@@ -1,0 +1,47 @@
+.element {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  max-width: 50rem;
+  margin: 2rem auto;
+  text-align: center;
+}
+
+.element p {
+  border: solid rgb(50, 47, 47);
+  background-color: rgb(56, 52, 52);
+  font-weight: 700;
+  padding: 1rem;
+  color: var(--color-primary-400);
+}
+
+p span {
+    font-weight: 400;
+    color: var(--color-primary-200);
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.actions a,
+.actions button {
+  padding: 0.25rem 1rem;
+  text-decoration: none;
+  font: inherit;
+  cursor: pointer;
+  color: var(--color-primary-200);
+}
+
+.actions button {
+  background-color: transparent;
+  border: none;
+}
+
+.actions a:hover,
+.actions button:hover {
+    color: var(--color-primary-800);
+  }
