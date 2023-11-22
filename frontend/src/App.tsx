@@ -5,11 +5,11 @@ import ElementDetailPage, {
   loader as elementDetailLoader,
   action as deleteElementAction
 } from './Pages/ElementDetail';
-import RootLayout from './Pages/Root';
+import RootLayout, { loader as getLoggedInUserLoader } from './Pages/Root';
 import HomePage from './Pages/Home';
 import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
 import EditElementsPage from './Pages/EditElement';
-import LoginPage from './Pages/Login';
+import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as manipulateFormAction } from './Components/ElementForm';
 
 const router = createBrowserRouter([
@@ -17,6 +17,7 @@ const router = createBrowserRouter([
     path: '/',
     element: <RootLayout />,
     id: 'root',
+    loader: getLoggedInUserLoader,
     children: [
       {
         index: true,
@@ -55,8 +56,9 @@ const router = createBrowserRouter([
         ]
       },
       {
-        path: 'login',
-        element: <LoginPage />
+        path: 'auth',
+        element: <LoginPage />,
+        action: authFormAction
       }
     ]
   }

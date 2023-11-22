@@ -1,23 +1,41 @@
-import { Form, Link } from "react-router-dom";
+import { Form, Link, useActionData, useSearchParams } from "react-router-dom";
 import classes from './LoginForm.module.css';
 
 const LoginForm: React.FC = () => {
+    const data: any = useActionData();
+    const [searchParams] = useSearchParams();
+    const isLogin = searchParams.get('mode') === 'login';
+
     return (
-        <Form method="post" className={classes.form}>
-            <h1>Log in</h1>
-            <p>
-                <label htmlFor="email">Email</label>
-                <input type="email" name="email" id="email" />
-            </p>
-            <p>
-                <label htmlFor="password">Password</label>
-                <input type="password" name="password" id="password" />
-            </p>
-            <div className={classes.actions}>
-                <Link to='signup'>Sign up</Link>
-                <button>Save</button>
-            </div>
-        </Form>
+        <>
+            <Form method="post" className={classes.form}>
+                <h1>{isLogin ? 'Log in' : 'Sign up'}</h1>
+                {data && data === "username exists" &&
+                    <p style={{ color: "orange" }}>User with the same username already exists!</p>
+                }
+                {data && data === "email exists" &&
+                    <p style={{ color: "orange" }}>User with the same email already exists!</p>
+                }
+                {!isLogin ?
+                    <p>
+                        <label htmlFor="username">Username</label>
+                        <input type="text" name="username" id="username" />
+                    </p> : ''
+                }
+                <p>
+                    <label htmlFor="email">Email</label>
+                    <input type="email" name="email" id="email" />
+                </p>
+                <p>
+                    <label htmlFor="password">Password</label>
+                    <input type="password" name="password" id="password" />
+                </p>
+                <div className={classes.actions}>
+                    <Link to={`?mode=${isLogin ? 'signup' : 'login'}`}>{isLogin ? 'Sign up' : 'Log in'}</Link>
+                    <button>Submit</button>
+                </div>
+            </Form>
+        </>
     );
 };
 
