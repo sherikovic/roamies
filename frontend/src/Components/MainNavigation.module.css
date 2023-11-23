@@ -20,3 +20,18 @@
 .list a.active {
     color: var(--color-primary-800);
 }
+
+.button {
+    border: none;
+    text-decoration: none;
+    /* padding: 1rem 0 1rem; */
+    color: var(--color-primary-200);
+    background-color: #242424;
+    font-size: medium;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button:hover {
+    color: var(--color-primary-800);
+}

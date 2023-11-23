@@ -16,6 +16,9 @@ const LoginForm: React.FC = () => {
                 {data && data === "email exists" &&
                     <p style={{ color: "orange" }}>User with the same email already exists!</p>
                 }
+                {data && data === "Unauthorized" &&
+                    <p style={{ color: "orange" }}>Either username or password is incorrect!</p>
+                }
                 {!isLogin ?
                     <p>
                         <label htmlFor="username">Username</label>

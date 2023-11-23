@@ -1,10 +1,9 @@
-import { NavLink, useRouteLoaderData } from "react-router-dom";
+import { Form, NavLink, useRouteLoaderData } from "react-router-dom";
 
 import classes from './MainNavigation.module.css';
 
 const MainNavigation: React.FC = () => {
     const data: any = useRouteLoaderData('root');
-    console.log(data.user)
 
     return (
         <header className={classes.header}>
@@ -35,16 +34,25 @@ const MainNavigation: React.FC = () => {
             </nav>
             <nav>
                 <ul className={classes.list}>
-                    <li>
-                        <NavLink
-                            to={data.user ? '/auth/logout' : '/auth?mode=login'}
-                            className={({ isActive }) =>
-                                isActive ? classes.active : undefined
-                            }
-                        >
-                            {data.user ? 'Logout' : 'Login'}
-                        </NavLink>
-                    </li>
+                    {!data &&
+                        <li>
+                            <NavLink
+                                to='/auth?mode=login'
+                                className={({ isActive }) =>
+                                    isActive ? classes.active : undefined
+                                }
+                            >
+                                Login
+                            </NavLink>
+                        </li>
+                    }
+                    {data && data.user &&
+                        <li>
+                            <Form action="/logout" method="post">
+                                <button className={classes.button}>Logout</button>
+                            </Form>
+                        </li>
+                    }
                 </ul>
             </nav>
         </header>

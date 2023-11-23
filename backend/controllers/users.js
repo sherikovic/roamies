@@ -1,4 +1,3 @@
-const passport = require('passport');
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
 require('express').Router();
@@ -28,22 +27,26 @@ module.exports.signup = async (req, res) => {
     }
 };
 
-module.exports.login = (req, res, next) => {
+module.exports.login = (req, res) => {
     res.status(201).json({ message: 'Log in succussful', user: req.user });
 };
 
 module.exports.logout = async (req, res) => {
-    console.log(req.body);
+    // no need to delete the cookie on the client side since req.logout will remove
+    // req.user from passport and thus authentication becomes null
+    // on the client side, the cookie is not destroyed but it is invalidated
+    // cookie will remain the same while logged in and will change once you log out
+    req.logOut(function (err) {
+        if (err) {
+            return next(err);
+        };
+        res.json({ message: "logged out" });
+    });
 };
 
 module.exports.getLoggedInUser = async (req, res) => {
-    if (req.session.passport) {
-        const user = await User.findById(req.session.passport.user)
-        if (user) {
-            res.status(201).json({ user: user.username })
-        } else {
-            res.json({ user: null })
-        }
+    if (req.user) {
+        res.status(201).json({ user: req.user.username });
     } else {
         res.json({ user: null })
     }

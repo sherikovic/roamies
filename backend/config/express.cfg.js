@@ -1,7 +1,7 @@
 const session = require('express-session');
 const bodyParser = require('body-parser');
 
-module.exports = (app, passport) => {
+module.exports = (app) => {
     app.use(bodyParser.json());
 
     app.use((req, res, next) => {
@@ -15,7 +15,12 @@ module.exports = (app, passport) => {
     app.use(session({
         secret: 'thisisasecret',
         resave: false,
-        saveUninitialized: false
+        saveUninitialized: false,
+        cookie: {
+            httpOnly: true,
+            expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+            maxAge: 1000 * 60 * 60 * 24 * 7,
+        }
     }));
 
     app.listen(8080, () => {

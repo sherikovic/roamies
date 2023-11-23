@@ -1,9 +1,8 @@
 const express = require('express');
 const router = express.Router();
 const usersCtls = require('../controllers/users');
-const { checkAuthenticated } = require('../middleware');
+const { checkAuthenticated, checkNotAuthenticated } = require('../middleware');
 const passport = require('passport');
-const User = require('../models/user');
 
 module.exports = router
     .post('/signup', usersCtls.signup)
@@ -11,5 +10,5 @@ module.exports = router
         checkAuthenticated,
         passport.authenticate('local'),
         usersCtls.login)
-    .post('/logout', usersCtls.logout)
+    .post('/logout', checkNotAuthenticated, usersCtls.logout)
     .get('/getuser', usersCtls.getLoggedInUser);

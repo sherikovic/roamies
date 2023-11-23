@@ -1,9 +1,8 @@
-const express = require('express');
+const app = require('express')();
 const passport = require('passport');
 
-const app = express();
 require('./config/mongodb-cfg');
-require('./config/express.cfg')(app, passport);
+require('./config/express.cfg')(app);
 require('./config/passport-cfg')(app, passport);
 
 app.use('/elements', require('./routes/elements'));

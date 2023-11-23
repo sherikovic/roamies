@@ -31,5 +31,14 @@ module.exports = function (app, passport) {
         }
     ));
     passport.serializeUser((user, done) => done(null, user.id));
-    passport.deserializeUser((id, done) => done(null, User.findById(id)));
+    passport.deserializeUser((id, done) => {
+        User.findById(id).then((user) => {
+            const userInfo = {
+                id: user.id,
+                username: user.username,
+                email: user.email,
+            };
+            done(null, userInfo);
+        });
+    });
 }

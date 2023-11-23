@@ -11,11 +11,14 @@ import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
 import EditElementsPage from './Pages/EditElement';
 import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as manipulateFormAction } from './Components/ElementForm';
+import { action as logoutAction } from './Pages/Logout';
+import ErrorPage from './Pages/Error';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <RootLayout />,
+    errorElement: <ErrorPage />,
     id: 'root',
     loader: getLoggedInUserLoader,
     children: [
@@ -59,6 +62,10 @@ const router = createBrowserRouter([
         path: 'auth',
         element: <LoginPage />,
         action: authFormAction
+      },
+      {
+        path: 'logout',
+        action: logoutAction
       }
     ]
   }

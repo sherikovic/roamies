@@ -1,9 +1,18 @@
-import { ActionFunction, json, redirect } from "react-router-dom";
+import { ActionFunction, json, redirect, useRouteLoaderData } from "react-router-dom";
 import LoginForm from "../Components/LoginForm";
 
 const LoginPage: React.FC = () => {
+    const data: any = useRouteLoaderData('root');
+
     return (
-        <LoginForm />
+        <>
+            {data && !data.user && <LoginForm />}
+            {data && data.user &&
+                <div>
+                    <h4>You are already logged in!</h4>
+                </div>
+            }
+        </>
     );
 };
 
@@ -37,7 +46,7 @@ export const action: ActionFunction = async ({ request }) => {
 
     if (response.status !== 401) {
         const resData = await response.json();
-        console.log(resData.message);
+        // console.log(resData.message);
     }
 
     if (response.status === 401) { // user exists
