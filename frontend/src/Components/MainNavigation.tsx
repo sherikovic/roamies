@@ -34,8 +34,8 @@ const MainNavigation: React.FC = () => {
             </nav>
             <nav>
                 <ul className={classes.list}>
-                    {!data &&
-                        <li>
+                    {(!data || !data.user) &&
+                        < li >
                             <NavLink
                                 to='/auth?mode=login'
                                 className={({ isActive }) =>
@@ -55,7 +55,7 @@ const MainNavigation: React.FC = () => {
                     }
                 </ul>
             </nav>
-        </header>
+        </header >
     );
 };
 
