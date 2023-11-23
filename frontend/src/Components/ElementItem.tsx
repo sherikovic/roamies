@@ -1,6 +1,6 @@
 import React from 'react';
 import ElementModel from '../models/element';
-import { Link, useSubmit } from 'react-router-dom';
+import { Link, useRouteLoaderData, useSubmit } from 'react-router-dom';
 import classes from './ElementItem.module.css';
 
 interface ElementItemProps {
@@ -10,6 +10,7 @@ interface ElementItemProps {
 
 const ElementItem: React.FC<ElementItemProps> = (props) => {
     const submit = useSubmit();
+    const data: any = useRouteLoaderData('root');
 
     const deleteElement = () => {
         const proceed = window.confirm('Are you sure?');
@@ -25,11 +26,13 @@ const ElementItem: React.FC<ElementItemProps> = (props) => {
             <p>Name: <span>{props.element.name}</span></p>
             <p>Description: <span>{props.element.description}</span></p>
             <p>Value: <span>{props.element.value}</span></p>
-            <menu className={classes.actions}>
-                <Link to="..">Back</Link>
-                <Link to="edit">Edit</Link>
-                <button onClick={deleteElement}>Delete</button>
-            </menu>
+            {data && data.user &&
+                <menu className={classes.actions}>
+                    <Link to="..">Back</Link>
+                    <Link to="edit">Edit</Link>
+                    <button onClick={deleteElement}>Delete</button>
+                </menu>
+            }
         </article>
     );
 };

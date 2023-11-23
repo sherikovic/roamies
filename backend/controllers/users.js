@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const bcrypt = require('bcrypt');
-require('express').Router();
 
 module.exports.signup = async (req, res) => {
     try {
@@ -21,7 +20,12 @@ module.exports.signup = async (req, res) => {
             username
         });
         await newUser.save();
-        res.status(201).json({ message: "User was created" });
+        req.logIn(newUser, err => {
+            if (err) {
+                return res.status(500).json({ message: "User was created but an error occured while trying to log in." })
+            }
+            res.status(201).json({ message: "User was created" });
+        });
     } catch {
         res.status(500).json({ message: "Something went wrong, couldn't create user!" });
     }

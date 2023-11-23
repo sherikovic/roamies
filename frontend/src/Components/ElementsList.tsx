@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useRouteLoaderData } from "react-router-dom";
 import ElementModel from "../models/element";
 import classes from './ElementsList.module.css';
 
@@ -8,11 +8,15 @@ interface ElementsListProps {
 };
 
 const ElementsList: React.FC<ElementsListProps> = (props) => {
+    const data: any = useRouteLoaderData('root');
+
     return (
         <div>
-            <div className={classes.new}>
-                <Link to="new">New Element</Link>
-            </div>
+            {data && data.user &&
+                <div className={classes.new}>
+                    <Link to="new">New Element</Link>
+                </div>
+            }
             <div className={classes.elements}>
                 <ul className={classes.list}>
                     {props.elements.map((element: ElementModel) => (

@@ -10,6 +10,7 @@ module.exports.index = async (req, res) => {
 };
 
 module.exports.createElement = async (req, res) => {
+    console.log(req.user)
     const element = new Element(req.body);
     await element.save();
     res.status(201).json({ message: 'Element saved.', element: element });

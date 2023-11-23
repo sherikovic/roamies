@@ -9,7 +9,7 @@ const LoginPage: React.FC = () => {
             {data && !data.user && <LoginForm />}
             {data && data.user &&
                 <div>
-                    <h4>You are already logged in!</h4>
+                    <h4 style={{ textAlign: 'center' }}>You are already logged in!</h4>
                 </div>
             }
         </>
@@ -57,6 +57,6 @@ export const action: ActionFunction = async ({ request }) => {
     else if (!response.ok) {
         throw json({ message: 'An error occured!' }, { status: 500 });
     } else {
-        return redirect('/');
+        return redirect('/elements');
     }
 };

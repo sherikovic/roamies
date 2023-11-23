@@ -10,5 +10,6 @@ export const action: ActionFunction = async () => {
     });
     const resData = await response.json();
     // console.log(resData);
+
     return redirect('/elements');
 };
