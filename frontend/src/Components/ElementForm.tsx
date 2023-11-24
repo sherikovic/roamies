@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActionFunction, Form, json, redirect, useNavigate } from 'react-router-dom';
+import { ActionFunction, Form, json, redirect, useActionData, useNavigate } from 'react-router-dom';
 
 import ElementModel from '../models/element';
 import classes from './ElementForm.module.css';
@@ -11,6 +11,7 @@ interface ElementFormProps {
 };
 
 const ElementForm: React.FC<ElementFormProps> = (props) => {
+    const data: any = useActionData();
     const navigate = useNavigate();
     const cancelHandler = () => {
         navigate('..');
@@ -22,6 +23,9 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
                 <p className={classes.paragraph}>Define your element</p>
             </div>
             <Form method={props.method} className={classes.form}>
+                {data && data.name &&
+                    <p style={{ color: 'orange' }}>{data.name}</p>
+                }
                 <p>
                     <label htmlFor="name">Name:</label>
                     <input
@@ -31,6 +35,9 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
                         defaultValue={props.data ? props.data.name : ''}
                     />
                 </p>
+                {data && data.value &&
+                    <p style={{ color: 'orange' }}>{data.value}</p>
+                }
                 <p>
                     <label htmlFor="value">Value:</label>
                     <input
@@ -40,6 +47,9 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
                         defaultValue={props.data ? props.data.value : ''}
                     />
                 </p>
+                {data && data.description &&
+                    <p style={{ color: 'orange' }}>{data.description}</p>
+                }
                 <p>
                     <label htmlFor="description">Description:</label>
                     <textarea
@@ -62,39 +72,3 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
 
 export default ElementForm;
 
-export const action: ActionFunction = async ({ request, params }) => {
-    const method = request.method;
-    const data = await request.formData();
-
-    const FormData = {
-        name: data.get('name'),
-        value: data.get('value'),
-        description: data.get('description')
-    };
-
-    let url = 'http://localhost:8080/elements';
-    if (method === 'PATCH') {
-        const id = params.id;
-        url = 'http://localhost:8080/elements/' + id;
-    };
-
-    const response = await fetch(url, {
-        method: method,
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(FormData)
-    });
-
-    const resData = await response.json();
-
-    if (!response.ok) {
-        throw json({ message: 'Something went wrong!' }, { status: 500 });
-    };
-
-    if (method === 'POST') {
-        return redirect('/elements/' + resData.element._id);
-    } else {
-        return redirect('/elements/' + params.id);
-    }
-};

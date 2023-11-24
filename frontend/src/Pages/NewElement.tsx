@@ -1,5 +1,6 @@
-import { useRouteLoaderData } from 'react-router-dom';
+import { ActionFunction, json, redirect, useRouteLoaderData } from 'react-router-dom';
 import ElementForm from '../Components/ElementForm';
+import { Fragment } from 'react';
 
 const NewElementPage: React.FC = () => {
     const data: any = useRouteLoaderData('root');
@@ -16,3 +17,50 @@ const NewElementPage: React.FC = () => {
 };
 
 export default NewElementPage;
+
+export const action: ActionFunction = async ({ request, params }) => {
+    const method = request.method;
+    const data = await request.formData();
+
+    const FormData = {
+        name: data.get('name'),
+        value: data.get('value'),
+        description: data.get('description')
+    };
+
+    if (FormData.name === "") {
+        return { name: "Name field is required!" }
+    };
+    if (FormData.value === "") {
+        return { value: "Value field is required!" }
+    };
+    if (FormData.description === "") {
+        return { description: "Description field is required!" }
+    };
+
+    let url = 'http://localhost:8080/elements';
+    if (method === 'PATCH') {
+        const id = params.id;
+        url = 'http://localhost:8080/elements/' + id;
+    };
+
+    const response = await fetch(url, {
+        method: method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(FormData)
+    });
+
+    const resData = await response.json();
+
+    if (!response.ok) {
+        throw json({ message: 'Something went wrong!' }, { status: 500 });
+    };
+
+    if (method === 'POST') {
+        return redirect('/elements/' + resData.element._id);
+    } else {
+        return redirect('/elements/' + params.id);
+    }
+};

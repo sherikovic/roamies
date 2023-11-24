@@ -1,6 +1,6 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import NewElementPage from './Pages/NewElement';
+import NewElementPage, { action as manipulateFormAction } from './Pages/NewElement';
 import ElementDetailPage, {
   loader as elementDetailLoader,
   action as deleteElementAction
@@ -10,7 +10,6 @@ import HomePage from './Pages/Home';
 import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
 import EditElementsPage from './Pages/EditElement';
 import LoginPage, { action as authFormAction } from './Pages/Login';
-import { action as manipulateFormAction } from './Components/ElementForm';
 import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
 

@@ -19,6 +19,15 @@ const LoginForm: React.FC = () => {
                 {data && data === "Unauthorized" &&
                     <p style={{ color: "orange" }}>Either username or password is incorrect!</p>
                 }
+                {data && data === "Username is empty" &&
+                    <p style={{ color: "orange" }}>Username cannot be empty!</p>
+                }
+                {data && data === "Email is empty" &&
+                    <p style={{ color: "orange" }}>Email cannot be empty!</p>
+                }
+                {data && data === "Password is empty" &&
+                    <p style={{ color: "orange" }}>Password cannot be empty!</p>
+                }
                 {!isLogin ?
                     <p>
                         <label htmlFor="username">Username</label>

@@ -26,6 +26,16 @@ export const action: ActionFunction = async ({ request }) => {
         throw json({ message: 'Unsupported mode' }, { status: 422 });
     };
 
+    if (mode === 'signup' && data.get('username') === "") {
+        return 'Username is empty'
+    }
+    if (data.get('email') === "") {
+        return 'Email is empty'
+    }
+    if (data.get('password') === "") {
+        return 'Password is empty'
+    }
+
     let authData: any = {
         email: data.get('email'),
         password: data.get('password')
