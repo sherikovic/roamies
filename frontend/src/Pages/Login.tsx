@@ -44,11 +44,6 @@ export const action: ActionFunction = async ({ request }) => {
         body: JSON.stringify(authData)
     });
 
-    if (response.status !== 401) {
-        const resData = await response.json();
-        // console.log(resData.message);
-    }
-
     if (response.status === 401) { // user exists
         return response;
     } else if (response.status === 300) { // user is already logged in
