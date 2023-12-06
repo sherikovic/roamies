@@ -12,6 +12,7 @@ import EditElementsPage from './Pages/EditElement';
 import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
+import ProfilePage from './Pages/Profile';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
             action: manipulateFormAction
           },
         ]
+      },
+      {
+        path: 'profile',
+        element: <ProfilePage />
       },
       {
         path: 'auth',
