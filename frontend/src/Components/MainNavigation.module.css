@@ -30,18 +30,18 @@
     border-radius: 50%;
     max-width: 5%;
     cursor: pointer;
-    margin-right: 30px;
+    margin-right: 5px;
 }
 
-.dropdown_content {
+.dd_content {
     display: none;
     flex-direction: column;
     position: absolute;
     margin-top: 45px;
 }
 
-.dropdown_content a,
-.dropdown_content button {
+.dd_content a,
+.dd_content button {
     display: block;
     text-decoration: none;
     /* padding: 2px 30px; */
@@ -53,21 +53,38 @@
     cursor: pointer;
 }
 
-.dropdown_content a {
-    padding: 2px 30px;
+.dd_content a {
+    padding: 2px 50px;
 }
-.dropdown_content button {
-    padding: 4px 30px;
+.dd_content button {
+    padding: 4px 50px;
 }
 
-.dropdown_content a:hover,
-.dropdown_content button:hover {
+.dd_content a:hover,
+.dd_content button:hover {
     color: var(--color-primary-600);
     background-color: var(--color-gray-800);
 }
 
-.dropdown_content_display {
+.dd_content_display {
     display: flex;
+}
+
+.dd_caret_down {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    text-rendering: auto;
+    transform: translate(0 ,0);
+    color: var(--color-primary-600);
+    text-decoration: none;
+}
+
+.dd_userheader {
+    padding: 0 10px;
+    font-style: normal;
+    font-size: medium;
+    color: var(--color-primary-600);
 }
 
 /* ~ because both classes are siblings */

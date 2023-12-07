@@ -1,12 +1,14 @@
 import { Form, NavLink, Link, useRouteLoaderData } from "react-router-dom";
 
 import classes from './MainNavigation.module.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons'
 
 const MainNavigation: React.FC = () => {
     const data: any = useRouteLoaderData('root');
 
     function dropdownContentToggleHandler(event: any): void {
-        document.getElementById("dropdown_content")!.classList.toggle(classes.dropdown_content_display);
+        document.getElementById("dropdown_content")!.classList.toggle(classes.dd_content_display);
     }
 
     return (
@@ -43,13 +45,25 @@ const MainNavigation: React.FC = () => {
                         alt="user's profile"
                         onClick={dropdownContentToggleHandler}
                     />
+                    <Link
+                        to="#"
+                        className={classes.dd_caret_down}
+                        role="button"
+                        onClick={dropdownContentToggleHandler}
+                        title="User menu"
+                    >
+                        {data && data.user &&
+                            <i className={classes.dd_userheader}>Hello {data.user}</i>
+                        }
+                        <FontAwesomeIcon icon={faCaretSquareDown} />
+                    </Link>
                     {(!data || !data.user) &&
-                        <div className={classes.dropdown_content} id="dropdown_content">
+                        <div className={classes.dd_content} id="dropdown_content">
                             <Link to='/auth?mode=login' onClick={dropdownContentToggleHandler}>Login</Link>
                         </div>
                     }
                     {data && data.user &&
-                        <div className={classes.dropdown_content} id="dropdown_content">
+                        <div className={classes.dd_content} id="dropdown_content">
                             <Link to='/profile' onClick={dropdownContentToggleHandler}>Profile</Link>
                             <Form action="/logout" method="post">
                                 <button className={classes.button} onClick={dropdownContentToggleHandler}>Logout</button>
