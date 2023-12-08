@@ -1,10 +1,14 @@
 import { LoaderFunction, json, useLoaderData } from "react-router-dom";
 import ElementsList from "../Components/ElementsList";
+import PageHeader from "../Components/PageHeader";
 
 const ElementsPage: React.FC = () => {
     const elementsArray: any = useLoaderData();
     return (
-        <ElementsList elements={elementsArray} />
+        <div>
+            <PageHeader headerText="Elements" />
+            <ElementsList elements={elementsArray} />
+        </div>
     );
 };
 

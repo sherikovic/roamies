@@ -53,7 +53,7 @@ const MainNavigation: React.FC = () => {
                         title="User menu"
                     >
                         {data && data.user &&
-                            <i className={classes.dd_userheader}>Hello {data.user}</i>
+                            <i className={classes.dd_userheader}>Hello, {data.user}</i>
                         }
                         <FontAwesomeIcon icon={faCaretSquareDown} />
                     </Link>
@@ -65,8 +65,9 @@ const MainNavigation: React.FC = () => {
                     {data && data.user &&
                         <div className={classes.dd_content} id="dropdown_content">
                             <Link to='/profile' onClick={dropdownContentToggleHandler}>Profile</Link>
+                            <Link to='/settings' onClick={dropdownContentToggleHandler}>Settings</Link>
                             <Form action="/logout" method="post">
-                                <button className={classes.button} onClick={dropdownContentToggleHandler}>Logout</button>
+                                <button onClick={dropdownContentToggleHandler}>Logout</button>
                             </Form>
                         </div>
                     }

@@ -1,6 +1,5 @@
 import { ActionFunction, json, redirect, useRouteLoaderData } from 'react-router-dom';
 import ElementForm from '../Components/ElementForm';
-import { Fragment } from 'react';
 
 const NewElementPage: React.FC = () => {
     const data: any = useRouteLoaderData('root');

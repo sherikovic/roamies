@@ -1,0 +1,15 @@
+.header_frame {
+    display: flex;
+    margin-bottom: 1rem;
+    padding: 2rem 3rem;
+    border-top: 0 solid transparent;
+    border-bottom: 0 solid transparent;
+    background-color: #d4b37278;
+}
+
+.header_text {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 500;
+    color: var(--color-primary-600);
+}

@@ -1,8 +1,7 @@
 .header {
     display: flex;
-    max-width: 60rem;
-    margin: auto;
-    padding: 2rem;
+    margin-bottom: 1rem;
+    padding: 1.2rem 0;
     justify-content: space-between;
 }
 
@@ -51,6 +50,7 @@
     color: var(--color-primary-200);
     background-color: var(--color-gray-500);
     cursor: pointer;
+    width: 100%;
 }
 
 .dd_content a {
@@ -63,7 +63,7 @@
 .dd_content a:hover,
 .dd_content button:hover {
     color: var(--color-primary-600);
-    background-color: var(--color-gray-800);
+    background-color: var(--color-gray-600);
 }
 
 .dd_content_display {
@@ -76,8 +76,12 @@
     font-size: 15px;
     text-rendering: auto;
     transform: translate(0 ,0);
-    color: var(--color-primary-600);
+    color: var(--color-primary-300);
     text-decoration: none;
+}
+
+.dd_caret_down:hover {
+    color: var(--color-primary-600);
 }
 
 .dd_userheader {
@@ -85,6 +89,7 @@
     font-style: normal;
     font-size: medium;
     color: var(--color-primary-600);
+    text-transform: capitalize;
 }
 
 /* ~ because both classes are siblings */
