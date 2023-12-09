@@ -20,9 +20,7 @@ const MainNavigation: React.FC = () => {
                     to='/'
                     className={({ isActive }) =>
                         isActive ?
-                            `${classes.listitem} ${classes.listitem_active}` :
-                            classes.listitem
-                    }
+                            `${classes.listitem} ${classes.listitem_active}` : classes.listitem}
                     end
                 >
                     Home
@@ -31,9 +29,7 @@ const MainNavigation: React.FC = () => {
                     to='/elements'
                     className={({ isActive }) =>
                         isActive ?
-                            `${classes.listitem} ${classes.listitem_active}` :
-                            classes.listitem
-                    }
+                            `${classes.listitem} ${classes.listitem_active}` : classes.listitem}
                 >
                     Elements
                 </NavLink>
@@ -73,9 +69,7 @@ const MainNavigation: React.FC = () => {
                             onClick={dropdownContentToggleHandler}
                             className={({ isActive }) =>
                                 isActive ?
-                                    `${classes.dd_content_item} ${classes.usermenu_active}` :
-                                    classes.dd_content_item
-                            }
+                                    `${classes.dd_content_item} ${classes.usermenu_active}` : classes.dd_content_item}
                         >
                             Profile
                         </NavLink>
@@ -84,9 +78,7 @@ const MainNavigation: React.FC = () => {
                             onClick={dropdownContentToggleHandler}
                             className={({ isActive }) =>
                                 isActive ?
-                                    `${classes.dd_content_item} ${classes.usermenu_active}` :
-                                    classes.dd_content_item
-                            }
+                                    `${classes.dd_content_item} ${classes.usermenu_active}` : classes.dd_content_item}
                         >
                             Settings
                         </NavLink>
