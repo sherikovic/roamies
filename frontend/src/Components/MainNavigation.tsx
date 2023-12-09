@@ -39,15 +39,15 @@ const MainNavigation: React.FC = () => {
                 </NavLink>
             </nav>
             <nav className={classes.dropdown}>
-                <img
-                    src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
-                    alt="user's profile"
-                    onClick={dropdownContentToggleHandler}
-                />
                 <div
                     className={classes.dd_user_menu}
                     onClick={dropdownContentToggleHandler}
                 >
+                    <img
+                        src="https://cdn.pixabay.com/photo/2018/11/13/21/43/avatar-3814049_1280.png"
+                        alt="user's profile"
+                        onClick={dropdownContentToggleHandler}
+                    />
                     {data && data.user &&
                         <i className={classes.dd_userheader}>Hello, {data.user}</i>
                     }
