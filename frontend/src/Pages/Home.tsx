@@ -1,6 +1,8 @@
+import PageHeader from "../Components/PageHeader";
+
 const HomePage: React.FC = () => {
     return (
-        <p>Home</p>
+        <PageHeader headerText="Welcome" />
     );
 };
 

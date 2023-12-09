@@ -1,6 +1,7 @@
 .header_frame {
     display: flex;
-    margin-bottom: 1rem;
+    flex-direction: column;
+    margin-bottom: 2rem;
     padding: 2rem 3rem;
     border-top: 0 solid transparent;
     border-bottom: 0 solid transparent;
@@ -12,4 +13,10 @@
     font-size: 3rem;
     font-weight: 500;
     color: var(--color-primary-600);
+}
+
+.header_content {
+    font-size: 1rem;
+    font-weight: 400;
+    color: var(--color-primary-200);
 }

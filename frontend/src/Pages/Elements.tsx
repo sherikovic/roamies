@@ -6,7 +6,9 @@ const ElementsPage: React.FC = () => {
     const elementsArray: any = useLoaderData();
     return (
         <div>
-            <PageHeader headerText="Elements" />
+            <PageHeader headerText="Elements">
+                Save your keys, elements, codes,..etc
+            </PageHeader>
             <ElementsList elements={elementsArray} />
         </div>
     );

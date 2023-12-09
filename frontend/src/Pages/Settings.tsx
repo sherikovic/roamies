@@ -1,14 +1,14 @@
-import PersonalInfoForm from "../Components/PersonalInfoForm";
-import AccountSettingsForm from "../Components/AccountSettingsForm";
 import PageHeader from "../Components/PageHeader";
+import SettingsTabs from "../Components/SettingsTabs";
 
 const SettingsPage: React.FC = () => {
 
     return (
         <div>
-            <PageHeader headerText="Settings" />
-            <PersonalInfoForm />
-            <AccountSettingsForm />
+            <PageHeader headerText="Settings" >
+                Update your personal settings
+            </PageHeader>
+            <SettingsTabs />
         </div>
     );
 };
