@@ -3,12 +3,14 @@ import { Form, NavLink, Link, useRouteLoaderData } from "react-router-dom";
 import classes from './MainNavigation.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons'
+import { useState } from "react";
 
 const MainNavigation: React.FC = () => {
     const data: any = useRouteLoaderData('root');
+    const [toggleDisplay, setToggleDisplay] = useState(false);
 
     function dropdownContentToggleHandler(event: any): void {
-        document.getElementById("dropdown_content")!.classList.toggle(classes.dd_content_display);
+        setToggleDisplay(!toggleDisplay);
     }
 
     return (
@@ -49,10 +51,12 @@ const MainNavigation: React.FC = () => {
                     {data && data.user &&
                         <i className={classes.dd_userheader}>Hello, {data.user}</i>
                     }
-                    <FontAwesomeIcon icon={faCaretSquareDown} />
+                    <div className={`${classes.dd_caret_down} ${toggleDisplay && classes.dd_caret_down_tr}`}>
+                        <FontAwesomeIcon icon={faCaretSquareDown} />
+                    </div>
                 </div>
                 {(!data || !data.user) &&
-                    <div className={classes.dd_content} id="dropdown_content">
+                    <div className={`${classes.dd_content} ${toggleDisplay && classes.dd_content_display}`}>
                         <Link
                             to='/auth?mode=login'
                             onClick={dropdownContentToggleHandler}
@@ -63,7 +67,7 @@ const MainNavigation: React.FC = () => {
                     </div>
                 }
                 {data && data.user &&
-                    <div className={classes.dd_content} id="dropdown_content">
+                    <div className={`${classes.dd_content} ${toggleDisplay && classes.dd_content_display}`}>
                         <NavLink
                             to='/profile'
                             onClick={dropdownContentToggleHandler}

@@ -72,7 +72,6 @@
 
 .usermenu_active {
     color: var(--color-primary-500);
-    
 }
 
 .dd_content_display {
@@ -99,6 +98,14 @@
     font-size: medium;
     font-weight: 300;
     text-transform: capitalize;
+}
+
+.dd_caret_down {
+    transition: transform 0.3s;
+}
+
+.dd_caret_down_tr {
+    transform: rotate(180deg);
 }
 
 /* ~ because both classes are siblings */

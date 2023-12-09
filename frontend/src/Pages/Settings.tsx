@@ -6,7 +6,7 @@ const SettingsPage: React.FC = () => {
     return (
         <div>
             <PageHeader headerText="Settings" >
-                Update your personal settings
+                Update your settings
             </PageHeader>
             <SettingsTabs />
         </div>
