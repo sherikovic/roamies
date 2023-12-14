@@ -1,5 +1,79 @@
-.form {
-    display: block;
-    margin: 0;
-    padding: 0;
+.pi_form {
+    display: flex;
+    flex-direction: column;
+    padding: 15px 30px 15px 30px;
+    margin: 0 auto 0;
+    width: 100%;
+    align-items: flex-start;
 }
+
+.pi_form_header {
+    margin: 0;
+    padding: 0 0 30px;
+    font-size: medium;
+    font-weight: 500;
+    letter-spacing: 0.1rem;
+    color: var(--color-primary-200);
+    width: 100%;
+}
+
+.pi_form_item {
+    display: flex;
+    position: relative;
+    padding: 20px 0;
+    margin-top: 0;
+    width: 100%;
+}
+
+.pi_input_field {
+    width: 100%;
+    border: none;
+    outline: 0;
+    padding: 7px 0;
+    font-size: 0.9rem;
+    border-bottom: 0.1rem solid var(--color-gray-700);
+    background: transparent;
+    transition: border-color 0.2s;
+    color: var(--color-primary-200);
+
+    &::placeholder {
+        color: transparent;
+    }
+    &:placeholder-shown ~ .pi_input_label {
+        font-size: 0.9rem;
+        cursor: text;
+        top: 20px;
+    }
+}
+
+.pi_input_label {
+    position: absolute;
+    top: 0;
+    font-weight: 400;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+    transition: 0.2s;
+    color: var(--color-primary-200);
+}
+
+.pi_input_field:focus {
+    ~ .pi_input_label {
+        position: absolute;
+        transition: 0.2s;
+        font-size: 0.7rem;
+        top: 0;
+        color: var(--color-primary-600);
+    }
+    padding: 8px 0;
+    border-color: var(--color-primary-600);
+    border-width: 0.15rem;
+}
+
+.pi_form_group_cc {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 10rem;
+}
+

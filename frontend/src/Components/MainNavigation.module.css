@@ -43,7 +43,7 @@
     display: none;
     flex-direction: column;
     position: absolute;
-    right: 181px;
+    right: 255px;
     margin-top: 60px;
     border: 0.1rem solid var(--color-gray-700);
     border-radius: 0.3rem;
