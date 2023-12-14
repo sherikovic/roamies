@@ -57,7 +57,8 @@
     color: var(--color-primary-200);
 }
 
-.pi_input_field:focus {
+.pi_input_field:focus,
+.pi_input_field:enabled {
     ~ .pi_input_label {
         position: absolute;
         transition: 0.2s;

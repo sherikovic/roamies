@@ -2,7 +2,7 @@ import { Form, NavLink, Link, useRouteLoaderData } from "react-router-dom";
 
 import classes from './MainNavigation.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons'
+import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons';
 import { useState } from "react";
 
 const MainNavigation: React.FC = () => {
