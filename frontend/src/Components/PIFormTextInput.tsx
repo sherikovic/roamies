@@ -1,14 +1,16 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faSave } from '@fortawesome/free-regular-svg-icons';
-import classes from './PersonalInfoForm.module.css';
 import { useState } from 'react';
 
-interface PIFormTextInputProps {
+interface PIFormTextInputLabelProps {
     name: string;
+    classDiv?: string;
+    classInput?: string;
+    classLabel?: string;
     children?: React.ReactNode;
 };
 
-const PIFormTextInput: React.FC<PIFormTextInputProps> = (props) => {
+const PIFormTextInputLabel: React.FC<PIFormTextInputLabelProps> = (props) => {
     const [editMode, setEditMode] = useState(false);
 
     const editIconHandler = () => {
@@ -16,16 +18,16 @@ const PIFormTextInput: React.FC<PIFormTextInputProps> = (props) => {
     };
 
     return (
-        <div className={classes.pi_form_item}>
+        <div className={props.classDiv}>
             <input
                 type="text"
                 placeholder={props.name}
                 name={props.name}
                 id={props.name}
-                className={`${classes.pi_input_field} ${editMode && classes.pi_input_field}`}
+                className={props.classInput}
                 disabled={!editMode}
             />
-            <label htmlFor={props.name} className={classes.pi_input_label}>
+            <label htmlFor={props.name} className={props.classLabel}>
                 {props.name.toUpperCase()}
             </label>
             <div onClick={editIconHandler} style={{ color: 'gray' }}>
@@ -35,4 +37,4 @@ const PIFormTextInput: React.FC<PIFormTextInputProps> = (props) => {
     );
 };
 
-export default PIFormTextInput;
+export default PIFormTextInputLabel;
