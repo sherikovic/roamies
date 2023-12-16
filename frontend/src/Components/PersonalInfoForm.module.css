@@ -30,11 +30,14 @@
     border: none;
     outline: 0;
     padding: 7px 0;
+    padding-left: 5px;
     font-size: 0.9rem;
     border-bottom: 0.1rem solid var(--color-gray-700);
     background: transparent;
     transition: border-color 0.2s;
     color: var(--color-primary-200);
+    border-radius: 0.2rem;
+    cursor: pointer;
 
     &::placeholder {
         color: transparent;
@@ -42,7 +45,11 @@
     &:placeholder-shown ~ .pi_input_label {
         font-size: 0.9rem;
         cursor: text;
-        top: 20px;
+        top: 22px;
+    }
+    &:hover {
+        background-color: var(--color-gray-800);
+        transition: 0.2s;
     }
 }
 
@@ -54,11 +61,12 @@
     text-transform: uppercase;
     letter-spacing: 0.15rem;
     transition: 0.2s;
+    padding-left: 7px;
     color: var(--color-primary-200);
+    cursor: pointer;
 }
 
-.pi_input_field:focus,
-.pi_input_field:enabled {
+.pi_input_field:focus {
     ~ .pi_input_label {
         position: absolute;
         transition: 0.2s;
@@ -73,8 +81,28 @@
 
 .pi_form_group_cc {
     display: flex;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
     gap: 10rem;
 }
 
+.btn_save {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.btn_save button {
+    font: inherit;
+    cursor: pointer;
+    margin: 1rem 0;
+    padding: 0.7rem 2rem;
+    border-radius: 4px;
+    background-color: var(--color-primary-300);
+    color: var(--color-gray-800);
+    border: none;  
+}
+
+.btn_save button:hover {
+    background-color: var(--color-primary-500);
+}

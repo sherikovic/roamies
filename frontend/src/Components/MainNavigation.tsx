@@ -1,13 +1,22 @@
 import { Form, NavLink, Link, useRouteLoaderData } from "react-router-dom";
+import { useRef, useState } from "react";
 
 import classes from './MainNavigation.module.css';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCaretSquareDown } from '@fortawesome/free-regular-svg-icons';
-import { useState } from "react";
+import { useOutsideAlerter } from "../utils";
 
 const MainNavigation: React.FC = () => {
     const data: any = useRouteLoaderData('root');
     const [toggleDisplay, setToggleDisplay] = useState(false);
+    const containerRef = useRef(null);
+
+    useOutsideAlerter(
+        containerRef,
+        () => {
+            setToggleDisplay(false);
+        }
+    );
 
     function dropdownContentToggleHandler(event: any): void {
         setToggleDisplay(!toggleDisplay);
@@ -34,7 +43,7 @@ const MainNavigation: React.FC = () => {
                     Elements
                 </NavLink>
             </nav>
-            <nav className={classes.dropdown}>
+            <nav ref={containerRef} className={classes.dropdown}>
                 <div
                     className={classes.dd_user_menu}
                     onClick={dropdownContentToggleHandler}
