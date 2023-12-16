@@ -2,8 +2,14 @@ import { useState } from "react";
 import AccountSettingsForm from "./AccountSettingsForm";
 import PersonalInfoForm from "./PersonalInfoForm";
 import classes from './SettingsTabs.module.css';
+import ElementModel from '../models/element';
 
-const SettingsTabs: React.FC = () => {
+interface SettingsTabsProps {
+    userData: ElementModel;
+    children?: React.ReactNode;
+}
+
+const SettingsTabs: React.FC<SettingsTabsProps> = (props) => {
     const [toggleTab, setToggleTab] = useState(1);
 
     function toggleTabHandler(index: number): void {
@@ -28,7 +34,7 @@ const SettingsTabs: React.FC = () => {
                 </button>
             </div>
             <div className={classes.content}>
-                {toggleTab === 1 && <PersonalInfoForm />}
+                {toggleTab === 1 && <PersonalInfoForm userData={props.userData} />}
                 {toggleTab === 2 && <AccountSettingsForm />}
             </div>
         </div >

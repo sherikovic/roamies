@@ -17,7 +17,7 @@ const RootLayout: React.FC = () => {
 export default RootLayout;
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-    const response = await fetch('http://localhost:8080/auth/getuser', {
+    const response = await fetch('http://localhost:8080/auth/getusername', {
         credentials: 'include'
     });
 

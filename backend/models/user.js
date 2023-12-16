@@ -13,7 +13,12 @@ const UserSchema = new Schema({
     password: {
         type: String,
         required: true
-    }
+    },
+    fullname: String,
+    country: String,
+    city: String,
+    github: String,
+    linkedin: String
 });
 
 module.exports = mongoose.model('user', UserSchema);

@@ -1,5 +1,6 @@
 interface PIFormTextInputLabelProps {
     name: string;
+    value: string;
     classDiv?: string;
     classInput?: string;
     classLabel?: string;
@@ -14,6 +15,7 @@ const PIFormTextInputLabel: React.FC<PIFormTextInputLabelProps> = (props) => {
                 placeholder={props.name}
                 name={props.name}
                 id={props.name}
+                defaultValue={props.value}
                 className={props.classInput}
             />
             <label htmlFor={props.name} className={props.classLabel}>

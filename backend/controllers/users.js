@@ -17,7 +17,12 @@ module.exports.signup = async (req, res) => {
         const newUser = new User({
             email,
             password: hashedPassword,
-            username
+            username,
+            fullname: '',
+            country: '',
+            city: '',
+            github: '',
+            linkedin: ''
         });
         await newUser.save();
         req.logIn(newUser, err => {

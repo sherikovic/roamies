@@ -13,7 +13,10 @@ import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
 import ProfilePage from './Pages/Profile';
-import SettingsPage, { action as settingsFormAction } from './Pages/Settings';
+import SettingsPage, {
+  action as settingsFormAction,
+  loader as settingsFormLoader
+} from './Pages/Settings';
 
 const router = createBrowserRouter([
   {
@@ -75,6 +78,7 @@ const router = createBrowserRouter([
       {
         path: 'settings',
         element: <SettingsPage />,
+        loader: settingsFormLoader,
         action: settingsFormAction
       }
     ]
