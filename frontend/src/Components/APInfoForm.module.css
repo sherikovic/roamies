@@ -1,4 +1,4 @@
-.pi_form {
+.api_form {
     display: flex;
     flex-direction: column;
     padding: 15px 30px 15px 30px;
@@ -7,7 +7,7 @@
     align-items: flex-start;
 }
 
-.pi_form_header {
+.api_form_header {
     margin: 0;
     padding: 0 0 30px;
     font-size: medium;
@@ -17,7 +17,7 @@
     width: 100%;
 }
 
-.pi_form_item {
+.api_form_item {
     display: flex;
     position: relative;
     padding: 20px 0;
@@ -25,7 +25,7 @@
     width: 100%;
 }
 
-.pi_input_field {
+.api_input_field {
     width: 100%;
     border: none;
     outline: 0;
@@ -42,7 +42,7 @@
     &::placeholder {
         color: transparent;
     }
-    &:placeholder-shown ~ .pi_input_label {
+    &:placeholder-shown ~ .api_input_label {
         font-size: 0.9rem;
         cursor: text;
         top: 22px;
@@ -53,7 +53,7 @@
     }
 }
 
-.pi_input_label {
+.api_input_label {
     position: absolute;
     top: 0;
     font-weight: 400;
@@ -66,8 +66,8 @@
     cursor: pointer;
 }
 
-.pi_input_field:focus {
-    ~ .pi_input_label {
+.api_input_field:focus {
+    ~ .api_input_label {
         position: absolute;
         transition: 0.2s;
         font-size: 0.7rem;
@@ -79,7 +79,7 @@
     border-width: 0.15rem;
 }
 
-.pi_form_group_cc {
+.api_form_group_cc {
     display: flex;
     /* justify-content: space-between; */
     width: 100%;

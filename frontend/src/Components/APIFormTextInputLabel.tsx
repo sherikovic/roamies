@@ -1,4 +1,5 @@
-interface PIFormTextInputLabelProps {
+interface APIFormTextInputLabelProps {
+    type: string;
     name: string;
     value: string;
     classDiv?: string;
@@ -7,11 +8,11 @@ interface PIFormTextInputLabelProps {
     children?: React.ReactNode;
 };
 
-const PIFormTextInputLabel: React.FC<PIFormTextInputLabelProps> = (props) => {
+const APIFormTextInputLabel: React.FC<APIFormTextInputLabelProps> = (props) => {
     return (
         <div className={props.classDiv}>
             <input
-                type="text"
+                type={props.type}
                 placeholder={props.name}
                 name={props.name}
                 id={props.name}
@@ -25,4 +26,4 @@ const PIFormTextInputLabel: React.FC<PIFormTextInputLabelProps> = (props) => {
     );
 };
 
-export default PIFormTextInputLabel;
+export default APIFormTextInputLabel;

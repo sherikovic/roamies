@@ -1,6 +1,6 @@
 import { Form, useActionData } from 'react-router-dom';
-import PIFormTextInputLabel from './PIFormTextInputLabel';
-import classes from './PersonalInfoForm.module.css';
+import APIFormTextInputLabel from './APIFormTextInputLabel';
+import classes from './APInfoForm.module.css';
 import ElementModel from '../models/element';
 
 interface PersonalInfoFormProps {
@@ -14,48 +14,53 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 
     return (
         <Form method='patch'>
-            <div className={classes.pi_form}>
-                <p className={classes.pi_form_header}>Update your personal information</p>
+            <div className={classes.api_form}>
+                <p className={classes.api_form_header}>Update your personal information</p>
                 {data && data.fullname &&
                     <p style={{ color: 'orange' }}>{data.fullname}</p>
                 }
-                <PIFormTextInputLabel
+                <APIFormTextInputLabel
+                    type='text'
                     name='full name'
                     value={props.userData ? userInfo.fullname : ''}
-                    classDiv={classes.pi_form_item}
-                    classInput={classes.pi_input_field}
-                    classLabel={classes.pi_input_label}
+                    classDiv={classes.api_form_item}
+                    classInput={classes.api_input_field}
+                    classLabel={classes.api_input_label}
                 />
-                <div className={classes.pi_form_group_cc}>
-                    <PIFormTextInputLabel
+                <div className={classes.api_form_group_cc}>
+                    <APIFormTextInputLabel
+                        type='text'
                         name='city'
                         value={props.userData ? userInfo.city : ''}
-                        classDiv={classes.pi_form_item}
-                        classInput={classes.pi_input_field}
-                        classLabel={classes.pi_input_label}
+                        classDiv={classes.api_form_item}
+                        classInput={classes.api_input_field}
+                        classLabel={classes.api_input_label}
                     />
-                    <PIFormTextInputLabel
+                    <APIFormTextInputLabel
+                        type='text'
                         name='country'
                         value={props.userData ? userInfo.country : ''}
-                        classDiv={classes.pi_form_item}
-                        classInput={classes.pi_input_field}
-                        classLabel={classes.pi_input_label}
+                        classDiv={classes.api_form_item}
+                        classInput={classes.api_input_field}
+                        classLabel={classes.api_input_label}
                     />
                 </div>
-                <div className={classes.pi_form_group_cc}>
-                    <PIFormTextInputLabel
+                <div className={classes.api_form_group_cc}>
+                    <APIFormTextInputLabel
+                        type='text'
                         name='github'
                         value={props.userData ? userInfo.github : ''}
-                        classDiv={classes.pi_form_item}
-                        classInput={classes.pi_input_field}
-                        classLabel={classes.pi_input_label}
+                        classDiv={classes.api_form_item}
+                        classInput={classes.api_input_field}
+                        classLabel={classes.api_input_label}
                     />
-                    <PIFormTextInputLabel
+                    <APIFormTextInputLabel
+                        type='text'
                         name='linkedin'
                         value={props.userData ? userInfo.linkedin : ''}
-                        classDiv={classes.pi_form_item}
-                        classInput={classes.pi_input_field}
-                        classLabel={classes.pi_input_label}
+                        classDiv={classes.api_form_item}
+                        classInput={classes.api_input_field}
+                        classLabel={classes.api_input_label}
                     />
                 </div>
                 <div className={classes.btn_save}>
