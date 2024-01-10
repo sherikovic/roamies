@@ -63,7 +63,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
                         classLabel={classes.api_input_label}
                     />
                 </div>
-                <div className={classes.btn_save}>
+                <div className={classes.api_btn_save}>
                     <button name={'personal'}>Save</button>
                 </div>
             </div>

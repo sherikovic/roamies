@@ -4,7 +4,7 @@
     padding: 15px 30px 15px 30px;
     margin: 0 auto 0;
     width: 100%;
-    align-items: flex-start;
+    /* align-items: flex-start; */
 }
 
 .api_form_header {
@@ -86,13 +86,13 @@
     gap: 10rem;
 }
 
-.btn_save {
+.api_btn_save {
     display: flex;
     justify-content: flex-end;
     width: 100%;
 }
 
-.btn_save button {
+.api_btn_save button {
     font: inherit;
     cursor: pointer;
     margin: 1rem 0;
@@ -103,6 +103,20 @@
     border: none;  
 }
 
-.btn_save button:hover {
+.api_btn_save button:hover {
     background-color: var(--color-primary-500);
+}
+
+.api_form_btns_sel {
+    display: flex;
+    justify-content: space-between;
+    margin: 0 20px;
+}
+
+.api_form_btn_sel {
+    border: none;
+    background: none;
+    cursor: pointer;
+    color: var(--color-primary-300);
+    font-size: medium;
 }
