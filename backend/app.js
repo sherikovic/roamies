@@ -6,5 +6,5 @@ require('./config/express.cfg')(app);
 require('./config/passport-cfg')(app, passport);
 
 app.use('/elements', require('./routes/elements'));
-app.use('/auth', require('./routes/users'));
+app.use('/auth',     require('./routes/users'));
 app.use('/settings', require('./routes/settings'));
