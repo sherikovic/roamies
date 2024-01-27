@@ -1,18 +1,18 @@
-.elements {
-  margin: 2rem auto;
-  max-width: 40rem;
-}
-
 .new {
-  padding: 1rem;
+  margin-top: 2rem;
   display: flex;
   justify-content: center;
   font-size: medium;
   font-weight: 600;
+  justify-content: flex-start;
+  background-color: transparent;
+  &:hover {
+    transform: translateY(-0.1rem);
+  }
 }
 
 .new a {
-  background-color: var(--color-gray-800);
+  border: 2px solid var(--color-gray-700);
   color: var(--color-primary-200);
   padding: 0.5rem 1.5rem;
   border-radius: 4px;
@@ -21,7 +21,6 @@
 
 .new a:hover {
   background-color: var(--color-gray-700);
-  color: var(--color-primary-600);
 }
 
 .list {
@@ -41,9 +40,8 @@
 }
 
 .item a:hover {
-  transform: scale(1.02);
+  transform: scale(1.01);
   background-color: var(--color-gray-700);
-  color: var(--color-primary-600);
 }
 
 .content {
@@ -51,5 +49,5 @@
 }
 
 .item h4 {
-  margin: 0 0 1rem 0;
+  margin: 0;
 }
