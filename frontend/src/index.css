@@ -1,8 +1,9 @@
 * {
   box-sizing: border-box;
+  transition: all 0.2s ease;
 }
 
-:root{
+:root {
   font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 24px;
@@ -10,7 +11,7 @@
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #1f1d1b;
+  background-color: #000a1c;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -18,35 +19,35 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
-  --color-gray-100: #f4f3f1;
-  --color-gray-200: #dddbd8;
-  --color-gray-300: #ccc9c6;
-  --color-gray-400: #aeaba7;
-  --color-gray-500: #8a8784;
-  --color-gray-600: #656360;
-  --color-gray-700: #4b4a47;
-  --color-gray-800: #31302e;
-  --color-gray-900: #1f1d1b;
+  --color-gray-100: #e3f2fd;
+  --color-gray-200: #bbdefb;
+  --color-gray-300: #90caf9;
+  --color-gray-400: #64b5f6;
+  --color-gray-500: #1976d2;
+  --color-gray-600: #0353a4;
+  --color-gray-700: #023e7d;
+  --color-gray-800: #002855;
+  --color-gray-900: #000a1c;
 
   --color-primary-100: #fcf3e1;
-  --color-primary-200: #fceccd;
-  --color-primary-300: #fae1af;
+  --color-primary-200: #ffffff;
+  --color-primary-300: #0353a4;
   --color-primary-400: #fbd997;
-  --color-primary-500: #ffd37c;
-  --color-primary-600: #f9c762;
-  --color-primary-700: #fbc14d;
-  --color-primary-800: #fab833;
-  --color-primary-900: #f6ad1b;
+  --color-primary-500: #2196f3;
+  --color-primary-600: #0466c8;
+  --color-primary-700: #0353a4;
+  --color-primary-800: #0353a4;
+  --color-primary-900: #0353a4;
 }
 
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  max-width: 65%;
+  padding: 7rem 15rem;
   margin: 0.5rem 0;
   margin-left: auto;
   margin-right: auto;
