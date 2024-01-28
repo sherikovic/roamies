@@ -2,7 +2,6 @@ import {
     ActionFunction,
     LoaderFunction,
     json,
-    redirect,
     useLoaderData,
     useRouteLoaderData
 } from "react-router-dom";
@@ -37,19 +36,36 @@ export default SettingsPage;
 export const action: ActionFunction = async ({ request, params }) => {
     const data = await request.formData();
 
-    const FormData = {
-        fullname: data.get('full name'),
-        city: data.get('city'),
-        country: data.get('country'),
-        github: data.get('github'),
-        linkedin: data.get('linkedin'),
-        // type: (data.get('personal') === '' && 'personal') || (data.get('account') === '' && 'account')
-    };
+    let FormData: any = {};
 
-    if (FormData.fullname === "") {
-        return { fullname: "At least name field is required!" }
+    if (data.get("personal") === "") {
+        FormData = {
+            fullname: data.get('full name'),
+            city: data.get('city'),
+            country: data.get('country'),
+            github: data.get('github'),
+            linkedin: data.get('linkedin'),
+            type: "personal"
+        };
+
+        if (FormData.fullname === "") {
+            return { errorMessage: "At least name field is required!" }
+        }
+    } else if (data.get("accountEmail") === "") {
+        FormData = {
+            oldEmail: data.get("old Email"),
+            newEmail: data.get("new Email"),
+            confirmNewEmail: data.get("confirm New Email"),
+            type: "email"
+        };
+    } else if (data.get('accountPassword') === "") {
+        FormData = {
+            oldPassword: data.get('old Password'),
+            newPassword: data.get('new Password'),
+            confirmNewPassword: data.get('confirm New Password'),
+            type: "password"
+        };
     }
-
     const response = await fetch('http://localhost:8080/settings/updateuserpersonalinfo', {
         method: 'PATCH',
         credentials: 'include',
@@ -60,11 +76,18 @@ export const action: ActionFunction = async ({ request, params }) => {
     });
 
     if (response.ok) {
-        return redirect('/settings');
+        const resData = await response.json();
+        return { successMessage: resData.message }
     } else {
         const status = response.status;
         const resData = await response.json();
-        throw json({ message: resData.message }, { status });
+        if (status === 500) {
+            throw json({ message: resData.message }, { status });
+        } else if (status === 501) {
+            return { errorMessage: resData.message }
+        } else if (status === 502) {
+            return { errorMessage: resData.message }
+        }
     }
 };
 
