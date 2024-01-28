@@ -18,8 +18,15 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
         <p className={classes.api_form_header}>
           Update your personal information
         </p>
-        {data && data.fullname && (
-          <p style={{ color: "orange" }}>{data.fullname}</p>
+        {data && data.errorMessage && (
+          <p className={classes.api_form_header} style={{ color: "orange" }}>
+            {data.errorMessage}
+          </p>
+        )}
+        {data && data.successMessage && (
+          <p className={classes.api_form_header} style={{ color: "green" }}>
+            {data.successMessage}
+          </p>
         )}
         <APIFormTextInputLabel
           type="text"

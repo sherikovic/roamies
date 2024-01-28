@@ -49,7 +49,7 @@ export const action: ActionFunction = async ({ request, params }) => {
         };
 
         if (FormData.fullname === "") {
-            return { fullname: "At least name field is required!" }
+            return { errorMessage: "At least name field is required!" }
         }
     } else if (data.get("accountEmail") === "") {
         FormData = {
