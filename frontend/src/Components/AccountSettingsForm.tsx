@@ -1,4 +1,4 @@
-import { Form } from "react-router-dom";
+import { Form, useActionData } from "react-router-dom";
 import { useState } from "react";
 import APIFormTextInputLabel from "./APIFormTextInputLabel";
 import classes from "./APInfoForm.module.css";
@@ -6,28 +6,29 @@ import classes from "./APInfoForm.module.css";
 const AccountSettingsForm: React.FC = () => {
   const [changeEmail, setChangeEmail] = useState(true);
   const [changePassword, setChangePassword] = useState(false);
+  const data: any = useActionData();
 
   return (
     <div className={classes.api_form}>
       <p className={classes.api_form_header}>What would you like to change?</p>
+      {data && data.errorMessage && (
+        <p className={classes.api_form_header} style={{ color: "orange" }}>
+          {data.errorMessage}
+        </p>
+      )}
+      {data && data.successMessage && (
+        <p className={classes.api_form_header} style={{ color: "green" }}>
+          {data.successMessage}
+        </p>
+      )}
       <div className={classes.api_form_container}>
         <div className={classes.api_form_btns_sel}>
-          {/* <NavLink
-                        to="#"
-                        className={({ isActive }) =>
-                        isActive ?
-                        `${classes.listitem} ${classes.listitem_active}` : classes.listitem}
-                        >
-                        Update my email address
-                    </NavLink> */}
           <button
             onClick={() => {
               changePassword && setChangeEmail(true);
               setChangePassword(false);
             }}
-            className={`${classes.api_form_btn_sel} ${
-              changeEmail && classes.selected
-            }`}
+            className={`${classes.api_form_btn_sel} ${changeEmail && classes.selected}`}
           >
             Update Email Address
           </button>
@@ -36,9 +37,7 @@ const AccountSettingsForm: React.FC = () => {
               changeEmail && setChangePassword(true);
               setChangeEmail(false);
             }}
-            className={`${classes.api_form_btn_sel} ${
-              changePassword && classes.selected
-            }`}
+            className={`${classes.api_form_btn_sel} ${changePassword && classes.selected}`}
           >
             Update Password
           </button>
@@ -70,7 +69,7 @@ const AccountSettingsForm: React.FC = () => {
               classLabel={classes.api_input_label}
             />
             <div className={classes.api_btn_save}>
-              <button>Save</button>
+              <button name={"accountEmail"}>Save</button>
             </div>
           </Form>
         )}
@@ -101,7 +100,7 @@ const AccountSettingsForm: React.FC = () => {
               classLabel={classes.api_input_label}
             />
             <div className={classes.api_btn_save}>
-              <button>Save</button>
+              <button name={"accountPassword"}>Save</button>
             </div>
           </Form>
         )}
