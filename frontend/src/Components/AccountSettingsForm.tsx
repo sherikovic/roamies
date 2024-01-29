@@ -11,12 +11,12 @@ const AccountSettingsForm: React.FC = () => {
     return (
         <div className={classes.api_form}>
             <p className={classes.api_form_header}>What would you like to change?</p>
-            {data && data.errorMessage && (
+            {data && data.errorMessage && data.type === "account" && (
                 <p className={classes.api_form_header} style={{ color: "orange" }}>
                     {data.errorMessage}
                 </p>
             )}
-            {data && data.successMessage && (
+            {data && data.successMessage && data.type === "account" && (
                 <p className={classes.api_form_header} style={{ color: "green" }}>
                     {data.successMessage}
                 </p>
