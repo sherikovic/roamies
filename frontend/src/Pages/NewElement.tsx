@@ -5,13 +5,13 @@ const NewElementPage: React.FC = () => {
     const data: any = useRouteLoaderData('root');
 
     return (
-        <>
+        <div>
             {data && data.user ? <ElementForm method='post' /> :
                 <div>
                     <h4 style={{ textAlign: 'center' }}>You are not authorized to view this page!</h4>
                 </div>
             }
-        </>
+        </div>
     );
 };
 
@@ -51,14 +51,15 @@ export const action: ActionFunction = async ({ request, params }) => {
         body: JSON.stringify(FormData)
     });
 
-    const resData = await response.json();
+    const resObj: any = await response.json();
 
     if (!response.ok) {
-        throw json({ message: 'Something went wrong!' }, { status: 500 });
+        // throw json({ message: 'Something went wrong!' }, { status: 500 });
+        throw json({ message: resObj.message }, { status: resObj.status });
     };
 
     if (method === 'POST') {
-        return redirect('/elements/' + resData.element._id);
+        return redirect('/elements/' + resObj.element._id);
     } else {
         return redirect('/elements/' + params.id);
     }

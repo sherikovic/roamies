@@ -1,4 +1,3 @@
-import React from 'react';
 import { Form, useActionData, useNavigate } from 'react-router-dom';
 
 import ElementModel from '../models/element';
@@ -18,7 +17,7 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
     };
 
     return (
-        <React.Fragment>
+        <div>
             <div>
                 <p className={classes.paragraph}>Define your element</p>
             </div>
@@ -66,7 +65,7 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
                     <button>Submit</button>
                 </div>
             </Form>
-        </React.Fragment>
+        </div>
     );
 };
 

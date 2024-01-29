@@ -5,7 +5,11 @@ module.exports.index = async (req, res) => {
         const elements = await Element.find({});
         res.json({ elements });
     } catch (e) {
-        res.status(500).json({ message: 'An error occured while fetching the details of the elements from the database!' });
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while fetching the details of the elements from the database!' }
+            );
     }
 };
 
@@ -13,9 +17,17 @@ module.exports.createElement = async (req, res) => {
     try {
         const element = new Element(req.body);
         await element.save();
-        res.status(201).json({ message: 'Element saved.', element: element });
+        res.
+            status(201)
+            .json(
+                { message: 'Element saved.', element: element }
+            );
     } catch (e) {
-        res.status(500).json({ message: 'An error occured while creating an element!' });
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while creating an element!' }
+            );
     }
 };
 
@@ -24,7 +36,11 @@ module.exports.showElement = async (req, res) => {
         const element = await Element.findById(req.params.id);
         res.json({ element: element });
     } catch (e) {
-        res.status(500).json({ message: 'An error occured while fetching element details from the database' });
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while fetching element details from the database' }
+            );
     }
 };
 
@@ -34,7 +50,11 @@ module.exports.editElement = async (req, res) => {
         await element.save();
         res.json({ message: "Element was updated!" });
     } catch (e) {
-        res.status(500).json({ message: 'An error occured while updating element details!' });
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while updating element details!' }
+            );
     }
 };
 
@@ -43,6 +63,10 @@ module.exports.deleteElement = async (req, res) => {
         await Element.findByIdAndDelete(req.params.id);
         res.json({ message: 'Element deleted!' });
     } catch (e) {
-        res.status(500).json({ message: 'An error occured while deleting element!' });
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while deleting element!' }
+            );
     }
 };
