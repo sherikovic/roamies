@@ -49,7 +49,10 @@ export const action: ActionFunction = async ({ request, params }) => {
         };
 
         if (FormData.fullname === "") {
-            return { errorMessage: "At least name field is required!", type: "personal" }
+            return {
+                errorMessage: "At least name field is required!",
+                type: FormData.type
+            }
         }
     } else if (data.get("accountEmail") === "") {
         FormData = {
@@ -79,30 +82,25 @@ export const action: ActionFunction = async ({ request, params }) => {
         const resData = await response.json();
         return {
             successMessage: resData.message,
-            type:
-                FormData.type === "email" || "password" ?
-                    "account" :
-                    "personal"
+            type: FormData.type
         }
     } else {
         const status = response.status;
         const resData = await response.json();
         if (status === 500) {
-            throw json({ message: resData.message }, { status });
+            throw json(
+                { message: resData.message },
+                { status }
+            );
         } else if (status === 501) {
             return {
                 errorMessage: resData.message,
-                type:
-                    FormData.type === "email" || "password" ?
-                        "account" :
-                        "personal"
+                type: FormData.type
             }
         } else if (status === 502) {
             return {
                 errorMessage: resData.message,
-                type: FormData.type === "email" || "password" ?
-                    "account" :
-                    "personal"
+                type: FormData.type
             }
         }
     }

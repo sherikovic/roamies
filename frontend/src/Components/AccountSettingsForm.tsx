@@ -11,16 +11,30 @@ const AccountSettingsForm: React.FC = () => {
     return (
         <div className={classes.api_form}>
             <p className={classes.api_form_header}>What would you like to change?</p>
-            {data && data.errorMessage && data.type === "account" && (
-                <p className={classes.api_form_header} style={{ color: "orange" }}>
-                    {data.errorMessage}
-                </p>
-            )}
-            {data && data.successMessage && data.type === "account" && (
-                <p className={classes.api_form_header} style={{ color: "green" }}>
-                    {data.successMessage}
-                </p>
-            )}
+            {
+                data &&
+                data.errorMessage &&
+                (
+                    (changeEmail && data.type === "email") ||
+                    (changePassword && data.type === "password")
+                ) &&
+                (
+                    <p className={classes.api_form_header} style={{ color: "orange" }}>
+                        {data.errorMessage}
+                    </p>
+                )}
+            {
+                data &&
+                data.successMessage &&
+                (
+                    (changeEmail && data.type === "email") ||
+                    (changePassword && data.type === "password")
+                ) &&
+                (
+                    <p className={classes.api_form_header} style={{ color: "green" }}>
+                        {data.successMessage}
+                    </p>
+                )}
             <div className={classes.api_form_container}>
                 <div className={classes.api_form_btns_sel}>
                     <button
