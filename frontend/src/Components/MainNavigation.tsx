@@ -43,6 +43,16 @@ const MainNavigation: React.FC = () => {
         >
           Elements
         </NavLink>
+        <NavLink
+          to="/locations"
+          className={({ isActive }) =>
+            isActive
+              ? `${classes.listitem} ${classes.listitem_active}`
+              : classes.listitem
+          }
+        >
+          Locations
+        </NavLink>
       </nav>
       <nav ref={containerRef} className={classes.dropdown}>
         <div
@@ -58,9 +68,8 @@ const MainNavigation: React.FC = () => {
             <i className={classes.dd_userheader}>Hello, {data.user}</i>
           )}
           <div
-            className={`${classes.dd_caret_down} ${
-              toggleDisplay && classes.dd_caret_down_tr
-            }`}
+            className={`${classes.dd_caret_down} ${toggleDisplay && classes.dd_caret_down_tr
+              }`}
           >
             <FontAwesomeIcon
               icon={faCaretSquareDown}
@@ -70,9 +79,8 @@ const MainNavigation: React.FC = () => {
         </div>
         {(!data || !data.user) && (
           <div
-            className={`${classes.dd_content} ${
-              toggleDisplay && classes.dd_content_display
-            }`}
+            className={`${classes.dd_content} ${toggleDisplay && classes.dd_content_display
+              }`}
           >
             <Link
               to="/auth?mode=login"
@@ -85,9 +93,8 @@ const MainNavigation: React.FC = () => {
         )}
         {data && data.user && (
           <div
-            className={`${classes.dd_content} ${
-              toggleDisplay && classes.dd_content_display
-            }`}
+            className={`${classes.dd_content} ${toggleDisplay && classes.dd_content_display
+              }`}
           >
             <NavLink
               to="/profile"

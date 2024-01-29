@@ -1,24 +1,24 @@
 import { LoaderFunction, json, useLoaderData } from "react-router-dom";
-import ElementsList from "../Components/ElementsList";
 import PageHeader from "../Components/PageHeader";
-import ElementModel from "../models/element";
+import LocationsList from "../Components/LocationsList";
+import LocationModel from "../models/location";
 
-const ElementsPage: React.FC = () => {
-    const elementsArray: any = useLoaderData();
+const LocationsPage: React.FC = () => {
+    const locationsArray: any = useLoaderData();
     return (
         <div>
-            <PageHeader headerText="Elements">
-                Save your keys, elements, codes,..etc
+            <PageHeader headerText="Locations">
+                Show the world your most interesing locations...
             </PageHeader>
-            <ElementsList elements={elementsArray} />
+            <LocationsList locations={locationsArray} />
         </div>
     );
 };
 
-export default ElementsPage;
+export default LocationsPage;
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-    const response = await fetch('http://localhost:8080/elements');
+    const response = await fetch('http://localhost:8080/locations');
     if (!response.ok) {
         const resObj: {
             message: string,
@@ -30,8 +30,8 @@ export const loader: LoaderFunction = async ({ request, params }) => {
         )
     } else {
         const resObj: {
-            elements: ElementModel[]
+            locations: LocationModel[]
         } = await response.json();
-        return resObj.elements;
+        return resObj.locations;
     }
 };

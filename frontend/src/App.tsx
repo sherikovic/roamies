@@ -1,14 +1,10 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
-import NewElementPage, { action as manipulateFormAction } from './Pages/NewElement';
-import ElementDetailPage, {
-  loader as elementDetailLoader,
-  action as deleteElementAction
-} from './Pages/ElementDetail';
-import RootLayout, { loader as getLoggedInUserLoader } from './Pages/Root';
+// Main Routes
 import HomePage from './Pages/Home';
-import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
-import EditElementsPage from './Pages/EditElement';
+import RootLayout, { loader as getLoggedInUserLoader } from './Pages/Root';
+
+// Auth and Settings Routes
 import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
@@ -17,6 +13,24 @@ import SettingsPage, {
   action as settingsFormAction,
   loader as settingsFormLoader
 } from './Pages/Settings';
+
+// Elements Routes
+import NewElementPage, { action as manipulateElementFormAction } from './Pages/NewElement';
+import ElementDetailPage, {
+  loader as elementDetailLoader,
+  action as deleteElementAction
+} from './Pages/ElementDetail';
+import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
+import EditElementsPage from './Pages/EditElement';
+
+// Locations Routes
+import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
+import LocationDetailPage, {
+  loader as locationDetailLoader,
+  action as deleteLocationAction
+} from './Pages/LocationDetail';
+import EditLocationPage from './Pages/EditLocation';
+import NewLocationPage, { action as manipulateLocationFormAction } from './Pages/NewLocation';
 
 const router = createBrowserRouter([
   {
@@ -51,15 +65,47 @@ const router = createBrowserRouter([
               {
                 path: 'edit',
                 element: <EditElementsPage />,
-                action: manipulateFormAction
+                action: manipulateElementFormAction
               }
             ]
           },
           {
             path: 'new',
             element: <NewElementPage />,
-            action: manipulateFormAction
+            action: manipulateElementFormAction
           },
+        ]
+      },
+      {
+        path: 'locations',
+        children: [
+          {
+            index: true,
+            element: <LocationsPage />,
+            loader: locationsLoader
+          },
+          {
+            path: ':id',
+            id: 'location-detail',
+            loader: locationDetailLoader,
+            children: [
+              {
+                index: true,
+                element: <LocationDetailPage />,
+                action: deleteLocationAction
+              },
+              {
+                path: 'edit',
+                element: <EditLocationPage />,
+                action: manipulateLocationFormAction
+              }
+            ]
+          },
+          {
+            path: 'new',
+            element: <NewLocationPage />,
+            action: manipulateLocationFormAction
+          }
         ]
       },
       {
