@@ -1,4 +1,4 @@
-import { Form, useActionData, useNavigate } from 'react-router-dom';
+import { Form, useActionData } from 'react-router-dom';
 
 import ElementModel from '../models/element';
 import classes from './ElementForm.module.css';
@@ -6,21 +6,18 @@ import classes from './ElementForm.module.css';
 interface ElementFormProps {
     method: any;
     data?: ElementModel;
+    cancelHandler: () => void;
+    submitHandler: () => void;
     children?: React.ReactNode;
 };
 
 const ElementForm: React.FC<ElementFormProps> = (props) => {
     const data: any = useActionData();
-    const navigate = useNavigate();
-    const cancelHandler = () => {
-        navigate('..');
-    };
 
     return (
-        <div>
-            <div>
-                <p className={classes.paragraph}>Define your element</p>
-            </div>
+        <div className={classes.card_container}>
+            <span className={classes.card_close} onClick={props.cancelHandler}>X</span>
+            <p className={classes.paragraph}>Define your element</p>
             <Form method={props.method} className={classes.form}>
                 {data && data.name &&
                     <p style={{ color: 'orange' }}>{data.name}</p>
@@ -61,8 +58,8 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
                     />
                 </p>
                 <div className={classes.actions}>
-                    <button type="button" onClick={cancelHandler}>Cancel</button>
-                    <button>Submit</button>
+                    <button type="button" onClick={props.cancelHandler}>Cancel</button>
+                    <button onSubmit={props.submitHandler}>Submit</button>
                 </div>
             </Form>
         </div>

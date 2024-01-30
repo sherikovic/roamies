@@ -7,11 +7,11 @@ const EditElementsPage: React.FC = () => {
 
     return (
         <div>
-            {data && data.user ? <ElementForm method='patch' data={elementData} /> :
+            {/* {data && data.user ? <ElementForm method='patch' data={elementData} /> :
                 <div>
                     <h4 style={{ textAlign: 'center' }}>You are not authorized to view this page!</h4>
                 </div>
-            }
+            } */}
 
         </div>
     );

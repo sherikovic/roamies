@@ -6,11 +6,11 @@ const NewElementPage: React.FC = () => {
 
     return (
         <div>
-            {data && data.user ? <ElementForm method='post' /> :
+            {/* {data && data.user ? <ElementForm method='post' /> :
                 <div>
                     <h4 style={{ textAlign: 'center' }}>You are not authorized to view this page!</h4>
                 </div>
-            }
+            } */}
         </div>
     );
 };
@@ -54,7 +54,6 @@ export const action: ActionFunction = async ({ request, params }) => {
     const resObj: any = await response.json();
 
     if (!response.ok) {
-        // throw json({ message: 'Something went wrong!' }, { status: 500 });
         throw json({ message: resObj.message }, { status: resObj.status });
     };
 

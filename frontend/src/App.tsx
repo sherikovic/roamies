@@ -15,12 +15,15 @@ import SettingsPage, {
 } from './Pages/Settings';
 
 // Elements Routes
-import NewElementPage, { action as manipulateElementFormAction } from './Pages/NewElement';
+// import NewElementPage, { action as manipulateElementFormAction } from './Pages/NewElement';
 import ElementDetailPage, {
   loader as elementDetailLoader,
   action as deleteElementAction
 } from './Pages/ElementDetail';
-import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
+import ElementsPage, {
+  loader as elementsLoader,
+  action as manipulateElementFormAction
+} from './Pages/Elements';
 import EditElementsPage from './Pages/EditElement';
 
 // Locations Routes
@@ -68,12 +71,12 @@ const router = createBrowserRouter([
                 action: manipulateElementFormAction
               }
             ]
-          },
-          {
-            path: 'new',
-            element: <NewElementPage />,
-            action: manipulateElementFormAction
-          },
+          }
+          // {
+          //   path: 'new',
+          //   element: <NewElementPage />,
+          //   action: manipulateElementFormAction
+          // },
         ]
       },
       {
