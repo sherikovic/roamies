@@ -9,7 +9,7 @@
   justify-content: space-between;
   border-bottom: 0.1rem solid var(--color-gray-700);
   background-color: var(--color-gray-900);
-  z-index: 11;
+  z-index: 2;
 }
 
 .list {

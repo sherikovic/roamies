@@ -11,11 +11,7 @@ interface ElementsListProps {
 
 const ElementsList: React.FC<ElementsListProps> = (props) => {
   const data: any = useRouteLoaderData("root");
-  const [defineElement, setDefineElement] = useState(false);
-
-  const saveElement: () => void = () => {
-
-  }
+  const [createNewElement, setCreateNewElement] = useState(false);
 
   return (
     <div>
@@ -33,14 +29,17 @@ const ElementsList: React.FC<ElementsListProps> = (props) => {
         </div>
         {data && data.user && (
           <div className={classes.new}>
-            <span onClick={() => setDefineElement(!defineElement)}>+ New Element</span>
+            <span onClick={() => setCreateNewElement(!createNewElement)}>+ New Element</span>
           </div>
         )}
       </div>
-      {defineElement && (
+      {createNewElement && (
         <div className={classes.card_overlay}>
           <div className={classes.overlay_content}>
-            <ElementForm method='post' cancelHandler={() => setDefineElement(false)} submitHandler={saveElement} />
+            <ElementForm
+              method="POST"
+              cancelHandler={() => setCreateNewElement(false)}
+            />
           </div>
         </div>
       )}

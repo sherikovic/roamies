@@ -15,16 +15,11 @@ import SettingsPage, {
 } from './Pages/Settings';
 
 // Elements Routes
-// import NewElementPage, { action as manipulateElementFormAction } from './Pages/NewElement';
 import ElementDetailPage, {
   loader as elementDetailLoader,
   action as deleteElementAction
 } from './Pages/ElementDetail';
-import ElementsPage, {
-  loader as elementsLoader,
-  action as manipulateElementFormAction
-} from './Pages/Elements';
-import EditElementsPage from './Pages/EditElement';
+import ElementsPage, { loader as elementsLoader, } from './Pages/Elements';
 
 // Locations Routes
 import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
@@ -58,25 +53,10 @@ const router = createBrowserRouter([
           {
             path: ':id',
             id: 'element-detail',
+            element: <ElementDetailPage />,
             loader: elementDetailLoader,
-            children: [
-              {
-                index: true,
-                element: <ElementDetailPage />,
-                action: deleteElementAction
-              },
-              {
-                path: 'edit',
-                element: <EditElementsPage />,
-                action: manipulateElementFormAction
-              }
-            ]
+            action: deleteElementAction
           }
-          // {
-          //   path: 'new',
-          //   element: <NewElementPage />,
-          //   action: manipulateElementFormAction
-          // },
         ]
       },
       {
