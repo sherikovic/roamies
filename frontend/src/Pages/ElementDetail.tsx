@@ -5,7 +5,7 @@ import ElementItem from "../Components/ElementItem";
 const ElementDetailPage: React.FC = () => {
     const elementData: any = useRouteLoaderData('element-detail');
     return (
-        <ElementItem element={elementData} />
+        <ElementItem elementData={elementData} />
     );
 };
 
