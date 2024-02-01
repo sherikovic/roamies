@@ -19,7 +19,7 @@ import ElementDetailPage, {
   loader as elementDetailLoader,
   action as deleteElementAction
 } from './Pages/ElementDetail';
-import ElementsPage, { loader as elementsLoader, } from './Pages/Elements';
+import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
 
 // Locations Routes
 import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
@@ -27,8 +27,6 @@ import LocationDetailPage, {
   loader as locationDetailLoader,
   action as deleteLocationAction
 } from './Pages/LocationDetail';
-import EditLocationPage from './Pages/EditLocation';
-import NewLocationPage, { action as manipulateLocationFormAction } from './Pages/NewLocation';
 
 const router = createBrowserRouter([
   {
@@ -70,24 +68,9 @@ const router = createBrowserRouter([
           {
             path: ':id',
             id: 'location-detail',
+            element: <LocationDetailPage />,
             loader: locationDetailLoader,
-            children: [
-              {
-                index: true,
-                element: <LocationDetailPage />,
-                action: deleteLocationAction
-              },
-              {
-                path: 'edit',
-                element: <EditLocationPage />,
-                action: manipulateLocationFormAction
-              }
-            ]
-          },
-          {
-            path: 'new',
-            element: <NewLocationPage />,
-            action: manipulateLocationFormAction
+            action: deleteLocationAction
           }
         ]
       },
