@@ -14,11 +14,14 @@ const UserSchema = new Schema({
         type: String,
         required: true
     },
+    age: {
+        type: Number,
+        min: -1
+    },
     fullname: String,
     country: String,
-    city: String,
-    github: String,
-    linkedin: String
+    bio: String,
+    social: String
 });
 
 module.exports = mongoose.model('user', UserSchema);

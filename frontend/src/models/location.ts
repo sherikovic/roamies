@@ -14,7 +14,8 @@ class LocationModel {
         locationDescription: string,
         locationId: string,
         locationCountry: string,
-        locationCity: string) {
+        locationCity: string
+    ) {
         this.name = locationName;
         this.latitude = locationLatitude;
         this.longitude = locationLongitude;
