@@ -7,6 +7,10 @@ router
     .post(tripsCtls.createTrip);
 
 router
+    .route('/user=:user')
+    .get(tripsCtls.userIndex);
+
+router
     .route('/:id')
     .get(tripsCtls.showTrip)
     .patch(tripsCtls.editTrip)

@@ -21,7 +21,10 @@ const UserSchema = new Schema({
     fullname: String,
     country: String,
     bio: String,
-    social: String
+    social: {
+        instagram: String,
+        twitter: String
+    }
 });
 
 module.exports = mongoose.model('user', UserSchema);

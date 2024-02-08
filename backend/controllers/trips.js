@@ -13,6 +13,19 @@ module.exports.index = async (req, res) => {
     }
 }
 
+module.exports.userIndex = async (req, res) => {
+    try {
+        const trips = await Trip.find({});
+        res.json({ trips });
+    } catch (e) {
+        res.
+            status(500).
+            json(
+                { message: 'An error occured while fetching the details of the elements from the database!', error: e }
+            );
+    }
+}
+
 module.exports.createTrip = async (req, res) => {
     try {
         const trip = new Trip(req.body);
