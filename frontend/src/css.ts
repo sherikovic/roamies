@@ -412,7 +412,6 @@ export const ContentBox = styled.div`
   width: 100%;
   height: 100%;
   background-color: ${colors.white};
-  overflow-y: hidden;
   border: ${borders.mainBorder};
   border-right: none;
   border-top: none;

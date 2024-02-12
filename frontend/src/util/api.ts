@@ -1,6 +1,7 @@
 import { backOff } from "exponential-backoff";
 
 import { baseURL } from "./util";
+import { Trip } from "types/trip";
 
 const apiFetch = async <T>(
   method: "GET" | "POST",
@@ -48,4 +49,35 @@ const apiGet = async <T>(path: string) => await apiFetch<T>("GET", path, null);
 
 const apiPost = async function <T>(path: string, data: any) {
   return await apiFetch<T>("POST", path, data);
+};
+
+// Todo should add filtering by category or location on BE
+export const getAllTrips = async () => {
+  const res = await apiGet<Trip[]>(`trips`);
+  return res.ok ? res.getJson : null;
+};
+
+export const createTrip = async ({ data }: { data: Trip }) => {
+  const res = await apiPost(`trips`, data);
+  return res.ok ? res.getJson : null;
+};
+
+export const getUserTrips = async (id: string) => {
+  const res = await apiGet<Trip[]>(`trips/${id}`);
+  return res.ok ? res.getJson : null;
+};
+
+export const getTrip = async (id: string) => {
+  const res = await apiGet<Trip>(`trip/${id}`);
+  return res.ok ? res.getJson : null;
+};
+
+export const updateTrip = async (id: string, data: Trip) => {
+  const res = await apiPost(`trip/${id}`, data);
+  return res.ok ? res.getJson : null;
+};
+
+export const deleteTrip = async (id: string) => {
+  const res = await apiGet(`trip/${id}/delete`);
+  return res.ok ? res.getJson : null;
 };
