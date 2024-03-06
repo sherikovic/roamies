@@ -10,95 +10,95 @@ import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
 import ProfilePage from './Pages/Profile';
 import SettingsPage, {
-  action as settingsFormAction,
-  loader as settingsFormLoader
+	action as settingsFormAction,
+	loader as settingsFormLoader,
 } from './Pages/Settings';
 
 // Elements Routes
 import ElementDetailPage, {
-  loader as elementDetailLoader,
-  action as deleteElementAction
+	loader as elementDetailLoader,
+	action as deleteElementAction,
 } from './Pages/ElementDetail';
 import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
 
 // Locations Routes
 import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
 import LocationDetailPage, {
-  loader as locationDetailLoader,
-  action as deleteLocationAction
+	loader as locationDetailLoader,
+	action as deleteLocationAction,
 } from './Pages/LocationDetail';
 
 const router = createBrowserRouter([
-  {
-    path: '/',
-    element: <RootLayout />,
-    errorElement: <ErrorPage />,
-    id: 'root',
-    loader: getLoggedInUserLoader,
-    children: [
-      {
-        index: true,
-        element: <HomePage />
-      },
-      {
-        path: 'elements',
-        children: [
-          {
-            index: true,
-            element: <ElementsPage />,
-            loader: elementsLoader
-          },
-          {
-            path: ':id',
-            id: 'element-detail',
-            element: <ElementDetailPage />,
-            loader: elementDetailLoader,
-            action: deleteElementAction
-          }
-        ]
-      },
-      {
-        path: 'locations',
-        children: [
-          {
-            index: true,
-            element: <LocationsPage />,
-            loader: locationsLoader
-          },
-          {
-            path: ':id',
-            id: 'location-detail',
-            element: <LocationDetailPage />,
-            loader: locationDetailLoader,
-            action: deleteLocationAction
-          }
-        ]
-      },
-      {
-        path: 'profile',
-        element: <ProfilePage />
-      },
-      {
-        path: 'auth',
-        element: <LoginPage />,
-        action: authFormAction
-      },
-      {
-        path: 'logout',
-        action: logoutAction
-      },
-      {
-        path: 'settings',
-        element: <SettingsPage />,
-        loader: settingsFormLoader,
-        action: settingsFormAction
-      }
-    ]
-  }
+	{
+		path: '/',
+		element: <RootLayout />,
+		errorElement: <ErrorPage />,
+		id: 'root',
+		loader: getLoggedInUserLoader,
+		children: [
+			{
+				index: true,
+				element: <HomePage />,
+			},
+			{
+				path: 'elements',
+				children: [
+					{
+						index: true,
+						element: <ElementsPage />,
+						loader: elementsLoader,
+					},
+					{
+						path: ':id',
+						id: 'element-detail',
+						element: <ElementDetailPage />,
+						loader: elementDetailLoader,
+						action: deleteElementAction,
+					},
+				],
+			},
+			{
+				path: 'locations',
+				children: [
+					{
+						index: true,
+						element: <LocationsPage />,
+						loader: locationsLoader,
+					},
+					{
+						path: ':id',
+						id: 'location-detail',
+						element: <LocationDetailPage />,
+						loader: locationDetailLoader,
+						action: deleteLocationAction,
+					},
+				],
+			},
+			{
+				path: 'profile',
+				element: <ProfilePage />,
+			},
+			{
+				path: 'auth',
+				element: <LoginPage />,
+				action: authFormAction,
+			},
+			{
+				path: 'logout',
+				action: logoutAction,
+			},
+			{
+				path: 'settings',
+				element: <SettingsPage />,
+				loader: settingsFormLoader,
+				action: settingsFormAction,
+			},
+		],
+	},
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+	return <RouterProvider router={router} />;
 }
 
 export default App;

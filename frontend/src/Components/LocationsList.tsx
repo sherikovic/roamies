@@ -1,51 +1,52 @@
-import { Link, useRouteLoaderData } from "react-router-dom";
-import LocationModel from "../models/location";
+import { Link, useRouteLoaderData } from 'react-router-dom';
+import { Location } from '../types/location';
 import classes from './LocationsList.module.css';
-import { useState } from "react";
-import LocationForm from "./LocationForm";
+import { useState } from 'react';
+import LocationForm from './LocationForm';
 
 interface LocationsListProps {
-    locations: LocationModel[];
-    children?: React.ReactNode;
+	locations: Location[];
+	children?: React.ReactNode;
 }
 
 const LocationsList: React.FC<LocationsListProps> = (props) => {
-    const data: any = useRouteLoaderData("root");
-    const [createNewLocation, setCreateNewLocation] = useState(false);
+	const data: any = useRouteLoaderData('root');
+	const [createNewLocation, setCreateNewLocation] = useState(false);
 
-    return (
-        <div>
-
-            <div>
-                <div className={classes.locations}>
-                    <ul className={classes.list}>
-                        {props.locations.map((location: LocationModel) => (
-                            <li key={location._id} className={classes.item}>
-                                <Link to={location._id} className={classes.content}>
-                                    <h4>{location.name}</h4>
-                                </Link>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-                {data && data.user && (
-                    <div className={classes.new}>
-                        <span onClick={() => setCreateNewLocation(!createNewLocation)}>+ New Location</span>
-                    </div>
-                )}
-            </div>
-            {createNewLocation && (
-                <div className={classes.card_overlay}>
-                    <div className={classes.overlay_content}>
-                        <LocationForm
-                            method="POST"
-                            cancelHandler={() => setCreateNewLocation(false)}
-                        />
-                    </div>
-                </div>
-            )}
-        </div>
-    );
-}
+	return (
+		<div>
+			<div>
+				<div className={classes.locations}>
+					<ul className={classes.list}>
+						{props.locations.map((location: Location) => (
+							<li key={location._id} className={classes.item}>
+								<Link to={location._id} className={classes.content}>
+									<h4>{location.name}</h4>
+								</Link>
+							</li>
+						))}
+					</ul>
+				</div>
+				{data && data.user && (
+					<div className={classes.new}>
+						<span onClick={() => setCreateNewLocation(!createNewLocation)}>
+							+ New Location
+						</span>
+					</div>
+				)}
+			</div>
+			{createNewLocation && (
+				<div className={classes.card_overlay}>
+					<div className={classes.overlay_content}>
+						<LocationForm
+							method='POST'
+							cancelHandler={() => setCreateNewLocation(false)}
+						/>
+					</div>
+				</div>
+			)}
+		</div>
+	);
+};
 
 export default LocationsList;
