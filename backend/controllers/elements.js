@@ -5,13 +5,11 @@ module.exports.index = async (req, res) => {
 		const elements = await Element.find({});
 		res.json({ objects: elements });
 	} catch (e) {
-		res
-			.status(500)
-			.json({
-				message:
-					'An error occured while fetching the details of the elements from the database!',
-				error: e,
-			});
+		res.status(500).json({
+			message:
+				'An error occured while fetching the details of the elements from the database!',
+			error: e,
+		});
 	}
 };
 
@@ -21,12 +19,10 @@ module.exports.createElement = async (req, res) => {
 		await element.save();
 		res.status(201).json({ message: 'Element saved.', element: element });
 	} catch (e) {
-		res
-			.status(500)
-			.json({
-				message: 'An error occured while creating an element!',
-				error: e,
-			});
+		res.status(500).json({
+			message: 'An error occured while creating an element!',
+			error: e,
+		});
 	}
 };
 
@@ -35,13 +31,11 @@ module.exports.showElement = async (req, res) => {
 		const element = await Element.findById(req.params.id);
 		res.json({ element: element });
 	} catch (e) {
-		res
-			.status(500)
-			.json({
-				message:
-					'An error occured while fetching element details from the database',
-				error: e,
-			});
+		res.status(500).json({
+			message:
+				'An error occured while fetching element details from the database',
+			error: e,
+		});
 	}
 };
 
@@ -53,12 +47,10 @@ module.exports.editElement = async (req, res) => {
 		await element.save();
 		res.json({ message: 'Element was successfully updated!' });
 	} catch (e) {
-		res
-			.status(500)
-			.json({
-				message: 'An error occured while updating element details!',
-				error: e,
-			});
+		res.status(500).json({
+			message: 'An error occured while updating element details!',
+			error: e,
+		});
 	}
 };
 

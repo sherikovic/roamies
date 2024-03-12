@@ -2,18 +2,22 @@ const router = require('express').Router();
 const tripsCtls = require('../controllers/trips');
 
 router
-    .route('/')
-    .get(tripsCtls.index)
-    .post(tripsCtls.createTrip);
+	.route('/') // the optional parameters are passed as optional queries
+	.get(tripsCtls.index) // available for everyone, gets narrowed down dep. on the query params
+	.post(tripsCtls.createTrip) // requires login
+	.get(tripsCtls.showTrip) // available for everyone
+	.patch(tripsCtls.editTrip) // requires login
+	.delete(tripsCtls.deleteTrip); // requires login
 
-router
-    .route('/user=:user')
-    .get(tripsCtls.userIndex);
+// router
+// 	.route('/user/:userId') // in case user is logged in, would be accessed from the profile for example
+// 	.get(tripsCtls.userIndex); // retrieves trips of that user
 
-router
-    .route('/:id')
-    .get(tripsCtls.showTrip)
-    .patch(tripsCtls.editTrip)
-    .delete(tripsCtls.deleteTrip);
+// an alternative would be to include the user as a variable to this router
+// router
+// 	.route('/:id') // id for each trip
+// 	.get(tripsCtls.showTrip) // doesn't require login
+// 	.patch(tripsCtls.editTrip) // requries login
+// 	.delete(tripsCtls.deleteTrip); // requires login
 
 module.exports = router;

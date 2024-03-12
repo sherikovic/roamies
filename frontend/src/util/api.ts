@@ -18,6 +18,7 @@ const apiFetch = async <T>(
 			async () => {
 				const res = await fetch(`${baseURL}/${path}`, {
 					method,
+					credentials: 'include',
 					headers: {
 						'Content-Type': 'application/json',
 					},
@@ -67,8 +68,13 @@ export const getUserTrips = async (id: string) => {
 	return res.ok ? res.getJson : null;
 };
 
-export const getTrip = async (id: string) => {
-	const res = await apiGet<Trip>(`trip/${id}`);
+export const getTrip = async (id: string | null, user: string | null) => {
+	let res: any;
+	if (id) {
+		res = await apiGet<Trip>(`trips?id=${id}`);
+	} else if (user) {
+		res = await apiGet<Trip>(`trips?user=${user}`);
+	}
 	return res.ok ? res.getJson : null;
 };
 
