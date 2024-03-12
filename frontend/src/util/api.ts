@@ -52,29 +52,27 @@ export const apiGet = async <T>(path: string) =>
 export const apiPost = async <T>(path: string, data: any) =>
 	await apiFetch<T>('POST', path, data);
 
-// Todo should add filtering by category or location on BE
-export const getAllTrips = async () => {
-	const res = await apiGet<Trip[]>(`trips`);
+export const getAllTrips = async (queryOptions?: string) => {
+	const res = await apiGet<Trip[]>(
+		queryOptions ? `trips?${queryOptions}` : 'trips'
+	);
+	return res.getJson;
+};
+
+// kinda redundant, could use queryOptions in getAllTrips but this is more direct
+export const getUserTrips = async (username: string) => {
+	const res = await apiGet<Trip[]>(`trips?username=${username}`);
+	return res.ok ? res.getJson : null;
+};
+
+// only to display a single trip, no filtering, no gimmicks, just retrieve info
+export const getTrip = async (id: string) => {
+	const res = await apiGet<Trip>(`trips/${id}`);
 	return res.ok ? res.getJson : null;
 };
 
 export const createTrip = async ({ data }: { data: Trip }) => {
 	const res = await apiPost(`trips`, data);
-	return res.ok ? res.getJson : null;
-};
-
-export const getUserTrips = async (id: string) => {
-	const res = await apiGet<Trip[]>(`trips/${id}`);
-	return res.ok ? res.getJson : null;
-};
-
-export const getTrip = async (id: string | null, user: string | null) => {
-	let res: any;
-	if (id) {
-		res = await apiGet<Trip>(`trips?id=${id}`);
-	} else if (user) {
-		res = await apiGet<Trip>(`trips?user=${user}`);
-	}
 	return res.ok ? res.getJson : null;
 };
 

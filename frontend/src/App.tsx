@@ -14,12 +14,12 @@ import SettingsPage, {
 	loader as settingsFormLoader,
 } from './Pages/Settings';
 
-// Elements Routes
-import ElementDetailPage, {
-	loader as elementDetailLoader,
-	action as deleteElementAction,
-} from './Pages/ElementDetail';
-import ElementsPage, { loader as elementsLoader } from './Pages/Elements';
+// Trips Routes
+import TripDetailPage, {
+	loader as tripDetailLoader,
+	action as deleteTripAction,
+} from './Pages/TripDetail';
+import TripsPage, { loader as tripsLoader } from './Pages/Trips';
 
 // Locations Routes
 import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
@@ -41,19 +41,19 @@ const router = createBrowserRouter([
 				element: <HomePage />,
 			},
 			{
-				path: 'elements',
+				path: 'trips',
 				children: [
 					{
 						index: true,
-						element: <ElementsPage />,
-						loader: elementsLoader,
+						element: <TripsPage />,
+						loader: tripsLoader,
 					},
 					{
 						path: ':id',
-						id: 'element-detail',
-						element: <ElementDetailPage />,
-						loader: elementDetailLoader,
-						action: deleteElementAction,
+						id: 'trip-detail',
+						element: <TripDetailPage />,
+						loader: tripDetailLoader,
+						action: deleteTripAction,
 					},
 				],
 			},

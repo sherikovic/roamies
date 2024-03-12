@@ -9,15 +9,14 @@ router
 	.patch(tripsCtls.editTrip) // requires login
 	.delete(tripsCtls.deleteTrip); // requires login
 
+router
+	.route('/:id') // id for each trip
+	.get(tripsCtls.showTrip) // doesn't require login
+	.patch(tripsCtls.editTrip) // requries login
+	.delete(tripsCtls.deleteTrip); // requires login
+
 // router
 // 	.route('/user/:userId') // in case user is logged in, would be accessed from the profile for example
 // 	.get(tripsCtls.userIndex); // retrieves trips of that user
-
-// an alternative would be to include the user as a variable to this router
-// router
-// 	.route('/:id') // id for each trip
-// 	.get(tripsCtls.showTrip) // doesn't require login
-// 	.patch(tripsCtls.editTrip) // requries login
-// 	.delete(tripsCtls.deleteTrip); // requires login
 
 module.exports = router;

@@ -1,18 +1,18 @@
 import React, { useState } from 'react';
-import { Element } from '../types/element';
+import { Trip } from '../types/trip';
 import { Link, useRouteLoaderData, useSubmit } from 'react-router-dom';
-import classes from './ElementItem.module.css';
-import ElementForm from './ElementForm';
+import classes from './TripItem.module.css';
+import TripForm from './TripForm';
 
 interface ElementItemProps {
-	elementData: Element;
+	tripData: Trip;
 	children?: React.ReactNode;
 }
 
 const ElementItem: React.FC<ElementItemProps> = (props) => {
 	const submit = useSubmit();
 	const data: any = useRouteLoaderData('root');
-	const [editElement, setEditElement] = useState(false);
+	const [editTrip, setEditTrip] = useState(false);
 
 	const deleteElement = () => {
 		const proceed = window.confirm('Are you sure?');
@@ -27,31 +27,31 @@ const ElementItem: React.FC<ElementItemProps> = (props) => {
 		<div>
 			<div className={classes.element}>
 				<p>
-					Name: <span>{props.elementData.name}</span>
+					Name: <span>{props.tripData.name}</span>
 				</p>
 				<p>
-					Description: <span>{props.elementData.description}</span>
+					Description: <span>{props.tripData.description}</span>
 				</p>
 				<p>
-					Value: <span>{props.elementData.value}</span>
+					Value: <span>{props.tripData.location}</span>
 				</p>
 				<menu className={classes.actions}>
 					<Link to='..'>Back</Link>
 					{data && data.user && (
 						<div>
-							<span onClick={() => setEditElement(!editElement)}>Edit</span>
+							<span onClick={() => setEditTrip(!editTrip)}>Edit</span>
 							<button onClick={deleteElement}>Delete</button>
 						</div>
 					)}
 				</menu>
 			</div>
-			{editElement && (
+			{editTrip && (
 				<div className={classes.card_overlay}>
 					<div className={classes.overlay_content}>
-						<ElementForm
+						<TripForm
 							method='PATCH'
-							elementData={props.elementData}
-							cancelHandler={() => setEditElement(false)}
+							tripData={props.tripData}
+							cancelHandler={() => setEditTrip(false)}
 						/>
 					</div>
 				</div>

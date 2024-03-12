@@ -1,7 +1,7 @@
 import { BroadcastEvent } from './broadcast';
 
 export interface Trip {
-	id: string;
+	_id: string;
 	name: string;
 	location: string;
 	description: string;

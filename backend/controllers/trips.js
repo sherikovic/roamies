@@ -3,23 +3,15 @@ const User = require('../models/user');
 
 module.exports.index = async (req, res) => {
 	try {
-		if (req.query.id && req.query.user) {
-			// should not allow both queries to be sent together
-			res.status(500).json({
-				message: 'Wrong queries!',
-				error: "Couldn't fulfill request",
-			});
-		} else if (req.query.user) {
-			const user = await User.findOne({ username: req.query.user });
+		// get all trips in the database
+		// TODO filter according to the queries passed, for example by username
+		if (req.query.user) {
+			const user = await User.findOne({ username: req.query.username });
 			const trips = await Trip.find({ owner: { $in: user } });
-			res.json({ trips });
-		} else if (req.query.id) {
-			const trip = await Trip.find({ _id: req.query.id });
-			res.json({ trip });
+			res.json({ objects: trips });
 		} else {
-			// get all trips in the database
 			const trips = await Trip.find({});
-			res.json({ trips });
+			res.json({ objects: trips });
 		}
 	} catch (e) {
 		res.status(500).json({
@@ -29,19 +21,6 @@ module.exports.index = async (req, res) => {
 		});
 	}
 };
-
-// module.exports.userIndex = async (req, res) => {
-// 	try {
-// 		const trips = await Trip.find({});
-// 		res.json({ trips });
-// 	} catch (e) {
-// 		res.status(500).json({
-// 			message:
-// 				'An error occured while fetching the details of the trips from the database!',
-// 			error: e,
-// 		});
-// 	}
-// };
 
 module.exports.createTrip = async (req, res) => {
 	try {
@@ -91,3 +70,16 @@ module.exports.deleteTrip = async (req, res) => {
 			.json({ message: 'An error occured while deleting trip!', error: e });
 	}
 };
+
+// module.exports.userIndex = async (req, res) => {
+// 	try {
+// 		const trips = await Trip.find({});
+// 		res.json({ trips });
+// 	} catch (e) {
+// 		res.status(500).json({
+// 			message:
+// 				'An error occured while fetching the details of the trips from the database!',
+// 			error: e,
+// 		});
+// 	}
+// };

@@ -34,14 +34,14 @@ const MainNavigation: React.FC = () => {
 					Home
 				</NavLink>
 				<NavLink
-					to='/elements'
+					to='/trips'
 					className={({ isActive }) =>
 						isActive
 							? `${classes.listitem} ${classes.listitem_active}`
 							: classes.listitem
 					}
 				>
-					Elements
+					Trips
 				</NavLink>
 				<NavLink
 					to='/locations'

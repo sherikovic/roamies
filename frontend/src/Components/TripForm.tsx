@@ -1,17 +1,17 @@
 import { json, useNavigate, useParams } from 'react-router-dom';
 
-import { Element } from '../types/element';
-import classes from './ElementForm.module.css';
+import { Trip } from '../types/trip';
+import classes from './TripForm.module.css';
 import { useState } from 'react';
 
-interface ElementFormProps {
+interface TripFormProps {
 	method: any;
-	elementData?: Element;
+	tripData?: Trip;
 	cancelHandler: () => void;
 	children?: React.ReactNode;
 }
 
-const ElementForm: React.FC<ElementFormProps> = (props) => {
+const ElementForm: React.FC<TripFormProps> = (props) => {
 	const [formErrors, setFormErrors] = useState({
 		name: '',
 		value: '',
@@ -98,7 +98,7 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
 						type='text'
 						name='name'
 						id='name'
-						defaultValue={props.elementData ? props.elementData.name : ''}
+						defaultValue={props.tripData ? props.tripData.name : ''}
 					/>
 				</p>
 				<p style={{ color: 'orange' }}>{formErrors.value}</p>
@@ -108,7 +108,7 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
 						type='text'
 						name='value'
 						id='value'
-						defaultValue={props.elementData ? props.elementData.value : ''}
+						defaultValue={props.tripData ? props.tripData.location : ''}
 					/>
 				</p>
 				<p style={{ color: 'orange' }}>{formErrors.description}</p>
@@ -120,9 +120,7 @@ const ElementForm: React.FC<ElementFormProps> = (props) => {
 						placeholder='Describe the usage of this element'
 						cols={30}
 						rows={3}
-						defaultValue={
-							props.elementData ? props.elementData.description : ''
-						}
+						defaultValue={props.tripData ? props.tripData.description : ''}
 					/>
 				</p>
 				<div className={classes.actions}>
