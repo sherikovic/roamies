@@ -4,15 +4,15 @@ const tripsCtls = require('../controllers/trips');
 router
 	.route('/') // the optional parameters are passed as optional queries
 	.get(tripsCtls.index) // available for everyone, gets narrowed down dep. on the query params
-	.post(tripsCtls.createTrip) // requires login
-	.get(tripsCtls.showTrip) // available for everyone
-	.patch(tripsCtls.editTrip) // requires login
-	.delete(tripsCtls.deleteTrip); // requires login
+	.post(tripsCtls.createTrip); // requires login
+// .get(tripsCtls.showTrip) // available for everyone
+// .patch(tripsCtls.updateTrip) // requires login
+// .delete(tripsCtls.deleteTrip); // requires login
 
 router
 	.route('/:id') // id for each trip
 	.get(tripsCtls.showTrip) // doesn't require login
-	.patch(tripsCtls.editTrip) // requries login
+	.patch(tripsCtls.updateTrip) // requries login
 	.delete(tripsCtls.deleteTrip); // requires login
 
 // router

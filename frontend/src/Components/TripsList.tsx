@@ -30,7 +30,7 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 				{data && data.user && (
 					<div className={classes.new}>
 						<span onClick={() => setCreateNewTrip(!createNewTrip)}>
-							+ New Element
+							+ New Trip
 						</span>
 					</div>
 				)}

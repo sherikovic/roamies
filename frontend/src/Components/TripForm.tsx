@@ -3,6 +3,7 @@ import { json, useNavigate, useParams } from 'react-router-dom';
 import { Trip } from '../types/trip';
 import classes from './TripForm.module.css';
 import { useState } from 'react';
+import { createTrip, updateTrip } from 'util/api';
 
 interface TripFormProps {
 	method: any;
@@ -11,10 +12,10 @@ interface TripFormProps {
 	children?: React.ReactNode;
 }
 
-const ElementForm: React.FC<TripFormProps> = (props) => {
+const TripForm: React.FC<TripFormProps> = (props) => {
 	const [formErrors, setFormErrors] = useState({
 		name: '',
-		value: '',
+		location: '',
 		description: '',
 	});
 	const navigate = useNavigate();
@@ -22,12 +23,18 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 
 	const validateFormInputs = (FormData: any) => {
 		FormData.name === ''
-			? setFormErrors((prev) => ({ ...prev, name: 'Name is required!' }))
+			? setFormErrors((prev) => ({
+					...prev,
+					name: 'Name is required!',
+			  }))
 			: setFormErrors((prev) => ({ ...prev, name: '' }));
 
-		FormData.value === ''
-			? setFormErrors((prev) => ({ ...prev, value: 'Value is required!' }))
-			: setFormErrors((prev) => ({ ...prev, value: '' }));
+		FormData.location === ''
+			? setFormErrors((prev) => ({
+					...prev,
+					location: 'Location is required!',
+			  }))
+			: setFormErrors((prev) => ({ ...prev, location: '' }));
 
 		FormData.description === ''
 			? setFormErrors((prev) => ({
@@ -40,9 +47,9 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 	const submitHandler = async (event: any) => {
 		event.preventDefault();
 
-		const FormData = {
+		const FormData: any = {
 			name: event.target.name.value,
-			value: event.target.value.value,
+			location: event.target.location.value,
 			description: event.target.description.value,
 		};
 
@@ -50,32 +57,30 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 
 		if (
 			FormData.name !== '' &&
-			FormData.value !== '' &&
+			FormData.location !== '' &&
 			FormData.description !== ''
 		) {
-			let url = 'http://localhost:8080/elements';
+			let res: any;
 			if (props.method === 'PATCH') {
-				const id = params.id;
-				url = 'http://localhost:8080/elements/' + id;
-			}
-			const response = await fetch(url, {
-				method: props.method,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(FormData),
-			});
-			const resObj: any = await response.json();
-
-			if (!response.ok) {
-				throw json({ message: resObj.message }, { status: resObj.status });
-			}
-			props.cancelHandler();
-			if (props.method === 'POST') {
-				console.log(resObj);
-				navigate('/elements/' + resObj.element._id);
+				const id: any = params.id;
+				res = await updateTrip(id, FormData);
 			} else {
-				navigate('/elements/' + params.id);
+				res = await createTrip(FormData);
+			}
+
+			if (res.error) {
+				throw json(
+					{ message: res.error.message },
+					{ status: res.error.status }
+				);
+			}
+
+			props.cancelHandler();
+
+			if (props.method === 'POST') {
+				navigate('/trips/' + res.trip._id);
+			} else {
+				navigate('/trips/' + params.id);
 			}
 		}
 	};
@@ -85,7 +90,7 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 			<span className={classes.card_close} onClick={props.cancelHandler}>
 				X
 			</span>
-			<p className={classes.paragraph}>Define your element</p>
+			<p className={classes.paragraph}>Start your trip</p>
 			<form
 				method={props.method}
 				className={classes.form}
@@ -101,13 +106,13 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 						defaultValue={props.tripData ? props.tripData.name : ''}
 					/>
 				</p>
-				<p style={{ color: 'orange' }}>{formErrors.value}</p>
+				<p style={{ color: 'orange' }}>{formErrors.location}</p>
 				<p>
-					<label htmlFor='value'>Value:</label>
+					<label htmlFor='location'>Location:</label>
 					<input
 						type='text'
-						name='value'
-						id='value'
+						name='location'
+						id='location'
 						defaultValue={props.tripData ? props.tripData.location : ''}
 					/>
 				</p>
@@ -117,7 +122,7 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 					<textarea
 						name='description'
 						id='description'
-						placeholder='Describe the usage of this element'
+						placeholder='Tell us more about your trip'
 						cols={30}
 						rows={3}
 						defaultValue={props.tripData ? props.tripData.description : ''}
@@ -134,4 +139,4 @@ const ElementForm: React.FC<TripFormProps> = (props) => {
 	);
 };
 
-export default ElementForm;
+export default TripForm;

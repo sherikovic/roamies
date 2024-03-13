@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 
 import TripItem from '../Components/TripItem';
+import { deleteTrip, getTrip } from 'util/api';
 
 const TripDetailPage: React.FC = () => {
 	const tripData: any = useRouteLoaderData('trip-detail');
@@ -15,24 +16,22 @@ const TripDetailPage: React.FC = () => {
 
 export default TripDetailPage;
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-	const id = params.id;
-	const response = await fetch('http://localhost:8080/trips/' + id);
-	if (!response.ok) {
-		throw json({ message: 'Could not fetch trip details!' }, { status: 500 });
+export const loader: LoaderFunction = async ({ params }) => {
+	const id: any = params.id;
+	const res = await getTrip(id);
+	if (!res.error) {
+		return res.objects;
 	} else {
-		const resObj = await response.json();
-		return resObj.trip;
+		throw json({ message: res.error.message }, { status: 500 });
 	}
 };
 
-export const action: ActionFunction = async ({ request, params }) => {
-	const id = params.id;
-	const response = await fetch('http://localhost:8080/trips/' + id, {
-		method: request.method,
-	});
-	if (!response.ok) {
-		throw json({ message: "Couldn't delete trip" }, { status: 500 });
+export const action: ActionFunction = async ({ params }) => {
+	const id: any = params.id;
+	const res = await deleteTrip(id);
+
+	if (res.error) {
+		throw json({ message: res.error.message }, { status: res.error.status });
 	}
 	return redirect('/trips');
 };

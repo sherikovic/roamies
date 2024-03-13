@@ -33,7 +33,7 @@ const ElementItem: React.FC<ElementItemProps> = (props) => {
 					Description: <span>{props.tripData.description}</span>
 				</p>
 				<p>
-					Value: <span>{props.tripData.location}</span>
+					Location: <span>{props.tripData.location}</span>
 				</p>
 				<menu className={classes.actions}>
 					<Link to='..'>Back</Link>

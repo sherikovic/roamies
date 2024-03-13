@@ -19,20 +19,10 @@ const TripsPage: React.FC = () => {
 export default TripsPage;
 
 export const loader: LoaderFunction = async () => {
-	// const data: Trip = {
-	// 	name: 'China',
-	// 	location: 'China Mainland',
-	// 	id: '11',
-	// 	description: 'trip',
-	// };
-	// const res1 = createTrip({ data: data });
-	// const res1: any = await getTrip('?id=65efae603c9d51d37e5fefa9');
-	// const res1: any = await getAllTrips();
-	// console.log(res1);
-	const res: any = await getAllTrips();
+	const res = await getAllTrips();
 	if (!res.error) {
 		return res.objects;
 	} else {
-		throw json({ message: res.error?.message }, { status: res.error?.status });
+		throw json({ message: res.error.message }, { status: res.error.status });
 	}
 };

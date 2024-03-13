@@ -27,7 +27,9 @@ module.exports.createTrip = async (req, res) => {
 		const trip = new Trip(req.body);
 		trip.owner = req.user.id;
 		await trip.save();
-		res.status(201).json({ message: 'Trip created.', trip: trip });
+		res
+			.status(201)
+			.json({ message: 'Trip was successfully created.', trip: trip });
 	} catch (e) {
 		res
 			.status(500)
@@ -38,7 +40,7 @@ module.exports.createTrip = async (req, res) => {
 module.exports.showTrip = async (req, res) => {
 	try {
 		const trip = await Trip.findById(req.params.id);
-		res.json({ trip: trip });
+		res.json({ objects: trip });
 	} catch (e) {
 		res.status(500).json({
 			message: 'An error occured while fetching trip details from the database',
@@ -47,7 +49,7 @@ module.exports.showTrip = async (req, res) => {
 	}
 };
 
-module.exports.editTrip = async (req, res) => {
+module.exports.updateTrip = async (req, res) => {
 	try {
 		const trip = await Trip.findByIdAndUpdate(req.params.id, { ...req.body });
 		await trip.save();

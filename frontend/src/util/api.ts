@@ -4,7 +4,7 @@ import { baseURL } from './util';
 import { Trip } from 'types/trip';
 
 const apiFetch = async <T>(
-	method: 'GET' | 'POST',
+	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
 	path: string,
 	data: any
 ): Promise<{
@@ -52,6 +52,12 @@ export const apiGet = async <T>(path: string) =>
 export const apiPost = async <T>(path: string, data: any) =>
 	await apiFetch<T>('POST', path, data);
 
+export const apiPatch = async <T>(path: string, data: any) =>
+	await apiFetch<T>('PATCH', path, data);
+
+export const apiDelete = async <T>(path: string) =>
+	await apiFetch<T>('DELETE', path, null);
+
 export const getAllTrips = async (queryOptions?: string) => {
 	const res = await apiGet<Trip[]>(
 		queryOptions ? `trips?${queryOptions}` : 'trips'
@@ -62,26 +68,26 @@ export const getAllTrips = async (queryOptions?: string) => {
 // kinda redundant, could use queryOptions in getAllTrips but this is more direct
 export const getUserTrips = async (username: string) => {
 	const res = await apiGet<Trip[]>(`trips?username=${username}`);
-	return res.ok ? res.getJson : null;
+	return res.getJson;
 };
 
 // only to display a single trip, no filtering, no gimmicks, just retrieve info
 export const getTrip = async (id: string) => {
 	const res = await apiGet<Trip>(`trips/${id}`);
-	return res.ok ? res.getJson : null;
+	return res.getJson;
 };
 
-export const createTrip = async ({ data }: { data: Trip }) => {
+export const createTrip = async (data: Trip) => {
 	const res = await apiPost(`trips`, data);
-	return res.ok ? res.getJson : null;
+	return res.getJson;
 };
 
 export const updateTrip = async (id: string, data: Trip) => {
-	const res = await apiPost(`trip/${id}`, data);
-	return res.ok ? res.getJson : null;
+	const res = await apiPatch(`trips/${id}`, data);
+	return res.getJson;
 };
 
 export const deleteTrip = async (id: string) => {
-	const res = await apiGet(`trip/${id}/delete`);
-	return res.ok ? res.getJson : null;
+	const res = await apiDelete(`trips/${id}`);
+	return res.getJson;
 };
