@@ -1,8 +1,8 @@
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // Main Routes
-import HomePage from './Pages/Home';
-import RootLayout, { loader as getLoggedInUserLoader } from './Pages/Root';
+import LandingPage from './Pages/Landing';
+import RootMain, { loader as getLoggedInUserLoader } from './Pages/RootMain';
 
 // Auth and Settings Routes
 import LoginPage, { action as authFormAction } from './Pages/Login';
@@ -28,18 +28,45 @@ import LocationDetailPage, {
 	action as deleteLocationAction,
 } from './Pages/LocationDetail';
 
+import AboutPage from './Pages/About';
+import HowToUsePage from 'Pages/HowToUse';
+import FAQPage from 'Pages/FAQ';
+import ContactPage from 'Pages/Contact';
+import RootLanding from 'Pages/RootLanding';
+
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <RootLayout />,
+		element: <LandingPage />,
+	},
+	{
+		path: '/',
+		element: <RootLanding />,
+		children: [
+			{
+				path: 'about',
+				element: <AboutPage />,
+			},
+			{
+				path: 'how-to-use',
+				element: <HowToUsePage />,
+			},
+			{
+				path: 'faq',
+				element: <FAQPage />,
+			},
+			{
+				path: 'contact',
+				element: <ContactPage />,
+			},
+		],
+	},
+	{
+		element: <RootMain />,
 		errorElement: <ErrorPage />,
 		id: 'root',
 		loader: getLoggedInUserLoader,
 		children: [
-			{
-				index: true,
-				element: <HomePage />,
-			},
 			{
 				path: 'trips',
 				children: [

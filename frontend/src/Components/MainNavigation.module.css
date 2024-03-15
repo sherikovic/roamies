@@ -1,128 +1,128 @@
 .header {
-  top: 0;
-  left: 0;
-  width: 100vw;
-  position: fixed;
-  padding: 0 2rem;
-  display: flex;
-  margin-bottom: 2rem;
-  justify-content: space-between;
-  border-bottom: 0.1rem solid var(--color-gray-700);
-  background-color: var(--color-gray-900);
-  z-index: 2;
+	top: 0;
+	left: 0;
+	width: 100vw;
+	position: fixed;
+	padding: 0 2rem;
+	display: flex;
+	margin-bottom: 2rem;
+	justify-content: space-between;
+	/* border-bottom: 0.1rem solid var(--color-gray-700); */
+	/* background-color: var(--color-gray-900); */
+	z-index: 2;
 }
 
 .list {
-  display: flex;
-  gap: 0.5rem;
-  padding: 0.4rem;
+	display: flex;
+	gap: 0.5rem;
+	padding: 0.4rem;
 }
 
 .listitem {
-  padding: 0.4rem;
-  text-decoration: none;
-  color: var(--color-primary-200);
-  transition: transform 0.2s;
-  font-weight: 300;
-  &:hover {
-    color: var(--color-primary-500);
-    transform: translate(0, -2.3px);
-  }
+	padding: 0.4rem;
+	text-decoration: none;
+	color: rgb(255, 255, 255);
+	transition: transform 0.2s;
+	font-weight: 300;
+	&:hover {
+		color: rgb(255, 255, 255);
+		transform: translate(0, -2.3px);
+	}
 }
 
 .listitem_active {
-  color: var(--color-primary-500);
+	color: rgb(255, 255, 255);
 }
 
 .dropdown {
-  display: flex;
-  position: relative;
+	display: flex;
+	position: relative;
 }
 
 .dd_user_menu > img {
-  border-radius: 50%;
-  max-width: 50px;
-  max-height: 35px;
-  cursor: pointer;
-  margin-right: 5px;
+	border-radius: 50%;
+	max-width: 50px;
+	max-height: 35px;
+	cursor: pointer;
+	margin-right: 5px;
 }
 
 .dd_content {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  right: 0px;
-  top: 60px;
-  border: 0.1rem solid var(--color-gray-700);
-  border-radius: 0.3rem;
+	display: none;
+	flex-direction: column;
+	position: absolute;
+	right: 0px;
+	top: 60px;
+	border: 0.1rem solid var(--color-gray-700);
+	border-radius: 0.3rem;
 }
 
 .dd_content_item {
-  text-decoration: none;
-  font-size: medium;
-  font-weight: 300;
-  color: var(--color-primary-200);
-  background-color: var(--color-gray-900);
-  width: 8rem;
-  padding: 0.4rem 0.7rem;
-  cursor: pointer;
-  &:hover {
-    color: var(--color-primary-500);
-    background-color: var(--color-gray-800);
-  }
-  &:first-child {
-    border-radius: 0.3rem 0.3rem 0 0;
-  }
-  &:last-child {
-    border-radius: 0 0 0.3rem 0.3rem;
-  }
+	text-decoration: none;
+	font-size: medium;
+	font-weight: 300;
+	color: var(--color-primary-200);
+	background-color: var(--color-gray-900);
+	width: 8rem;
+	padding: 0.4rem 0.7rem;
+	cursor: pointer;
+	&:hover {
+		color: var(--color-primary-500);
+		background-color: var(--color-gray-800);
+	}
+	&:first-child {
+		border-radius: 0.3rem 0.3rem 0 0;
+	}
+	&:last-child {
+		border-radius: 0 0 0.3rem 0.3rem;
+	}
 }
 
 .dd_content_button {
-  border: none;
-  text-align: left;
-  padding: 0.5rem 0.7rem;
+	border: none;
+	text-align: left;
+	padding: 0.5rem 0.7rem;
 }
 
 .usermenu_active {
-  color: var(--color-primary-500);
+	color: var(--color-primary-500);
 }
 
 .dd_content_display {
-  display: flex;
+	display: flex;
 }
 
 .dd_user_menu {
-  display: flex;
-  align-items: center;
-  font-size: 15px;
-  text-rendering: auto;
-  color: var(--color-primary-200);
-  text-decoration: none;
-  cursor: pointer;
-  &:hover {
-    color: var(--color-primary-600);
-  }
+	display: flex;
+	align-items: center;
+	font-size: 15px;
+	text-rendering: auto;
+	color: var(--color-primary-200);
+	text-decoration: none;
+	cursor: pointer;
+	&:hover {
+		color: var(--color-primary-600);
+	}
 }
 
 .dd_user_menu i {
-  padding: 0 10px;
-  font-style: normal;
-  font-size: medium;
-  font-weight: 300;
-  text-transform: capitalize;
+	padding: 0 10px;
+	font-style: normal;
+	font-size: medium;
+	font-weight: 300;
+	text-transform: capitalize;
 }
 
 .dd_caret_down {
-  transition: transform 0.1s;
+	transition: transform 0.1s;
 }
 
 .dd_caret_down_tr {
-  transform: rotate(180deg);
+	transform: rotate(180deg);
 }
 
 .dd_caret_down_svg {
-  transition: transform 0.1s;
+	transition: transform 0.1s;
 }
 
 /* ~ because both classes are siblings */

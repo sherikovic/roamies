@@ -1,6 +1,6 @@
 * {
 	box-sizing: border-box;
-	transition: all 0.2s ease;
+	/* transition: all 0.2s ease; */
 }
 
 :root {
@@ -11,7 +11,7 @@
 
 	color-scheme: light dark;
 	color: rgba(255, 255, 255, 0.87);
-	background-color: #787f87cd;
+	background-color: #f1f5f6;
 
 	font-synthesis: none;
 	text-rendering: optimizeLegibility;
@@ -42,13 +42,13 @@
 
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-		'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-		sans-serif;
+	font-family: sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+		'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans',
+		'Helvetica Neue', sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
-	padding: 7rem 15rem;
-	margin: 0.5rem 0;
+	/* padding: 7rem 15rem; */
+	/* margin: 0.5rem 0; */
 	margin-left: auto;
 	margin-right: auto;
 }
