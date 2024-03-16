@@ -61,6 +61,15 @@ const router = createBrowserRouter([
 			},
 		],
 	},
+	// {
+	// 	path: 'auth',
+	// 	element: <LoginPage />,
+	// 	action: authFormAction,
+	// },
+	{
+		path: 'logout',
+		action: logoutAction,
+	},
 	{
 		element: <RootMain />,
 		errorElement: <ErrorPage />,
@@ -104,15 +113,6 @@ const router = createBrowserRouter([
 			{
 				path: 'profile',
 				element: <ProfilePage />,
-			},
-			{
-				path: 'auth',
-				element: <LoginPage />,
-				action: authFormAction,
-			},
-			{
-				path: 'logout',
-				action: logoutAction,
 			},
 			{
 				path: 'settings',

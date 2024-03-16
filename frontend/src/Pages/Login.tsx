@@ -6,12 +6,17 @@ import {
 } from 'react-router-dom';
 import LoginForm from '../Components/LoginForm';
 
-const LoginPage: React.FC = () => {
+interface LoginPageProps {
+	cancelHandler: () => void;
+	children?: React.ReactNode;
+}
+
+const LoginPage: React.FC<LoginPageProps> = (props) => {
 	const data: any = useRouteLoaderData('root');
 
 	return (
 		<>
-			{data && !data.user && <LoginForm />}
+			{!data && <LoginForm cancelHandler={props.cancelHandler} />}
 			{data && data.user && (
 				<div>
 					<h4 style={{ textAlign: 'center' }}>You are already logged in!</h4>
