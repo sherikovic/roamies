@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import styles from './Landing.module.css';
-import LoginPage from './Login';
+import LoginForm from 'Components/LoginForm';
 
 const LandingPage: React.FC = () => {
 	const [showLoginPage, setShowLoginPage] = useState(false);
@@ -27,12 +27,12 @@ const LandingPage: React.FC = () => {
 				<p>From solo traverels, for solo traverels.</p>
 			</div>
 			<div className={styles.join_link}>
-				<a href='/auth?mode=signup'>Join the Community</a>
+				<a href='/signup'>Join the Community</a>
 			</div>
 			{showLoginPage && (
 				<div className={styles.card_overlay}>
 					<div className={styles.overlay_content}>
-						<LoginPage cancelHandler={() => setShowLoginPage(false)} />
+						<LoginForm cancelHandler={() => setShowLoginPage(false)} />
 					</div>
 				</div>
 			)}

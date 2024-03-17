@@ -1,14 +1,9 @@
 import { useState } from 'react';
 import styles from './LandingNavigation.module.css';
 import LoginPage from 'Pages/Login';
+import { NavLink } from 'react-router-dom';
 
 const LandingNavigation: React.FC = () => {
-	// could use NavLink instead of all this
-	const currentLocation = window.location.pathname;
-	const isAbout = currentLocation === '/about';
-	const isHowToUse = currentLocation === '/how-to-use';
-	const isFAQ = currentLocation === '/faq';
-	const isContact = currentLocation === '/contact';
 	const [showLoginPage, setShowLoginPage] = useState(false);
 
 	return (
@@ -17,22 +12,34 @@ const LandingNavigation: React.FC = () => {
 				<a href='/'>SYT</a>
 			</nav>
 			<nav className={styles.landing_nav_container}>
-				<a href='about' className={isAbout ? styles.active : ''}>
+				<NavLink
+					to='about'
+					className={({ isActive }) => (isActive ? styles.active : undefined)}
+				>
 					About
-				</a>
-				<a href='how-to-use' className={isHowToUse ? styles.active : ''}>
+				</NavLink>
+				<NavLink
+					to='how-to-use'
+					className={({ isActive }) => (isActive ? styles.active : undefined)}
+				>
 					How to Use
-				</a>
-				<a href='faq' className={isFAQ ? styles.active : ''}>
+				</NavLink>
+				<NavLink
+					to='faq'
+					className={({ isActive }) => (isActive ? styles.active : undefined)}
+				>
 					FAQ
-				</a>
-				<a href='contact' className={isContact ? styles.active : ''}>
+				</NavLink>
+				<NavLink
+					to='contact'
+					className={({ isActive }) => (isActive ? styles.active : undefined)}
+				>
 					Contact
-				</a>
+				</NavLink>
 			</nav>
 			<nav className={styles.landing_login}>
 				<button onClick={() => setShowLoginPage(true)}>Log in</button>
-				<button>Register</button>
+				<a href='signup'>Sign up</a>
 			</nav>
 			{showLoginPage && (
 				<div className={styles.card_overlay}>

@@ -1,0 +1,54 @@
+.register_page {
+	display: flex;
+	flex-direction: column;
+	height: 100vh;
+	align-items: stretch;
+	justify-content: stretch;
+}
+
+.register_layout {
+	display: flex;
+	width: 100%;
+	padding: 0px;
+	background: linear-gradient(90deg, rgb(15, 15, 10) 25%, rgb(25, 25, 24) 50%);
+	flex: 1 1;
+}
+
+.register_banner {
+	display: flex;
+	justify-content: center;
+	padding-top: 50px;
+	padding-bottom: 20px;
+}
+
+.brand a {
+	text-align: center;
+	font-size: 30px;
+	font-weight: 700;
+	text-decoration: none;
+	color: white;
+}
+
+.register_content {
+	display: flex;
+	justify-content: space-between;
+	max-width: 1400px;
+}
+
+.left_side {
+	width: 100%;
+	background-size: cover;
+	background-position: left;
+	background-repeat: no-repeat;
+	background-image: url('../images/register.jpeg');
+	filter: blur(2px);
+	flex-basis: 40%;
+}
+
+.right_side {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	margin: auto;
+	flex-basis: 60%;
+}

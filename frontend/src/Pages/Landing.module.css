@@ -61,12 +61,15 @@
 	border: 1px solid grey;
 	padding: 10px 15px;
 	cursor: pointer;
-	border-radius: 10px;
-	color: black;
-	background-color: white;
+	border-radius: 25px;
+	color: white;
+	background-color: transparent;
 	text-decoration: none;
 	font-size: 15px;
-	font-weight: 500;
+	font-weight: 550;
+	&:hover {
+		background-color: rgba(244, 244, 243, 0.105);
+	}
 }
 
 .main_text p:first-child {
@@ -89,19 +92,16 @@
 	color: white;
 }
 
-.join_link {
+.join_link a {
 	position: absolute;
 	top: 70%;
 	left: 20%;
 	margin: auto;
 	border: 1px transparent;
-	border-radius: 10px;
-	padding: 10px 30px;
+	border-radius: 25px;
+	padding: 15px 40px;
 	background-color: rgb(27, 26, 26);
 	box-shadow: 1px 2px 2px #696262;
-}
-
-.join_link a {
 	color: white;
 	text-decoration: none;
 }
@@ -126,7 +126,7 @@
 	transform: translate(-50%, -50%);
 	background-color: white;
 	width: 500px;
-	height: 600px;
+	height: 570px;
 	float: left;
 	border-radius: 12px;
 }

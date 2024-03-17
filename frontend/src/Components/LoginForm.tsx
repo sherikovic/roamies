@@ -1,44 +1,58 @@
-import { Form, useActionData } from 'react-router-dom';
+import { useState } from 'react';
+import { authUser } from 'util/api';
+import { User } from 'types/user';
+import { useNavigate } from 'react-router';
+
+import googleIcon from '../images/googlelogo.svg';
 import styles from './LoginForm.module.css';
-import images from '../images/google.686f8efa.svg';
+
 interface LoginFormProps {
 	cancelHandler: () => void;
 	children?: React.ReactNode;
 }
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
-	const data: any = useActionData();
+	const navigate = useNavigate();
+	const [invalidEmail, setInvalidEmail] = useState(false);
+	const [invalidPassword, setInvalidPassword] = useState(false);
+
+	const submitLoginForm = async (event: any) => {
+		event.preventDefault();
+		const data = new FormData(event.target as HTMLFormElement);
+		data.get('email') === '' ? setInvalidEmail(true) : setInvalidEmail(false);
+		data.get('password') === ''
+			? setInvalidPassword(true)
+			: setInvalidPassword(false);
+		if (invalidEmail === false && invalidPassword === false) {
+			const formData: User | any = Object.fromEntries(data.entries());
+			const res = await authUser('login', formData);
+			// if (!res?.error) navigate('/settings');
+		}
+	};
+
+	const validateEmail = (e: any) => {
+		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+		if (re.test(e.target.value)) {
+			setInvalidEmail(false);
+		} else {
+			setInvalidEmail(true);
+		}
+	};
+
+	const validatePassword = (e: any) => {
+		e.target.value === ''
+			? setInvalidPassword(true)
+			: setInvalidPassword(false);
+	};
 
 	return (
-		<Form method='post' className={styles.form}>
+		<form method='post' className={styles.form} onSubmit={submitLoginForm}>
 			<header>Log in</header>
-			<button id={styles.lfboxClose} onClick={props.cancelHandler}></button>
-
-			{data && data === 'username exists' && (
-				<p style={{ color: 'orange' }}>
-					User with the same username already exists!
-				</p>
-			)}
-			{data && data === 'email exists' && (
-				<p style={{ color: 'orange' }}>
-					User with the same email already exists!
-				</p>
-			)}
-			{data && data === 'Unauthorized' && (
-				<p style={{ color: 'orange' }}>
-					Either username or password is incorrect!
-				</p>
-			)}
-			{data && data === 'Username is empty' && (
-				<p style={{ color: 'orange' }}>Username cannot be empty!</p>
-			)}
-			{data && data === 'Email is empty' && (
-				<p style={{ color: 'orange' }}>Email cannot be empty!</p>
-			)}
-			{data && data === 'Password is empty' && (
-				<p style={{ color: 'orange' }}>Password cannot be empty!</p>
-			)}
-
+			<button
+				type='button'
+				id={styles.lfboxClose}
+				onClick={props.cancelHandler}
+			></button>
 			<div className={styles.form_content}>
 				<section className={styles.lf_input_field}>
 					<label htmlFor='email' />
@@ -46,7 +60,9 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 						type='email'
 						name='email'
 						id='email'
-						placeholder='Email or Username'
+						placeholder='Email'
+						className={invalidEmail ? styles.invalid : ''}
+						onChange={validateEmail}
 					/>
 				</section>
 				<section className={styles.lf_input_field}>
@@ -56,6 +72,8 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 						name='password'
 						id='password'
 						placeholder='Password'
+						className={invalidPassword ? styles.invalid : ''}
+						onChange={validatePassword}
 					/>
 				</section>
 				<section className={styles.login_options}>
@@ -69,11 +87,13 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 					</div>
 				</section>
 				<div className={styles.actions}>
-					<button name='login'>Log in</button>
-					<span>OR</span>
-					<button name='google'>
+					<button name='login' type='submit'>
+						Log in
+					</button>
+					<span>or</span>
+					<button name='google' type='button'>
 						<img
-							src='/static/media/google.686f8efa.svg'
+							src={googleIcon}
 							alt='Google logo'
 							className={styles.googlelogo}
 						/>
@@ -81,11 +101,11 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 					</button>
 					<div>
 						<span>Not a member yet?</span>
-						<button name='join'>Join</button>
+						<a href='signup'>Join</a>
 					</div>
 				</div>
 			</div>
-		</Form>
+		</form>
 	);
 };
 

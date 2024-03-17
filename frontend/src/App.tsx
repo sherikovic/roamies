@@ -33,11 +33,20 @@ import HowToUsePage from 'Pages/HowToUse';
 import FAQPage from 'Pages/FAQ';
 import ContactPage from 'Pages/Contact';
 import RootLanding from 'Pages/RootLanding';
+import SignupPage from 'Pages/Signup';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
 		element: <LandingPage />,
+	},
+	{
+		path: '/signup',
+		element: <SignupPage />,
+	},
+	{
+		path: 'logout',
+		action: logoutAction,
 	},
 	{
 		path: '/',
@@ -60,15 +69,6 @@ const router = createBrowserRouter([
 				element: <ContactPage />,
 			},
 		],
-	},
-	// {
-	// 	path: 'auth',
-	// 	element: <LoginPage />,
-	// 	action: authFormAction,
-	// },
-	{
-		path: 'logout',
-		action: logoutAction,
 	},
 	{
 		element: <RootMain />,

@@ -2,6 +2,7 @@ import { backOff } from 'exponential-backoff';
 
 import { baseURL } from './util';
 import { Trip } from 'types/trip';
+import { User } from 'types/user';
 
 const apiFetch = async <T>(
 	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
@@ -89,5 +90,10 @@ export const updateTrip = async (id: string, data: Trip) => {
 
 export const deleteTrip = async (id: string) => {
 	const res = await apiDelete(`trips/${id}`);
+	return res.getJson;
+};
+
+export const authUser = async (mode: string, data: User) => {
+	const res = await apiPost<User | any>(`auth/${mode}`, data);
 	return res.getJson;
 };
