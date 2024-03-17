@@ -85,44 +85,44 @@ const SignupForm: React.FC = () => {
 	// }, [firstName, lastName, email, password]);
 
 	const validateFirstName = (e: string | any) => {
-		const val = typeof e === 'string' ? e : e.traget.value;
+		const val = typeof e === 'string' ? e : e.target.value;
 		if (val === '') {
 			setFirstName({ val, ok: true });
 			setErrorMessage('Enter a valid first name.');
 		} else {
 			setFirstName({ val, ok: false });
-			setErrorMessage('');
+			// setErrorMessage('');
 		}
 	};
 	const validateLastName = (e: string | any) => {
-		const val = typeof e === 'string' ? e : e.traget.value;
+		const val = typeof e === 'string' ? e : e.target.value;
 		if (val === '') {
 			setLastName({ val, ok: true });
 			setErrorMessage('Enter a valid last name.');
 		} else {
 			setLastName({ val, ok: false });
-			setErrorMessage('');
+			// setErrorMessage('');
 		}
 	};
 	const validateEmail = (e: string | any) => {
-		const val = typeof e === 'string' ? e : e.traget.value;
+		const val = typeof e === 'string' ? e : e.target.value;
 		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
 		if (re.test(val)) {
 			setEmail({ val, ok: false });
-			setErrorMessage('Enter a valid email address.');
+			setErrorMessage('');
 		} else {
 			setEmail({ val, ok: true });
-			setErrorMessage('');
+			setErrorMessage('Enter a valid email address.');
 		}
 	};
 	const validatePassword = (e: string | any) => {
-		const val = typeof e === 'string' ? e : e.traget.value;
+		const val = typeof e === 'string' ? e : e.target.value;
 		if (val === '') {
 			setPassword({ val, ok: true });
 			setErrorMessage('Enter a valid password.');
 		} else {
 			setPassword({ val, ok: false });
-			setErrorMessage('');
+			// setErrorMessage('');
 		}
 	};
 
