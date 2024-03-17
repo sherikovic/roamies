@@ -7,64 +7,128 @@ import googleIcon from '../images/googlelogo.svg';
 import emailIcon from '../images/emailicon.png';
 import passwordIcon from '../images/passwordicon.png';
 import personalIcon from '../images/personalicon.png';
+import warningIcon from '../images/warningicon.png';
+
 import styles from './SignupForm.module.css';
 import LoginForm from './LoginForm';
 
-const SignupForm: React.FC = (props) => {
+const SignupForm: React.FC = () => {
 	const navigate = useNavigate();
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const [invalidFirstName, setInvalidFirstName] = useState(false);
-	const [invalidLastName, setInvalidLastName] = useState(false);
-	const [invalidEmail, setInvalidEmail] = useState(false);
-	const [invalidPassword, setInvalidPassword] = useState(false);
+	const [firstName, setFirstName] = useState({ val: '', ok: false });
+	const [lastName, setLastName] = useState({ val: '', ok: false });
+	const [email, setEmail] = useState({ val: '', ok: false });
+	const [password, setPassword] = useState({ val: '', ok: false });
+	const [errorMessage, setErrorMessage] = useState('');
 
-	const submitLoginForm = async (event: any) => {
+	const submitSignupForm = async (event: any) => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
-		data.get('firstname') === ''
-			? setInvalidFirstName(true)
-			: setInvalidFirstName(false);
-		data.get('secondname') === ''
-			? setInvalidLastName(true)
-			: setInvalidLastName(false);
-		data.get('email') === '' ? setInvalidEmail(true) : setInvalidEmail(false);
-		data.get('password') === ''
-			? setInvalidPassword(true)
-			: setInvalidPassword(false);
-		if (invalidEmail === false && invalidPassword === false) {
+
+		// if (password.val === '') {
+		// 	setPassword((prev) => ({ ...prev, ok: true }));
+		// 	setErrorMessage((prev) => 'Enter a valid password.');
+		// } else {
+		// 	setPassword((prev) => ({ ...prev, ok: false }));
+		// 	setErrorMessage((prev) => '');
+		// }
+		// if (email.val === '') {
+		// 	setEmail((prev) => ({ ...prev, ok: true }));
+		// 	setErrorMessage((prev) => 'Enter a valid email.');
+		// } else {
+		// 	setEmail((prev) => ({ ...prev, ok: false }));
+		// 	setErrorMessage((prev) => '');
+		// }
+		// if (lastName.val === '') {
+		// 	setLastName((prev) => ({ ...prev, ok: true }));
+		// 	setErrorMessage((prev) => 'Enter a valid last name.');
+		// } else {
+		// 	setLastName((prev) => ({ ...prev, ok: false }));
+		// 	setErrorMessage((prev) => '');
+		// }
+		// if (firstName.val === '') {
+		// 	setFirstName((prev) => ({ ...prev, ok: true }));
+		// 	setErrorMessage((prev) => 'Enter a valid first name.');
+		// } else {
+		// 	setFirstName((prev) => ({ ...prev, ok: false }));
+		// 	setErrorMessage((prev) => '');
+		// }
+
+		validatePassword(password.val);
+		validateEmail(email.val);
+		validateLastName(lastName.val);
+		validateFirstName(firstName.val);
+
+		if (!firstName.ok && !lastName.ok && !email.ok && !password.ok) {
 			const formData: User | any = Object.fromEntries(data.entries());
 			const res = await authUser('signup', formData);
-			// if (!res?.error) navigate('/settings');
+			if (res.status === 201) {
+				// setErrorMessage('');
+				navigate('/trips');
+			} else {
+				console.log(res.getJson);
+				// setErrorMessage('ssss');
+			}
 		}
 	};
 
-	const validateFirstName = (e: any) => {
-		e.target.value === ''
-			? setInvalidFirstName(true)
-			: setInvalidFirstName(false);
-	};
-	const validateLastName = (e: any) => {
-		e.target.value === ''
-			? setInvalidLastName(true)
-			: setInvalidLastName(false);
-	};
-	const validateEmail = (e: any) => {
-		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-		if (re.test(e.target.value)) {
-			setInvalidEmail(false);
+	// useEffect(() => {
+	// 	validateFirstName(firstName);
+	// 	validateLastName(lastName);
+	// 	validateEmail(email);
+	// 	validatePassword(password);
+
+	// 	invalidPassword && setErrorMessage('Enter a valid password.');
+	// 	invalidEmail && setErrorMessage('Enter a valid email address.');
+	// 	invalidLastName && setErrorMessage('Enter a valid last name.');
+	// 	invalidFirstName && setErrorMessage('Enter a valid first name.');
+	// }, [firstName, lastName, email, password]);
+
+	const validateFirstName = (e: string | any) => {
+		const val = typeof e === 'string' ? e : e.traget.value;
+		if (val === '') {
+			setFirstName({ val, ok: true });
+			setErrorMessage('Enter a valid first name.');
 		} else {
-			setInvalidEmail(true);
+			setFirstName({ val, ok: false });
+			setErrorMessage('');
 		}
 	};
-	const validatePassword = (e: any) => {
-		e.target.value === ''
-			? setInvalidPassword(true)
-			: setInvalidPassword(false);
+	const validateLastName = (e: string | any) => {
+		const val = typeof e === 'string' ? e : e.traget.value;
+		if (val === '') {
+			setLastName({ val, ok: true });
+			setErrorMessage('Enter a valid last name.');
+		} else {
+			setLastName({ val, ok: false });
+			setErrorMessage('');
+		}
+	};
+	const validateEmail = (e: string | any) => {
+		const val = typeof e === 'string' ? e : e.traget.value;
+		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
+		if (re.test(val)) {
+			setEmail({ val, ok: false });
+			setErrorMessage('Enter a valid email address.');
+		} else {
+			setEmail({ val, ok: true });
+			setErrorMessage('');
+		}
+	};
+	const validatePassword = (e: string | any) => {
+		const val = typeof e === 'string' ? e : e.traget.value;
+		if (val === '') {
+			setPassword({ val, ok: true });
+			setErrorMessage('Enter a valid password.');
+		} else {
+			setPassword({ val, ok: false });
+			setErrorMessage('');
+		}
 	};
 
 	return (
 		<div>
-			<form method='post' className={styles.form} onSubmit={submitLoginForm}>
+			<form method='post' className={styles.form} onSubmit={submitSignupForm}>
 				<div className={styles.form_content}>
 					<section className={styles.left_side}>
 						<header>Sign up faster with</header>
@@ -82,6 +146,16 @@ const SignupForm: React.FC = (props) => {
 					</section>
 					<section className={styles.right_side}>
 						<header>Sign up with email</header>
+						{errorMessage !== '' && (
+							<p className={styles.error}>
+								<img
+									src={warningIcon}
+									alt='warning icon'
+									className={styles.warningIcon}
+								/>
+								{errorMessage}
+							</p>
+						)}
 						<div className={styles.su_input_flnames}>
 							<div className={styles.su_input_field}>
 								<label htmlFor='firstname'>
@@ -96,7 +170,7 @@ const SignupForm: React.FC = (props) => {
 									name='firstname'
 									id='firstname'
 									placeholder='First Name'
-									className={invalidFirstName ? styles.invalid : ''}
+									className={firstName.ok ? styles.invalid : ''}
 									onChange={validateFirstName}
 								/>
 							</div>
@@ -113,7 +187,7 @@ const SignupForm: React.FC = (props) => {
 									name='lastname'
 									id='lastname'
 									placeholder='Last Name'
-									className={invalidLastName ? styles.invalid : ''}
+									className={lastName.ok ? styles.invalid : ''}
 									onChange={validateLastName}
 								/>
 							</div>
@@ -127,7 +201,7 @@ const SignupForm: React.FC = (props) => {
 								name='email'
 								id='email'
 								placeholder='Email'
-								className={invalidEmail ? styles.invalid : ''}
+								className={email.ok ? styles.invalid : ''}
 								onChange={validateEmail}
 							/>
 						</div>
@@ -144,7 +218,7 @@ const SignupForm: React.FC = (props) => {
 								name='password'
 								id='password'
 								placeholder='Password'
-								className={invalidPassword ? styles.invalid : ''}
+								className={password.ok ? styles.invalid : ''}
 								onChange={validatePassword}
 							/>
 						</div>
@@ -158,7 +232,9 @@ const SignupForm: React.FC = (props) => {
 				<section className={styles.footer}>
 					<span>
 						Already have an account?
-						<button onClick={() => setShowLoginPage(true)}>Log in</button>
+						<button type='button' onClick={() => setShowLoginPage(true)}>
+							Log in
+						</button>
 					</span>
 				</section>
 			</form>

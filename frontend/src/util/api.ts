@@ -95,5 +95,5 @@ export const deleteTrip = async (id: string) => {
 
 export const authUser = async (mode: string, data: User) => {
 	const res = await apiPost<User | any>(`auth/${mode}`, data);
-	return res.getJson;
+	return res;
 };

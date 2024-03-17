@@ -23,10 +23,14 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 		data.get('password') === ''
 			? setInvalidPassword(true)
 			: setInvalidPassword(false);
-		if (invalidEmail === false && invalidPassword === false) {
+		if (!(invalidEmail && invalidPassword)) {
 			const formData: User | any = Object.fromEntries(data.entries());
-			const res = await authUser('login', formData);
-			// if (!res?.error) navigate('/settings');
+			const res: any = await authUser('login', formData);
+			if (res.status === 201) {
+				navigate('/trips');
+			} else {
+				console.log(res.getJson);
+			}
 		}
 	};
 
