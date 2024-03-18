@@ -11,54 +11,49 @@ import warningIcon from '../images/warningicon.png';
 
 import styles from './SignupForm.module.css';
 import LoginForm from './LoginForm';
-import { useIsFirstRender } from 'util/util';
 
 const SignupForm: React.FC = () => {
 	const navigate = useNavigate();
-	const isFirstRender = useIsFirstRender();
 
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const [firstName, setFirstName] = useState({ val: '', ok: false });
-	const [lastName, setLastName] = useState({ val: '', ok: false });
-	const [email, setEmail] = useState({ val: '', ok: false });
-	const [password, setPassword] = useState({ val: '', ok: false });
+	const [firstName, setFirstName] = useState({ val: '', valid: false });
+	const [lastName, setLastName] = useState({ val: '', valid: false });
+	const [email, setEmail] = useState({ val: '', valid: false });
+	const [password, setPassword] = useState({ val: '', valid: false });
 	const [errorMessage, setErrorMessage] = useState('');
-	const [didMount, setDidMount] = useState(false);
 
-	useEffect(() => {
-		setDidMount(true);
-	}, []);
-
-	const submitSignupForm = async (event: any) => {
-		event.preventDefault();
-		const data = new FormData(event.target as HTMLFormElement);
-		validateForSubmit();
-		sendAuthRequest(data);
-	};
-
-	const validateForSubmit = () => {
-		if (firstName.val === '') {
-			setFirstName((prev) => ({ ...prev, ok: true }));
-			setErrorMessage('Please enter valid inputs.');
+	const validateInputsForSubmit = () => {
+		if (password.val === '') {
+			setPassword((prev) => ({ ...prev, valid: false }));
+			setErrorMessage('Please enter valid password.');
+		} else {
+			setPassword((prev) => ({ ...prev, valid: true }));
+		}
+		if (
+			email.val === '' ||
+			!/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(email.val)
+		) {
+			setEmail((prev) => ({ ...prev, valid: false }));
+			setErrorMessage('Please enter valid email address.');
+		} else {
+			setEmail((prev) => ({ ...prev, valid: true }));
 		}
 		if (lastName.val === '') {
-			setLastName((prev) => ({ ...prev, ok: true }));
-			setErrorMessage('Please enter valid inputs.');
-		}
-		if (email.val === '') {
-			setEmail((prev) => ({ ...prev, ok: true }));
-			setErrorMessage('Please enter valid inputs.');
+			setLastName((prev) => ({ ...prev, valid: false }));
+			setErrorMessage('Please enter valid last name.');
 		} else {
-			validateEmail(email.val);
+			setLastName((prev) => ({ ...prev, valid: true }));
 		}
-		if (password.val === '') {
-			setPassword((prev) => ({ ...prev, ok: true }));
-			setErrorMessage('Please enter valid inputs.');
+		if (firstName.val === '') {
+			setFirstName((prev) => ({ ...prev, valid: false }));
+			setErrorMessage('Please enter valid first name.');
+		} else {
+			setFirstName((prev) => ({ ...prev, valid: true }));
 		}
 	};
 
 	const sendAuthRequest = async (data: any) => {
-		if (!firstName.ok && !lastName.ok && !email.ok && !password.ok) {
+		if (firstName.valid && lastName.valid && email.valid && password.valid) {
 			setErrorMessage('');
 			const formData: User | any = Object.fromEntries(data.entries());
 			const res = await authUser('signup', formData);
@@ -71,33 +66,32 @@ const SignupForm: React.FC = () => {
 		}
 	};
 
+	const submitSignupForm = async (event: any) => {
+		event.preventDefault();
+		const data = new FormData(event.target as HTMLFormElement);
+		validateInputsForSubmit();
+		sendAuthRequest(data);
+	};
+
 	const validateFirstName = (e: string | any) => {
 		const val = typeof e === 'string' ? e : e.target.value;
-		val === ''
-			? setFirstName({ val, ok: true })
-			: setFirstName({ val, ok: false });
+		setFirstName({ val, valid: false });
 	};
 	const validateLastName = (e: string | any) => {
 		const val = typeof e === 'string' ? e : e.target.value;
-		val === ''
-			? setLastName({ val, ok: true })
-			: setLastName({ val, ok: false });
+		setLastName({ val, valid: false });
 	};
 	const validateEmail = (e: string | any) => {
 		const val = typeof e === 'string' ? e : e.target.value;
-		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-		if (re.test(val)) {
-			setEmail({ val, ok: false });
+		if (/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(val) || val === '') {
+			setEmail({ val, valid: false });
 		} else {
-			setEmail({ val, ok: true });
-			setErrorMessage('Please enter a valid email address.');
+			setEmail({ val, valid: true });
 		}
 	};
 	const validatePassword = (e: string | any) => {
 		const val = typeof e === 'string' ? e : e.target.value;
-		val === ''
-			? setPassword({ val, ok: true })
-			: setPassword({ val, ok: false });
+		setPassword({ val, valid: false });
 	};
 
 	return (
@@ -144,7 +138,7 @@ const SignupForm: React.FC = () => {
 									name='firstname'
 									id='firstname'
 									placeholder='First Name'
-									className={firstName.ok ? styles.invalid : ''}
+									className={!firstName.valid ? styles.invalid : ''}
 									onChange={validateFirstName}
 								/>
 							</div>
@@ -161,7 +155,7 @@ const SignupForm: React.FC = () => {
 									name='lastname'
 									id='lastname'
 									placeholder='Last Name'
-									className={lastName.ok ? styles.invalid : ''}
+									className={!lastName.valid ? styles.invalid : ''}
 									onChange={validateLastName}
 								/>
 							</div>
@@ -175,7 +169,7 @@ const SignupForm: React.FC = () => {
 								name='email'
 								id='email'
 								placeholder='Email'
-								className={email.ok ? styles.invalid : ''}
+								className={!email.valid ? styles.invalid : ''}
 								onChange={validateEmail}
 							/>
 						</div>
@@ -192,7 +186,7 @@ const SignupForm: React.FC = () => {
 								name='password'
 								id='password'
 								placeholder='Password'
-								className={password.ok ? styles.invalid : ''}
+								className={!password.valid ? styles.invalid : ''}
 								onChange={validatePassword}
 							/>
 						</div>
