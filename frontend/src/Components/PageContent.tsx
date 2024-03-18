@@ -1,11 +1,11 @@
-import classes from "./PageHeader.module.css";
+import classes from "./PageContent.module.css";
 
-interface PageHeaderProps {
+interface PageContentProps {
   headerText: String;
   children?: React.ReactNode;
 }
 
-const PageHeader: React.FC<PageHeaderProps> = (props) => {
+const PageContent: React.FC<PageContentProps> = (props) => {
   return (
     <div className={classes.header_frame}>
       <p className={classes.header_text}>{props.headerText}</p>
@@ -14,4 +14,4 @@ const PageHeader: React.FC<PageHeaderProps> = (props) => {
   );
 };
 
-export default PageHeader;
+export default PageContent;

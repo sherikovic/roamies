@@ -5,15 +5,15 @@
   padding: 2rem;
   border-top: 0 solid transparent;
   border-bottom: 0 solid transparent;
-  border: 0.1rem solid var(--color-gray-700);
   border-radius: 7px;
+  background-color: white;
 }
 
 .header_text {
   margin: 0;
   font-size: 3rem;
   font-weight: 500;
-  color: var(--color-primary-600);
+  color: black;
 }
 
 .header_content {
