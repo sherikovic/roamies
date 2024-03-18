@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import styles from './LandingNavigation.module.css';
-import LoginPage from 'Pages/Login';
 import { NavLink } from 'react-router-dom';
 
+import styles from './LandingNavigation.module.css';
+import LoginPage from 'Pages/Login';
+
 const LandingNavigation: React.FC = () => {
-	const [showLoginPage, setShowLoginPage] = useState(false);
+	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 
 	return (
 		<div className={styles.landing_navigation}>
@@ -38,13 +39,13 @@ const LandingNavigation: React.FC = () => {
 				</NavLink>
 			</nav>
 			<nav className={styles.landing_login}>
-				<button onClick={() => setShowLoginPage(true)}>Log in</button>
+				<button onClick={() => setShowLoginOverlay(true)}>Log in</button>
 				<a href='signup'>Sign up</a>
 			</nav>
-			{showLoginPage && (
+			{showLoginOverlay && (
 				<div className={styles.card_overlay}>
 					<div className={styles.overlay_content}>
-						<LoginPage cancelHandler={() => setShowLoginPage(false)} />
+						<LoginPage cancelHandler={() => setShowLoginOverlay(false)} />
 					</div>
 				</div>
 			)}

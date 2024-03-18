@@ -4,6 +4,6 @@
 	font-weight: 600;
 	width: 100%;
 	text-align: center;
-	position: fixed;
-	top: 40%;
+	position: relative;
+	margin: 0;
 }

@@ -4,6 +4,7 @@ import { User } from 'types/user';
 import { useNavigate } from 'react-router';
 
 import googleIcon from '../images/googlelogo.svg';
+import warningIcon from '../images/warningicon.png';
 import styles from './LoginForm.module.css';
 
 interface LoginFormProps {
@@ -11,42 +12,86 @@ interface LoginFormProps {
 	children?: React.ReactNode;
 }
 
+const fields = {
+	password: {
+		val: '',
+		valid: true,
+		errorMessage: 'Please enter valid password.',
+	},
+	email: {
+		val: '',
+		valid: true,
+		errorMessage: 'Please enter valid email address.',
+	},
+};
+
 const LoginForm: React.FC<LoginFormProps> = (props) => {
 	const navigate = useNavigate();
-	const [invalidEmail, setInvalidEmail] = useState(false);
-	const [invalidPassword, setInvalidPassword] = useState(false);
+	const [formInputs, setFormInputs] = useState(fields);
+	const [errorMessage, setErrorMessage] = useState('');
+
+	const validateInputsForSubmit = () => {
+		let isInvalid = false;
+		Object.keys(formInputs).forEach((key: any) => {
+			const input = formInputs[key];
+			if (
+				input.val === '' ||
+				(key === 'email' &&
+					!/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
+			) {
+				isInvalid = true;
+				setErrorMessage(input.errorMessage);
+				setFormInputs((prev) => ({
+					...prev,
+					[key]: { ...input, valid: false },
+				}));
+			}
+		});
+		// setState is asyncronous, so you need the function to return the value of isInvalid, can't rely on state for that
+		return isInvalid;
+	};
+
+	const sendAuthRequest = async (data: any) => {
+		const formData: User | any = Object.fromEntries(data.entries());
+		const res = await authUser('login', formData);
+		if (res.status === 201) {
+			navigate('/trips');
+		} else if (res.status === 401) {
+			setErrorMessage('Either email or password is invalid!');
+		} else {
+			setErrorMessage('An error occured!');
+		}
+	};
 
 	const submitLoginForm = async (event: any) => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
-		data.get('email') === '' ? setInvalidEmail(true) : setInvalidEmail(false);
-		data.get('password') === ''
-			? setInvalidPassword(true)
-			: setInvalidPassword(false);
-		if (!(invalidEmail && invalidPassword)) {
-			const formData: User | any = Object.fromEntries(data.entries());
-			const res: any = await authUser('login', formData);
-			if (res.status === 201) {
-				navigate('/trips');
-			} else {
-				console.log(res.getJson);
-			}
-		}
+		const isInvalid = validateInputsForSubmit();
+		!isInvalid && sendAuthRequest(data);
 	};
 
-	const validateEmail = (e: any) => {
-		const re = /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/;
-		if (re.test(e.target.value)) {
-			setInvalidEmail(false);
-		} else {
-			setInvalidEmail(true);
-		}
-	};
-
-	const validatePassword = (e: any) => {
-		e.target.value === ''
-			? setInvalidPassword(true)
-			: setInvalidPassword(false);
+	const inputOnChange = ({
+		type,
+		value,
+	}: {
+		type: 'email' | 'password';
+		value: string;
+	}) => {
+		setFormInputs({
+			...formInputs,
+			[type]: {
+				...formInputs[type],
+				val: value,
+				valid:
+					type === 'email'
+						? /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value) ||
+						  value === ''
+							? true
+							: false
+						: true,
+			},
+		});
+		setErrorMessage('');
 	};
 
 	return (
@@ -56,8 +101,18 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 				type='button'
 				id={styles.lfboxClose}
 				onClick={props.cancelHandler}
-			></button>
+			/>
 			<div className={styles.form_content}>
+				{errorMessage !== '' && (
+					<p className={styles.error}>
+						<img
+							src={warningIcon}
+							alt='warning icon'
+							className={styles.warningIcon}
+						/>
+						{errorMessage}
+					</p>
+				)}
 				<section className={styles.lf_input_field}>
 					<label htmlFor='email' />
 					<input
@@ -65,8 +120,10 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 						name='email'
 						id='email'
 						placeholder='Email'
-						className={invalidEmail ? styles.invalid : ''}
-						onChange={validateEmail}
+						className={formInputs['email'].valid ? '' : styles.invalid}
+						onChange={(e) =>
+							inputOnChange({ type: 'email', value: e.target.value })
+						}
 					/>
 				</section>
 				<section className={styles.lf_input_field}>
@@ -76,8 +133,10 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 						name='password'
 						id='password'
 						placeholder='Password'
-						className={invalidPassword ? styles.invalid : ''}
-						onChange={validatePassword}
+						className={formInputs['password'].valid ? '' : styles.invalid}
+						onChange={(e) =>
+							inputOnChange({ type: 'password', value: e.target.value })
+						}
 					/>
 				</section>
 				<section className={styles.login_options}>

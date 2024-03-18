@@ -207,14 +207,13 @@ button[name='signup'] {
 	transform: translate(-50%, -50%);
 	background-color: white;
 	width: 500px;
-	height: 570px;
 	float: left;
 	border-radius: 12px;
 }
 
 .error {
-	border: 1px solid #de8787;
-	background-color: #de8787;
+	border: 1px solid #eac8c8;
+	background-color: #eac8c8;
 	height: 40px;
 	font-size: 14px;
 	color: #6c2f2f;

@@ -1,8 +1,8 @@
 import { backOff } from 'exponential-backoff';
 
-import { baseURL } from './util';
 import { Trip } from 'types/trip';
 import { User } from 'types/user';
+import { baseURL } from './util';
 
 const apiFetch = async <T>(
 	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
@@ -12,7 +12,9 @@ const apiFetch = async <T>(
 	ok: boolean;
 	isClientError: boolean;
 	status: number;
-	getJson: { error?: { message: string; status: number } } & { objects: T };
+	getJson:
+		| ({ error?: { message: string; status: number } } & { objects: T })
+		| any;
 }> => {
 	try {
 		const response = await backOff(
@@ -36,12 +38,15 @@ const apiFetch = async <T>(
 			}
 		);
 
-		return {
+		let returnObj = {
 			ok: response.ok,
 			isClientError: response.status >= 400 && response.status <= 499,
 			status: response.status,
-			getJson: await response.json(),
+			getJson: undefined,
 		};
+		returnObj.getJson = !path.includes('login') && (await response.json());
+
+		return returnObj;
 	} catch (e: any) {
 		return e;
 	}
@@ -94,6 +99,6 @@ export const deleteTrip = async (id: string) => {
 };
 
 export const authUser = async (mode: string, data: User) => {
-	const res = await apiPost<User | any>(`auth/${mode}`, data);
+	const res = await apiPost(`auth/${mode}`, data);
 	return res;
 };
