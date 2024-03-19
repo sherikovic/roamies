@@ -97,11 +97,13 @@ label[for='remember_me'] {
 	cursor: pointer;
 	padding: 8px 12px;
 	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.8);
+	/* background-color: rgba(0, 0, 0, 0.8); */
+	background-color: #2c3333;
 	color: white;
 	border: none;
 	&:hover {
-		background-color: rgb(0, 0, 0);
+		/* background-color: rgb(0, 0, 0); */
+		background-color: #1c2727;
 	}
 }
 
@@ -169,10 +171,12 @@ img {
 	text-align: center;
 	text-decoration: none;
 	border-radius: 15px;
-	background-color: rgba(0, 0, 0, 0.8);
+	/* background-color: rgba(0, 0, 0, 0.8); */
+	background-color: #2c3333;
 	color: white;
 	&:hover {
-		background-color: rgb(0, 0, 0);
+		/* background-color: rgb(0, 0, 0); */
+		background-color: #1c2727;
 	}
 }
 
