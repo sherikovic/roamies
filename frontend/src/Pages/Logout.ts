@@ -8,6 +8,7 @@ export const action: ActionFunction = async () => {
 			'Content-Type': 'application/json',
 		},
 	});
+
 	if (!response.ok) {
 		throw json(
 			{ message: 'Encountered an error during logging out.' },
@@ -17,5 +18,5 @@ export const action: ActionFunction = async () => {
 	// const resData = await response.json();
 	// console.log(resData);
 
-	return redirect('/trips');
+	return redirect('/');
 };

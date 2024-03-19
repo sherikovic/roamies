@@ -27,7 +27,7 @@ const fields = {
 
 const LoginForm: React.FC<LoginFormProps> = (props) => {
 	const navigate = useNavigate();
-	let prevLocation = useLocation().pathname;
+	let location = useLocation().pathname;
 
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState('');
@@ -56,17 +56,12 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 	const sendAuthRequest = async (data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser('login', formData);
-		if (prevLocation.includes('signup')) {
-			prevLocation = '/';
+		if (res.status === 201) {
+			location.includes('signup') ? navigate(-1) : window.location.reload();
 		}
-		res.status === 201
-			? prevLocation === '/'
-				? navigate(prevLocation)
-				: window.location.reload()
-			: navigate('/');
+		res.status === 300 && setErrorMessage('A user is already logged in!');
 		res.status === 401 &&
 			setErrorMessage('Either email or password is invalid!');
-		res.status === 300 && setErrorMessage('A user is already logged in!');
 	};
 
 	const submitLoginForm = async (event: any) => {

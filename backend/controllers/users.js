@@ -49,7 +49,7 @@ module.exports.logout = async (req, res) => {
 		if (err) {
 			return next(err);
 		}
-		res.json({ message: 'logged out' });
+		res.json({ message: 'User was successfully logged out.' });
 	});
 };
 

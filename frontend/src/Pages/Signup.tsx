@@ -1,7 +1,6 @@
 import SignupForm from 'Components/SignupForm';
 import styles from './Signup.module.css';
 import { useRouteLoaderData } from 'react-router';
-import { symbol } from 'prop-types';
 
 const SignupPage: React.FC = () => {
 	const logIn = useRouteLoaderData('root');

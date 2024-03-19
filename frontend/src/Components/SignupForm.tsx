@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { authUser } from 'util/api';
 import { User } from 'types/user';
-import { useNavigate } from 'react-router';
+import { useLocation, useNavigate } from 'react-router';
 
 import googleIcon from '../images/googlelogo.svg';
 import emailIcon from '../images/emailicon.png';
@@ -66,11 +66,6 @@ const SignupForm: React.FC = () => {
 	const sendAuthRequest = async (data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser('signup', formData);
-		// res.status === 201
-		// 	? prevLocation === '/'
-		// 		? navigate(prevLocation)
-		// 		: window.location.reload()
-		// 	: navigate('/');
 		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
 	};
 

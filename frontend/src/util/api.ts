@@ -98,8 +98,10 @@ export const deleteTrip = async (id: string) => {
 	return res.getJson;
 };
 
-export const authUser = async (mode: string, data: User) => {
-	const res = await apiPost(`auth/${mode}`, data);
+export const authUser = async (mode: string, data: User | null) => {
+	const res = data
+		? await apiPost(`auth/${mode}`, data)
+		: await apiPost(`auth/${mode}`, null);
 	return res;
 };
 

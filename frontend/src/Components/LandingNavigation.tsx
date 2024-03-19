@@ -1,11 +1,20 @@
 import { useState } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useRouteLoaderData } from 'react-router-dom';
 
 import styles from './LandingNavigation.module.css';
 import LoginForm from './LoginForm';
 
+import { authUser } from 'util/api';
+
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+	const logIn = useRouteLoaderData('root');
+
+	const logOutHandler = async () => {
+		const res = await authUser('logout', null);
+		res.status === 200 && window.location.reload();
+		// TODO handler errors coming from the logout
+	};
 
 	return (
 		<div className={styles.landing_navigation}>
@@ -38,10 +47,16 @@ const LandingNavigation: React.FC = () => {
 					Contact
 				</NavLink>
 			</nav>
-			<nav className={styles.landing_login}>
-				<button onClick={() => setShowLoginOverlay(true)}>Log in</button>
-				<a href='signup'>Sign up</a>
-			</nav>
+			{logIn ? (
+				<nav className={styles.landing_login}>
+					<button onClick={logOutHandler}>Log out</button>
+				</nav>
+			) : (
+				<nav className={styles.landing_login}>
+					<button onClick={() => setShowLoginOverlay(true)}>Log in</button>
+					<a href='signup'>Sign up</a>
+				</nav>
+			)}
 			{showLoginOverlay && (
 				<div className={styles.card_overlay}>
 					<div className={styles.overlay_content}>
