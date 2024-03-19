@@ -37,7 +37,6 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-	console.log(req.user);
 	res.status(201).json({ message: 'Log in succussful', user: req.user });
 };
 

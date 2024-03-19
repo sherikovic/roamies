@@ -50,7 +50,7 @@
 	width: 100%;
 	background-color: white;
 	border: 1.5px solid #d8d0d0;
-	border-radius: 4px;
+	border-radius: 15px;
 	padding: 12px 8px;
 	font-size: 15px;
 	&:focus,
@@ -96,7 +96,7 @@ label[for='remember_me'] {
 	line-height: 1.6;
 	cursor: pointer;
 	padding: 8px 12px;
-	border-radius: 4px;
+	border-radius: 15px;
 	background-color: rgba(0, 0, 0, 0.8);
 	color: white;
 	border: none;
@@ -121,7 +121,7 @@ label[for='remember_me'] {
 	width: 100%;
 	cursor: pointer;
 	padding: 8px 12px;
-	border-radius: 4px;
+	border-radius: 15px;
 	background-color: white;
 	border: 1px solid black;
 	&:hover {
@@ -168,7 +168,7 @@ img {
 	line-height: 1.6;
 	text-align: center;
 	text-decoration: none;
-	border-radius: 4px;
+	border-radius: 15px;
 	background-color: rgba(0, 0, 0, 0.8);
 	color: white;
 	&:hover {
@@ -185,7 +185,7 @@ img {
 	color: #6c2f2f;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border-radius: 4px;
+	border-radius: 15px;
 	display: flex;
 	justify-content: center;
 	align-items: center;

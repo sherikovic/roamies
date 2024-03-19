@@ -1,9 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useNavigate, useRouteLoaderData } from 'react-router';
+
 import styles from './Landing.module.css';
 import LoginForm from 'Components/LoginForm';
 
 const LandingPage: React.FC = () => {
+	const navigate = useNavigate();
 	const [showLoginPage, setShowLoginPage] = useState(false);
+	const logIn = useRouteLoaderData('root');
+
+	useEffect(() => {
+		logIn && navigate('/home');
+	}, [logIn, navigate]);
 
 	return (
 		<div className={styles.landing_page}>

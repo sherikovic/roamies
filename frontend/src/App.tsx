@@ -2,10 +2,10 @@ import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // Main Routes
 import LandingPage from './Pages/Landing';
-import RootMain, { loader as getLoggedInUserLoader } from './Pages/RootMain';
+import RootHome from './Pages/RootHome';
+import SignupPage from 'Pages/Signup';
 
 // Auth and Settings Routes
-import LoginPage, { action as authFormAction } from './Pages/Login';
 import { action as logoutAction } from './Pages/Logout';
 import ErrorPage from './Pages/Error';
 import ProfilePage from './Pages/Profile';
@@ -33,92 +33,99 @@ import HowToUsePage from 'Pages/HowToUse';
 import FAQPage from 'Pages/FAQ';
 import ContactPage from 'Pages/Contact';
 import RootLanding from 'Pages/RootLanding';
-import SignupPage from 'Pages/Signup';
+
+// Util functions
+import { isUserLoggedIn } from 'util/util';
+import HomePage from 'Pages/Home';
 
 const router = createBrowserRouter([
 	{
 		path: '/',
-		element: <LandingPage />,
-	},
-	{
-		path: '/signup',
-		element: <SignupPage />,
-	},
-	{
-		path: 'logout',
-		action: logoutAction,
-	},
-	{
-		path: '/',
-		element: <RootLanding />,
-		children: [
-			{
-				path: 'about',
-				element: <AboutPage />,
-			},
-			{
-				path: 'how-to-use',
-				element: <HowToUsePage />,
-			},
-			{
-				path: 'faq',
-				element: <FAQPage />,
-			},
-			{
-				path: 'contact',
-				element: <ContactPage />,
-			},
-		],
-	},
-	{
-		element: <RootMain />,
-		errorElement: <ErrorPage />,
 		id: 'root',
-		loader: getLoggedInUserLoader,
+		errorElement: <ErrorPage />,
+		loader: isUserLoggedIn,
 		children: [
 			{
-				path: 'trips',
+				index: true,
+				element: <LandingPage />,
+			},
+			{
+				path: 'signup',
+				element: <SignupPage />,
+			},
+			{
+				path: 'logout',
+				action: logoutAction,
+			},
+			{
+				element: <RootLanding />,
+				id: 'root-landing',
 				children: [
 					{
-						index: true,
+						path: 'about',
+						element: <AboutPage />,
+					},
+					{
+						path: 'how-to-use',
+						element: <HowToUsePage />,
+					},
+					{
+						path: 'faq',
+						element: <FAQPage />,
+					},
+					{
+						path: 'contact',
+						element: <ContactPage />,
+					},
+				],
+			},
+			{
+				element: <RootHome />,
+				id: 'root-home',
+				children: [
+					{
+						path: 'home',
+						element: <HomePage />,
+					},
+					{
+						path: 'trips',
 						element: <TripsPage />,
 						loader: tripsLoader,
+						children: [
+							{
+								path: ':id',
+								id: 'trip-detail',
+								element: <TripDetailPage />,
+								loader: tripDetailLoader,
+								action: deleteTripAction,
+							},
+						],
 					},
 					{
-						path: ':id',
-						id: 'trip-detail',
-						element: <TripDetailPage />,
-						loader: tripDetailLoader,
-						action: deleteTripAction,
-					},
-				],
-			},
-			{
-				path: 'locations',
-				children: [
-					{
-						index: true,
+						path: 'locations',
 						element: <LocationsPage />,
 						loader: locationsLoader,
+						children: [
+							{
+								path: ':id',
+								id: 'location-detail',
+								element: <LocationDetailPage />,
+								loader: locationDetailLoader,
+								action: deleteLocationAction,
+							},
+						],
 					},
 					{
-						path: ':id',
-						id: 'location-detail',
-						element: <LocationDetailPage />,
-						loader: locationDetailLoader,
-						action: deleteLocationAction,
+						path: 'profile',
+						element: <ProfilePage />,
+					},
+					{
+						path: 'settings',
+						element: <SettingsPage />,
+						loader: settingsFormLoader,
+						action: settingsFormAction,
 					},
 				],
-			},
-			{
-				path: 'profile',
-				element: <ProfilePage />,
-			},
-			{
-				path: 'settings',
-				element: <SettingsPage />,
-				loader: settingsFormLoader,
-				action: settingsFormAction,
 			},
 		],
 	},

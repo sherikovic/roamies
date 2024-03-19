@@ -102,3 +102,8 @@ export const authUser = async (mode: string, data: User) => {
 	const res = await apiPost(`auth/${mode}`, data);
 	return res;
 };
+
+export const getUser = async () => {
+	const res = await apiGet('auth/getusername');
+	return res;
+};

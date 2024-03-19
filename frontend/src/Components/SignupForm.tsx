@@ -66,11 +66,12 @@ const SignupForm: React.FC = () => {
 	const sendAuthRequest = async (data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser('signup', formData);
-		if (res.status === 201) {
-			navigate('/trips');
-		} else {
-			setErrorMessage(res.getJson.message);
-		}
+		// res.status === 201
+		// 	? prevLocation === '/'
+		// 		? navigate(prevLocation)
+		// 		: window.location.reload()
+		// 	: navigate('/');
+		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
 	};
 
 	const submitSignupForm = async (event: any) => {
@@ -108,22 +109,8 @@ const SignupForm: React.FC = () => {
 		<div>
 			<form method='post' className={styles.form} onSubmit={submitSignupForm}>
 				<div className={styles.form_content}>
-					<section className={styles.left_side}>
-						<header>Sign up faster with</header>
-						<button name='google' type='button'>
-							<img
-								src={googleIcon}
-								alt='Google logo'
-								className={styles.googlelogo}
-							/>
-							<p>Google</p>
-						</button>
-					</section>
-					<section className={styles.separator}>
-						<span>or</span>
-					</section>
-					<section className={styles.right_side}>
-						<header>Sign up with email</header>
+					<section className={styles.email_login}>
+						<header>Create new account</header>
 						{errorMessage !== '' && (
 							<p className={styles.error}>
 								<img
@@ -140,7 +127,7 @@ const SignupForm: React.FC = () => {
 									<img
 										src={personalIcon}
 										alt='personal icon'
-										className={styles.icon}
+										className={`${styles.icon} ${styles.flicon}`}
 									/>
 								</label>
 								<input
@@ -161,7 +148,7 @@ const SignupForm: React.FC = () => {
 									<img
 										src={personalIcon}
 										alt='personal icon'
-										className={styles.icon}
+										className={`${styles.icon} ${styles.flicon}`}
 									/>
 								</label>
 								<input
@@ -178,7 +165,11 @@ const SignupForm: React.FC = () => {
 						</div>
 						<div className={styles.su_input_field}>
 							<label htmlFor='email'>
-								<img src={emailIcon} alt='email icon' className={styles.icon} />
+								<img
+									src={emailIcon}
+									alt='email icon'
+									className={`${styles.icon} ${styles.epicon}`}
+								/>
 							</label>
 							<input
 								type='email'
@@ -196,7 +187,7 @@ const SignupForm: React.FC = () => {
 								<img
 									src={passwordIcon}
 									alt='password icon'
-									className={styles.icon}
+									className={`${styles.icon} ${styles.epicon}`}
 								/>
 							</label>
 							<input
@@ -210,11 +201,24 @@ const SignupForm: React.FC = () => {
 								}
 							/>
 						</div>
-						<div className={styles.actions}>
+						<div>
 							<button name='signup' type='submit'>
 								Sign up
 							</button>
 						</div>
+					</section>
+					<section className={styles.separator}>
+						<span>or</span>
+					</section>
+					<section className={styles.other_login}>
+						<button name='google' type='button'>
+							<img
+								src={googleIcon}
+								alt='Google logo'
+								className={styles.googlelogo}
+							/>
+							<p>Google</p>
+						</button>
 					</section>
 				</div>
 				<section className={styles.footer}>

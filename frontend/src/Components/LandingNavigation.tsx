@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 import styles from './LandingNavigation.module.css';
-import LoginPage from 'Pages/Login';
+import LoginForm from './LoginForm';
 
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
@@ -45,7 +45,7 @@ const LandingNavigation: React.FC = () => {
 			{showLoginOverlay && (
 				<div className={styles.card_overlay}>
 					<div className={styles.overlay_content}>
-						<LoginPage cancelHandler={() => setShowLoginOverlay(false)} />
+						<LoginForm cancelHandler={() => setShowLoginOverlay(false)} />
 					</div>
 				</div>
 			)}

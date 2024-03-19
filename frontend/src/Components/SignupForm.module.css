@@ -2,21 +2,86 @@
 	display: flex;
 	flex-direction: column;
 	justify-content: space-evenly;
-	width: 700px;
-	border: 1px solid grey;
 	border-radius: 8px;
-	padding: 25px;
+	/* padding: 25px; */
+	width: 340px;
 }
 
 .form_content {
 	display: flex;
+	flex-direction: column;
 }
 
-.left_side {
+.email_login {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
 	width: 100%;
+}
+
+header {
+	font-size: 50px;
+	font-weight: 550;
+	color: white;
+	margin: 0;
+	text-align: left;
+	padding-bottom: 20px;
+	line-height: 50px;
+	text-wrap: pretty;
+}
+
+.su_input_field {
+	padding: 10px 0px;
+}
+
+.su_input_flnames {
+	display: flex;
+	justify-content: space-between;
+	position: relative;
+	gap: 10px;
+}
+
+.su_input_field input {
+	position: relative;
+	width: 100%;
+	background-color: rgb(33, 33, 34);
+	border: 0.1px solid transparent;
+	border-radius: 15px;
+	padding: 12px 4px;
+	padding-left: 25px;
+	font-size: 15px;
+	color: white;
+	&:focus {
+		outline: none;
+		border: 1.5px solid grey;
+	}
+	&::placeholder {
+		color: rgba(128, 128, 128, 0.966);
+	}
+}
+
+.su_input_field input.invalid {
+	border-color: rgba(255, 0, 0, 0.296);
+}
+
+label {
+	position: absolute;
+}
+
+button[name='signup'] {
+	margin-top: 30px;
+	width: 100%;
+	font-size: 15px;
+	line-height: 1.6;
+	cursor: pointer;
+	padding: 8px 12px;
+	border-radius: 15px;
+	background-color: rgb(32 77 136);
+	color: white;
+	border: none;
+	&:hover {
+		background-color: rgb(37, 88, 155);
+	}
 }
 
 .separator {
@@ -27,9 +92,10 @@
 	font-weight: 500;
 	line-height: 0.7;
 	color: grey;
+	padding: 20px 0;
 }
 
-.right_side {
+.other_login {
 	display: flex;
 	flex-direction: column;
 	justify-content: center;
@@ -44,7 +110,7 @@ button[name='google'] {
 	width: 100%;
 	cursor: pointer;
 	padding: 8px 12px;
-	border-radius: 4px;
+	border-radius: 15px;
 	background-color: white;
 	border: 1px solid black;
 	&:hover {
@@ -76,60 +142,6 @@ img {
 	overflow: clip;
 }
 
-header {
-	font-size: 23px;
-	font-weight: 550;
-	color: white;
-	margin: 0;
-	text-align: center;
-	padding-bottom: 20px;
-	&:after {
-		content: '_________________';
-		display: block;
-		/* transform: translateY(-15px); */
-		color: #868080;
-	}
-}
-
-.su_input_field {
-	padding: 5px 0px;
-}
-
-.su_input_flnames {
-	display: flex;
-	justify-content: space-between;
-	position: relative;
-	gap: 10px;
-}
-
-.su_input_field input {
-	position: relative;
-	width: 100%;
-	background-color: white;
-	border: 1.5px solid #d8d0d0;
-	border-radius: 4px;
-	padding: 8px 4px;
-	padding-left: 25px;
-	font-size: 15px;
-	color: black;
-	&:focus,
-	&:hover {
-		outline: none;
-		border: 1.5px solid grey;
-	}
-	&::placeholder {
-		color: rgba(128, 128, 128, 0.966);
-	}
-}
-
-.su_input_field input.invalid {
-	border-color: rgba(255, 0, 0, 0.296);
-}
-
-label {
-	position: absolute;
-}
-
 .icon {
 	height: 18px;
 	width: 18px;
@@ -138,25 +150,17 @@ label {
 	margin-right: 8px;
 	text-indent: 0px;
 	position: absolute;
-	right: -30px;
-	top: 6px;
 	z-index: 2;
 }
 
-button[name='signup'] {
-	margin-top: 30px;
-	width: 100%;
-	font-size: 15px;
-	line-height: 1.6;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 4px;
-	background-color: rgb(255, 255, 255);
-	color: black;
-	border: none;
-	&:hover {
-		background-color: rgba(240, 240, 240, 0.827);
-	}
+.flicon {
+	left: 140px;
+	top: 10px;
+}
+
+.epicon {
+	left: 315px;
+	top: 10px;
 }
 
 .footer {
@@ -208,7 +212,7 @@ button[name='signup'] {
 	background-color: white;
 	width: 500px;
 	float: left;
-	border-radius: 12px;
+	border-radius: 15px;
 }
 
 .error {
@@ -219,7 +223,7 @@ button[name='signup'] {
 	color: #6c2f2f;
 	margin-top: 10px;
 	margin-bottom: 10px;
-	border-radius: 4px;
+	border-radius: 15px;
 	display: flex;
 	justify-content: center;
 	align-items: center;
