@@ -1,20 +1,21 @@
 import { json, useNavigate, useParams } from 'react-router-dom';
 
-import { Location } from '../types/location';
-import classes from './LocationForm.module.css';
+import { Trip } from '../../types/trip';
+import classes from './TripForm.module.css';
 import { useState } from 'react';
+import { createTrip, updateTrip } from 'util/api';
 
-interface LocationFormProps {
+interface TripFormProps {
 	method: any;
-	LocationData?: Location;
+	tripData?: Trip;
 	cancelHandler: () => void;
 	children?: React.ReactNode;
 }
 
-const LocationForm: React.FC<LocationFormProps> = (props) => {
+const TripForm: React.FC<TripFormProps> = (props) => {
 	const [formErrors, setFormErrors] = useState({
 		name: '',
-		latitude: '',
+		location: '',
 		description: '',
 	});
 	const navigate = useNavigate();
@@ -22,15 +23,18 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 
 	const validateFormInputs = (FormData: any) => {
 		FormData.name === ''
-			? setFormErrors((prev) => ({ ...prev, name: 'Name is required!' }))
-			: setFormErrors((prev) => ({ ...prev, name: '' }));
-
-		FormData.latitude === ''
 			? setFormErrors((prev) => ({
 					...prev,
-					latitude: 'Latitude is required!',
+					name: 'Name is required!',
 			  }))
-			: setFormErrors((prev) => ({ ...prev, latitude: '' }));
+			: setFormErrors((prev) => ({ ...prev, name: '' }));
+
+		FormData.location === ''
+			? setFormErrors((prev) => ({
+					...prev,
+					location: 'Location is required!',
+			  }))
+			: setFormErrors((prev) => ({ ...prev, location: '' }));
 
 		FormData.description === ''
 			? setFormErrors((prev) => ({
@@ -43,9 +47,9 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 	const submitHandler = async (event: any) => {
 		event.preventDefault();
 
-		const FormData = {
+		const FormData: any = {
 			name: event.target.name.value,
-			latitude: event.target.latitude.value,
+			location: event.target.location.value,
 			description: event.target.description.value,
 		};
 
@@ -53,32 +57,30 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 
 		if (
 			FormData.name !== '' &&
-			FormData.latitude !== '' &&
+			FormData.location !== '' &&
 			FormData.description !== ''
 		) {
-			let url = 'http://localhost:8080/Locations';
+			let res: any;
 			if (props.method === 'PATCH') {
-				const id = params.id;
-				url = 'http://localhost:8080/Locations/' + id;
-			}
-			const response = await fetch(url, {
-				method: props.method,
-				headers: {
-					'Content-Type': 'application/json',
-				},
-				body: JSON.stringify(FormData),
-			});
-			const resObj: any = await response.json();
-
-			if (!response.ok) {
-				throw json({ message: resObj.message }, { status: resObj.status });
-			}
-			props.cancelHandler();
-			if (props.method === 'POST') {
-				console.log(resObj);
-				navigate('/Locations/' + resObj.Location._id);
+				const id: any = params.id;
+				res = await updateTrip(id, FormData);
 			} else {
-				navigate('/Locations/' + params.id);
+				res = await createTrip(FormData);
+			}
+
+			if (res.error) {
+				throw json(
+					{ message: res.error.message },
+					{ status: res.error.status }
+				);
+			}
+
+			props.cancelHandler();
+
+			if (props.method === 'POST') {
+				navigate('/trips/' + res.trip._id);
+			} else {
+				navigate('/trips/' + params.id);
 			}
 		}
 	};
@@ -88,7 +90,7 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 			<span className={classes.card_close} onClick={props.cancelHandler}>
 				X
 			</span>
-			<p className={classes.paragraph}>Define your Location</p>
+			<p className={classes.paragraph}>Start your trip</p>
 			<form
 				method={props.method}
 				className={classes.form}
@@ -101,17 +103,17 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 						type='text'
 						name='name'
 						id='name'
-						defaultValue={props.LocationData ? props.LocationData.name : ''}
+						defaultValue={props.tripData ? props.tripData.name : ''}
 					/>
 				</p>
-				<p style={{ color: 'orange' }}>{formErrors.latitude}</p>
+				<p style={{ color: 'orange' }}>{formErrors.location}</p>
 				<p>
-					<label htmlFor='latitude'>Latitude:</label>
+					<label htmlFor='location'>Location:</label>
 					<input
 						type='text'
-						name='latitude'
-						id='latitude'
-						defaultValue={props.LocationData ? props.LocationData.latitude : ''}
+						name='location'
+						id='location'
+						defaultValue={props.tripData ? props.tripData.location : ''}
 					/>
 				</p>
 				<p style={{ color: 'orange' }}>{formErrors.description}</p>
@@ -120,12 +122,10 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 					<textarea
 						name='description'
 						id='description'
-						placeholder='Describe the usage of this Location'
+						placeholder='Tell us more about your trip'
 						cols={30}
 						rows={3}
-						defaultValue={
-							props.LocationData ? props.LocationData.description : ''
-						}
+						defaultValue={props.tripData ? props.tripData.description : ''}
 					/>
 				</p>
 				<div className={classes.actions}>
@@ -139,4 +139,4 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 	);
 };
 
-export default LocationForm;
+export default TripForm;

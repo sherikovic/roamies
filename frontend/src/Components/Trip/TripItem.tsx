@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Trip } from '../types/trip';
+import { Trip } from '../../types/trip';
 import { Link, useRouteLoaderData, useSubmit } from 'react-router-dom';
 import classes from './TripItem.module.css';
 import TripForm from './TripForm';

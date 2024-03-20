@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useRouteLoaderData } from 'react-router';
 
 import styles from './Landing.module.css';
-import LoginForm from 'Components/LoginForm';
+import LoginForm from 'Components/Auth/LoginForm';
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();

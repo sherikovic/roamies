@@ -1,13 +1,13 @@
 import { useState } from 'react';
 import { authUser } from 'util/api';
 import { User } from 'types/user';
-import { useLocation, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router-dom';
 
-import googleIcon from '../images/googlelogo.svg';
-import emailIcon from '../images/emailicon.png';
-import passwordIcon from '../images/passwordicon.png';
-import personalIcon from '../images/personalicon.png';
-import warningIcon from '../images/warningicon.png';
+import googleIcon from '../../images/googlelogo.svg';
+import emailIcon from '../../images/emailicon.png';
+import passwordIcon from '../../images/passwordicon.png';
+import personalIcon from '../../images/personalicon.png';
+import warningIcon from '../../images/warningicon.png';
 
 import styles from './SignupForm.module.css';
 import LoginForm from './LoginForm';

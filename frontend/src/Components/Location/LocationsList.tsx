@@ -1,5 +1,5 @@
 import { Link, useRouteLoaderData } from 'react-router-dom';
-import { Location } from '../types/location';
+import { Location } from '../../types/location';
 import classes from './LocationsList.module.css';
 import { useState } from 'react';
 import LocationForm from './LocationForm';

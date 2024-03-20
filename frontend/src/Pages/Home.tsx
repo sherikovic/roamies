@@ -1,6 +1,8 @@
 import { useEffect } from 'react';
 import { useNavigate, useRouteLoaderData } from 'react-router';
 
+import styles from './Home.module.css';
+
 const HomePage: React.FC = () => {
 	const navigate = useNavigate();
 	const logIn = useRouteLoaderData('root');
@@ -9,7 +11,15 @@ const HomePage: React.FC = () => {
 		!logIn && navigate('/');
 	}, [logIn, navigate]);
 
-	return <></>;
+	return (
+		<div className={styles.home_page}>
+			<div className={styles.home_body}>
+				<div className={styles.side_nav}></div>
+				<div className={styles.home_contents}></div>
+				<div className={styles.right_actions}></div>
+			</div>
+		</div>
+	);
 };
 
 export default HomePage;

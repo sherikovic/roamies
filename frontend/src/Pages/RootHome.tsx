@@ -1,12 +1,13 @@
 import React from 'react';
 import { Outlet } from 'react-router-dom';
 
-import MainNavigation from '../Components/MainNavigation';
+// import MainNavigation from '../Components/Homepage/MainNavigation';
+import TopNavBar from 'Components/Homepage/MainNavBar';
 
 const RootHome: React.FC = () => {
 	return (
 		<React.Fragment>
-			<MainNavigation />
+			<TopNavBar />
 			<main>
 				<Outlet />
 			</main>

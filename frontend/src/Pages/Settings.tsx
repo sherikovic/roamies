@@ -5,8 +5,8 @@ import {
 	useLoaderData,
 	useRouteLoaderData,
 } from 'react-router-dom';
-import PageContent from '../Components/PageContent';
-import SettingsTabs from '../Components/SettingsTabs';
+import PageContent from '../Components/Misc/PageContent';
+import SettingsTabs from '../Components/Settings/SettingsTabs';
 import { Element } from '../types/element';
 
 const SettingsPage: React.FC = () => {

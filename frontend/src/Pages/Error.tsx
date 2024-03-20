@@ -1,6 +1,6 @@
 import { useRouteError } from 'react-router-dom';
-import MainNavigation from '../Components/MainNavigation';
-import ErrorContent from '../Components/ErrorContent';
+import MainNavBar from '../Components/Homepage/MainNavBar';
+import ErrorContent from '../Components/Misc/ErrorContent';
 
 const ErrorPage: React.FC = () => {
 	const error: any = useRouteError();
@@ -19,7 +19,7 @@ const ErrorPage: React.FC = () => {
 
 	return (
 		<>
-			<MainNavigation />
+			<MainNavBar />
 			<ErrorContent title={title}>{message}</ErrorContent>
 		</>
 	);

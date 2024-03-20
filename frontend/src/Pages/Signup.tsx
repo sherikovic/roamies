@@ -1,4 +1,4 @@
-import SignupForm from 'Components/SignupForm';
+import SignupForm from 'Components/Auth/SignupForm';
 import styles from './Signup.module.css';
 import { useRouteLoaderData } from 'react-router';
 

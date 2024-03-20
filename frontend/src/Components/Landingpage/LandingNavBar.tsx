@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { NavLink, useRouteLoaderData } from 'react-router-dom';
 
-import styles from './LandingNavigation.module.css';
-import LoginForm from './LoginForm';
+import styles from './LandingNavBar.module.css';
+import LoginForm from '../Auth/LoginForm';
 
 import { authUser } from 'util/api';
 
@@ -13,7 +13,7 @@ const LandingNavigation: React.FC = () => {
 	const logOutHandler = async () => {
 		const res = await authUser('logout', null);
 		res.status === 200 && window.location.reload();
-		// TODO handler errors coming from the logout
+		// TODO handle errors coming from the logout
 	};
 
 	return (

@@ -1,5 +1,5 @@
 import { Link, useRouteLoaderData } from 'react-router-dom';
-import { Trip } from '../types/trip';
+import { Trip } from '../../types/trip';
 import classes from './TripsList.module.css';
 import { useState } from 'react';
 import TripForm from './TripForm';

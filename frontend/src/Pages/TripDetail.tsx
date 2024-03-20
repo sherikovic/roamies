@@ -6,7 +6,7 @@ import {
 	useRouteLoaderData,
 } from 'react-router-dom';
 
-import TripItem from '../Components/TripItem';
+import TripItem from '../Components/Trip/TripItem';
 import { deleteTrip, getTrip } from 'util/api';
 
 const TripDetailPage: React.FC = () => {

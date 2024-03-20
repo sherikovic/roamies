@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AccountSettingsForm from './AccountSettingsForm';
 import PersonalInfoForm from './PersonalInfoForm';
 import classes from './SettingsTabs.module.css';
-import { Element } from '../types/element';
+import { Element } from '../../types/element';
 
 interface SettingsTabsProps {
 	userData: Element;

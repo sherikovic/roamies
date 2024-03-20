@@ -1,0 +1,27 @@
+.home_page {
+	display: flex;
+	flex-direction: column;
+}
+
+.main_top_nav {
+	display: flex;
+}
+
+.home_body {
+	display: flex;
+}
+
+.side_nav {
+	display: flex;
+	flex-direction: column;
+}
+
+.home_contents {
+	display: flex;
+	flex-direction: column;
+}
+
+.right_actions {
+	display: flex;
+	flex-direction: column;
+}

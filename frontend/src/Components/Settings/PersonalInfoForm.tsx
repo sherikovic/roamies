@@ -1,7 +1,7 @@
 import { Form, useActionData } from 'react-router-dom';
 import APIFormTextInputLabel from './APIFormTextInputLabel';
 import classes from './APInfoForm.module.css';
-import { Element } from '../types/element';
+import { Element } from '../../types/element';
 
 interface PersonalInfoFormProps {
 	userData: Element;

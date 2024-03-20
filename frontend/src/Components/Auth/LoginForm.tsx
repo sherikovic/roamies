@@ -3,8 +3,8 @@ import { authUser } from 'util/api';
 import { User } from 'types/user';
 import { useLocation, useNavigate } from 'react-router';
 
-import googleIcon from '../images/googlelogo.svg';
-import warningIcon from '../images/warningicon.png';
+import googleIcon from '../../images/googlelogo.svg';
+import warningIcon from '../../images/warningicon.png';
 import styles from './LoginForm.module.css';
 
 interface LoginFormProps {

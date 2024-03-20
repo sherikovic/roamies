@@ -4,7 +4,7 @@ import {
 	redirect,
 	useRouteLoaderData,
 } from 'react-router-dom';
-import LoginForm from '../Components/LoginForm';
+import LoginForm from '../Components/Auth/LoginForm';
 
 interface LoginPageProps {
 	cancelHandler: () => void;
