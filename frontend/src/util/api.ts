@@ -109,3 +109,12 @@ export const getUser = async () => {
 	const res = await apiGet('auth/getusername');
 	return res;
 };
+
+// export const getAllData = async (
+// 	select: string,
+// 	path: string,
+// 	queryOptions?: string
+// ) => {
+// let path: string;
+// path = select === 'trip' ? 'trips'
+// };

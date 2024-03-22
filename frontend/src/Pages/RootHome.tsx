@@ -2,12 +2,12 @@ import React from 'react';
 import { Outlet } from 'react-router-dom';
 
 // import MainNavigation from '../Components/Homepage/MainNavigation';
-import TopNavBar from 'Components/Homepage/MainNavBar';
+import MainNavBar from 'Components/Homepage/MainNavBar';
 
 const RootHome: React.FC = () => {
 	return (
 		<React.Fragment>
-			<TopNavBar />
+			<MainNavBar />
 			<main>
 				<Outlet />
 			</main>

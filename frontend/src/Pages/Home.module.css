@@ -3,10 +3,6 @@
 	flex-direction: column;
 }
 
-.main_top_nav {
-	display: flex;
-}
-
 .home_body {
 	display: flex;
 }
@@ -19,6 +15,10 @@
 .home_contents {
 	display: flex;
 	flex-direction: column;
+}
+
+.events_layout {
+	width: 100%;
 }
 
 .right_actions {

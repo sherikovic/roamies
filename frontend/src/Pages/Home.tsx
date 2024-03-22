@@ -14,8 +14,11 @@ const HomePage: React.FC = () => {
 	return (
 		<div className={styles.home_page}>
 			<div className={styles.home_body}>
-				<div className={styles.side_nav}></div>
-				<div className={styles.home_contents}></div>
+				{/* <div className={styles.side_nav}></div> */}
+				<div className={styles.home_contents}>
+					<section className={styles.events_layout}></section>
+					<section className={styles.trips_layout}></section>
+				</div>
 				<div className={styles.right_actions}></div>
 			</div>
 		</div>
