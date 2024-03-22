@@ -1,10 +1,10 @@
 import { Form, useActionData } from "react-router-dom";
 import APIFormTextInputLabel from "./APIFormTextInputLabel";
 import classes from "./APInfoForm.module.css";
-import { Element } from "../../types/element";
+import { User } from "types/user";
 
 interface PersonalInfoFormProps {
-	userData: Element;
+	userData: User;
 	children?: React.ReactNode;
 }
 
@@ -30,8 +30,8 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 				)}
 				<APIFormTextInputLabel
 					type="text"
-					name="full name"
-					value={props.userData ? userInfo.fullname : ""}
+					name="bio"
+					value={props.userData ? userInfo.bio : ""}
 					classDiv={classes.api_form_item}
 					classInput={classes.api_input_field}
 					classLabel={classes.api_input_label}
@@ -39,39 +39,37 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 				<div className={classes.api_form_group_cc}>
 					<APIFormTextInputLabel
 						type="text"
-						name="city"
-						value={props.userData ? userInfo.city : ""}
+						name="first name"
+						value={props.userData ? userInfo.firstname : ""}
 						classDiv={classes.api_form_item}
 						classInput={classes.api_input_field}
 						classLabel={classes.api_input_label}
 					/>
 					<APIFormTextInputLabel
 						type="text"
-						name="country"
-						value={props.userData ? userInfo.country : ""}
+						name="last name"
+						value={props.userData ? userInfo.lastname : ""}
 						classDiv={classes.api_form_item}
 						classInput={classes.api_input_field}
 						classLabel={classes.api_input_label}
 					/>
 				</div>
-				<div className={classes.api_form_group_cc}>
-					<APIFormTextInputLabel
-						type="text"
-						name="github"
-						value={props.userData ? userInfo.github : ""}
-						classDiv={classes.api_form_item}
-						classInput={classes.api_input_field}
-						classLabel={classes.api_input_label}
-					/>
-					<APIFormTextInputLabel
-						type="text"
-						name="linkedin"
-						value={props.userData ? userInfo.linkedin : ""}
-						classDiv={classes.api_form_item}
-						classInput={classes.api_input_field}
-						classLabel={classes.api_input_label}
-					/>
-				</div>
+				<APIFormTextInputLabel
+					type="text"
+					name="age"
+					value={props.userData ? userInfo.age : ""}
+					classDiv={classes.api_form_item}
+					classInput={classes.api_input_field}
+					classLabel={classes.api_input_label}
+				/>
+				<APIFormTextInputLabel
+					type="text"
+					name="country"
+					value={props.userData ? userInfo.country : ""}
+					classDiv={classes.api_form_item}
+					classInput={classes.api_input_field}
+					classLabel={classes.api_input_label}
+				/>
 				<div className={classes.api_btn_save}>
 					<button name={"personal"}>Save</button>
 				</div>

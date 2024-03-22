@@ -1,8 +1,8 @@
-import { Link, useRouteLoaderData } from 'react-router-dom';
-import { Location } from '../../types/location';
-import classes from './LocationsList.module.css';
-import { useState } from 'react';
-import LocationForm from './LocationForm';
+import { Link, useRouteLoaderData } from "react-router-dom";
+import { Location } from "../../types/location";
+import classes from "./LocationsList.module.css";
+import { useState } from "react";
+import LocationForm from "./LocationForm";
 
 interface LocationsListProps {
 	locations: Location[];
@@ -10,7 +10,7 @@ interface LocationsListProps {
 }
 
 const LocationsList: React.FC<LocationsListProps> = (props) => {
-	const data: any = useRouteLoaderData('root');
+	const data: any = useRouteLoaderData("root");
 	const [createNewLocation, setCreateNewLocation] = useState(false);
 
 	return (
@@ -39,7 +39,7 @@ const LocationsList: React.FC<LocationsListProps> = (props) => {
 				<div className={classes.card_overlay}>
 					<div className={classes.overlay_content}>
 						<LocationForm
-							method='POST'
+							method="POST"
 							cancelHandler={() => setCreateNewLocation(false)}
 						/>
 					</div>

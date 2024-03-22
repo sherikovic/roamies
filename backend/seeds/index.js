@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
+
 const trips = require("./tripsDummy");
+const broadcasts = require("./broadcastsDummy");
+
 const Trip = require("../models/trip");
+const Broadcast = require("../models/broadcast");
 
 // establish connection to monogodb
 mongoose.connect("mongodb://127.0.0.1:27017/playground");
@@ -33,6 +37,7 @@ const seedDB = async () => {
 	});
 	// clear the database
 	await Trip.deleteMany({});
+	await Broadcast.deleteMany({});
 
 	// loop over the imported data
 	// I tried to do this with foreach and map, but the connection.close() throws an error
@@ -47,6 +52,20 @@ const seedDB = async () => {
 		});
 		await trip.save();
 	}
+	for (let i = 0; i < broadcasts.length; i++) {
+		const broadcast = new Broadcast({
+			name: broadcasts[i].name,
+			description: broadcasts[i].description,
+			location: broadcasts[i].location,
+			date: broadcasts[i].date,
+			category: broadcasts[i].category,
+			time: broadcasts[i].time,
+			owner: user,
+		});
+		await broadcast.save();
+	}
 };
 
-seedDB().then(() => mongoose.connection.close());
+seedDB().then(() =>
+	mongoose.connection.close().then(console.log("Connection closed!"))
+);

@@ -7,11 +7,11 @@ import {
 } from "react-router-dom";
 import PageContent from "../Components/Misc/PageContent";
 import SettingsTabs from "../Components/Settings/SettingsTabs";
-import { Element } from "../types/element";
+import { User } from "types/user";
 
 const SettingsPage: React.FC = () => {
 	const logIn = useRouteLoaderData("root");
-	const userData: { user: Element } | any = useLoaderData();
+	const userData: { user: User } | any = useLoaderData();
 
 	return (
 		<>

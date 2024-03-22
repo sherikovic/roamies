@@ -1,7 +1,7 @@
 interface APIFormTextInputLabelProps {
 	type: string;
 	name: string;
-	value: string;
+	value?: string;
 	classDiv?: string;
 	classInput?: string;
 	classLabel?: string;

@@ -19,7 +19,7 @@ const BroadcastSchema = new Schema({
 		required: true,
 	},
 	time: {
-		type: Date,
+		type: String,
 		required: true,
 	},
 	description: {
@@ -29,6 +29,18 @@ const BroadcastSchema = new Schema({
 	images: {
 		type: Buffer,
 		required: false,
+	},
+	owner: {
+		type: Schema.Types.ObjectId,
+		ref: "User",
+	},
+	participants: {
+		type: [Schema.Types.ObjectId],
+		ref: "User",
+	},
+	comments: {
+		type: [Schema.Types.ObjectId],
+		ref: "comment",
 	},
 });
 
