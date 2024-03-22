@@ -4,13 +4,13 @@ import {
 	json,
 	redirect,
 	useRouteLoaderData,
-} from 'react-router-dom';
+} from "react-router-dom";
 
-import TripItem from '../Components/Trip/TripItem';
-import { deleteTrip, getTrip } from 'util/api';
+import TripItem from "../Components/Trip/TripItem";
+import { deleteTrip, getTrip } from "util/api";
 
 const TripDetailPage: React.FC = () => {
-	const tripData: any = useRouteLoaderData('trip-detail');
+	const tripData: any = useRouteLoaderData("trip-detail");
 	return <TripItem tripData={tripData} />;
 };
 
@@ -33,5 +33,5 @@ export const action: ActionFunction = async ({ params }) => {
 	if (res.error) {
 		throw json({ message: res.error.message }, { status: res.error.status });
 	}
-	return redirect('/trips');
+	return redirect("/trips");
 };

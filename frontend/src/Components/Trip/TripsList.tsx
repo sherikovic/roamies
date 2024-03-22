@@ -1,8 +1,8 @@
-import { Link, useRouteLoaderData } from 'react-router-dom';
-import { Trip } from '../../types/trip';
-import classes from './TripsList.module.css';
-import { useState } from 'react';
-import TripForm from './TripForm';
+import { Link, useRouteLoaderData } from "react-router-dom";
+import { Trip } from "../../types/trip";
+import classes from "./TripsList.module.css";
+import { useState } from "react";
+import TripForm from "./TripForm";
 
 interface TripsListProps {
 	trips: Trip[];
@@ -10,7 +10,7 @@ interface TripsListProps {
 }
 
 const TripsList: React.FC<TripsListProps> = (props) => {
-	const data: any = useRouteLoaderData('root');
+	const data: any = useRouteLoaderData("root");
 	const [createNewTrip, setCreateNewTrip] = useState(false);
 
 	return (
@@ -39,7 +39,7 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 				<div className={classes.card_overlay}>
 					<div className={classes.overlay_content}>
 						<TripForm
-							method='POST'
+							method="POST"
 							cancelHandler={() => setCreateNewTrip(false)}
 						/>
 					</div>

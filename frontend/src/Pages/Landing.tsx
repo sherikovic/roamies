@@ -1,16 +1,16 @@
-import { useEffect, useState } from 'react';
-import { useNavigate, useRouteLoaderData } from 'react-router';
+import { useEffect, useState } from "react";
+import { useNavigate, useRouteLoaderData } from "react-router";
 
-import styles from './Landing.module.css';
-import LoginForm from 'Components/Auth/LoginForm';
+import styles from "./Landing.module.css";
+import LoginForm from "Components/Auth/LoginForm";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const logIn = useRouteLoaderData('root');
+	const logIn = useRouteLoaderData("root");
 
 	useEffect(() => {
-		logIn && navigate('/home');
+		logIn && navigate("/home");
 	}, [logIn, navigate]);
 
 	return (
@@ -18,13 +18,13 @@ const LandingPage: React.FC = () => {
 			<div className={styles.background_image}></div>
 			<div className={styles.landing_navigation}>
 				<nav className={styles.brand}>
-					<a href='/'>SYT</a>
+					<a href="/">SYT</a>
 				</nav>
 				<nav className={styles.landing_nav_container}>
-					<a href='/about'>About</a>
-					<a href='/how-to-use'>How to Use</a>
-					<a href='/faq'>FAQ</a>
-					<a href='/contact'>Contact</a>
+					<a href="/about">About</a>
+					<a href="/how-to-use">How to Use</a>
+					<a href="/faq">FAQ</a>
+					<a href="/contact">Contact</a>
 				</nav>
 				<nav className={styles.landing_login}>
 					<button onClick={() => setShowLoginPage(true)}>Log in</button>
@@ -35,7 +35,7 @@ const LandingPage: React.FC = () => {
 				<p>From solo traverels, for solo traverels.</p>
 			</div>
 			<div className={styles.join_link}>
-				<a href='/signup'>Join the Community</a>
+				<a href="/signup">Join the Community</a>
 			</div>
 			{showLoginPage && (
 				<div className={styles.card_overlay}>

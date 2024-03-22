@@ -1,7 +1,7 @@
-import { useEffect, useRef } from 'react';
-import { getUser } from 'util/api';
+import { useEffect, useRef } from "react";
+import { getUser } from "util/api";
 
-export const baseURL = 'http://localhost:8080';
+export const baseURL = "http://localhost:8080";
 
 export const useIsFirstRender = () => {
 	const isMountRef = useRef(true);
@@ -25,9 +25,9 @@ export const useOutsideAlerter = (ref: any, handleClick: any) => {
 		if (ref?.current && !ref.current.contains(e.target)) handleClick();
 	};
 	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside);
+		document.addEventListener("mousedown", handleClickOutside);
 		return () => {
-			document.removeEventListener('mousedown', handleClickOutside);
+			document.removeEventListener("mousedown", handleClickOutside);
 		};
 	});
 };

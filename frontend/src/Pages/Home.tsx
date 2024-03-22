@@ -1,14 +1,14 @@
-import { useEffect } from 'react';
-import { useNavigate, useRouteLoaderData } from 'react-router';
+import { useEffect } from "react";
+import { useNavigate, useRouteLoaderData } from "react-router";
 
-import styles from './Home.module.css';
+import styles from "./Home.module.css";
 
 const HomePage: React.FC = () => {
 	const navigate = useNavigate();
-	const logIn = useRouteLoaderData('root');
+	const logIn = useRouteLoaderData("root");
 
 	useEffect(() => {
-		!logIn && navigate('/');
+		!logIn && navigate("/");
 	}, [logIn, navigate]);
 
 	return (

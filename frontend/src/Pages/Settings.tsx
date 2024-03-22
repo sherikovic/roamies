@@ -4,25 +4,25 @@ import {
 	json,
 	useLoaderData,
 	useRouteLoaderData,
-} from 'react-router-dom';
-import PageContent from '../Components/Misc/PageContent';
-import SettingsTabs from '../Components/Settings/SettingsTabs';
-import { Element } from '../types/element';
+} from "react-router-dom";
+import PageContent from "../Components/Misc/PageContent";
+import SettingsTabs from "../Components/Settings/SettingsTabs";
+import { Element } from "../types/element";
 
 const SettingsPage: React.FC = () => {
-	const logIn = useRouteLoaderData('root');
+	const logIn = useRouteLoaderData("root");
 	const userData: { user: Element } | any = useLoaderData();
 
 	return (
 		<>
 			{logIn ? (
 				<div>
-					<PageContent headerText='Settings'>Update your settings</PageContent>
+					<PageContent headerText="Settings">Update your settings</PageContent>
 					<SettingsTabs userData={userData.user} />
 				</div>
 			) : (
 				<div>
-					<h4 style={{ textAlign: 'center' }}>
+					<h4 style={{ textAlign: "center" }}>
 						You are not authorized to view this page!
 					</h4>
 				</div>
@@ -38,44 +38,44 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 	let FormData: any = {};
 
-	if (data.get('personal') === '') {
+	if (data.get("personal") === "") {
 		FormData = {
-			fullname: data.get('full name'),
-			city: data.get('city'),
-			country: data.get('country'),
-			github: data.get('github'),
-			linkedin: data.get('linkedin'),
-			type: 'personal',
+			fullname: data.get("full name"),
+			city: data.get("city"),
+			country: data.get("country"),
+			github: data.get("github"),
+			linkedin: data.get("linkedin"),
+			type: "personal",
 		};
 
-		if (FormData.fullname === '') {
+		if (FormData.fullname === "") {
 			return {
-				errorMessage: 'At least name field is required!',
+				errorMessage: "At least name field is required!",
 				type: FormData.type,
 			};
 		}
-	} else if (data.get('accountEmail') === '') {
+	} else if (data.get("accountEmail") === "") {
 		FormData = {
-			oldEmail: data.get('old Email'),
-			newEmail: data.get('new Email'),
-			confirmNewEmail: data.get('confirm New Email'),
-			type: 'email',
+			oldEmail: data.get("old Email"),
+			newEmail: data.get("new Email"),
+			confirmNewEmail: data.get("confirm New Email"),
+			type: "email",
 		};
-	} else if (data.get('accountPassword') === '') {
+	} else if (data.get("accountPassword") === "") {
 		FormData = {
-			oldPassword: data.get('old Password'),
-			newPassword: data.get('new Password'),
-			confirmNewPassword: data.get('confirm New Password'),
-			type: 'password',
+			oldPassword: data.get("old Password"),
+			newPassword: data.get("new Password"),
+			confirmNewPassword: data.get("confirm New Password"),
+			type: "password",
 		};
 	}
 	const response = await fetch(
-		'http://localhost:8080/settings/updateuserpersonalinfo',
+		"http://localhost:8080/settings/updateuserpersonalinfo",
 		{
-			method: 'PATCH',
-			credentials: 'include',
+			method: "PATCH",
+			credentials: "include",
 			headers: {
-				'Content-Type': 'application/json',
+				"Content-Type": "application/json",
 			},
 			body: JSON.stringify(FormData),
 		}
@@ -108,9 +108,9 @@ export const action: ActionFunction = async ({ request, params }) => {
 
 export const loader: LoaderFunction = async ({ request, params }) => {
 	const response = await fetch(
-		'http://localhost:8080/settings/getuserpersonalinfo',
+		"http://localhost:8080/settings/getuserpersonalinfo",
 		{
-			credentials: 'include',
+			credentials: "include",
 		}
 	);
 	if (response.ok) {

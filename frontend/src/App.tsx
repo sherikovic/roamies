@@ -1,47 +1,47 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Main Routes
-import LandingPage from './Pages/Landing';
-import RootHome from './Pages/RootHome';
-import SignupPage from 'Pages/Signup';
+import LandingPage from "./Pages/Landing";
+import RootHome from "./Pages/RootHome";
+import SignupPage from "Pages/Signup";
 
 // Auth and Settings Routes
-import { action as logoutAction } from './Pages/Logout';
-import ErrorPage from './Pages/Error';
-import ProfilePage from './Pages/Profile';
+import { action as logoutAction } from "./Pages/Logout";
+import ErrorPage from "./Pages/Error";
+import ProfilePage from "./Pages/Profile";
 import SettingsPage, {
 	action as settingsFormAction,
 	loader as settingsFormLoader,
-} from './Pages/Settings';
+} from "./Pages/Settings";
 
 // Trips Routes
 import TripDetailPage, {
 	loader as tripDetailLoader,
 	action as deleteTripAction,
-} from './Pages/TripDetail';
-import TripsPage, { loader as tripsLoader } from './Pages/Trips';
+} from "./Pages/TripDetail";
+import TripsPage, { loader as tripsLoader } from "./Pages/Trips";
 
 // Locations Routes
-import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
+import LocationsPage, { loader as locationsLoader } from "./Pages/Locations";
 import LocationDetailPage, {
 	loader as locationDetailLoader,
 	action as deleteLocationAction,
-} from './Pages/LocationDetail';
+} from "./Pages/LocationDetail";
 
-import AboutPage from './Pages/About';
-import HowToUsePage from 'Pages/HowToUse';
-import FAQPage from 'Pages/FAQ';
-import ContactPage from 'Pages/Contact';
-import RootLanding from 'Pages/RootLanding';
+import AboutPage from "./Pages/About";
+import HowToUsePage from "Pages/HowToUse";
+import FAQPage from "Pages/FAQ";
+import ContactPage from "Pages/Contact";
+import RootLanding from "Pages/RootLanding";
 
 // Util functions
-import { isUserLoggedIn } from 'util/util';
-import HomePage from 'Pages/Home';
+import { isUserLoggedIn } from "util/util";
+import HomePage from "Pages/Home";
 
 const router = createBrowserRouter([
 	{
-		path: '/',
-		id: 'root',
+		path: "/",
+		id: "root",
 		errorElement: <ErrorPage />,
 		loader: isUserLoggedIn,
 		children: [
@@ -50,51 +50,51 @@ const router = createBrowserRouter([
 				element: <LandingPage />,
 			},
 			{
-				path: 'signup',
+				path: "signup",
 				element: <SignupPage />,
 			},
 			{
-				path: 'logout',
+				path: "logout",
 				action: logoutAction,
 			},
 			{
 				element: <RootLanding />,
-				id: 'root-landing',
+				id: "root-landing",
 				children: [
 					{
-						path: 'about',
+						path: "about",
 						element: <AboutPage />,
 					},
 					{
-						path: 'how-to-use',
+						path: "how-to-use",
 						element: <HowToUsePage />,
 					},
 					{
-						path: 'faq',
+						path: "faq",
 						element: <FAQPage />,
 					},
 					{
-						path: 'contact',
+						path: "contact",
 						element: <ContactPage />,
 					},
 				],
 			},
 			{
 				element: <RootHome />,
-				id: 'root-home',
+				id: "root-home",
 				children: [
 					{
-						path: 'home',
+						path: "home",
 						element: <HomePage />,
 					},
 					{
-						path: 'trips',
+						path: "trips",
 						element: <TripsPage />,
 						loader: tripsLoader,
 						children: [
 							{
-								path: ':id',
-								id: 'trip-detail',
+								path: ":id",
+								id: "trip-detail",
 								element: <TripDetailPage />,
 								loader: tripDetailLoader,
 								action: deleteTripAction,
@@ -102,13 +102,13 @@ const router = createBrowserRouter([
 						],
 					},
 					{
-						path: 'locations',
+						path: "locations",
 						element: <LocationsPage />,
 						loader: locationsLoader,
 						children: [
 							{
-								path: ':id',
-								id: 'location-detail',
+								path: ":id",
+								id: "location-detail",
 								element: <LocationDetailPage />,
 								loader: locationDetailLoader,
 								action: deleteLocationAction,
@@ -116,11 +116,11 @@ const router = createBrowserRouter([
 						],
 					},
 					{
-						path: 'profile',
+						path: "profile",
 						element: <ProfilePage />,
 					},
 					{
-						path: 'settings',
+						path: "settings",
 						element: <SettingsPage />,
 						loader: settingsFormLoader,
 						action: settingsFormAction,

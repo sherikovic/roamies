@@ -1,4 +1,4 @@
-import classes from './UnderConstruction.module.css';
+import classes from "./UnderConstruction.module.css";
 
 const UnderConstructionPage: React.FC = () => {
 	return (

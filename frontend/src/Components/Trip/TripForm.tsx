@@ -1,9 +1,9 @@
-import { json, useNavigate, useParams } from 'react-router-dom';
+import { json, useNavigate, useParams } from "react-router-dom";
 
-import { Trip } from '../../types/trip';
-import classes from './TripForm.module.css';
-import { useState } from 'react';
-import { createTrip, updateTrip } from 'util/api';
+import { Trip } from "../../types/trip";
+import classes from "./TripForm.module.css";
+import { useState } from "react";
+import { createTrip, updateTrip } from "util/api";
 
 interface TripFormProps {
 	method: any;
@@ -14,34 +14,34 @@ interface TripFormProps {
 
 const TripForm: React.FC<TripFormProps> = (props) => {
 	const [formErrors, setFormErrors] = useState({
-		name: '',
-		location: '',
-		description: '',
+		name: "",
+		location: "",
+		description: "",
 	});
 	const navigate = useNavigate();
 	const params = useParams();
 
 	const validateFormInputs = (FormData: any) => {
-		FormData.name === ''
+		FormData.name === ""
 			? setFormErrors((prev) => ({
 					...prev,
-					name: 'Name is required!',
+					name: "Name is required!",
 			  }))
-			: setFormErrors((prev) => ({ ...prev, name: '' }));
+			: setFormErrors((prev) => ({ ...prev, name: "" }));
 
-		FormData.location === ''
+		FormData.location === ""
 			? setFormErrors((prev) => ({
 					...prev,
-					location: 'Location is required!',
+					location: "Location is required!",
 			  }))
-			: setFormErrors((prev) => ({ ...prev, location: '' }));
+			: setFormErrors((prev) => ({ ...prev, location: "" }));
 
-		FormData.description === ''
+		FormData.description === ""
 			? setFormErrors((prev) => ({
 					...prev,
-					description: 'Description is required!',
+					description: "Description is required!",
 			  }))
-			: setFormErrors((prev) => ({ ...prev, description: '' }));
+			: setFormErrors((prev) => ({ ...prev, description: "" }));
 	};
 
 	const submitHandler = async (event: any) => {
@@ -56,12 +56,12 @@ const TripForm: React.FC<TripFormProps> = (props) => {
 		validateFormInputs(FormData);
 
 		if (
-			FormData.name !== '' &&
-			FormData.location !== '' &&
-			FormData.description !== ''
+			FormData.name !== "" &&
+			FormData.location !== "" &&
+			FormData.description !== ""
 		) {
 			let res: any;
-			if (props.method === 'PATCH') {
+			if (props.method === "PATCH") {
 				const id: any = params.id;
 				res = await updateTrip(id, FormData);
 			} else {
@@ -77,10 +77,10 @@ const TripForm: React.FC<TripFormProps> = (props) => {
 
 			props.cancelHandler();
 
-			if (props.method === 'POST') {
-				navigate('/trips/' + res.trip._id);
+			if (props.method === "POST") {
+				navigate("/trips/" + res.trip._id);
 			} else {
-				navigate('/trips/' + params.id);
+				navigate("/trips/" + params.id);
 			}
 		}
 	};
@@ -96,43 +96,43 @@ const TripForm: React.FC<TripFormProps> = (props) => {
 				className={classes.form}
 				onSubmit={submitHandler}
 			>
-				<p style={{ color: 'orange' }}>{formErrors.name}</p>
+				<p style={{ color: "orange" }}>{formErrors.name}</p>
 				<p>
-					<label htmlFor='name'>Name:</label>
+					<label htmlFor="name">Name:</label>
 					<input
-						type='text'
-						name='name'
-						id='name'
-						defaultValue={props.tripData ? props.tripData.name : ''}
+						type="text"
+						name="name"
+						id="name"
+						defaultValue={props.tripData ? props.tripData.name : ""}
 					/>
 				</p>
-				<p style={{ color: 'orange' }}>{formErrors.location}</p>
+				<p style={{ color: "orange" }}>{formErrors.location}</p>
 				<p>
-					<label htmlFor='location'>Location:</label>
+					<label htmlFor="location">Location:</label>
 					<input
-						type='text'
-						name='location'
-						id='location'
-						defaultValue={props.tripData ? props.tripData.location : ''}
+						type="text"
+						name="location"
+						id="location"
+						defaultValue={props.tripData ? props.tripData.location : ""}
 					/>
 				</p>
-				<p style={{ color: 'orange' }}>{formErrors.description}</p>
+				<p style={{ color: "orange" }}>{formErrors.description}</p>
 				<p>
-					<label htmlFor='description'>Description:</label>
+					<label htmlFor="description">Description:</label>
 					<textarea
-						name='description'
-						id='description'
-						placeholder='Tell us more about your trip'
+						name="description"
+						id="description"
+						placeholder="Tell us more about your trip"
 						cols={30}
 						rows={3}
-						defaultValue={props.tripData ? props.tripData.description : ''}
+						defaultValue={props.tripData ? props.tripData.description : ""}
 					/>
 				</p>
 				<div className={classes.actions}>
-					<button type='button' onClick={props.cancelHandler}>
+					<button type="button" onClick={props.cancelHandler}>
 						Cancel
 					</button>
-					<button type='submit'>Submit</button>
+					<button type="submit">Submit</button>
 				</div>
 			</form>
 		</div>

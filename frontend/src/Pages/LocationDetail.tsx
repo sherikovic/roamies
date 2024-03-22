@@ -1,4 +1,4 @@
-import { ActionFunction, LoaderFunction } from 'react-router-dom';
+import { ActionFunction, LoaderFunction } from "react-router-dom";
 
 const LocationDetailPage: React.FC = () => {
 	return (

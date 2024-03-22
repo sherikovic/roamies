@@ -1,17 +1,17 @@
-import { useState } from 'react';
-import { NavLink, useRouteLoaderData } from 'react-router-dom';
+import { useState } from "react";
+import { NavLink, useRouteLoaderData } from "react-router-dom";
 
-import styles from './LandingNavBar.module.css';
-import LoginForm from '../Auth/LoginForm';
+import styles from "./LandingNavBar.module.css";
+import LoginForm from "../Auth/LoginForm";
 
-import { authUser } from 'util/api';
+import { authUser } from "util/api";
 
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
-	const logIn = useRouteLoaderData('root');
+	const logIn = useRouteLoaderData("root");
 
 	const logOutHandler = async () => {
-		const res = await authUser('logout', null);
+		const res = await authUser("logout", null);
 		res.status === 200 && window.location.reload();
 		// TODO handle errors coming from the logout
 	};
@@ -19,29 +19,29 @@ const LandingNavigation: React.FC = () => {
 	return (
 		<div className={styles.landing_navigation}>
 			<nav className={styles.brand}>
-				<a href='/'>SYT</a>
+				<a href="/">SYT</a>
 			</nav>
 			<nav className={styles.landing_nav_container}>
 				<NavLink
-					to='about'
+					to="about"
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					About
 				</NavLink>
 				<NavLink
-					to='how-to-use'
+					to="how-to-use"
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					How to Use
 				</NavLink>
 				<NavLink
-					to='faq'
+					to="faq"
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					FAQ
 				</NavLink>
 				<NavLink
-					to='contact'
+					to="contact"
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					Contact
@@ -54,7 +54,7 @@ const LandingNavigation: React.FC = () => {
 			) : (
 				<nav className={styles.landing_login}>
 					<button onClick={() => setShowLoginOverlay(true)}>Log in</button>
-					<a href='signup'>Sign up</a>
+					<a href="signup">Sign up</a>
 				</nav>
 			)}
 			{showLoginOverlay && (

@@ -43,15 +43,19 @@ const TopNavBar: React.FC = () => {
 	};
 
 	useOutsideAlerter(filterDDRef, () => {
-		console.log('ere');
 		setShowFilterMenu(false);
 		setFlipArrow(false);
 	});
 
 	useOutsideAlerter(profileDDRef, () => {
-		console.log('profile');
 		setShowProfileMenu(false);
 	});
+
+	const logOutHandler = async () => {
+		const res = await authUser('logout', null);
+		res.status === 200 && window.location.reload();
+		// TODO handle errors coming from the logout
+	};
 
 	return (
 		<div>
@@ -140,7 +144,7 @@ const TopNavBar: React.FC = () => {
 										/>
 										Settings
 									</a>
-									<button type='button'>
+									<button type='button' onClick={logOutHandler}>
 										<img
 											src={logouticon}
 											alt='log out icon'

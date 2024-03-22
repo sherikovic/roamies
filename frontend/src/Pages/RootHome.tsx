@@ -1,8 +1,8 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
 // import MainNavigation from '../Components/Homepage/MainNavigation';
-import MainNavBar from 'Components/Homepage/MainNavBar';
+import MainNavBar from "Components/Homepage/MainNavBar";
 
 const RootHome: React.FC = () => {
 	return (

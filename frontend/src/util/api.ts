@@ -1,11 +1,11 @@
-import { backOff } from 'exponential-backoff';
+import { backOff } from "exponential-backoff";
 
-import { Trip } from 'types/trip';
-import { User } from 'types/user';
-import { baseURL } from './util';
+import { Trip } from "types/trip";
+import { User } from "types/user";
+import { baseURL } from "./util";
 
 const apiFetch = async <T>(
-	method: 'GET' | 'POST' | 'PATCH' | 'DELETE',
+	method: "GET" | "POST" | "PATCH" | "DELETE",
 	path: string,
 	data: any
 ): Promise<{
@@ -21,15 +21,15 @@ const apiFetch = async <T>(
 			async () => {
 				const res = await fetch(`${baseURL}/${path}`, {
 					method,
-					credentials: 'include',
+					credentials: "include",
 					headers: {
-						'Content-Type': 'application/json',
+						"Content-Type": "application/json",
 					},
 					body: data ? JSON.stringify(data) : undefined,
 				});
 
 				// Retry 5xx errors
-				if (!res || res.status.toString()[0] === '5')
+				if (!res || res.status.toString()[0] === "5")
 					throw Error(`${res?.status}`);
 				else return res;
 			},
@@ -44,7 +44,7 @@ const apiFetch = async <T>(
 			status: response.status,
 			getJson: undefined,
 		};
-		returnObj.getJson = !path.includes('login') && (await response.json());
+		returnObj.getJson = !path.includes("login") && (await response.json());
 
 		return returnObj;
 	} catch (e: any) {
@@ -53,20 +53,20 @@ const apiFetch = async <T>(
 };
 
 export const apiGet = async <T>(path: string) =>
-	await apiFetch<T>('GET', path, null);
+	await apiFetch<T>("GET", path, null);
 
 export const apiPost = async <T>(path: string, data: any) =>
-	await apiFetch<T>('POST', path, data);
+	await apiFetch<T>("POST", path, data);
 
 export const apiPatch = async <T>(path: string, data: any) =>
-	await apiFetch<T>('PATCH', path, data);
+	await apiFetch<T>("PATCH", path, data);
 
 export const apiDelete = async <T>(path: string) =>
-	await apiFetch<T>('DELETE', path, null);
+	await apiFetch<T>("DELETE", path, null);
 
 export const getAllTrips = async (queryOptions?: string) => {
 	const res = await apiGet<Trip[]>(
-		queryOptions ? `trips?${queryOptions}` : 'trips'
+		queryOptions ? `trips?${queryOptions}` : "trips"
 	);
 	return res.getJson;
 };
@@ -99,6 +99,7 @@ export const deleteTrip = async (id: string) => {
 };
 
 export const authUser = async (mode: string, data: User | null) => {
+	// logout doesn't take any data
 	const res = data
 		? await apiPost(`auth/${mode}`, data)
 		: await apiPost(`auth/${mode}`, null);
@@ -106,7 +107,7 @@ export const authUser = async (mode: string, data: User | null) => {
 };
 
 export const getUser = async () => {
-	const res = await apiGet('auth/getusername');
+	const res = await apiGet("auth/getusername");
 	return res;
 };
 

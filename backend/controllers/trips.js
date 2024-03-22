@@ -1,5 +1,5 @@
-const Trip = require('../models/trip');
-const User = require('../models/user');
+const Trip = require("../models/trip");
+const User = require("../models/user");
 
 module.exports.index = async (req, res) => {
 	try {
@@ -16,7 +16,7 @@ module.exports.index = async (req, res) => {
 	} catch (e) {
 		res.status(500).json({
 			message:
-				'An error occured while fetching the details of the trips from the database!',
+				"An error occured while fetching the details of the trips from the database!",
 			error: e,
 		});
 	}
@@ -29,11 +29,11 @@ module.exports.createTrip = async (req, res) => {
 		await trip.save();
 		res
 			.status(201)
-			.json({ message: 'Trip was successfully created.', trip: trip });
+			.json({ message: "Trip was successfully created.", trip: trip });
 	} catch (e) {
 		res
 			.status(500)
-			.json({ message: 'An error occured while creating a trip!', error: e });
+			.json({ message: "An error occured while creating a trip!", error: e });
 	}
 };
 
@@ -43,7 +43,7 @@ module.exports.showTrip = async (req, res) => {
 		res.json({ objects: trip });
 	} catch (e) {
 		res.status(500).json({
-			message: 'An error occured while fetching trip details from the database',
+			message: "An error occured while fetching trip details from the database",
 			error: e,
 		});
 	}
@@ -53,10 +53,10 @@ module.exports.updateTrip = async (req, res) => {
 	try {
 		const trip = await Trip.findByIdAndUpdate(req.params.id, { ...req.body });
 		await trip.save();
-		res.json({ message: 'Trip was successfully updated!' });
+		res.json({ message: "Trip was successfully updated!" });
 	} catch (e) {
 		res.status(500).json({
-			message: 'An error occured while updating trip details!',
+			message: "An error occured while updating trip details!",
 			error: e,
 		});
 	}
@@ -65,11 +65,11 @@ module.exports.updateTrip = async (req, res) => {
 module.exports.deleteTrip = async (req, res) => {
 	try {
 		await Trip.findByIdAndDelete(req.params.id);
-		res.json({ message: 'Trip deleted!' });
+		res.json({ message: "Trip deleted!" });
 	} catch (e) {
 		res
 			.status(500)
-			.json({ message: 'An error occured while deleting trip!', error: e });
+			.json({ message: "An error occured while deleting trip!", error: e });
 	}
 };
 

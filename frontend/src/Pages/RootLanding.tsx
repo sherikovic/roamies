@@ -1,7 +1,7 @@
-import React from 'react';
-import { Outlet } from 'react-router-dom';
+import React from "react";
+import { Outlet } from "react-router-dom";
 
-import LandingNavigation from 'Components/Landingpage/LandingNavBar';
+import LandingNavigation from "Components/Landingpage/LandingNavBar";
 
 const RootLanding: React.FC = () => {
 	return (
