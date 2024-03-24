@@ -5,6 +5,7 @@
 
 .home_body {
 	display: flex;
+	width: 900px;
 }
 
 .side_nav {
@@ -15,10 +16,57 @@
 .home_contents {
 	display: flex;
 	flex-direction: column;
+	justify-content: flex-start;
+	width: 100%;
 }
 
 .events_layout {
 	width: 100%;
+	border: 1px solid #c2c2d1;
+	border-radius: 8px;
+	padding: 0px 0px 20px 0px;
+	margin-bottom: 25px;
+	overflow: hidden;
+}
+
+.events_header,
+.trips_header {
+	display: flex;
+	margin-bottom: 20px;
+}
+
+.trips_layout {
+	width: 100%;
+	border: 1px solid #c2c2d1;
+	border-radius: 8px;
+	padding: 0px 0px 20px 0px;
+}
+
+.events_header p,
+.trips_header p {
+	display: inline-flex;
+	font-size: 15px;
+	font-weight: 550;
+	margin: 0;
+	padding: 10px 15px 0px 10px;
+}
+
+.events_layout a,
+.trips_layout a {
+	font-size: 13px;
+	text-decoration: none;
+	color: black;
+	padding-top: 10px;
+}
+
+.icon {
+	height: 18px;
+	width: 18px;
+	min-height: 18px;
+	min-width: 18px;
+	margin-right: 8px;
+	text-indent: 0px;
+	position: relative;
 }
 
 .right_actions {

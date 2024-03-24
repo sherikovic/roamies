@@ -1,4 +1,4 @@
-import { BroadcastEvent } from "./broadcast";
+import { Broadcast } from "./broadcast";
 import { User } from "./user";
 
 export interface Trip {
@@ -6,7 +6,8 @@ export interface Trip {
 	name: string;
 	location: string;
 	description: string;
+	date: Date;
 	owner: User;
 	images?: File;
-	events?: BroadcastEvent[];
+	events?: Broadcast[];
 }

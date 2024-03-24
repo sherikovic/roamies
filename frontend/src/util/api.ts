@@ -3,6 +3,7 @@ import { backOff } from "exponential-backoff";
 import { Trip } from "types/trip";
 import { User } from "types/user";
 import { baseURL } from "./util";
+import { Broadcast } from "types/broadcast";
 
 const apiFetch = async <T>(
 	method: "GET" | "POST" | "PATCH" | "DELETE",
@@ -109,6 +110,13 @@ export const authUser = async (mode: string, data: User | null) => {
 export const getUser = async () => {
 	const res = await apiGet("auth/getusername");
 	return res;
+};
+
+export const getAllEvents = async (queryOptions?: string) => {
+	const res = await apiGet<Broadcast[]>(
+		queryOptions ? `events?${queryOptions}` : "events"
+	);
+	return res.getJson;
 };
 
 // export const getAllData = async (

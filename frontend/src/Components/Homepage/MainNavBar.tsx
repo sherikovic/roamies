@@ -1,38 +1,40 @@
-import searchicon from '../../images/searchicon.png';
-import arrowdropdownicon from '../../images/arrowdropdownicon.png';
-import bellicon from '../../images/bellicon.png';
-import dd_profileicon from '../../images/dd_profileicon.png';
-import settingsicon from '../../images/settingsicon.png';
-import logouticon from '../../images/logouticon.png';
+import searchicon from "../../images/searchicon.png";
+import arrowdropdownicon from "../../images/arrowdropdownicon.png";
+import bellicon from "../../images/bellicon.png";
+import dd_profileicon from "../../images/dd_profileicon.png";
+import settingsicon from "../../images/settingsicon.png";
+import logouticon from "../../images/logouticon.png";
 // TODO profile picture should be retrieved from the DB
-import profilepic from '../../images/profilepic.png';
+import profilepic from "../../images/profilepic.png";
 
-import { useOutsideAlerter } from '../../util/util';
+import { useOutsideAlerter } from "../../util/util";
 
-import styles from './MainNavBar.module.css';
-import { useRef, useState } from 'react';
-import { authUser } from 'util/api';
+import styles from "./MainNavBar.module.css";
+import { useEffect, useRef, useState } from "react";
+import { authUser } from "util/api";
+import { useRouteLoaderData } from "react-router-dom";
 
 const TopNavBar: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
-		useState('Search for events');
-	const [filterBtnText, setFilterBtnText] = useState('Find Events');
+		useState("Search for events");
+	const [filterBtnText, setFilterBtnText] = useState("Find Events");
 	const [showFilterMenu, setShowFilterMenu] = useState(false);
 	const [showProfileMenu, setShowProfileMenu] = useState(false);
-	const [searchText, setSearchText] = useState('');
+	const [searchText, setSearchText] = useState("");
 	const [hideSearchIcon, setHideSearchIcon] = useState(false);
 	const [flipArrow, setFlipArrow] = useState(false);
 	const filterDDRef = useRef(null);
 	const profileDDRef = useRef(null);
+	const [homeUrl, setHomeUrl] = useState("/");
 
 	const searchInputOnChange = (e: any) => {
 		setSearchText(e.target.value);
-		e.target.value !== '' ? setHideSearchIcon(true) : setHideSearchIcon(false);
+		e.target.value !== "" ? setHideSearchIcon(true) : setHideSearchIcon(false);
 	};
 
 	const dropdownItemOnClick = (e: any) => {
-		setFilterBtnText('Find ' + e.target.innerText);
-		setSearchPlaceholder('Search for ' + e.target.innerText);
+		setFilterBtnText("Find " + e.target.innerText);
+		setSearchPlaceholder("Search for " + e.target.innerText);
 		setShowFilterMenu(false);
 		setFlipArrow(false);
 	};
@@ -52,21 +54,27 @@ const TopNavBar: React.FC = () => {
 	});
 
 	const logOutHandler = async () => {
-		const res = await authUser('logout', null);
+		const res = await authUser("logout", null);
 		res.status === 200 && window.location.reload();
 		// TODO handle errors coming from the logout
 	};
+
+	const logIn = useRouteLoaderData("root");
+	useEffect(() => {
+		logIn && setHomeUrl("home");
+		!logIn && setHomeUrl("/");
+	}, [logIn]);
 
 	return (
 		<div>
 			<div className={styles.main_nav_bar}>
 				<nav className={styles.main_nav_bar_left}>
 					<section className={styles.brand}>
-						<a href='/'>SYT</a>
+						<a href={homeUrl}>SYT</a>
 					</section>
 					<section className={styles.search_field}>
 						<button
-							type='button'
+							type="button"
 							className={styles.filter_search_button}
 							onClick={filterBtnOnClick}
 							ref={filterDDRef}
@@ -74,7 +82,7 @@ const TopNavBar: React.FC = () => {
 							{filterBtnText}
 							<img
 								src={arrowdropdownicon}
-								alt='arrow drop down icon'
+								alt="arrow drop down icon"
 								className={
 									flipArrow
 										? `${styles.icon} ${styles.arrowdropdownicon} ${styles.arrowdropdownflip}`
@@ -88,10 +96,10 @@ const TopNavBar: React.FC = () => {
 								</div>
 							)}
 						</button>
-						<label htmlFor='search'>
+						<label htmlFor="search">
 							<img
 								src={searchicon}
-								alt='search icon'
+								alt="search icon"
 								className={
 									hideSearchIcon
 										? `${styles.icon} ${styles.searchicon} ${styles.hideIcon}`
@@ -100,9 +108,9 @@ const TopNavBar: React.FC = () => {
 							/>
 						</label>
 						<input
-							type='search'
-							name='search'
-							id='search'
+							type="search"
+							name="search"
+							id="search"
 							value={searchText}
 							placeholder={searchPlaceholder}
 							onChange={searchInputOnChange}
@@ -115,39 +123,39 @@ const TopNavBar: React.FC = () => {
 						<div>
 							<img
 								src={bellicon}
-								alt='notifications icon'
+								alt="notifications icon"
 								className={styles.bellicon}
 							/>
 						</div>
 						<div ref={profileDDRef}>
 							<img
 								src={profilepic}
-								alt='empty profile'
+								alt="empty profile"
 								className={styles.profilepic}
 								onClick={() => setShowProfileMenu(!showProfileMenu)}
 							/>
 							{showProfileMenu && (
 								<div className={styles.profile_menu}>
-									<a href='/profile'>
+									<a href="/profile">
 										<img
 											src={dd_profileicon}
-											alt='profile icon'
+											alt="profile icon"
 											className={styles.icon}
 										/>
 										Profile
 									</a>
-									<a href='/settings'>
+									<a href="/settings">
 										<img
 											src={settingsicon}
-											alt='settigns icon'
+											alt="settigns icon"
 											className={styles.icon}
 										/>
 										Settings
 									</a>
-									<button type='button' onClick={logOutHandler}>
+									<button type="button" onClick={logOutHandler}>
 										<img
 											src={logouticon}
-											alt='log out icon'
+											alt="log out icon"
 											className={styles.icon}
 										/>
 										Sign out

@@ -1,4 +1,4 @@
-export interface ShareModel {
+export interface Share {
 	_id: string;
 	name: string;
 	location: string;

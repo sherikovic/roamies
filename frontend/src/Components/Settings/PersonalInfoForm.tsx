@@ -29,7 +29,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 					</p>
 				)}
 				<APIFormTextInputLabel
-					type="text"
+					type="textarea"
 					name="bio"
 					value={props.userData ? userInfo.bio : ""}
 					classDiv={classes.api_form_item}
@@ -54,22 +54,24 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 						classLabel={classes.api_input_label}
 					/>
 				</div>
-				<APIFormTextInputLabel
-					type="text"
-					name="age"
-					value={props.userData ? userInfo.age : ""}
-					classDiv={classes.api_form_item}
-					classInput={classes.api_input_field}
-					classLabel={classes.api_input_label}
-				/>
-				<APIFormTextInputLabel
-					type="text"
-					name="country"
-					value={props.userData ? userInfo.country : ""}
-					classDiv={classes.api_form_item}
-					classInput={classes.api_input_field}
-					classLabel={classes.api_input_label}
-				/>
+				<div className={classes.api_form_group_cc}>
+					<APIFormTextInputLabel
+						type="text"
+						name="age"
+						value={props.userData ? userInfo.age : ""}
+						classDiv={classes.api_form_item}
+						classInput={classes.api_input_field}
+						classLabel={classes.api_input_label}
+					/>
+					<APIFormTextInputLabel
+						type="text"
+						name="country"
+						value={props.userData ? userInfo.country : ""}
+						classDiv={classes.api_form_item}
+						classInput={classes.api_input_field}
+						classLabel={classes.api_input_label}
+					/>
+				</div>
 				<div className={classes.api_btn_save}>
 					<button name={"personal"}>Save</button>
 				</div>

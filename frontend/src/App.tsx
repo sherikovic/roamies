@@ -2,7 +2,7 @@ import { RouterProvider, createBrowserRouter } from "react-router-dom";
 
 // Main Routes
 import LandingPage from "./Pages/Landing";
-import RootHome from "./Pages/RootHome";
+import RootHome, { loader as rootHomeLoader } from "./Pages/RootHome";
 import SignupPage from "Pages/Signup";
 
 // Auth and Settings Routes
@@ -37,6 +37,7 @@ import RootLanding from "Pages/RootLanding";
 // Util functions
 import { isUserLoggedIn } from "util/util";
 import HomePage from "Pages/Home";
+import EventsPage from "Pages/Events";
 
 const router = createBrowserRouter([
 	{
@@ -82,6 +83,7 @@ const router = createBrowserRouter([
 			{
 				element: <RootHome />,
 				id: "root-home",
+				loader: rootHomeLoader,
 				children: [
 					{
 						path: "home",
@@ -90,11 +92,25 @@ const router = createBrowserRouter([
 					{
 						path: "trips",
 						element: <TripsPage />,
+						id: "trips",
 						loader: tripsLoader,
 						children: [
 							{
 								path: ":id",
 								id: "trip-detail",
+								element: <TripDetailPage />,
+								loader: tripDetailLoader,
+								action: deleteTripAction,
+							},
+						],
+					},
+					{
+						path: "events",
+						element: <EventsPage />,
+						children: [
+							{
+								path: ":id",
+								id: "event-detail",
 								element: <TripDetailPage />,
 								loader: tripDetailLoader,
 								action: deleteTripAction,

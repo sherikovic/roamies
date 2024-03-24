@@ -60,6 +60,8 @@ const seedDB = async () => {
 			date: broadcasts[i].date,
 			category: broadcasts[i].category,
 			time: broadcasts[i].time,
+			rsvp: broadcasts[i].rsvp,
+			participants: [],
 			owner: user,
 		});
 		await broadcast.save();

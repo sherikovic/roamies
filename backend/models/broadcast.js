@@ -30,6 +30,10 @@ const BroadcastSchema = new Schema({
 		type: Buffer,
 		required: false,
 	},
+	rsvp: {
+		type: Number,
+		required: true,
+	},
 	owner: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
@@ -40,7 +44,7 @@ const BroadcastSchema = new Schema({
 	},
 	comments: {
 		type: [Schema.Types.ObjectId],
-		ref: "comment",
+		ref: "Comment",
 	},
 });
 
