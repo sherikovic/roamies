@@ -26,8 +26,8 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 		: (imgType = undefined);
 
 	return (
-		<div className={styles.ei_layout}>
-			<div className={styles.ei_header}>
+		<div className={styles.event_item}>
+			<div className={styles.event_item_header}>
 				<a href="profile">
 					<img
 						src={sherikovic}
@@ -35,18 +35,18 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 						className={styles.user_profile_icon}
 					/>
 				</a>
-				<div className={styles.ei_header_name_date}>
+				<div className={styles.event_item_header_name_date}>
 					<a href={`events/${props.event._id}`} id={styles.name}>
 						{props.event.name}
 					</a>
-					<p id={styles.date}>
+					<h6 id={styles.date}>
 						{new Date(props.event.date.toString()).toLocaleDateString("en-US", {
 							weekday: "short",
 							year: "numeric",
 							month: "long",
 							day: "numeric",
 						})}
-					</p>
+					</h6>
 				</div>
 				<img
 					src={imgType}
@@ -54,13 +54,13 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 					className={styles.event_type_icon}
 				/>
 			</div>
-			<div className={styles.ei_content}>
-				<p id={styles.description}>{props.event.description}</p>
+			<div className={styles.event_item_content}>
+				<h4 id={styles.description}>{props.event.description}</h4>
 			</div>
-			<div className={styles.ei_footer}>
-				<p id={styles.rsvp}>
+			<div className={styles.event_item_footer}>
+				<h6 id={styles.rsvp}>
 					RSVP: {props.event.participants.length}/{props.event.rsvp.toString()}
-				</p>
+				</h6>
 			</div>
 		</div>
 	);
