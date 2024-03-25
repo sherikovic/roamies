@@ -19,7 +19,7 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 	const slideLeft = () => {
 		if (slidingRef.current !== 0) {
 			slidingRef.current--;
-			const width = (slidingRef.current * -265).toString() + "px";
+			const width = (slidingRef.current * -270).toString() + "px";
 			const slider = document.querySelector(`.${styles.inner_slider}`);
 			slider?.setAttribute(
 				"style",
@@ -35,21 +35,23 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 		}
 	};
 	const slideRight = () => {
+		console.log(slidingRef.current, props.data.length);
 		if (slidingRef.current < props.data.length - 3) {
 			slidingRef.current === null
 				? (slidingRef.current = 1)
 				: slidingRef.current++;
-			const width = (slidingRef.current * -265).toString() + "px";
+			const width = (slidingRef.current * -270).toString() + "px";
 			const slider = document.querySelector(`.${styles.inner_slider}`);
 			slider?.setAttribute(
 				"style",
 				`transform: translateX(${width}); transition: transform 0.5s ease-in-out`
 			);
 		} else if (slidingRef.current === props.data.length - 3) {
+			console.log("NOW");
 			const scroll: number | undefined = sliderRef.current!.scrollWidth;
 			const offset: number | undefined = sliderRef.current!.offsetWidth;
 			const width =
-				-(265 * (props.data.length - 3) + (scroll - offset)).toString() + "px";
+				-(270 * (props.data.length - 3) + (scroll - offset)).toString() + "px";
 			const slider = document.querySelector(`.${styles.inner_slider}`);
 			slider?.setAttribute(
 				"style",
