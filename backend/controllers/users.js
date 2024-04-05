@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-module.exports.signup = async (req, res) => {
+module.exports.signupLocal = async (req, res) => {
 	try {
 		const { firstname, lastname, email, password } = req.body;
 		if (await User.findOne({ email: email })) {
@@ -36,7 +36,13 @@ module.exports.signup = async (req, res) => {
 	}
 };
 
-module.exports.login = (req, res) => {
+module.exports.signupGoogle = async (req, res) => {};
+
+module.exports.loginLocal = (req, res) => {
+	res.status(201).json({ message: "Log in succussful", user: req.user });
+};
+
+module.exports.loginGoogle = (req, res) => {
 	res.status(201).json({ message: "Log in succussful", user: req.user });
 };
 

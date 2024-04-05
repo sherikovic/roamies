@@ -6,7 +6,8 @@ export interface Trip {
 	name: string;
 	location: string;
 	description: string;
-	date: Date;
+	startdate: Date;
+	enddate: Date;
 	owner: User;
 	images?: File;
 	events?: Broadcast[];

@@ -16,7 +16,7 @@ import { useRouteLoaderData } from "react-router-dom";
 
 const TopNavBar: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
-		useState("Search for events");
+		useState("Search for Events");
 	const [filterBtnText, setFilterBtnText] = useState("Find Events");
 	const [showFilterMenu, setShowFilterMenu] = useState(false);
 	const [showProfileMenu, setShowProfileMenu] = useState(false);

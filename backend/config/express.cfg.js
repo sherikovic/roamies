@@ -1,16 +1,26 @@
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 module.exports = (app) => {
 	app.use(bodyParser.json());
 
-	app.use((req, res, next) => {
-		res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-		res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
-		res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-		res.setHeader("Access-Control-Allow-Credentials", "true");
-		next();
-	});
+	app.use(
+		cors({
+			origin: "http://localhost:3000",
+			methods: ["GET", "PATCH", "POST", "DELETE"],
+			allowedHeaders: "Content-Type",
+			credentials: true,
+		})
+	);
+
+	// app.use((req, res, next) => {
+	// 	res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+	// 	res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
+	// 	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+	// 	res.setHeader("Access-Control-Allow-Credentials", "true");
+	// 	next();
+	// });
 
 	app.use(
 		session({

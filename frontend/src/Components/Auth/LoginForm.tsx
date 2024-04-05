@@ -1,11 +1,11 @@
-import { useState } from 'react';
-import { authUser } from 'util/api';
-import { User } from 'types/user';
-import { useLocation, useNavigate } from 'react-router';
+import { useState } from "react";
+import { apiGet, authUser } from "util/api";
+import { User } from "types/user";
+import { useLocation, useNavigate } from "react-router";
 
-import googleIcon from '../../images/googlelogo.svg';
-import warningIcon from '../../images/warningicon.png';
-import styles from './LoginForm.module.css';
+import googleIcon from "../../images/googlelogo.svg";
+import warningIcon from "../../images/warningicon.png";
+import styles from "./LoginForm.module.css";
 
 interface LoginFormProps {
 	cancelHandler: () => void;
@@ -14,14 +14,14 @@ interface LoginFormProps {
 
 const fields = {
 	password: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid password.',
+		errorMessage: "Please enter valid password.",
 	},
 	email: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid email address.',
+		errorMessage: "Please enter valid email address.",
 	},
 };
 
@@ -30,15 +30,15 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 	let location = useLocation().pathname;
 
 	const [formInputs, setFormInputs] = useState(fields);
-	const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const validateInputsForSubmit = () => {
 		let isInvalid = false;
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (
-				input.val === '' ||
-				(key === 'email' &&
+				input.val === "" ||
+				(key === "email" &&
 					!/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
 			) {
 				isInvalid = true;
@@ -53,29 +53,37 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 		return isInvalid;
 	};
 
-	const sendAuthRequest = async (data: any) => {
-		const formData: User | any = Object.fromEntries(data.entries());
-		const res = await authUser('login', formData);
+	const sendAuthRequest = async (path: string, data?: any) => {
+		const formData: User | any = data
+			? Object.fromEntries(data.entries())
+			: null;
+		const res = await authUser(path, formData);
 		if (res.status === 201) {
-			location.includes('signup') ? navigate(-1) : window.location.reload();
+			location.includes("signup") ? navigate(-1) : window.location.reload();
 		}
-		res.status === 300 && setErrorMessage('A user is already logged in!');
+		res.status === 300 && setErrorMessage("A user is already logged in!");
 		res.status === 401 &&
-			setErrorMessage('Either email or password is invalid!');
+			setErrorMessage("Either email or password is invalid!");
 	};
 
 	const submitLoginForm = async (event: any) => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
-		!isInvalid && sendAuthRequest(data);
+		!isInvalid && sendAuthRequest("loginLocal", data);
+	};
+
+	const loginWithGoogle = async (event: any) => {
+		// event.preventDefault();
+		const res = await apiGet("auth/loginGoogle");
+		// sendAuthRequest("loginGoogle");
 	};
 
 	const inputOnChange = ({
 		type,
 		value,
 	}: {
-		type: 'email' | 'password';
+		type: "email" | "password";
 		value: string;
 	}) => {
 		setFormInputs({
@@ -84,88 +92,88 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 				...formInputs[type],
 				val: value,
 				valid:
-					type === 'email'
+					type === "email"
 						? /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value) ||
-						  value === ''
+						  value === ""
 							? true
 							: false
 						: true,
 			},
 		});
-		setErrorMessage('');
+		setErrorMessage("");
 	};
 
 	return (
-		<form method='post' className={styles.form} onSubmit={submitLoginForm}>
+		<form method="post" className={styles.form} onSubmit={submitLoginForm}>
 			<header>Log in</header>
 			<button
-				type='button'
+				type="button"
 				id={styles.lfboxClose}
 				onClick={props.cancelHandler}
 			/>
 			<div className={styles.form_content}>
-				{errorMessage !== '' && (
+				{errorMessage !== "" && (
 					<p className={styles.error}>
 						<img
 							src={warningIcon}
-							alt='warning icon'
+							alt="warning icon"
 							className={styles.warningIcon}
 						/>
 						{errorMessage}
 					</p>
 				)}
 				<section className={styles.lf_input_field}>
-					<label htmlFor='email' />
+					<label htmlFor="email" />
 					<input
-						type='email'
-						name='email'
-						id='email'
-						placeholder='Email'
-						className={formInputs['email'].valid ? '' : styles.invalid}
+						type="email"
+						name="email"
+						id="email"
+						placeholder="Email"
+						className={formInputs["email"].valid ? "" : styles.invalid}
 						onChange={(e) =>
-							inputOnChange({ type: 'email', value: e.target.value })
+							inputOnChange({ type: "email", value: e.target.value })
 						}
 					/>
 				</section>
 				<section className={styles.lf_input_field}>
-					<label htmlFor='password' />
+					<label htmlFor="password" />
 					<input
-						type='password'
-						name='password'
-						id='password'
-						placeholder='Password'
-						className={formInputs['password'].valid ? '' : styles.invalid}
+						type="password"
+						name="password"
+						id="password"
+						placeholder="Password"
+						className={formInputs["password"].valid ? "" : styles.invalid}
 						onChange={(e) =>
-							inputOnChange({ type: 'password', value: e.target.value })
+							inputOnChange({ type: "password", value: e.target.value })
 						}
 					/>
 				</section>
 				<section className={styles.login_options}>
 					<div className={styles.checkbox_container}>
-						<input type='checkbox' name='remember_me' id='remember_me' />
+						<input type="checkbox" name="remember_me" id="remember_me" />
 						<span className={styles.checkmark}></span>
-						<label htmlFor='remember_me'>Remember me</label>
+						<label htmlFor="remember_me">Remember me</label>
 					</div>
 					<div>
-						<a href='/'>Forgot password?</a>
+						<a href="/">Forgot password?</a>
 					</div>
 				</section>
 				<div className={styles.actions}>
-					<button name='login' type='submit'>
+					<button name="login" type="submit">
 						Log in
 					</button>
 					<span>or</span>
-					<button name='google' type='button'>
+					<button name="google" type="button" onClick={loginWithGoogle}>
 						<img
 							src={googleIcon}
-							alt='Google logo'
+							alt="Google logo"
 							className={styles.googlelogo}
 						/>
 						<p>Continue with Google</p>
 					</button>
 					<div>
 						<span>Not a member yet?</span>
-						<a href='signup'>Join</a>
+						<a href="signup">Join</a>
 					</div>
 				</div>
 			</div>

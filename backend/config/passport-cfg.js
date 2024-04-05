@@ -1,6 +1,9 @@
 const LocalStrategy = require("passport-local");
+const GoogleStrategy = require("passport-google-oauth20");
+
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const keys = require("./keys");
 
 module.exports = function (app, passport) {
 	app.use(passport.initialize());
@@ -34,6 +37,18 @@ module.exports = function (app, passport) {
 			}
 		)
 	);
+
+	passport.use(
+		new GoogleStrategy(
+			{
+				clientID: keys.google.clientID,
+				clientSecret: keys.google.clientSecret,
+				callbackURL: "/auth/google/redirect",
+			},
+			() => {}
+		)
+	);
+
 	passport.serializeUser((user, done) => done(null, user.id));
 	passport.deserializeUser((id, done) => {
 		User.findById(id).then((user) => {

@@ -1,18 +1,70 @@
-.trips_list {
-	display: flex;
-}
-
-.trip_item {
+.tl_body {
 	display: flex;
 	flex-direction: column;
+	width: 100%;
 	border: 1px solid #c2c2d1;
-	margin-right: 20px;
-	&:first-child {
-		margin-left: 10px;
-	}
+	border-radius: 8px;
+	padding: 0px;
+	margin-bottom: 25px;
+	overflow: hidden;
+	background-color: white;
 }
 
-.trip_item p {
-	padding: 10px;
-	margin: 0px;
+.tl_header {
+	display: flex;
+	margin: 10px 0 10px 0;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.tl_header_info {
+	display: flex;
+	align-items: center;
+}
+
+.tl_header_info h4 {
+	display: inline-flex;
+	font-size: 15px;
+	font-weight: 550;
+	margin: 0;
+	padding: 0px 15px 0px 20px;
+}
+
+.tl_header_info a {
+	font-size: 13px;
+	text-decoration: none;
+	color: black;
+}
+
+.tl_slider_btns {
+	display: flex;
+	justify-content: flex-end;
+}
+
+.tl_left_arrow {
+	opacity: 0.5;
+	display: flex;
+	position: relative;
+	z-index: 3;
+	align-items: center;
+	height: 30px;
+}
+
+.tl_right_arrow {
+	display: flex;
+	position: relative;
+	z-index: 3;
+	align-items: center;
+	cursor: pointer;
+	height: 30px;
+}
+
+.tl_slider {
+	overflow: hidden;
+	padding-bottom: 20px;
+}
+
+.tl_inner_slider {
+	display: flex;
+	padding: 0 20px 0 20px;
 }

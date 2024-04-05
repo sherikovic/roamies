@@ -47,7 +47,8 @@ const seedDB = async () => {
 			name: trips[i].name,
 			description: trips[i].description,
 			location: trips[i].location,
-			date: trips[i].date,
+			startdate: trips[i].startdate,
+			enddate: trips[i].enddate,
 			owner: user,
 		});
 		await trip.save();

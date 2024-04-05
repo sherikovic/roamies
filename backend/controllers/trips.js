@@ -4,9 +4,9 @@ const User = require("../models/user");
 module.exports.index = async (req, res) => {
 	try {
 		// get all trips in the database
-		// TODO filter according to the queries passed, for example by username
+		// TODO filter according to the queries passed, for example by email
 		if (req.query.user) {
-			const user = await User.findOne({ username: req.query.username });
+			const user = await User.findOne({ email: req.query.email });
 			const trips = await Trip.find({ owner: { $in: user } });
 			res.json({ objects: trips });
 		} else {

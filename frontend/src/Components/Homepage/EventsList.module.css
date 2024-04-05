@@ -1,4 +1,4 @@
-.events_layout {
+.el_body {
 	display: flex;
 	flex-direction: column;
 	width: 100%;
@@ -10,19 +10,19 @@
 	background-color: white;
 }
 
-.events_header {
+.el_header {
 	display: flex;
 	margin: 10px 0 10px 0;
 	justify-content: space-between;
 	align-items: center;
 }
 
-.events_header_info {
+.el_header_info {
 	display: flex;
 	align-items: center;
 }
 
-.events_header_info h4 {
+.el_header_info h4 {
 	display: inline-flex;
 	font-size: 15px;
 	font-weight: 550;
@@ -30,18 +30,18 @@
 	padding: 0px 15px 0px 20px;
 }
 
-.events_header_info a {
+.el_header_info a {
 	font-size: 13px;
 	text-decoration: none;
 	color: black;
 }
 
-.slider_btns {
+.el_slider_btns {
 	display: flex;
 	justify-content: flex-end;
 }
 
-.left_arrow {
+.el_left_arrow {
 	opacity: 0.5;
 	display: flex;
 	position: relative;
@@ -51,7 +51,7 @@
 	height: 30px;
 }
 
-.right_arrow {
+.el_right_arrow {
 	display: flex;
 	position: relative;
 	z-index: 3;
@@ -60,16 +60,12 @@
 	height: 30px;
 }
 
-.slider {
+.el_slider {
 	overflow: hidden;
 	padding-bottom: 20px;
 }
 
-.inner_slider {
+.el_inner_slider {
 	display: flex;
 	padding: 0 20px 0 20px;
-}
-
-.flex_cont {
-	display: flex;
 }

@@ -1,37 +1,37 @@
-import { useState } from 'react';
-import { authUser } from 'util/api';
-import { User } from 'types/user';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import { authUser } from "util/api";
+import { User } from "types/user";
+import { useNavigate } from "react-router-dom";
 
-import googleIcon from '../../images/googlelogo.svg';
-import emailIcon from '../../images/emailicon.png';
-import passwordIcon from '../../images/passwordicon.png';
-import personalIcon from '../../images/personalicon.png';
-import warningIcon from '../../images/warningicon.png';
+import googleIcon from "../../images/googlelogo.svg";
+import emailIcon from "../../images/emailicon.png";
+import passwordIcon from "../../images/passwordicon.png";
+import personalIcon from "../../images/personalicon.png";
+import warningIcon from "../../images/warningicon.png";
 
-import styles from './SignupForm.module.css';
-import LoginForm from './LoginForm';
+import styles from "./SignupForm.module.css";
+import LoginForm from "./LoginForm";
 
 const fields = {
 	password: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid password.',
+		errorMessage: "Please enter valid password.",
 	},
 	email: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid email address.',
+		errorMessage: "Please enter valid email address.",
 	},
 	lastName: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid last name.',
+		errorMessage: "Please enter valid last name.",
 	},
 	firstName: {
-		val: '',
+		val: "",
 		valid: true,
-		errorMessage: 'Please enter valid first name.',
+		errorMessage: "Please enter valid first name.",
 	},
 };
 
@@ -40,15 +40,15 @@ const SignupForm: React.FC = () => {
 
 	const [formInputs, setFormInputs] = useState(fields);
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const [errorMessage, setErrorMessage] = useState('');
+	const [errorMessage, setErrorMessage] = useState("");
 
 	const validateInputsForSubmit = () => {
 		let isInvalid = false;
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (
-				input.val === '' ||
-				(key === 'email' &&
+				input.val === "" ||
+				(key === "email" &&
 					!/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
 			) {
 				isInvalid = true;
@@ -63,9 +63,11 @@ const SignupForm: React.FC = () => {
 		return isInvalid;
 	};
 
-	const sendAuthRequest = async (data: any) => {
-		const formData: User | any = Object.fromEntries(data.entries());
-		const res = await authUser('signup', formData);
+	const sendAuthRequest = async (path: string, data?: any) => {
+		const formData: User | any = data
+			? Object.fromEntries(data.entries())
+			: null;
+		const res = await authUser(path, formData);
 		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
 	};
 
@@ -73,14 +75,19 @@ const SignupForm: React.FC = () => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
-		!isInvalid && sendAuthRequest(data);
+		!isInvalid && sendAuthRequest("signupLocal", data);
+	};
+
+	const signUpWithGoogle = async (event: any) => {
+		event.preventDefault();
+		sendAuthRequest("signupGoogle");
 	};
 
 	const inputOnChange = ({
 		type,
 		value,
 	}: {
-		type: 'firstName' | 'lastName' | 'email' | 'password';
+		type: "firstName" | "lastName" | "email" | "password";
 		value: string;
 	}) => {
 		setFormInputs({
@@ -89,28 +96,28 @@ const SignupForm: React.FC = () => {
 				...formInputs[type],
 				val: value,
 				valid:
-					type === 'email'
+					type === "email"
 						? /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value) ||
-						  value === ''
+						  value === ""
 							? true
 							: false
 						: true,
 			},
 		});
-		setErrorMessage('');
+		setErrorMessage("");
 	};
 
 	return (
 		<div>
-			<form method='post' className={styles.form} onSubmit={submitSignupForm}>
+			<form method="post" className={styles.form} onSubmit={submitSignupForm}>
 				<div className={styles.form_content}>
 					<section className={styles.email_login}>
 						<header>Create new account</header>
-						{errorMessage !== '' && (
+						{errorMessage !== "" && (
 							<p className={styles.error}>
 								<img
 									src={warningIcon}
-									alt='warning icon'
+									alt="warning icon"
 									className={styles.warningIcon}
 								/>
 								{errorMessage}
@@ -118,86 +125,86 @@ const SignupForm: React.FC = () => {
 						)}
 						<div className={styles.su_input_flnames}>
 							<div className={styles.su_input_field}>
-								<label htmlFor='firstname'>
+								<label htmlFor="firstname">
 									<img
 										src={personalIcon}
-										alt='personal icon'
+										alt="personal icon"
 										className={`${styles.icon} ${styles.flicon}`}
 									/>
 								</label>
 								<input
-									type='firstname'
-									name='firstname'
-									id='firstname'
-									placeholder='First Name'
+									type="firstname"
+									name="firstname"
+									id="firstname"
+									placeholder="First Name"
 									className={
-										formInputs['firstName'].valid ? '' : styles.invalid
+										formInputs["firstName"].valid ? "" : styles.invalid
 									}
 									onChange={(e) =>
-										inputOnChange({ type: 'firstName', value: e.target.value })
+										inputOnChange({ type: "firstName", value: e.target.value })
 									}
 								/>
 							</div>
 							<div className={styles.su_input_field}>
-								<label htmlFor='lastname'>
+								<label htmlFor="lastname">
 									<img
 										src={personalIcon}
-										alt='personal icon'
+										alt="personal icon"
 										className={`${styles.icon} ${styles.flicon}`}
 									/>
 								</label>
 								<input
-									type='lastname'
-									name='lastname'
-									id='lastname'
-									placeholder='Last Name'
-									className={formInputs['lastName'].valid ? '' : styles.invalid}
+									type="lastname"
+									name="lastname"
+									id="lastname"
+									placeholder="Last Name"
+									className={formInputs["lastName"].valid ? "" : styles.invalid}
 									onChange={(e) =>
-										inputOnChange({ type: 'lastName', value: e.target.value })
+										inputOnChange({ type: "lastName", value: e.target.value })
 									}
 								/>
 							</div>
 						</div>
 						<div className={styles.su_input_field}>
-							<label htmlFor='email'>
+							<label htmlFor="email">
 								<img
 									src={emailIcon}
-									alt='email icon'
+									alt="email icon"
 									className={`${styles.icon} ${styles.epicon}`}
 								/>
 							</label>
 							<input
-								type='email'
-								name='email'
-								id='email'
-								placeholder='Email'
-								className={formInputs['email'].valid ? '' : styles.invalid}
+								type="email"
+								name="email"
+								id="email"
+								placeholder="Email"
+								className={formInputs["email"].valid ? "" : styles.invalid}
 								onChange={(e) =>
-									inputOnChange({ type: 'email', value: e.target.value })
+									inputOnChange({ type: "email", value: e.target.value })
 								}
 							/>
 						</div>
 						<div className={styles.su_input_field}>
-							<label htmlFor='password'>
+							<label htmlFor="password">
 								<img
 									src={passwordIcon}
-									alt='password icon'
+									alt="password icon"
 									className={`${styles.icon} ${styles.epicon}`}
 								/>
 							</label>
 							<input
-								type='password'
-								name='password'
-								id='password'
-								placeholder='Password'
-								className={formInputs['password'].valid ? '' : styles.invalid}
+								type="password"
+								name="password"
+								id="password"
+								placeholder="Password"
+								className={formInputs["password"].valid ? "" : styles.invalid}
 								onChange={(e) =>
-									inputOnChange({ type: 'password', value: e.target.value })
+									inputOnChange({ type: "password", value: e.target.value })
 								}
 							/>
 						</div>
 						<div>
-							<button name='signup' type='submit'>
+							<button name="signup" type="submit">
 								Sign up
 							</button>
 						</div>
@@ -206,10 +213,10 @@ const SignupForm: React.FC = () => {
 						<span>or</span>
 					</section>
 					<section className={styles.other_login}>
-						<button name='google' type='button'>
+						<button name="google" type="button" onClick={signUpWithGoogle}>
 							<img
 								src={googleIcon}
-								alt='Google logo'
+								alt="Google logo"
 								className={styles.googlelogo}
 							/>
 							<p>Google</p>
@@ -219,7 +226,7 @@ const SignupForm: React.FC = () => {
 				<section className={styles.footer}>
 					<span>
 						Already have an account?
-						<button type='button' onClick={() => setShowLoginPage(true)}>
+						<button type="button" onClick={() => setShowLoginPage(true)}>
 							Log in
 						</button>
 					</span>

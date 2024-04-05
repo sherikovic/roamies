@@ -5,6 +5,7 @@
 
 .home_body {
 	display: flex;
+	align-items: flex-start;
 }
 
 .side_nav {
@@ -17,46 +18,17 @@
 	flex-direction: column;
 	justify-content: flex-start;
 	width: 850px;
+	margin-right: 25px;
 }
 
-.trips_header {
+.current_actions {
 	display: flex;
-	margin-bottom: 20px;
-}
-
-.trips_layout {
-	width: 100%;
+	background-color: white;
 	border: 1px solid #c2c2d1;
 	border-radius: 8px;
-	padding: 0px 0px 20px 0px;
 }
 
-.trips_header p {
-	display: inline-flex;
-	font-size: 15px;
-	font-weight: 550;
-	margin: 0;
-	padding: 10px 15px 0px 10px;
-}
-
-.trips_layout a {
-	font-size: 13px;
-	text-decoration: none;
-	color: black;
-	padding-top: 10px;
-}
-
-.icon {
-	height: 18px;
-	width: 18px;
-	min-height: 18px;
-	min-width: 18px;
-	margin-right: 8px;
-	text-indent: 0px;
-	position: relative;
-}
-
-.right_actions {
+.current_actions_header {
 	display: flex;
-	flex-direction: column;
+	width: 400px;
 }

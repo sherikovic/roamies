@@ -27,6 +27,7 @@ const apiFetch = async <T>(
 						"Content-Type": "application/json",
 					},
 					body: data ? JSON.stringify(data) : undefined,
+					// mode: "no-cors",
 				});
 
 				// Retry 5xx errors
@@ -73,8 +74,8 @@ export const getAllTrips = async (queryOptions?: string) => {
 };
 
 // kinda redundant, could use queryOptions in getAllTrips but this is more direct
-export const getUserTrips = async (username: string) => {
-	const res = await apiGet<Trip[]>(`trips?username=${username}`);
+export const getUserTrips = async (email: string) => {
+	const res = await apiGet<Trip[]>(`trips?email=${email}`);
 	return res.getJson;
 };
 
@@ -116,6 +117,11 @@ export const getAllEvents = async (queryOptions?: string) => {
 	const res = await apiGet<Broadcast[]>(
 		queryOptions ? `events?${queryOptions}` : "events"
 	);
+	return res.getJson;
+};
+
+export const getUserEvents = async (email: string) => {
+	const res = await apiGet<Trip[]>(`events?email=${email}`);
 	return res.getJson;
 };
 

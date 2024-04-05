@@ -37,7 +37,7 @@ const loadTrips = async () => {
 };
 
 // could actually defer them when we use lazy loading
-export const loader: LoaderFunction = async () => {
+export const loader: LoaderFunction = async ({ params }) => {
 	return defer({
 		events: await loadEvents(),
 		trips: await loadTrips(),

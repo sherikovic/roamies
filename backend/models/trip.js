@@ -14,9 +14,13 @@ const TripSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	date: {
+	startdate: {
 		type: Date,
 		required: true,
+	},
+	enddate: {
+		type: Date,
+		required: false,
 	},
 	images: {
 		type: Buffer,

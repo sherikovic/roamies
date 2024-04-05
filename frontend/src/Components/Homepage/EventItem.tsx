@@ -26,16 +26,16 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 		: (imgType = undefined);
 
 	return (
-		<div className={styles.event_item}>
-			<div className={styles.event_item_header}>
+		<div className={styles.ei_body}>
+			<div className={styles.ei_header}>
 				<a href="profile">
 					<img
 						src={sherikovic}
 						alt="user profile"
-						className={styles.user_profile_icon}
+						className={styles.ei_userprofile_icon}
 					/>
 				</a>
-				<div className={styles.event_item_header_name_date}>
+				<div className={styles.ei_header_name_date}>
 					<a href={`events/${props.event._id}`} id={styles.name}>
 						{props.event.name}
 					</a>
@@ -48,16 +48,12 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 						})}
 					</h6>
 				</div>
-				<img
-					src={imgType}
-					alt="event type"
-					className={styles.event_type_icon}
-				/>
+				<img src={imgType} alt="event type" className={styles.ei_type_icon} />
 			</div>
-			<div className={styles.event_item_content}>
+			<div className={styles.ei_content}>
 				<h4 id={styles.description}>{props.event.description}</h4>
 			</div>
-			<div className={styles.event_item_footer}>
+			<div className={styles.ei_footer}>
 				<h6 id={styles.rsvp}>
 					RSVP: {props.event.participants.length}/{props.event.rsvp.toString()}
 				</h6>

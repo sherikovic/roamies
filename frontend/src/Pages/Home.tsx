@@ -4,13 +4,17 @@ import { useNavigate, useRouteLoaderData } from "react-router";
 import styles from "./Home.module.css";
 import EventsList from "Components/Homepage/EventsList";
 import TripsList from "Components/Homepage/TripsList";
-
-import rightArrowIcon from "../images/rightarrow.png";
+import CurrentActions from "Components/Homepage/CurrentActions";
+import { Broadcast } from "types/broadcast";
+import { Trip } from "types/trip";
 
 const HomePage: React.FC = () => {
 	const navigate = useNavigate();
 	const logIn = useRouteLoaderData("root");
-	const { events, trips }: any = useRouteLoaderData("root-home");
+	const { events, trips } = useRouteLoaderData("root-home") as {
+		events: Broadcast[];
+		trips: Trip[];
+	};
 
 	useEffect(() => {
 		!logIn && navigate("/");
@@ -21,23 +25,12 @@ const HomePage: React.FC = () => {
 			<div className={styles.home_body}>
 				{/* <div className={styles.side_nav}></div> */}
 				<div className={styles.home_contents}>
-					<EventsList data={events} />
-					<section className={styles.trips_layout}>
-						<div className={styles.trips_header}>
-							<p>Trips</p>
-							<a href="/trips">
-								Explore
-								<img
-									src={rightArrowIcon}
-									alt="right arrow"
-									className={styles.icon}
-								/>
-							</a>
-						</div>
-						<TripsList data={trips} />
-					</section>
+					<TripsList trips={trips} />
+					<EventsList events={events} />
 				</div>
-				<div className={styles.right_actions}></div>
+				<div className={styles.current_actions}>
+					<CurrentActions />
+				</div>
 			</div>
 		</div>
 	);
