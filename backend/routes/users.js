@@ -4,20 +4,25 @@ const { checkAuthenticated, checkNotAuthenticated } = require("../middleware");
 const passport = require("passport");
 
 module.exports = router
-	.post("/signupLocal", usersCtls.signupLocal)
+	.post("/signupLocal", usersCtls.signup)
 	.post("/signupGoogle", usersCtls.signupGoogle)
 	.post(
-		"/loginLocal",
+		"/login",
 		checkAuthenticated,
 		passport.authenticate("local"),
-		usersCtls.loginLocal
+		usersCtls.login
 	)
-	.get(
-		"/loginGoogle",
-		// checkAuthenticated,
-		passport.authenticate("google", { scope: ["profile"] })
-		// usersCtls.loginGoogle
+	.post(
+		"/google",
+		passport.authenticate("google", {
+			scope: ["profile", "email"],
+			prompt: "select_account",
+		})
 	)
-	.get("/google/redirect", usersCtls.loginGoogle)
+	.post(
+		"/google/redirect",
+		passport.authenticate("google", { failureRedirect: "/" }),
+		usersCtls.google
+	)
 	.post("/logout", checkNotAuthenticated, usersCtls.logout)
 	.get("/getusername", usersCtls.getLoggedInUser);

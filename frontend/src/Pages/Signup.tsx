@@ -2,6 +2,8 @@ import SignupForm from "Components/Auth/SignupForm";
 import styles from "./Signup.module.css";
 import { useRouteLoaderData } from "react-router";
 
+import logo from "../images/logo.svg";
+
 const SignupPage: React.FC = () => {
 	const logIn = useRouteLoaderData("root");
 
@@ -16,7 +18,9 @@ const SignupPage: React.FC = () => {
 					<div className={styles.background_image}></div>
 					<div className={styles.signup_page}>
 						<div className={styles.brand}>
-							<a href="/">SYT</a>
+							<a href="/">
+								<img src={logo} alt="Logo" />
+							</a>
 						</div>
 						<div className={styles.signup_content}>
 							<section className={styles.signup_text}>

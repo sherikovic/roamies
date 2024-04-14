@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { apiGet, authUser } from "util/api";
+import { authUser } from "util/api";
 import { User } from "types/user";
 import { useLocation, useNavigate } from "react-router";
 
@@ -53,11 +53,11 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 		return isInvalid;
 	};
 
-	const sendAuthRequest = async (path: string, data?: any) => {
+	const sendAuthRequest = async (mode: string, data?: any) => {
 		const formData: User | any = data
 			? Object.fromEntries(data.entries())
 			: null;
-		const res = await authUser(path, formData);
+		const res = await authUser(mode, formData);
 		if (res.status === 201) {
 			location.includes("signup") ? navigate(-1) : window.location.reload();
 		}
@@ -70,13 +70,12 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
-		!isInvalid && sendAuthRequest("loginLocal", data);
+		!isInvalid && sendAuthRequest("login", data);
 	};
 
 	const loginWithGoogle = async (event: any) => {
-		// event.preventDefault();
-		const res = await apiGet("auth/loginGoogle");
-		// sendAuthRequest("loginGoogle");
+		event.preventDefault();
+		sendAuthRequest("google");
 	};
 
 	const inputOnChange = ({

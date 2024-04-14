@@ -4,6 +4,8 @@ import { useNavigate, useRouteLoaderData } from "react-router";
 import styles from "./Landing.module.css";
 import LoginForm from "Components/Auth/LoginForm";
 
+import logo from "../images/logo.svg";
+
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
 	const [showLoginPage, setShowLoginPage] = useState(false);
@@ -18,7 +20,9 @@ const LandingPage: React.FC = () => {
 			<div className={styles.background_image}></div>
 			<div className={styles.landing_navigation}>
 				<nav className={styles.brand}>
-					<a href="/">SYT</a>
+					<a href="/">
+						<img src={logo} alt="Logo" />
+					</a>
 				</nav>
 				<nav className={styles.landing_nav_container}>
 					<a href="/about">About</a>

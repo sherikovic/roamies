@@ -27,7 +27,6 @@ const apiFetch = async <T>(
 						"Content-Type": "application/json",
 					},
 					body: data ? JSON.stringify(data) : undefined,
-					// mode: "no-cors",
 				});
 
 				// Retry 5xx errors

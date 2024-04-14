@@ -35,6 +35,10 @@
 	padding: 25px 60px;
 }
 
+.brand img {
+	max-width: 80px;
+}
+
 .brand a {
 	font-size: 30px;
 	font-weight: 700;

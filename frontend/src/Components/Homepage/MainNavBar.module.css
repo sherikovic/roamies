@@ -16,6 +16,10 @@
 	align-items: center;
 }
 
+.brand img {
+	max-width: 50px;
+}
+
 .brand a {
 	font-size: 30px;
 	font-weight: 700;

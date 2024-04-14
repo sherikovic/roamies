@@ -1,9 +1,10 @@
 const LocalStrategy = require("passport-local");
-const GoogleStrategy = require("passport-google-oauth20");
+const GoogleStrategy = require("passport-google-oauth20").Strategy;
+const dotenv = require("dotenv");
+dotenv.config();
 
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
-const keys = require("./keys");
 
 module.exports = function (app, passport) {
 	app.use(passport.initialize());
@@ -41,11 +42,11 @@ module.exports = function (app, passport) {
 	passport.use(
 		new GoogleStrategy(
 			{
-				clientID: keys.google.clientID,
-				clientSecret: keys.google.clientSecret,
-				callbackURL: "/auth/google/redirect",
+				clientID: process.env.CLIENT_ID,
+				clientSecret: process.env.CLIENT_SECRET,
+				callbackURL: "http://localhost:8080/auth/google/redirect",
 			},
-			() => {}
+			(accessToken, refreshToken, profile, done) => {}
 		)
 	);
 

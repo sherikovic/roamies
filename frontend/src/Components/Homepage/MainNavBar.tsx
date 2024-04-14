@@ -6,6 +6,7 @@ import settingsicon from "../../images/settingsicon.png";
 import logouticon from "../../images/logouticon.png";
 // TODO profile picture should be retrieved from the DB
 import profilepic from "../../images/profilepic.png";
+import logo from "../../images/logo.svg";
 
 import { useOutsideAlerter } from "../../util/util";
 
@@ -13,6 +14,9 @@ import styles from "./MainNavBar.module.css";
 import { useEffect, useRef, useState } from "react";
 import { authUser } from "util/api";
 import { useRouteLoaderData } from "react-router-dom";
+
+import styled from "styled-components";
+import SVG from "react-inlinesvg";
 
 const TopNavBar: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
@@ -65,12 +69,22 @@ const TopNavBar: React.FC = () => {
 		!logIn && setHomeUrl("/");
 	}, [logIn]);
 
+	const LogoSVG = styled(SVG)`
+		> g {
+			fill: #000000;
+		}
+		max-width: 60px;
+		max-height: 60px;
+	`;
+
 	return (
 		<div>
 			<div className={styles.main_nav_bar}>
 				<nav className={styles.main_nav_bar_left}>
 					<section className={styles.brand}>
-						<a href={homeUrl}>SYT</a>
+						<a href={homeUrl}>
+							<LogoSVG src={logo} />
+						</a>
 					</section>
 					<section className={styles.search_field}>
 						<button
