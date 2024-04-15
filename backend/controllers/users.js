@@ -1,7 +1,7 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 
-module.exports.index = async (req, res) => {
+module.exports.getUsers = async (req, res) => {
 	const users = await User.find({});
 	res.json({ objects: users });
 };

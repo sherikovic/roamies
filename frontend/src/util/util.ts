@@ -1,7 +1,8 @@
 import { useEffect, useRef } from "react";
 import { getUser } from "util/api";
 
-export const baseURL = "http://localhost:8080";
+// export const baseURL = "http://localhost:8080";
+export const baseURL = "https://roamies-wd6p.onrender.com";
 
 export const useIsFirstRender = () => {
 	const isMountRef = useRef(true);
