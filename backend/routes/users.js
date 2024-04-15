@@ -25,4 +25,5 @@ module.exports = router
 		usersCtls.google
 	)
 	.post("/logout", checkNotAuthenticated, usersCtls.logout)
-	.get("/getusername", usersCtls.getLoggedInUser);
+	.get("/getusername", usersCtls.getLoggedInUser)
+	.get("/", usersCtls.index);
