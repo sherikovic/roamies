@@ -64,11 +64,11 @@ header {
 	border-color: rgba(255, 0, 0, 0.296);
 }
 
-label {
+.su_input_field label {
 	position: absolute;
 }
 
-button[name='signup'] {
+button[name="signup"] {
 	margin-top: 30px;
 	width: 100%;
 	font-size: 15px;
@@ -105,7 +105,7 @@ button[name='signup'] {
 	width: 100%;
 }
 
-button[name='google'] {
+button[name="google"] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -120,7 +120,7 @@ button[name='google'] {
 	}
 }
 
-button[name='google'] p {
+button[name="google"] p {
 	margin: 0;
 	font-size: 15px;
 	line-height: 1.6;

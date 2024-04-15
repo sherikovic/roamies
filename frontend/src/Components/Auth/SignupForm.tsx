@@ -11,6 +11,7 @@ import warningIcon from "../../images/warningicon.png";
 
 import styles from "./SignupForm.module.css";
 import LoginForm from "./LoginForm";
+import { CardOverlay, OverlayContent } from "util/common_styles";
 
 const fields = {
 	password: {
@@ -233,11 +234,11 @@ const SignupForm: React.FC = () => {
 				</section>
 			</form>
 			{showLoginPage && (
-				<div className={styles.card_overlay}>
-					<div className={styles.overlay_content}>
+				<CardOverlay>
+					<OverlayContent>
 						<LoginForm cancelHandler={() => setShowLoginPage(false)} />
-					</div>
-				</div>
+					</OverlayContent>
+				</CardOverlay>
 			)}
 		</div>
 	);

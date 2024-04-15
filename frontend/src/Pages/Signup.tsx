@@ -3,6 +3,7 @@ import styles from "./Signup.module.css";
 import { useRouteLoaderData } from "react-router";
 
 import logo from "../images/logo.svg";
+import { LogoLink, LogoWhite } from "util/common_styles";
 
 const SignupPage: React.FC = () => {
 	const logIn = useRouteLoaderData("root");
@@ -17,10 +18,10 @@ const SignupPage: React.FC = () => {
 				<div>
 					<div className={styles.background_image}></div>
 					<div className={styles.signup_page}>
-						<div className={styles.brand}>
-							<a href="/">
-								<img src={logo} alt="Logo" />
-							</a>
+						<div className={styles.header}>
+							<LogoLink href="/">
+								<LogoWhite src={logo} />
+							</LogoLink>
 						</div>
 						<div className={styles.signup_content}>
 							<section className={styles.signup_text}>

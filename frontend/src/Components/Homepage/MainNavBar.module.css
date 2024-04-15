@@ -2,7 +2,7 @@
 	display: flex;
 	justify-content: space-between;
 	align-items: center;
-	padding: 25px 55px 10px 55px;
+	padding: 5px 55px 5px 55px;
 	background-color: white;
 	position: relative;
 	z-index: 2;
@@ -14,18 +14,6 @@
 .main_nav_bar_right {
 	display: flex;
 	align-items: center;
-}
-
-.brand img {
-	max-width: 50px;
-}
-
-.brand a {
-	font-size: 30px;
-	font-weight: 700;
-	text-decoration: none;
-	color: black;
-	padding-right: 20px;
 }
 
 .icon {
@@ -67,6 +55,11 @@
 	display: flex;
 	width: 620px;
 	padding-right: 50px;
+	margin-left: 20px;
+}
+
+.search_field label {
+	position: absolute;
 }
 
 input[type="search"] {

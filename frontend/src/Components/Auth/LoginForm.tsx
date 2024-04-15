@@ -6,6 +6,7 @@ import { useLocation, useNavigate } from "react-router";
 import googleIcon from "../../images/googlelogo.svg";
 import warningIcon from "../../images/warningicon.png";
 import styles from "./LoginForm.module.css";
+import { XClose } from "util/common_styles";
 
 interface LoginFormProps {
 	cancelHandler: () => void;
@@ -25,7 +26,7 @@ const fields = {
 	},
 };
 
-const LoginForm: React.FC<LoginFormProps> = (props) => {
+const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 	const navigate = useNavigate();
 	let location = useLocation().pathname;
 
@@ -105,11 +106,7 @@ const LoginForm: React.FC<LoginFormProps> = (props) => {
 	return (
 		<form method="post" className={styles.form} onSubmit={submitLoginForm}>
 			<header>Log in</header>
-			<button
-				type="button"
-				id={styles.lfboxClose}
-				onClick={props.cancelHandler}
-			/>
+			<XClose type="button" onClick={cancelHandler} />
 			<div className={styles.form_content}>
 				{errorMessage !== "" && (
 					<p className={styles.error}>

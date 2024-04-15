@@ -7,6 +7,7 @@ import TripsList from "Components/Homepage/TripsList";
 import CurrentActions from "Components/Homepage/CurrentActions";
 import { Broadcast } from "types/broadcast";
 import { Trip } from "types/trip";
+import HomeActions from "Components/Homepage/HomeActions";
 
 const HomePage: React.FC = () => {
 	const navigate = useNavigate();
@@ -22,9 +23,12 @@ const HomePage: React.FC = () => {
 
 	return (
 		<div className={styles.home_page}>
-			<div className={styles.home_body}>
+			<div className={styles.home_actions}>
+				<HomeActions />
+			</div>
+			<div className={styles.contents}>
 				{/* <div className={styles.side_nav}></div> */}
-				<div className={styles.home_contents}>
+				<div className={styles.contents_items}>
 					<TripsList trips={trips} />
 					<EventsList events={events} />
 				</div>

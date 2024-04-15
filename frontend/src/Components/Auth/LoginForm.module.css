@@ -13,7 +13,7 @@
 	text-align: center;
 	padding-bottom: 30px;
 	&:after {
-		content: '______';
+		content: "______";
 		display: block;
 		/* transform: translateY(-15px); */
 		color: #868080;
@@ -30,7 +30,7 @@
 	border: none;
 	padding: 0;
 	&:after {
-		content: '\00d7';
+		content: "\00d7";
 		cursor: pointer;
 	}
 	&:hover {
@@ -79,7 +79,7 @@
 	}
 }
 
-label[for='remember_me'] {
+label[for="remember_me"] {
 	cursor: pointer;
 	color: black;
 	font-size: 12px;
@@ -90,7 +90,7 @@ label[for='remember_me'] {
 	flex-direction: column;
 }
 
-.actions button[name='login'] {
+.actions button[name="login"] {
 	width: 100%;
 	font-size: 15px;
 	line-height: 1.6;
@@ -116,7 +116,7 @@ label[for='remember_me'] {
 	color: grey;
 }
 
-.actions button[name='google'] {
+.actions button[name="google"] {
 	display: flex;
 	justify-content: center;
 	align-items: center;
@@ -131,7 +131,7 @@ label[for='remember_me'] {
 	}
 }
 
-.actions button[name='google'] p {
+.actions button[name="google"] p {
 	margin: 0;
 	font-size: 15px;
 	line-height: 1.6;

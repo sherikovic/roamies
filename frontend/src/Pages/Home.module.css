@@ -3,7 +3,11 @@
 	flex-direction: column;
 }
 
-.home_body {
+.home_actions {
+	display: flex;
+}
+
+.contents {
 	display: flex;
 	align-items: flex-start;
 }
@@ -13,7 +17,7 @@
 	flex-direction: column;
 }
 
-.home_contents {
+.contents_items {
 	display: flex;
 	flex-direction: column;
 	justify-content: flex-start;

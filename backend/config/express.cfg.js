@@ -1,5 +1,6 @@
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const PORT = env.process.PORT || 8080;
 
 module.exports = (app) => {
 	app.use(bodyParser.json());
@@ -34,7 +35,7 @@ module.exports = (app) => {
 		})
 	);
 
-	app.listen(8080, () => {
-		console.log("Serving on Port 8080");
+	app.listen(PORT, () => {
+		console.log("Serving on Port " + PORT);
 	});
 };

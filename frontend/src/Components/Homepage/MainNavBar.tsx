@@ -14,9 +14,7 @@ import styles from "./MainNavBar.module.css";
 import { useEffect, useRef, useState } from "react";
 import { authUser } from "util/api";
 import { useRouteLoaderData } from "react-router-dom";
-
-import styled from "styled-components";
-import SVG from "react-inlinesvg";
+import { LogoBlack, LogoLink } from "util/common_styles";
 
 const TopNavBar: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
@@ -69,23 +67,13 @@ const TopNavBar: React.FC = () => {
 		!logIn && setHomeUrl("/");
 	}, [logIn]);
 
-	const LogoSVG = styled(SVG)`
-		> g {
-			fill: #000000;
-		}
-		max-width: 60px;
-		max-height: 60px;
-	`;
-
 	return (
 		<div>
 			<div className={styles.main_nav_bar}>
 				<nav className={styles.main_nav_bar_left}>
-					<section className={styles.brand}>
-						<a href={homeUrl}>
-							<LogoSVG src={logo} />
-						</a>
-					</section>
+					<LogoLink href={homeUrl}>
+						<LogoBlack src={logo} />
+					</LogoLink>
 					<section className={styles.search_field}>
 						<button
 							type="button"

@@ -6,6 +6,9 @@ import LoginForm from "../Auth/LoginForm";
 
 import { authUser } from "util/api";
 
+import logo from "../../images/logo.svg";
+import { LogoLink, LogoWhite } from "util/common_styles";
+
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 	const logIn = useRouteLoaderData("root");
@@ -18,9 +21,9 @@ const LandingNavigation: React.FC = () => {
 
 	return (
 		<div className={styles.landing_navigation}>
-			<nav className={styles.brand}>
-				<a href="/">SYT</a>
-			</nav>
+			<LogoLink href="/">
+				<LogoWhite src={logo} />
+			</LogoLink>
 			<nav className={styles.landing_nav_container}>
 				<NavLink
 					to="about"

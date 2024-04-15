@@ -20,7 +20,7 @@ const CurrentActions: React.FC = () => {
 			}
 		}
 		logIn && runThis();
-	}, []);
+	}, [logIn]);
 
 	return (
 		<div className={styles.ca_body}>
@@ -29,7 +29,7 @@ const CurrentActions: React.FC = () => {
 					onClick={() => setActiveState("events")}
 					className={activeState === "events" ? styles.active : ""}
 				>
-					My Events
+					Current Events
 				</span>
 				<span
 					onClick={() => setActiveState("trips")}

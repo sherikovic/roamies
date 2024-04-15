@@ -31,19 +31,8 @@
 	height: 100vh;
 }
 
-.brand {
-	padding: 25px 60px;
-}
-
-.brand img {
-	max-width: 80px;
-}
-
-.brand a {
-	font-size: 30px;
-	font-weight: 700;
-	text-decoration: none;
-	color: white;
+.header {
+	padding: 20px 60px;
 }
 
 .signup_content {

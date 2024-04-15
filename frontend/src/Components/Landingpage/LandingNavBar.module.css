@@ -4,16 +4,9 @@
 	position: relative;
 	justify-content: space-between;
 	align-items: center;
-	padding: 25px 55px;
+	padding: 20px 60px;
 	/* background-color: black; */
 	background-color: #1c2727;
-}
-
-.brand a {
-	font-size: 30px;
-	font-weight: 700;
-	text-decoration: none;
-	color: white;
 }
 
 .landing_nav_container {

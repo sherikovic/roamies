@@ -3,8 +3,9 @@ import { useNavigate, useRouteLoaderData } from "react-router";
 
 import styles from "./Landing.module.css";
 import LoginForm from "Components/Auth/LoginForm";
-
+import { CardOverlay, LogoLink, OverlayContent } from "util/common_styles";
 import logo from "../images/logo.svg";
+import styled from "styled-components";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
@@ -19,11 +20,9 @@ const LandingPage: React.FC = () => {
 		<div className={styles.landing_page}>
 			<div className={styles.background_image}></div>
 			<div className={styles.landing_navigation}>
-				<nav className={styles.brand}>
-					<a href="/">
-						<img src={logo} alt="Logo" />
-					</a>
-				</nav>
+				<LogoLink href="/">
+					<LogoWhite src={logo} />
+				</LogoLink>
 				<nav className={styles.landing_nav_container}>
 					<a href="/about">About</a>
 					<a href="/how-to-use">How to Use</a>
@@ -42,14 +41,18 @@ const LandingPage: React.FC = () => {
 				<a href="/signup">Join the Community</a>
 			</div>
 			{showLoginPage && (
-				<div className={styles.card_overlay}>
-					<div className={styles.overlay_content}>
+				<CardOverlay>
+					<OverlayContent>
 						<LoginForm cancelHandler={() => setShowLoginPage(false)} />
-					</div>
-				</div>
+					</OverlayContent>
+				</CardOverlay>
 			)}
 		</div>
 	);
 };
 
 export default LandingPage;
+
+const LogoWhite = styled.img`
+	max-width: 80px;
+`;
