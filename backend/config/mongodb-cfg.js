@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const dbUrl =
 	process.env.MODE === "dev"
 		? "mongodb://127.0.0.1:27017/playground"
-		: "mongodb+srv://sherikovic:A1234a4321@cluster0.ah7ultu.mongodb.net/?retryWrites=true&w=majority";
+		: `mongodb+srv://roamies:${process.env.password}@cluster0.xprjipb.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0`;
 mongoose.connect(dbUrl);
 const db = mongoose.connection;
 db.on("error", (err) => {

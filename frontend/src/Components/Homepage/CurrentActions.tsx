@@ -38,12 +38,12 @@ const CurrentActions: React.FC = () => {
 					My Trips
 				</span>
 			</div>
-			{logIn && activeState === "events" && (
+			{/* {logIn && activeState === "events" && events && (
 				<div className={styles.ca_content}>{events?.objects[2].name}</div>
 			)}
-			{logIn && activeState === "trips" && (
+			{logIn && activeState === "trips" && trips && (
 				<div className={styles.ca_content}>{trips?.objects[2].name}</div>
-			)}
+			)} */}
 			{!logIn && <div>Couldn't load information</div>}
 		</div>
 	);
