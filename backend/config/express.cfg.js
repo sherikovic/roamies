@@ -1,12 +1,14 @@
 const session = require("express-session");
 const bodyParser = require("body-parser");
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.MODE === "dev" ? 8080 : process.env.PORT;
 
 module.exports = (app) => {
 	app.use(bodyParser.json());
 
 	app.use((req, res, next) => {
-		res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
+		process.env.MODE === "dev"
+			? res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+			: res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
 		res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
 		res.setHeader("Access-Control-Allow-Headers", "Content-Type");
 		res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -14,7 +16,9 @@ module.exports = (app) => {
 	});
 
 	app.options("*", (req, res) => {
-		res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
+		process.env.MODE === "dev"
+			? res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
+			: res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
 		res.setHeader("Access-Control-Allow-Methods", "GET, POST");
 		res.setHeader(
 			"Access-Control-Allow-Headers",

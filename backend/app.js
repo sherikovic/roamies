@@ -1,5 +1,7 @@
 const app = require("express")();
 const passport = require("passport");
+const dotenv = require("dotenv");
+dotenv.config();
 
 require("./config/mongodb-cfg");
 require("./config/express.cfg")(app);
