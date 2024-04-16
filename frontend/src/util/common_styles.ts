@@ -56,9 +56,9 @@ export const LogoBlack = styled(SVG)`
 	max-height: 60px;
 `;
 
-export const LogoWhite = styled.img`
+export const LogoWhite = styled(SVG)`
 	> g {
-		fill: #111111;
+		fill: #ffffff;
 	}
 	max-width: 80px;
 	max-height: 80px;

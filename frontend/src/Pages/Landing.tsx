@@ -3,9 +3,13 @@ import { useNavigate, useRouteLoaderData } from "react-router";
 
 import styles from "./Landing.module.css";
 import LoginForm from "Components/Auth/LoginForm";
-import { CardOverlay, LogoLink, OverlayContent } from "util/common_styles";
+import {
+	CardOverlay,
+	LogoLink,
+	LogoWhite,
+	OverlayContent,
+} from "util/common_styles";
 import logo from "../images/logo.svg";
-import styled from "styled-components";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
@@ -52,7 +56,3 @@ const LandingPage: React.FC = () => {
 };
 
 export default LandingPage;
-
-const LogoWhite = styled.img`
-	max-width: 80px;
-`;
