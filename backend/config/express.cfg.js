@@ -10,7 +10,7 @@ module.exports = (app) => {
 		origin:
 			process.env.MODE === "dev"
 				? "http://localhost:3000"
-				: /^https?:\/\/(?:.*\.)?roamies\.org$/,
+				: [/^https?:\/\/(?:.*\.)?roamies\.org$/, "https://accounts.google.com"],
 		methods: ["GET", "POST", "PATCH", "DELETE"],
 		allowedHeaders: "Content-Type",
 		credentials: true,
