@@ -8,35 +8,15 @@ module.exports = (app) => {
 
 	const corsOptions = {
 		origin:
-			process.env.MODE === "dev" ? "http://localhost:3000" : /\.roamies\.org$/,
+			process.env.MODE === "dev"
+				? "http://localhost:3000"
+				: /^https?:\/\/(?:.*\.)?roamies\.org$/,
 		methods: ["GET", "POST", "PATCH", "DELETE"],
 		allowedHeaders: "Content-Type",
 		credentials: true,
 	};
 	app.use(cors(corsOptions));
-	app.options("*", cors(corsOptions));
-
-	// app.use((req, res, next) => {
-	// 	process.env.MODE === "dev"
-	// 		? res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
-	// 		: res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
-	// 	res.setHeader("Access-Control-Allow-Methods", "GET,POST,PATCH,DELETE");
-	// 	res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-	// 	res.setHeader("Access-Control-Allow-Credentials", "true");
-	// 	next();
-	// });
-
-	// app.options("*", (req, res) => {
-	// 	process.env.MODE === "dev"
-	// 		? res.setHeader("Access-Control-Allow-Origin", "http://localhost:3000")
-	// 		: res.setHeader("Access-Control-Allow-Origin", "https://roamies.org");
-	// 	res.setHeader("Access-Control-Allow-Methods", "GET, POST");
-	// 	res.setHeader(
-	// 		"Access-Control-Allow-Headers",
-	// 		"Content-Type, Authorization"
-	// 	);
-	// 	res.status(200).send();
-	// });
+	app.options("*", cors());
 
 	app.use(
 		session({
