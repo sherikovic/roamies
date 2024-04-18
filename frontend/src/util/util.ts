@@ -4,7 +4,7 @@ import { getUser } from "util/api";
 export const baseURL =
 	process.env.NODE_ENV === "development"
 		? "http://localhost:8080"
-		: "https://roamies-wd6p.onrender.com";
+		: "https://api.roamies.org";
 
 export const useIsFirstRender = () => {
 	const isMountRef = useRef(true);
