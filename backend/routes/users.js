@@ -1,7 +1,15 @@
 const router = require("express").Router();
 const usersCtls = require("../controllers/users");
+const cors = require("cors");
 const { checkAuthenticated, checkNotAuthenticated } = require("../middleware");
 const passport = require("passport");
+
+const corsOptions = {
+	origin: "https://accounts.google.com",
+	methods: ["GET", "POST", "PATCH", "DELETE"],
+	allowedHeaders: "Content-Type",
+	credentials: true,
+};
 
 module.exports = router
 	.post("/signupLocal", usersCtls.signup)
@@ -14,6 +22,7 @@ module.exports = router
 	)
 	.post(
 		"/google",
+		cors(corsOptions),
 		passport.authenticate("google", {
 			scope: ["profile", "email"],
 			prompt: "select_account",
