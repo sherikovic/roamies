@@ -50,7 +50,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 				}));
 			}
 		});
-		// setState is asyncronous, so you need the function to return the value of isInvalid, can't rely on state for that
 		return isInvalid;
 	};
 

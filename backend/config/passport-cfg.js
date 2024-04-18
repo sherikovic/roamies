@@ -42,7 +42,7 @@ module.exports = function (app, passport) {
 			{
 				clientID: process.env.CLIENT_ID,
 				clientSecret: process.env.CLIENT_SECRET,
-				callbackURL: "http://localhost:8080/auth/google/redirect",
+				callbackURL: "http://api.roamies.org/auth/google/redirect",
 			},
 			(accessToken, refreshToken, profile, done) => {}
 		)
