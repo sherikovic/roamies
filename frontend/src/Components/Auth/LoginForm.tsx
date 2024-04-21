@@ -113,6 +113,17 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 						{errorMessage}
 					</p>
 				)}
+				{process.env.NODE_ENV === "production" && (
+					<INFO>
+						<img
+							src={warningIcon}
+							alt="warning icon"
+							className={styles.warningIcon}
+						/>
+						We're currently still in development, logging in is disabled, check
+						us out later ^^
+					</INFO>
+				)}
 				<section className={styles.lf_input_field}>
 					<label htmlFor="email" />
 					<input
@@ -150,10 +161,19 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 					</div>
 				</section>
 				<div className={styles.actions}>
-					<Login type="submit">Log in</Login>
+					<Login
+						type="submit"
+						disabled={process.env.NODE_ENV === "production" ? true : false}
+					>
+						Log in
+					</Login>
 					<span>or</span>
 					<GoogleLogin
-						href={baseURL + "/auth/google?redirect_url=" + document.URL}
+						href={
+							process.env.NODE_ENV === "production"
+								? "#"
+								: baseURL + "/auth/google?redirect_url=" + document.URL
+						}
 					>
 						<img
 							src={googleIcon}
@@ -164,7 +184,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 					</GoogleLogin>
 					<div>
 						<span>Not a member yet?</span>
-						<Join href="signup">Join</Join>
+						<Join href={process.env.NODE_ENV === "production" ? "#" : "signup"}>
+							Join
+						</Join>
 					</div>
 				</div>
 			</div>
@@ -226,4 +248,19 @@ const Join = styled.a`
 	&:hover {
 		background-color: #1c2727;
 	}
+`;
+
+const INFO = styled.p`
+	border: 1px solid #9cae9c;
+	background-color: #9cae9c;
+	width: 100%;
+	font-size: 14px;
+	color: #152515;
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;

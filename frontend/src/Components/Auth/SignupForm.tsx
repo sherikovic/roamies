@@ -127,6 +127,17 @@ const SignupForm: React.FC = () => {
 								{errorMessage}
 							</p>
 						)}
+						{process.env.NODE_ENV === "production" && (
+							<INFO>
+								<img
+									src={warningIcon}
+									alt="warning icon"
+									className={styles.warningIcon}
+								/>
+								We're currently still in development, sign up is disabled, check
+								us out later ^^
+							</INFO>
+						)}
 						<div className={styles.su_input_flnames}>
 							<div className={styles.su_input_field}>
 								<label htmlFor="firstname">
@@ -208,7 +219,11 @@ const SignupForm: React.FC = () => {
 							/>
 						</div>
 						<div>
-							<button name="signup" type="submit">
+							<button
+								name="signup"
+								type="submit"
+								disabled={process.env.NODE_ENV === "production" ? true : false}
+							>
 								Sign up
 							</button>
 						</div>
@@ -218,7 +233,11 @@ const SignupForm: React.FC = () => {
 					</section>
 					<section className={styles.other_login}>
 						<GoogleSignup
-							href={baseURL + "/auth/google?redirect_url=" + clientProdUrl}
+							href={
+								process.env.NODE_ENV === "production"
+									? "#"
+									: baseURL + "/auth/google?redirect_url=" + clientProdUrl
+							}
 						>
 							<img
 								src={googleIcon}
@@ -271,4 +290,19 @@ const GoogleSignup = styled.a`
 		line-height: 1.6;
 		color: black;
 	}
+`;
+
+const INFO = styled.p`
+	border: 1px solid #9cae9c;
+	background-color: #9cae9c;
+	width: 100%;
+	font-size: 14px;
+	color: #152515;
+	padding: 10px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
