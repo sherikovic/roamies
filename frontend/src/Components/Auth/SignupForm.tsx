@@ -12,7 +12,7 @@ import warningIcon from "../../images/warningicon.png";
 import styles from "./SignupForm.module.css";
 import LoginForm from "./LoginForm";
 import { CardOverlay, OverlayContent } from "util/common_styles";
-import { baseURL, clientProdUrl } from "util/util";
+import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components";
 
 const fields = {
@@ -40,6 +40,7 @@ const fields = {
 
 const SignupForm: React.FC = () => {
 	const navigate = useNavigate();
+	const { state } = useLocation();
 	const [searchParams]: any = useSearchParams();
 
 	const [formInputs, setFormInputs] = useState(fields);
@@ -236,7 +237,10 @@ const SignupForm: React.FC = () => {
 							href={
 								process.env.NODE_ENV === "production"
 									? "#"
-									: baseURL + "/auth/google?redirect_url=" + clientProdUrl
+									: baseURL +
+									  "/auth/google?redirect_url=" +
+									  clientUrl +
+									  state.from
 							}
 						>
 							<img

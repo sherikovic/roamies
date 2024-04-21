@@ -15,8 +15,14 @@ module.exports.checkNotAuthenticated = (req, res, next) => {
 module.exports.setRedirectUrl = (req, res, next) => {
 	if (req.query.redirect_url) {
 		res.cookie("redirectUrl", req.query.redirect_url);
+	} else {
+		res.cookie(
+			"redirectUrl",
+			process.env.MODE === "dev"
+				? "http://localhost:3000"
+				: "https://roamies.org"
+		);
 	}
-	console.log(req.query.redirect_url);
 	next();
 };
 

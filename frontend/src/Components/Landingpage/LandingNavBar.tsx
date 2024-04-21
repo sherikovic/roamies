@@ -1,5 +1,10 @@
 import { useState } from "react";
-import { NavLink, useRouteLoaderData } from "react-router-dom";
+import {
+	Link,
+	NavLink,
+	useLocation,
+	useRouteLoaderData,
+} from "react-router-dom";
 
 import styles from "./LandingNavBar.module.css";
 import LoginForm from "../Auth/LoginForm";
@@ -11,6 +16,7 @@ import { LogoLink, LogoWhite } from "util/common_styles";
 
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
+	const location = useLocation();
 	const logIn = useRouteLoaderData("root");
 
 	const logOutHandler = async () => {
@@ -27,24 +33,28 @@ const LandingNavigation: React.FC = () => {
 			<nav className={styles.landing_nav_container}>
 				<NavLink
 					to="about"
+					state={{ from: location.pathname }}
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					About
 				</NavLink>
 				<NavLink
 					to="how-to-use"
+					state={{ from: location.pathname }}
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					How to Use
 				</NavLink>
 				<NavLink
 					to="faq"
+					state={{ from: location.pathname }}
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					FAQ
 				</NavLink>
 				<NavLink
 					to="contact"
+					state={{ from: location.pathname }}
 					className={({ isActive }) => (isActive ? styles.active : undefined)}
 				>
 					Contact
@@ -57,7 +67,9 @@ const LandingNavigation: React.FC = () => {
 			) : (
 				<nav className={styles.landing_login}>
 					<button onClick={() => setShowLoginOverlay(true)}>Log in</button>
-					<a href="signup">Sign up</a>
+					<Link to="signup" state={{ from: location.pathname }}>
+						Sign up
+					</Link>
 				</nav>
 			)}
 			{showLoginOverlay && (

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useRouteLoaderData } from "react-router";
+import { useNavigate, useLocation, useRouteLoaderData } from "react-router";
 
 import styles from "./Landing.module.css";
 import LoginForm from "Components/Auth/LoginForm";
@@ -10,9 +10,11 @@ import {
 	OverlayContent,
 } from "util/common_styles";
 import logo from "../images/logo.svg";
+import { Link } from "react-router-dom";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
+	const location = useLocation();
 	const [showLoginPage, setShowLoginPage] = useState(false);
 	const logIn = useRouteLoaderData("root");
 
@@ -28,10 +30,18 @@ const LandingPage: React.FC = () => {
 					<LogoWhite src={logo} />
 				</LogoLink>
 				<nav className={styles.landing_nav_container}>
-					<a href="/about">About</a>
-					<a href="/how-to-use">How to Use</a>
-					<a href="/faq">FAQ</a>
-					<a href="/contact">Contact</a>
+					<Link to="/about" state={{ from: location.pathname }}>
+						About
+					</Link>
+					<Link to="/how-to-use" state={{ from: location.pathname }}>
+						How to Use
+					</Link>
+					<Link to="/faq" state={{ from: location.pathname }}>
+						FAQ
+					</Link>
+					<Link to="/contact" state={{ from: location.pathname }}>
+						Contact
+					</Link>
 				</nav>
 				<nav className={styles.landing_login}>
 					<button onClick={() => setShowLoginPage(true)}>Log in</button>
@@ -42,7 +52,9 @@ const LandingPage: React.FC = () => {
 				<p>From solo traverels, for solo traverels.</p>
 			</div>
 			<div className={styles.join_link}>
-				<a href="/signup">Join the Community</a>
+				<Link to="/signup" state={{ from: location.pathname }}>
+					Join the Community
+				</Link>
 			</div>
 			{showLoginPage && (
 				<CardOverlay>
