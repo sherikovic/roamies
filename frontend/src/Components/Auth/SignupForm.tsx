@@ -12,7 +12,7 @@ import warningIcon from "../../images/warningicon.png";
 import styles from "./SignupForm.module.css";
 import LoginForm from "./LoginForm";
 import { CardOverlay, OverlayContent } from "util/common_styles";
-import { baseURL } from "util/util";
+import { baseURL, clientProdUrl } from "util/util";
 import styled from "styled-components";
 
 const fields = {
@@ -218,7 +218,7 @@ const SignupForm: React.FC = () => {
 					</section>
 					<section className={styles.other_login}>
 						<GoogleSignup
-							href={baseURL + "/auth/google?redirect_url=" + baseURL}
+							href={baseURL + "/auth/google?redirect_url=" + clientProdUrl}
 						>
 							<img
 								src={googleIcon}

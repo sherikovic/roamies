@@ -6,6 +6,8 @@ export const baseURL =
 		? "http://localhost:8080"
 		: "https://api.roamies.org";
 
+export const clientProdUrl = "https://roamies.org";
+
 export const useIsFirstRender = () => {
 	const isMountRef = useRef(true);
 	useEffect(() => {
