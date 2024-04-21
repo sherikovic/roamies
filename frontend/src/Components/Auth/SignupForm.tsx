@@ -218,7 +218,7 @@ const SignupForm: React.FC = () => {
 					</section>
 					<section className={styles.other_login}>
 						<GoogleSignup
-							href={baseURL + "/auth/google?redirect_url=http://localhost:3000"}
+							href={baseURL + "/auth/google?redirect_url=" + baseURL}
 						>
 							<img
 								src={googleIcon}

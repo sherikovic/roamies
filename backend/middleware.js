@@ -19,3 +19,6 @@ module.exports.setRedirectUrl = (req, res, next) => {
 	console.log(req.query.redirect_url);
 	next();
 };
+
+module.exports.clientUrl =
+	process.env.MODE === "dev" ? process.env.CLIENT_DEV : process.env.CLIENT_PROD;

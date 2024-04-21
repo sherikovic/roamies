@@ -1,5 +1,6 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
+const { clientUrl } = require("../middleware");
 
 module.exports.getUsers = async (req, res) => {
 	const users = await User.find({});
@@ -53,7 +54,8 @@ module.exports.googleSuccess = (req, res) => {
 
 module.exports.googleFailure = async (req, res) => {
 	res.redirect(
-		"http://localhost:3000/signup?redirect=true&error=" +
+		clientUrl +
+			"/signup?redirect=true&error=" +
 			encodeURIComponent(
 				"A record for the same email was found, try logging in with a different method!"
 			)
