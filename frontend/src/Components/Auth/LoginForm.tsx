@@ -7,6 +7,8 @@ import googleIcon from "../../images/googlelogo.svg";
 import warningIcon from "../../images/warningicon.png";
 import styles from "./LoginForm.module.css";
 import { XClose } from "util/common_styles";
+import { baseURL } from "util/util";
+import styled from "styled-components";
 
 interface LoginFormProps {
 	cancelHandler: () => void;
@@ -53,10 +55,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 		return isInvalid;
 	};
 
-	const sendAuthRequest = async (mode: string, data?: any) => {
-		const formData: User | any = data
-			? Object.fromEntries(data.entries())
-			: null;
+	const sendAuthRequest = async (mode: string, data: any) => {
+		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser(mode, formData);
 		if (res.status === 201) {
 			location.includes("signup") ? navigate(-1) : window.location.reload();
@@ -64,6 +64,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 		res.status === 300 && setErrorMessage("A user is already logged in!");
 		res.status === 401 &&
 			setErrorMessage("Either email or password is invalid!");
+		res.status === 500 && setErrorMessage("An error occured.");
 	};
 
 	const submitLoginForm = async (event: any) => {
@@ -71,11 +72,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
 		!isInvalid && sendAuthRequest("login", data);
-	};
-
-	const loginWithGoogle = async (event: any) => {
-		event.preventDefault();
-		sendAuthRequest("google");
 	};
 
 	const inputOnChange = ({
@@ -154,21 +150,21 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 					</div>
 				</section>
 				<div className={styles.actions}>
-					<button name="login" type="submit">
-						Log in
-					</button>
+					<Login type="submit">Log in</Login>
 					<span>or</span>
-					<button name="google" type="button" onClick={loginWithGoogle}>
+					<GoogleLogin
+						href={baseURL + "/auth/google?redirect_url=" + document.URL}
+					>
 						<img
 							src={googleIcon}
 							alt="Google logo"
 							className={styles.googlelogo}
 						/>
 						<p>Continue with Google</p>
-					</button>
+					</GoogleLogin>
 					<div>
 						<span>Not a member yet?</span>
-						<a href="signup">Join</a>
+						<Join href="signup">Join</Join>
 					</div>
 				</div>
 			</div>
@@ -177,3 +173,57 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler }) => {
 };
 
 export default LoginForm;
+
+const Login = styled.button`
+	width: 100%;
+	font-size: 15px;
+	line-height: 1.6;
+	cursor: pointer;
+	padding: 8px 12px;
+	border-radius: 15px;
+	background-color: #2c3333;
+	color: white;
+	border: none;
+	&:hover {
+		background-color: #1c2727;
+	}
+`;
+
+const GoogleLogin = styled.a`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+	padding: 8px 12px;
+	border-radius: 15px;
+	background-color: white;
+	border: 1px solid black;
+	text-decoration: none;
+	&:hover {
+		background-color: rgb(244, 244, 243);
+	}
+	> p {
+		margin: 0;
+		font-size: 15px;
+		line-height: 1.6;
+		color: black;
+	}
+`;
+
+const Join = styled.a`
+	width: 25%;
+	margin: 10px auto;
+	padding: 8px 12px;
+	font-size: 15px;
+	font-weight: 500;
+	line-height: 1.6;
+	text-align: center;
+	text-decoration: none;
+	border-radius: 15px;
+	background-color: #2c3333;
+	color: white;
+	&:hover {
+		background-color: #1c2727;
+	}
+`;

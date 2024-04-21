@@ -41,14 +41,23 @@ module.exports.signup = async (req, res) => {
 	}
 };
 
-module.exports.signupGoogle = async (req, res) => {};
-
 module.exports.login = (req, res) => {
 	res.status(201).json({ message: "Log in succussful", user: req.user });
 };
 
-module.exports.google = (req, res) => {
-	res.status(201).json({ message: "Log in succussful", user: req.user });
+module.exports.googleSuccess = (req, res) => {
+	const redirectUrl = req.cookies.redirectUrl;
+	res.clearCookie("redirectUrl");
+	res.redirect(redirectUrl);
+};
+
+module.exports.googleFailure = async (req, res) => {
+	res.redirect(
+		"http://localhost:3000/signup?redirect=true&error=" +
+			encodeURIComponent(
+				"A record for the same email was found, try logging in with a different method!"
+			)
+	);
 };
 
 module.exports.logout = async (req, res) => {

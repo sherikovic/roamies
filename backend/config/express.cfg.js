@@ -1,17 +1,19 @@
 const session = require("express-session");
 const bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 const cors = require("cors");
 const PORT = process.env.MODE === "dev" ? 8080 : process.env.PORT;
 
 module.exports = (app) => {
 	app.use(bodyParser.json());
+	app.use(cookieParser());
 
 	const corsOptions = {
 		origin:
 			process.env.MODE === "dev"
 				? "http://localhost:3000"
-				: [/^https?:\/\/(?:.*\.)?roamies\.org$/, "https://accounts.google.com"],
-		methods: ["GET", "POST", "PATCH", "DELETE"],
+				: /^https?:\/\/(?:.*\.)?roamies\.org$/,
+		methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
 		allowedHeaders: "Content-Type",
 		credentials: true,
 	};

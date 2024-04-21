@@ -1,7 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { authUser } from "util/api";
 import { User } from "types/user";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 
 import googleIcon from "../../images/googlelogo.svg";
 import emailIcon from "../../images/emailicon.png";
@@ -12,6 +12,8 @@ import warningIcon from "../../images/warningicon.png";
 import styles from "./SignupForm.module.css";
 import LoginForm from "./LoginForm";
 import { CardOverlay, OverlayContent } from "util/common_styles";
+import { baseURL } from "util/util";
+import styled from "styled-components";
 
 const fields = {
 	password: {
@@ -38,10 +40,17 @@ const fields = {
 
 const SignupForm: React.FC = () => {
 	const navigate = useNavigate();
+	const [searchParams]: any = useSearchParams();
 
 	const [formInputs, setFormInputs] = useState(fields);
 	const [showLoginPage, setShowLoginPage] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
+
+	useEffect(() => {
+		if (searchParams.get("redirect")) {
+			setErrorMessage(searchParams.get("error"));
+		}
+	}, []);
 
 	const validateInputsForSubmit = () => {
 		let isInvalid = false;
@@ -76,11 +85,6 @@ const SignupForm: React.FC = () => {
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
 		!isInvalid && sendAuthRequest("signupLocal", data);
-	};
-
-	const signUpWithGoogle = async (event: any) => {
-		event.preventDefault();
-		sendAuthRequest("signupGoogle");
 	};
 
 	const inputOnChange = ({
@@ -213,14 +217,16 @@ const SignupForm: React.FC = () => {
 						<span>or</span>
 					</section>
 					<section className={styles.other_login}>
-						<button name="google" type="button" onClick={signUpWithGoogle}>
+						<GoogleSignup
+							href={baseURL + "/auth/google?redirect_url=http://localhost:3000"}
+						>
 							<img
 								src={googleIcon}
 								alt="Google logo"
 								className={styles.googlelogo}
 							/>
 							<p>Google</p>
-						</button>
+						</GoogleSignup>
 					</section>
 				</div>
 				<section className={styles.footer}>
@@ -244,3 +250,25 @@ const SignupForm: React.FC = () => {
 };
 
 export default SignupForm;
+
+const GoogleSignup = styled.a`
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	cursor: pointer;
+	padding: 8px 12px;
+	text-decoration: none;
+	border-radius: 15px;
+	background-color: white;
+	border: 1px solid black;
+	&:hover {
+		background-color: rgba(240, 240, 240, 0.827);
+	}
+	> p {
+		margin: 0;
+		font-size: 15px;
+		line-height: 1.6;
+		color: black;
+	}
+`;

@@ -105,28 +105,6 @@ button[name="signup"] {
 	width: 100%;
 }
 
-button[name="google"] {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 15px;
-	background-color: white;
-	border: 1px solid black;
-	&:hover {
-		background-color: rgba(240, 240, 240, 0.827);
-	}
-}
-
-button[name="google"] p {
-	margin: 0;
-	font-size: 15px;
-	line-height: 1.6;
-	color: black;
-}
-
 .googlelogo,
 .warningIcon {
 	height: 18px;
@@ -220,10 +198,11 @@ img {
 .error {
 	border: 1px solid #eac8c8;
 	background-color: #eac8c8;
-	height: 40px;
+	/* height: 40px; */
 	font-size: 14px;
 	color: #6c2f2f;
 	margin-top: 10px;
+	padding: 10px;
 	margin-bottom: 10px;
 	border-radius: 15px;
 	display: flex;

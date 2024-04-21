@@ -90,23 +90,6 @@ label[for="remember_me"] {
 	flex-direction: column;
 }
 
-.actions button[name="login"] {
-	width: 100%;
-	font-size: 15px;
-	line-height: 1.6;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 15px;
-	/* background-color: rgba(0, 0, 0, 0.8); */
-	background-color: #2c3333;
-	color: white;
-	border: none;
-	&:hover {
-		/* background-color: rgb(0, 0, 0); */
-		background-color: #1c2727;
-	}
-}
-
 .actions span {
 	padding: 20px 10px;
 	text-align: center;
@@ -114,28 +97,6 @@ label[for="remember_me"] {
 	font-weight: 500;
 	line-height: 0.7;
 	color: grey;
-}
-
-.actions button[name="google"] {
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 15px;
-	background-color: white;
-	border: 1px solid black;
-	&:hover {
-		background-color: rgb(244, 244, 243);
-	}
-}
-
-.actions button[name="google"] p {
-	margin: 0;
-	font-size: 15px;
-	line-height: 1.6;
-	color: black;
 }
 
 .googlelogo,
@@ -159,25 +120,6 @@ img {
 	display: flex;
 	flex-direction: column;
 	margin-top: 20px;
-}
-
-.actions a {
-	width: 25%;
-	margin: 10px auto;
-	padding: 8px 12px;
-	font-size: 15px;
-	font-weight: 500;
-	line-height: 1.6;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 15px;
-	/* background-color: rgba(0, 0, 0, 0.8); */
-	background-color: #2c3333;
-	color: white;
-	&:hover {
-		/* background-color: rgb(0, 0, 0); */
-		background-color: #1c2727;
-	}
 }
 
 .error {
