@@ -63,3 +63,7 @@ export const LogoWhite = styled(SVG)`
 	max-width: 80px;
 	max-height: 80px;
 `;
+
+export const FlexBoxRow = styled.div`
+	display: flex;
+`;

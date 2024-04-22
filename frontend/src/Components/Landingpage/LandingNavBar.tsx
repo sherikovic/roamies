@@ -75,7 +75,10 @@ const LandingNavigation: React.FC = () => {
 			{showLoginOverlay && (
 				<div className={styles.card_overlay}>
 					<div className={styles.overlay_content}>
-						<LoginForm cancelHandler={() => setShowLoginOverlay(false)} />
+						<LoginForm
+							cancelHandler={() => setShowLoginOverlay(false)}
+							from={location.pathname}
+						/>
 					</div>
 				</div>
 			)}

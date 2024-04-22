@@ -33,7 +33,7 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 							}
 						) +
 							" - " +
-							new Date(props.trip.enddate.toString()).toLocaleDateString(
+							new Date(props.trip.enddate!.toString()).toLocaleDateString(
 								"en-US",
 								{
 									// weekday: "short",

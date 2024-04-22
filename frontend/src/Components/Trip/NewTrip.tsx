@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { XClose } from "util/common_styles";
+import { XClose, FlexBoxRow } from "util/common_styles";
 
 interface NewTripProps {
 	cancelHandler: () => void;
@@ -7,25 +7,43 @@ interface NewTripProps {
 }
 
 const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
+	const newTipSubmit = () => {};
+
 	return (
 		<TripForm method="post">
 			<H4>Start a new trip</H4>
 			<XClose type="button" onClick={cancelHandler} />
-			<TripFormContents>
-				<label htmlFor="title">Title:</label>
-				<input type="text" name="title" id="title" />
-				<label htmlFor="location">Location:</label>
-				<input type="text" name="location" id="location" />
-				<label htmlFor="location">Description:</label>
-				<textarea name="description" id="description" cols={30} rows={3} />
-				<Date>
-					<label htmlFor="dates">Date:</label>
-					<input type="date" name="dates" id="dates" />
-				</Date>
-				<label htmlFor="images">Images:</label>
-				<input type="file" name="images" id="images" />
+			<TripFormContents onSubmit={newTipSubmit}>
+				<FlexBoxRow>
+					<label htmlFor="title">Title:</label>
+					<input type="text" name="title" id="title" />
+				</FlexBoxRow>
+				<FlexBoxRow>
+					<label htmlFor="location">Location:</label>
+					<input type="text" name="location" id="location" />
+				</FlexBoxRow>
+				<FlexBoxRow>
+					<label htmlFor="description">Description:</label>
+					<textarea name="description" id="description" cols={30} rows={3} />
+				</FlexBoxRow>
+				<FlexBoxRow>
+					<label htmlFor="startdate">Start date:</label>
+					<Date>
+						<input type="date" name="startdate" id="startdate" />
+					</Date>
+				</FlexBoxRow>
+				<FlexBoxRow>
+					<label htmlFor="enddate">End date:</label>
+					<Date>
+						<input type="date" name="enddate" id="enddate" />
+					</Date>
+				</FlexBoxRow>
+				<FlexBoxRow>
+					<label htmlFor="images">Images:</label>
+					<input type="file" name="images" id="images" />
+				</FlexBoxRow>
+				<Submit type="submit">Create</Submit>
 			</TripFormContents>
-			<Submit type="submit">Create</Submit>
 		</TripForm>
 	);
 };
@@ -52,7 +70,7 @@ const H4 = styled.h4`
 	}
 `;
 
-const TripFormContents = styled.div`
+const TripFormContents = styled.form`
 	display: flex;
 	flex-direction: column;
 	padding: 5px 40px;

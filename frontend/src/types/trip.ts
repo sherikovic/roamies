@@ -7,7 +7,7 @@ export interface Trip {
 	location: string;
 	description: string;
 	startdate: Date;
-	enddate: Date;
+	enddate?: Date;
 	owner: User;
 	images?: File;
 	events?: Broadcast[];

@@ -59,7 +59,10 @@ const LandingPage: React.FC = () => {
 			{showLoginPage && (
 				<CardOverlay>
 					<OverlayContent>
-						<LoginForm cancelHandler={() => setShowLoginPage(false)} />
+						<LoginForm
+							cancelHandler={() => setShowLoginPage(false)}
+							from={"/"}
+						/>
 					</OverlayContent>
 				</CardOverlay>
 			)}
