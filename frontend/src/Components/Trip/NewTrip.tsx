@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { XClose, FlexBoxRow } from "util/common_styles";
+import { XClose, FlexboxRow } from "util/common_styles";
 
 interface NewTripProps {
 	cancelHandler: () => void;
@@ -14,34 +14,34 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 			<H4>Start a new trip</H4>
 			<XClose type="button" onClick={cancelHandler} />
 			<TripFormContents onSubmit={newTipSubmit}>
-				<FlexBoxRow>
+				<FlexboxRow>
 					<label htmlFor="title">Title:</label>
 					<input type="text" name="title" id="title" />
-				</FlexBoxRow>
-				<FlexBoxRow>
+				</FlexboxRow>
+				<FlexboxRow>
 					<label htmlFor="location">Location:</label>
 					<input type="text" name="location" id="location" />
-				</FlexBoxRow>
-				<FlexBoxRow>
+				</FlexboxRow>
+				<FlexboxRow>
 					<label htmlFor="description">Description:</label>
 					<textarea name="description" id="description" cols={30} rows={3} />
-				</FlexBoxRow>
-				<FlexBoxRow>
+				</FlexboxRow>
+				<FlexboxRow>
 					<label htmlFor="startdate">Start date:</label>
 					<Date>
 						<input type="date" name="startdate" id="startdate" />
 					</Date>
-				</FlexBoxRow>
-				<FlexBoxRow>
+				</FlexboxRow>
+				<FlexboxRow>
 					<label htmlFor="enddate">End date:</label>
 					<Date>
 						<input type="date" name="enddate" id="enddate" />
 					</Date>
-				</FlexBoxRow>
-				<FlexBoxRow>
+				</FlexboxRow>
+				<FlexboxRow>
 					<label htmlFor="images">Images:</label>
 					<input type="file" name="images" id="images" />
-				</FlexBoxRow>
+				</FlexboxRow>
 				<Submit type="submit">Create</Submit>
 			</TripFormContents>
 		</TripForm>

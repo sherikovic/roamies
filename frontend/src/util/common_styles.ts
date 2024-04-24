@@ -64,6 +64,23 @@ export const LogoWhite = styled(SVG)`
 	max-height: 80px;
 `;
 
-export const FlexBoxRow = styled.div`
+export const FlexboxRow = styled.div`
 	display: flex;
+`;
+
+export const FlexboxCol = styled.div`
+	display: flex;
+	flex-direction: column;
+`;
+
+export const SliderBtn = styled.div<{ $opacity: number; $cursor: string }>`
+	> img {
+		opacity: ${(p) => p.$opacity};
+		display: flex;
+		position: relative;
+		z-index: 3;
+		align-items: center;
+		cursor: ${(p) => p.$cursor};
+		height: 30px;
+	}
 `;

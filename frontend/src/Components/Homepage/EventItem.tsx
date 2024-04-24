@@ -1,11 +1,6 @@
 import { Broadcast } from "types/broadcast";
 import sherikovic from "../../images/sherikovic.jpg";
-import rideshareimg from "../../images/rideshareicon.png";
-import trekkingimg from "../../images/trekkingicon.png";
-import tourimg from "../../images/touricon.png";
-import sightseeingimg from "../../images/sightseeingicon.png";
-
-import styles from "./EventItem.module.css";
+import styled from "styled-components";
 
 interface EventItemProps {
 	event: Broadcast;
@@ -16,30 +11,30 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 	let imgType: string | undefined;
 
 	props.event.category === "Ride share"
-		? (imgType = rideshareimg)
+		? (imgType = require("../../images/rideshareicon.png"))
 		: props.event.category === "Nature"
-		? (imgType = trekkingimg)
+		? (imgType = require("../../images/trekkingicon.png"))
 		: props.event.category === "Tour"
-		? (imgType = tourimg)
+		? (imgType = require("../../images/touricon.png"))
 		: props.event.category === "Sightseeing"
-		? (imgType = sightseeingimg)
+		? (imgType = require("../../images/sightseeingicon.png"))
 		: (imgType = undefined);
 
 	return (
-		<div className={styles.ei_body}>
-			<div className={styles.ei_header}>
+		<EventItemLayout>
+			<EventItemHeader>
 				<a href="profile">
-					<img
+					<Img
 						src={sherikovic}
 						alt="user profile"
-						className={styles.ei_userprofile_icon}
+						$height={35}
+						$width={35}
+						$br={25}
 					/>
 				</a>
-				<div className={styles.ei_header_name_date}>
-					<a href={`events/${props.event._id}`} id={styles.name}>
-						{props.event.name}
-					</a>
-					<h6 id={styles.date}>
+				<EventItemNameDate>
+					<a href={`events/${props.event._id}`}>{props.event.name}</a>
+					<h6>
 						{new Date(props.event.date.toString()).toLocaleDateString("en-US", {
 							weekday: "short",
 							year: "numeric",
@@ -47,19 +42,105 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 							day: "numeric",
 						})}
 					</h6>
-				</div>
-				<img src={imgType} alt="event type" className={styles.ei_type_icon} />
-			</div>
-			<div className={styles.ei_content}>
-				<h4 id={styles.description}>{props.event.description}</h4>
-			</div>
-			<div className={styles.ei_footer}>
-				<h6 id={styles.rsvp}>
+				</EventItemNameDate>
+				<Img src={imgType} alt="event type" $height={25} $width={25} $br={0} />
+			</EventItemHeader>
+			<EventItemContent>
+				<h4>{props.event.description}</h4>
+			</EventItemContent>
+			<EventItemFooter>
+				<h6>
 					RSVP: {props.event.participants.length}/{props.event.rsvp.toString()}
 				</h6>
-			</div>
-		</div>
+			</EventItemFooter>
+		</EventItemLayout>
 	);
 };
 
 export default EventItem;
+
+const EventItemLayout = styled.div`
+	display: flex;
+	flex-direction: column;
+	margin-right: 20px;
+	width: 250px;
+	min-width: 250px;
+	min-height: 170px;
+	padding: 10px;
+	border-radius: 8px;
+	background-color: #f4f0f0;
+`;
+
+const EventItemHeader = styled.div`
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+	> a {
+		margin-right: 10px;
+		padding: 0px;
+		font-size: 14px;
+	}
+`;
+
+const Img = styled.img<{ $height: number; $width: number; $br: number }>`
+	height: ${(p) => p.$height}px;
+	width: ${(p) => p.$width}px;
+	min-height: 18px;
+	min-width: 18px;
+	text-indent: 0px;
+	position: relative;
+	border-radius: ${(p) => p.$br}px;
+`;
+
+const EventItemNameDate = styled.div`
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+	width: 100%;
+	> a {
+		font-size: 14px;
+		padding: 0px;
+		font-weight: 550;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+		overflow: hidden;
+		text-decoration: none;
+		color: black;
+	}
+	> h6 {
+		font-size: 13px;
+		color: grey;
+		margin: 0px;
+		font-weight: normal;
+		line-height: 15px;
+	}
+`;
+
+const EventItemContent = styled.div`
+	display: flex;
+	align-items: flex-start;
+	margin-top: 10px;
+	height: 100%;
+	> h4 {
+		padding: 0px;
+		margin: 0;
+		font-size: 14px;
+		font-weight: normal;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+`;
+
+const EventItemFooter = styled.div`
+	display: flex;
+	justify-content: flex-start;
+	align-items: center;
+	> h6 {
+		font-size: 11px;
+		font-weight: normal;
+		padding: 0px;
+		margin: 0;
+	}
+`;

@@ -1,11 +1,21 @@
-import classes from "./UnderConstruction.module.css";
+import styled from "styled-components";
 
 const UnderConstructionPage: React.FC = () => {
 	return (
-		<p className={classes.under_construction}>
+		<UnderConstruction>
 			This page is still under construction.
-		</p>
+		</UnderConstruction>
 	);
 };
 
 export default UnderConstructionPage;
+
+const UnderConstruction = styled.p`
+	color: black;
+	font-size: 30px;
+	font-weight: 600;
+	width: 100%;
+	text-align: center;
+	position: relative;
+	margin: 0;
+`;

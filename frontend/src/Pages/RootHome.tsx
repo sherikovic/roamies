@@ -2,7 +2,7 @@ import React from "react";
 import { LoaderFunction, Outlet, defer, json } from "react-router-dom";
 
 // import MainNavigation from '../Components/Homepage/MainNavigation';
-import MainNavBar from "Components/Homepage/MainNavBar";
+import MainNavBar from "Components/Homepage/HomeNavigation";
 import { getAllEvents, getAllTrips } from "util/api";
 
 const RootHome: React.FC = () => {

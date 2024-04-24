@@ -10,7 +10,7 @@ import personalIcon from "../../images/personalicon.png";
 import warningIcon from "../../images/warningicon.png";
 
 import LoginForm from "./LoginForm";
-import { CardOverlay, OverlayContent } from "util/common_styles";
+import { CardOverlay, OverlayContent, FlexboxCol } from "util/common_styles";
 import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components";
 
@@ -244,11 +244,6 @@ const Signup = styled.form`
 	width: 340px;
 `;
 
-const FlexboxCol = styled.div`
-	display: flex;
-	flex-direction: column;
-`;
-
 const EmailSingup = styled.section`
 	display: flex;
 	flex-direction: column;
@@ -264,7 +259,7 @@ const SignupHeader = styled.header`
 	text-align: left;
 	padding-bottom: 20px;
 	line-height: 50px;
-	text-wrap: pretty;
+	/* text-wrap: pretty; */
 `;
 
 const Icon = styled.img<{ $left: number }>`
