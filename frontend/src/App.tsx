@@ -61,6 +61,7 @@ const router = createBrowserRouter([
 			{
 				element: <RootLanding />,
 				id: "root-landing",
+				errorElement: <ErrorPage />,
 				children: [
 					{
 						path: "about",
@@ -84,6 +85,7 @@ const router = createBrowserRouter([
 				element: <RootHome />,
 				id: "root-home",
 				loader: rootHomeLoader,
+				errorElement: <ErrorPage />,
 				children: [
 					{
 						path: "home",

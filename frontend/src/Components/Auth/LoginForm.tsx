@@ -36,7 +36,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 	const [errorMessage, setErrorMessage] = useState("");
 
 	const validateInputsForSubmit = () => {
-		let isInvalid = false;
+		let isInvalid: boolean = false;
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (

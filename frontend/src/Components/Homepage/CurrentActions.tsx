@@ -42,7 +42,7 @@ const CurrentActions: React.FC = () => {
 
 export default CurrentActions;
 
-const CurrentActionsHeader = styled.div<{ $activeState }>`
+const CurrentActionsHeader = styled.div<{ $activeState: string }>`
 	display: flex;
 	margin: 10px 30px 0 30px;
 	border-bottom: 1px solid #c2c2d1;

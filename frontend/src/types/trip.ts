@@ -3,11 +3,11 @@ import { User } from "./user";
 
 export interface Trip {
 	_id: string;
-	name: string;
+	title: string;
 	location: string;
-	description: string;
-	startdate: Date;
-	enddate?: Date;
+	description?: string;
+	startDate: Date;
+	endDate?: Date;
 	owner: User;
 	images?: File;
 	events?: Broadcast[];

@@ -14,10 +14,10 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 				<img src={china} alt="trip cover" style={{width: "100%", height: "100%"}} />
 			</div> */}
 			<TripItemContents>
-				<a href={`trips/${props.trip._id}`}>{props.trip.name}</a>
+				<a href={`trips/${props.trip._id}`}>{props.trip.title}</a>
 				<p>{props.trip.description}</p>
-				<h6>
-					{new Date(props.trip.startdate.toString()).toLocaleDateString(
+				{/* <h6>
+					{new Date(props.trip.startDate.toString()).toLocaleDateString(
 						"en-US",
 						{
 							// weekday: "short",
@@ -27,7 +27,7 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 						}
 					) +
 						" - " +
-						new Date(props.trip.enddate!.toString()).toLocaleDateString(
+						new Date(props.trip.endDate!.toString()).toLocaleDateString(
 							"en-US",
 							{
 								// weekday: "short",
@@ -36,7 +36,7 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 								day: "numeric",
 							}
 						)}
-				</h6>
+				</h6> */}
 			</TripItemContents>
 		</TripItemLayout>
 

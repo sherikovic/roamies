@@ -44,11 +44,11 @@ const seedDB = async () => {
 	// that the connection is not open
 	for (let i = 0; i < trips.length; i++) {
 		const trip = new Trip({
-			name: trips[i].name,
+			title: trips[i].title,
 			description: trips[i].description,
 			location: trips[i].location,
-			startdate: trips[i].startdate,
-			enddate: trips[i].enddate,
+			startdate: trips[i].startDate,
+			enddate: trips[i].endDate,
 			owner: user,
 		});
 		await trip.save();

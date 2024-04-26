@@ -1,13 +1,13 @@
-const router = require('express').Router();
-const tripsCtls = require('../controllers/trips');
+const router = require("express").Router();
+const tripsCtls = require("../controllers/trips");
 
 router
-	.route('/') // the optional parameters are passed as optional queries
+	.route("/") // the optional parameters are passed as optional queries
 	.get(tripsCtls.index) // available for everyone, gets narrowed down dep. on the query params
 	.post(tripsCtls.createTrip); // requires login
 
 router
-	.route('/:id') // id for each trip
+	.route("/:id") // id for each trip
 	.get(tripsCtls.showTrip) // doesn't require login
 	.patch(tripsCtls.updateTrip) // requries login
 	.delete(tripsCtls.deleteTrip); // requires login

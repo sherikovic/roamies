@@ -18,10 +18,10 @@ const ErrorPage: React.FC = () => {
 	}
 
 	return (
-		<>
+		<div>
 			<MainNavBar />
 			<ErrorContent title={title}>{message}</ErrorContent>
-		</>
+		</div>
 	);
 };
 

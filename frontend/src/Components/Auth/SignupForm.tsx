@@ -53,7 +53,7 @@ const SignupForm: React.FC = () => {
 	}, []);
 
 	const validateInputsForSubmit = () => {
-		let isInvalid = false;
+		let isInvalid: boolean = false;
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (

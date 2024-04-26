@@ -122,18 +122,16 @@ const HomeNavigation: React.FC = () => {
 				</SearchField>
 			</HomeNavBarSide>
 			<HomeNavBarSide>
-				<div>
-					<Img
-						src={bellicon}
-						alt="notifications icon"
-						$height={25}
-						$width={25}
-						$top={0}
-						$left={0}
-						$mr={20}
-						style={{ cursor: "pointer" }}
-					/>
-				</div>
+				<Img
+					src={bellicon}
+					alt="notifications icon"
+					$height={25}
+					$width={25}
+					$top={0}
+					$left={0}
+					$mr={20}
+					style={{ cursor: "pointer" }}
+				/>
 				<div ref={profileDDRef}>
 					<Img
 						src={profilepic}
@@ -148,7 +146,7 @@ const HomeNavigation: React.FC = () => {
 					/>
 					{showProfileMenu && (
 						<ProfileMenu>
-							<Link to="/profile">
+							<a href="/profile">
 								<Img
 									src={dd_profileicon}
 									alt="profile icon"
@@ -159,8 +157,8 @@ const HomeNavigation: React.FC = () => {
 									$mr={8}
 								/>
 								Profile
-							</Link>
-							<Link to="/settings">
+							</a>
+							<a href="/settings">
 								<Img
 									src={settingsicon}
 									alt="settings icon"
@@ -171,7 +169,7 @@ const HomeNavigation: React.FC = () => {
 									$mr={8}
 								/>
 								Settings
-							</Link>
+							</a>
 							<button type="button" onClick={logOutHandler}>
 								<Img
 									src={logouticon}

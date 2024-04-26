@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const TripSchema = new Schema({
-	name: {
+	title: {
 		type: String,
 		required: true,
 	},
@@ -12,13 +12,13 @@ const TripSchema = new Schema({
 	},
 	description: {
 		type: String,
-		required: true,
+		required: false,
 	},
-	startdate: {
+	startDate: {
 		type: Date,
 		required: true,
 	},
-	enddate: {
+	endDate: {
 		type: Date,
 		required: false,
 	},
@@ -29,10 +29,12 @@ const TripSchema = new Schema({
 	owner: {
 		type: Schema.Types.ObjectId,
 		ref: "User",
+		required: true,
 	},
 	events: {
 		type: [Schema.Types.ObjectId],
 		ref: "Broadcast",
+		required: false,
 	},
 });
 

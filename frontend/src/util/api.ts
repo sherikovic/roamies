@@ -30,9 +30,15 @@ const apiFetch = async <T>(
 				});
 
 				// Retry 5xx errors
-				if (!res || res.status.toString()[0] === "5")
-					throw Error(`${res?.status}`);
-				else return res;
+				if (!res || res.status.toString()[0] === "5") {
+					const errObj = {
+						ok: res.ok,
+						isClientError: false,
+						status: res.status,
+						getJson: await res.json(),
+					};
+					throw errObj;
+				} else return res;
 			},
 			{
 				numOfAttempts: 3,
@@ -86,7 +92,7 @@ export const getTrip = async (id: string) => {
 
 export const createTrip = async (data: Trip) => {
 	const res = await apiPost(`trips`, data);
-	return res.getJson;
+	return res;
 };
 
 export const updateTrip = async (id: string, data: Trip) => {

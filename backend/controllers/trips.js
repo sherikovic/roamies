@@ -24,12 +24,19 @@ module.exports.index = async (req, res) => {
 
 module.exports.createTrip = async (req, res) => {
 	try {
-		const trip = new Trip(req.body);
-		trip.owner = req.user.id;
-		await trip.save();
+		const user = await User.findById(req.user.id);
+		const newTrip = new Trip({
+			title: req.body.title,
+			description: req.body.description,
+			location: req.body.location,
+			startDate: new Date(req.body.startDate),
+			owner: user,
+		});
+		newTrip.endDate = req.body.endDate && new Date(req.boy.endDate);
+		await newTrip.save();
 		res
 			.status(201)
-			.json({ message: "Trip was successfully created.", trip: trip });
+			.json({ message: "Trip was successfully created.", objects: newTrip });
 	} catch (e) {
 		res
 			.status(500)
