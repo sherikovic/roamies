@@ -47,20 +47,19 @@ const seedDB = async () => {
 			title: trips[i].title,
 			description: trips[i].description,
 			location: trips[i].location,
-			startdate: trips[i].startDate,
-			enddate: trips[i].endDate,
+			startDate: trips[i].startDate,
+			endDate: trips[i].endDate,
 			owner: user,
 		});
 		await trip.save();
 	}
 	for (let i = 0; i < broadcasts.length; i++) {
 		const broadcast = new Broadcast({
-			name: broadcasts[i].name,
+			title: broadcasts[i].title,
 			description: broadcasts[i].description,
 			location: broadcasts[i].location,
-			date: broadcasts[i].date,
+			datetime: broadcasts[i].datetime,
 			category: broadcasts[i].category,
-			time: broadcasts[i].time,
 			rsvp: broadcasts[i].rsvp,
 			participants: [],
 			owner: user,

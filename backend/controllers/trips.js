@@ -24,6 +24,7 @@ module.exports.index = async (req, res) => {
 
 module.exports.createTrip = async (req, res) => {
 	try {
+		// TODO check if the user has an ongoing trip
 		const user = await User.findById(req.user.id);
 		const newTrip = new Trip({
 			title: req.body.title,
@@ -38,9 +39,10 @@ module.exports.createTrip = async (req, res) => {
 			.status(201)
 			.json({ message: "Trip was successfully created.", objects: newTrip });
 	} catch (e) {
-		res
-			.status(500)
-			.json({ message: "An error occured while creating a trip!", error: e });
+		res.status(500).json({
+			message: "A server side error occured while creating a trip!",
+			error: e,
+		});
 	}
 };
 

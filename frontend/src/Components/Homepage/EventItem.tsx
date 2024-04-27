@@ -10,13 +10,13 @@ interface EventItemProps {
 const EventItem: React.FC<EventItemProps> = (props) => {
 	let imgType: string | undefined;
 
-	props.event.category === "Ride share"
+	props.event.category === "Ride Share"
 		? (imgType = require("../../images/rideshareicon.png"))
 		: props.event.category === "Nature"
 		? (imgType = require("../../images/trekkingicon.png"))
 		: props.event.category === "Tour"
 		? (imgType = require("../../images/touricon.png"))
-		: props.event.category === "Sightseeing"
+		: props.event.category === "City Walks"
 		? (imgType = require("../../images/sightseeingicon.png"))
 		: (imgType = undefined);
 
@@ -33,14 +33,12 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 					/>
 				</a>
 				<EventItemNameDate>
-					<a href={`events/${props.event._id}`}>{props.event.name}</a>
+					<a href={`events/${props.event._id}`}>{props.event.title}</a>
 					<h6>
-						{new Date(props.event.date.toString()).toLocaleDateString("en-US", {
-							weekday: "short",
-							year: "numeric",
-							month: "long",
-							day: "numeric",
-						})}
+						{new Intl.DateTimeFormat("en", {
+							dateStyle: "short",
+							timeStyle: "short",
+						}).format(new Date(props.event.datetime))}
 					</h6>
 				</EventItemNameDate>
 				<Img src={imgType} alt="event type" $height={25} $width={25} $br={0} />
@@ -50,7 +48,12 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 			</EventItemContent>
 			<EventItemFooter>
 				<h6>
-					RSVP: {props.event.participants.length}/{props.event.rsvp.toString()}
+					RSVP:{" "}
+					{props.event.rsvp
+						? props.event.participants?.length +
+						  "/" +
+						  props.event.rsvp?.toString()
+						: "NA"}
 				</h6>
 			</EventItemFooter>
 		</EventItemLayout>

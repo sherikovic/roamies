@@ -1,4 +1,4 @@
-const Event = require("../models/broadcast");
+const Broadcast = require("../models/broadcast");
 const User = require("../models/user");
 
 module.exports.index = async (req, res) => {
@@ -7,10 +7,10 @@ module.exports.index = async (req, res) => {
 		// TODO filter according to the queries passed, for example by email
 		if (req.query.user) {
 			const user = await User.findOne({ email: req.query.email });
-			const events = await Event.find({ owner: { $in: user } });
+			const events = await Broadcast.find({ owner: { $in: user } });
 			res.json({ objects: events });
 		} else {
-			const events = await Event.find({});
+			const events = await Broadcast.find({});
 			res.json({ objects: events });
 		}
 	} catch (e) {
@@ -24,22 +24,32 @@ module.exports.index = async (req, res) => {
 
 module.exports.createEvent = async (req, res) => {
 	try {
-		const event = new Event(req.body);
-		event.owner = req.user.id;
-		await event.save();
-		res
-			.status(201)
-			.json({ message: "Event was successfully created.", event: event });
+		const user = await User.findById(req.user.id);
+		const newBroadcast = new Broadcast({
+			title: req.body.title,
+			location: req.body.location,
+			category: req.body.category,
+			datetime: new Date(req.body.datetime),
+			description: req.body.description,
+			owner: user,
+		});
+		newBroadcast.rsvp = req.body.rsvp && req.body.rsvp;
+		await newBroadcast.save();
+		res.status(201).json({
+			message: "Event was successfully created.",
+			objects: newBroadcast,
+		});
 	} catch (e) {
-		res
-			.status(500)
-			.json({ message: "An error occured while creating a event!", error: e });
+		res.status(500).json({
+			message: "A server side error occured while creating the event!",
+			error: e,
+		});
 	}
 };
 
 module.exports.showEvent = async (req, res) => {
 	try {
-		const event = await Event.findById(req.params.id);
+		const event = await Broadcast.findById(req.params.id);
 		res.json({ objects: event });
 	} catch (e) {
 		res.status(500).json({
@@ -52,8 +62,10 @@ module.exports.showEvent = async (req, res) => {
 
 module.exports.updateEvent = async (req, res) => {
 	try {
-		const event = await Event.findByIdAndUpdate(req.params.id, { ...req.body });
-		await event.save();
+		const event = await Broadcast.findByIdAndUpdate(req.params.id, {
+			...req.body,
+		});
+		await Broadcast.save();
 		res.json({ message: "Event was successfully updated!" });
 	} catch (e) {
 		res.status(500).json({
@@ -65,7 +77,7 @@ module.exports.updateEvent = async (req, res) => {
 
 module.exports.deleteEvent = async (req, res) => {
 	try {
-		await Event.findByIdAndDelete(req.params.id);
+		await Broadcast.findByIdAndDelete(req.params.id);
 		res.json({ message: "Event deleted!" });
 	} catch (e) {
 		res

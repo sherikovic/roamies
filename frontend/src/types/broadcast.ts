@@ -3,15 +3,14 @@ import { Comment } from "./comment";
 
 export interface Broadcast {
 	_id: string;
-	name: string;
+	title: string;
 	location: string;
 	category: string;
-	date: Date;
-	time: Date;
+	datetime: Date;
 	description: string;
 	images?: File;
-	rsvp: Number;
+	rsvp?: Number;
 	owner: User;
-	participants: User[];
-	comments: Comment[];
+	participants?: User[];
+	comments?: Comment[];
 }

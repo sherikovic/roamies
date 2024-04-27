@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const BroadcastSchema = new Schema({
-	name: {
+	title: {
 		type: String,
 		required: true,
 	},
@@ -14,12 +14,8 @@ const BroadcastSchema = new Schema({
 		type: String,
 		required: true,
 	},
-	date: {
+	datetime: {
 		type: Date,
-		required: true,
-	},
-	time: {
-		type: String,
 		required: true,
 	},
 	description: {
@@ -32,7 +28,7 @@ const BroadcastSchema = new Schema({
 	},
 	rsvp: {
 		type: Number,
-		required: true,
+		required: false,
 	},
 	owner: {
 		type: Schema.Types.ObjectId,

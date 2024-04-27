@@ -1,6 +1,6 @@
 export interface Share {
 	_id: string;
-	name: string;
+	title: string;
 	location: string;
 	category: string;
 	description: string;

@@ -12,7 +12,7 @@ import { clientUrl, useOutsideAlerter } from "../../util/util";
 
 import { useEffect, useRef, useState } from "react";
 import { authUser } from "util/api";
-import { Link, useRouteLoaderData } from "react-router-dom";
+import { useRouteLoaderData } from "react-router-dom";
 import { LogoBlack, LogoLink } from "util/common_styles";
 import styled from "styled-components";
 

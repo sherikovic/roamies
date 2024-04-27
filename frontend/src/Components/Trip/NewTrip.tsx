@@ -3,6 +3,7 @@ import styled from "styled-components";
 import { Trip } from "types/trip";
 import { createTrip } from "util/api";
 import { XClose, FlexboxRow, FlexboxCol } from "util/common_styles";
+import warningIcon from "../../images/warningicon.png";
 
 interface NewTripProps {
 	cancelHandler: () => void;
@@ -10,17 +11,12 @@ interface NewTripProps {
 }
 
 const fields = {
-	title: {
+	images: {
 		val: "",
 		valid: true,
-		errorMessage: "Title can't be empty",
+		errorMessage: "",
 	},
-	location: {
-		val: "",
-		valid: true,
-		errorMessage: "Location can't be empty",
-	},
-	description: {
+	endDate: {
 		val: "",
 		valid: true,
 		errorMessage: "",
@@ -30,15 +26,20 @@ const fields = {
 		valid: true,
 		errorMessage: "Start date can't be empty",
 	},
-	endDate: {
+	description: {
 		val: "",
 		valid: true,
 		errorMessage: "",
 	},
-	images: {
+	location: {
 		val: "",
 		valid: true,
-		errorMessage: "",
+		errorMessage: "Location can't be empty",
+	},
+	title: {
+		val: "",
+		valid: true,
+		errorMessage: "Title can't be empty",
 	},
 };
 
@@ -51,7 +52,7 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (
-				(key === "title" || key === "location" || key === "startDate") &&
+				(key === "title" || key === "location" || key === "date") &&
 				input.val === ""
 			) {
 				isValid = false;
@@ -71,8 +72,8 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 			setErrorMessage(response.getJson.message);
 		} else {
 			cancelHandler();
+			// TODO redirect to some other page
 		}
-		console.log(errorMessage);
 	};
 
 	const newTipSubmit = (event: any) => {
@@ -103,9 +104,8 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 				...formInputs[type],
 				val: value,
 				valid:
-					type === "title" ||
-					type === "location" ||
-					(type === "startDate" && value === "")
+					(type === "title" || type === "location" || type === "startDate") &&
+					value === ""
 						? false
 						: true,
 			},
@@ -117,6 +117,12 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 			<TripFormHeader>Start a new trip</TripFormHeader>
 			<XClose type="button" onClick={cancelHandler} />
 			<TripFormContents onSubmit={newTipSubmit} method="post">
+				{errorMessage && (
+					<Error>
+						<Img src={warningIcon} alt="warning icon" />
+						{errorMessage}
+					</Error>
+				)}
 				<FlexboxRow style={{ marginBottom: "10px" }}>
 					<Label htmlFor="title">Title:</Label>
 					<input
@@ -222,4 +228,27 @@ const Label = styled.label`
 
 const Submit = styled.button`
 	margin: 10px 40px;
+`;
+
+const Img = styled.img`
+	height: 18px;
+	width: 18px;
+	min-height: 18px;
+	min-width: 18px;
+	margin-right: 8px;
+	text-indent: 0px;
+`;
+
+const Error = styled.p`
+	border: 1px solid #eac8c8;
+	background-color: #eac8c8;
+	font-size: 14px;
+	color: #6c2f2f;
+	margin-top: 10px;
+	padding: 10px;
+	margin-bottom: 10px;
+	border-radius: 15px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;

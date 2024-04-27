@@ -130,6 +130,11 @@ export const getUserEvents = async (email: string) => {
 	return res.getJson;
 };
 
+export const createEvent = async (data: Broadcast) => {
+	const res = await apiPost(`events`, data);
+	return res;
+};
+
 // export const getAllData = async (
 // 	select: string,
 // 	path: string,

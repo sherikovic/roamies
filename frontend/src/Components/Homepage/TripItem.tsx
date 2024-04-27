@@ -16,27 +16,19 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 			<TripItemContents>
 				<a href={`trips/${props.trip._id}`}>{props.trip.title}</a>
 				<p>{props.trip.description}</p>
-				{/* <h6>
-					{new Date(props.trip.startDate.toString()).toLocaleDateString(
-						"en-US",
-						{
-							// weekday: "short",
-							year: "2-digit",
-							month: "short",
-							day: "numeric",
-						}
-					) +
-						" - " +
-						new Date(props.trip.endDate!.toString()).toLocaleDateString(
-							"en-US",
-							{
-								// weekday: "short",
-								year: "2-digit",
-								month: "short",
-								day: "numeric",
-							}
-						)}
-				</h6> */}
+				<h6>
+					{props.trip.endDate
+						? new Intl.DateTimeFormat("en", {
+								dateStyle: "short",
+						  }).format(new Date(props.trip.startDate)) +
+						  "-" +
+						  new Intl.DateTimeFormat("en", {
+								dateStyle: "short",
+						  }).format(new Date(props.trip.endDate))
+						: new Intl.DateTimeFormat("en", {
+								dateStyle: "short",
+						  }).format(new Date(props.trip.startDate))}
+				</h6>
 			</TripItemContents>
 		</TripItemLayout>
 
