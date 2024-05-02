@@ -15,7 +15,8 @@ interface EventsListProps {
 
 const EventsList: React.FC<EventsListProps> = (props) => {
 	const sliderRef = useRef<HTMLDivElement | null>(null);
-	const slidingRef = useRef<number>(0);
+	const [remainingDistance, setRemainingDistance] = useState(0);
+	const [traveledDistance, setTraveledDistance] = useState(0);
 	const [translateVal, setTranslateVal] = useState(0);
 	const [opacity, setOpacity] = useState({
 		left: 0.5,
@@ -27,41 +28,50 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 	});
 
 	const slideLeft = () => {
-		if (slidingRef.current !== 0) {
-			slidingRef.current--;
-			const width = slidingRef.current * -270;
-			setTranslateVal(width);
-		}
-		if (slidingRef.current === 0) {
+		const slidingDistance =
+			sliderRef.current!.scrollWidth / props.events.length;
+		// the purpose here is to check if there is only an item and a half to slide through
+		// 20 is padding that was added in the last step
+		if (traveledDistance - slidingDistance < slidingDistance) {
+			setTranslateVal(0);
+			setTraveledDistance(0);
+			setRemainingDistance(0);
 			setOpacity((prev) => ({ ...prev, left: 0.5, right: 1 }));
 			setCursor((prev) => ({ ...prev, left: "default", right: "pointer" }));
-		} else if (slidingRef.current !== props.events.length - 3) {
-			setOpacity((prev) => ({ ...prev, right: 1 }));
-			setCursor((prev) => ({ ...prev, right: "pointer" }));
+		} else {
+			const offset =
+				traveledDistance -
+				slidingDistance * Math.floor(traveledDistance / slidingDistance);
+
+			const travelingDistance = traveledDistance - slidingDistance - offset;
+			setTranslateVal(travelingDistance * -1);
+			setTraveledDistance(travelingDistance);
+			setOpacity((prev) => ({ ...prev, left: 1, right: 1 }));
+			setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
 		}
 	};
 	const slideRight = () => {
-		if (slidingRef.current < props.events.length - 3) {
-			slidingRef.current === null
-				? (slidingRef.current = 1)
-				: slidingRef.current++;
-			const width = slidingRef.current * -270;
-			setTranslateVal(width);
-		} else if (slidingRef.current === props.events.length - 3) {
-			const scroll: number | undefined = sliderRef.current!.scrollWidth;
-			const offset: number | undefined = sliderRef.current!.offsetWidth;
-			const width = -(270 * (props.events.length - 3) + (scroll - offset));
-			setTranslateVal(width);
-		}
-		if (
-			slidingRef.current !== 0 &&
-			slidingRef.current !== props.events.length - 3
-		) {
-			setOpacity((prev) => ({ ...prev, left: 1, right: 1 }));
-			setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
-		} else if (slidingRef.current === props.events.length - 3) {
-			setOpacity((prev) => ({ ...prev, left: 1, right: 0.5 }));
-			setCursor((prev) => ({ ...prev, left: "pointer", right: "default" }));
+		const offsetWidth = sliderRef.current!.offsetWidth;
+		const totalRemainingDistance = sliderRef.current!.scrollWidth - offsetWidth;
+		const slidingDistance =
+			sliderRef.current!.scrollWidth / props.events.length;
+
+		if (traveledDistance < totalRemainingDistance) {
+			if (remainingDistance > slidingDistance || traveledDistance === 0) {
+				const travelingDistance = traveledDistance + slidingDistance;
+				setTranslateVal(travelingDistance * -1);
+				setTraveledDistance(travelingDistance);
+				setRemainingDistance(totalRemainingDistance - travelingDistance);
+				setOpacity((prev) => ({ ...prev, left: 1, right: 1 }));
+				setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
+			} else {
+				const travelingDistance = traveledDistance + remainingDistance + 20; // 20 for padding
+				setTraveledDistance(travelingDistance);
+				setTranslateVal(travelingDistance * -1);
+				setOpacity((prev) => ({ ...prev, left: 1, right: 0.5 }));
+				setCursor((prev) => ({ ...prev, left: "pointer", right: "default" }));
+				setRemainingDistance(sliderRef.current!.scrollWidth - offsetWidth + 20);
+			}
 		}
 	};
 
@@ -92,8 +102,8 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 					</SliderBtn>
 				</EventsListHeaderSliderBtns>
 			</EventsListHeader>
-			<SliderContents ref={sliderRef}>
-				<InnerSlider $translate={translateVal}>
+			<SliderContents>
+				<InnerSlider $translate={translateVal} ref={sliderRef}>
 					{props.events.map((event) => (
 						<EventItem event={event} key={event._id} />
 					))}

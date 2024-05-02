@@ -50,7 +50,7 @@ const SignupForm: React.FC = () => {
 		if (searchParams.get("redirect")) {
 			setErrorMessage(searchParams.get("error"));
 		}
-	}, []);
+	}, [searchParams]);
 
 	const validateInputsForSubmit = () => {
 		let isInvalid: boolean = false;
