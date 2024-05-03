@@ -41,7 +41,6 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 			const offset =
 				traveledDistance -
 				slidingDistance * Math.floor(traveledDistance / slidingDistance);
-
 			const travelingDistance = traveledDistance - slidingDistance - offset;
 			setTranslateVal(travelingDistance * -1);
 			setTraveledDistance(travelingDistance);
@@ -53,7 +52,6 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 		const offsetWidth = sliderRef.current!.offsetWidth;
 		const totalRemainingDistance = sliderRef.current!.scrollWidth - offsetWidth;
 		const slidingDistance = sliderRef.current!.scrollWidth / props.trips.length;
-
 		if (traveledDistance < totalRemainingDistance) {
 			if (remainingDistance > slidingDistance || traveledDistance === 0) {
 				const travelingDistance = traveledDistance + slidingDistance;
@@ -64,11 +62,11 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 				setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
 			} else {
 				const travelingDistance = traveledDistance + remainingDistance + 20; // 20 for padding
-				setTraveledDistance(travelingDistance);
 				setTranslateVal(travelingDistance * -1);
+				setTraveledDistance(travelingDistance);
+				setRemainingDistance(sliderRef.current!.scrollWidth - offsetWidth + 20);
 				setOpacity((prev) => ({ ...prev, left: 1, right: 0.5 }));
 				setCursor((prev) => ({ ...prev, left: "pointer", right: "default" }));
-				setRemainingDistance(sliderRef.current!.scrollWidth - offsetWidth + 20);
 			}
 		}
 	};
@@ -78,7 +76,7 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 			<TripsListPageHeader>
 				<EventsListHeaderText>
 					<h4>Trips</h4>
-					<a href="/trips">
+					<a href="trips">
 						Explore
 						<img src={rightArrowIcon} alt="right arrow" />
 					</a>

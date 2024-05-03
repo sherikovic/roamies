@@ -5,20 +5,20 @@ import {
 	redirect,
 	useRouteLoaderData,
 } from "react-router-dom";
-import { Trip } from "types/trip";
+import { Broadcast } from "types/broadcast";
 
-import { deleteTrip, getTrip } from "util/api";
+import { deleteEvent, getEvent } from "util/api";
 
-const TripDetailPage: React.FC = () => {
-	const tripData = useRouteLoaderData("trip-detail") as Trip;
-	return <div>{tripData.description}</div>;
+const EventDetailPage: React.FC = () => {
+	const eventData = useRouteLoaderData("event-detail") as Broadcast;
+	return <div>{eventData.description}</div>;
 };
 
-export default TripDetailPage;
+export default EventDetailPage;
 
 export const loader: LoaderFunction = async ({ params }) => {
 	const id: any = params.id;
-	const res = await getTrip(id);
+	const res = await getEvent(id);
 	if (!res.error) {
 		return res.objects;
 	} else {
@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ params }) => {
 
 export const action: ActionFunction = async ({ params }) => {
 	const id: any = params.id;
-	const res = await deleteTrip(id);
+	const res = await deleteEvent(id);
 
 	if (res.error) {
 		throw json({ message: res.error.message }, { status: res.error.status });

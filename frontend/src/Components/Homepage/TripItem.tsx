@@ -31,39 +31,6 @@ const TripItem: React.FC<TripItemProps> = (props) => {
 				</h6>
 			</TripItemContents>
 		</TripItemLayout>
-
-		// <div className={styles.trip_item}>
-		// 	<div className={styles.trip_image}>
-		// 		<img src={china} alt="trip icon" />
-		// 	</div>
-		// 	<div className={styles.trip_content}>
-		// 		<a href={`trips/${props.trip._id}`} id={styles.name}>
-		// 			{props.trip.name}
-		// 		</a>
-		// 		<h6 id={styles.date}>
-		// 			{new Date(props.trip.startdate.toString()).toLocaleDateString(
-		// 				"en-US",
-		// 				{
-		// 					// weekday: "short",
-		// 					year: "2-digit",
-		// 					month: "short",
-		// 					day: "numeric",
-		// 				}
-		// 			) +
-		// 				" - " +
-		// 				new Date(props.trip.enddate.toString()).toLocaleDateString(
-		// 					"en-US",
-		// 					{
-		// 						// weekday: "short",
-		// 						year: "2-digit",
-		// 						month: "short",
-		// 						day: "numeric",
-		// 					}
-		// 				)}
-		// 		</h6>
-		// 		<p id={styles.description}>{props.trip.description}</p>
-		// 	</div>
-		// </div>
 	);
 };
 
@@ -129,3 +96,36 @@ const TripItemContents = styled.div`
 		}
 	}
 `;
+
+// <div className={styles.trip_item}>
+// 	<div className={styles.trip_image}>
+// 		<img src={china} alt="trip icon" />
+// 	</div>
+// 	<div className={styles.trip_content}>
+// 		<a href={`trips/${props.trip._id}`} id={styles.name}>
+// 			{props.trip.name}
+// 		</a>
+// 		<h6 id={styles.date}>
+// 			{new Date(props.trip.startdate.toString()).toLocaleDateString(
+// 				"en-US",
+// 				{
+// 					// weekday: "short",
+// 					year: "2-digit",
+// 					month: "short",
+// 					day: "numeric",
+// 				}
+// 			) +
+// 				" - " +
+// 				new Date(props.trip.enddate.toString()).toLocaleDateString(
+// 					"en-US",
+// 					{
+// 						// weekday: "short",
+// 						year: "2-digit",
+// 						month: "short",
+// 						day: "numeric",
+// 					}
+// 				)}
+// 		</h6>
+// 		<p id={styles.description}>{props.trip.description}</p>
+// 	</div>
+// </div>

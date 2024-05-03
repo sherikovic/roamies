@@ -55,6 +55,7 @@ const EventItem: React.FC<EventItemProps> = (props) => {
 						  props.event.rsvp?.toString()
 						: "NA"}
 				</h6>
+				<a href={`events/${props.event._id}`}>+1</a>
 			</EventItemFooter>
 		</EventItemLayout>
 	);
@@ -138,12 +139,16 @@ const EventItemContent = styled.div`
 
 const EventItemFooter = styled.div`
 	display: flex;
-	justify-content: flex-start;
+	justify-content: space-between;
 	align-items: center;
 	> h6 {
 		font-size: 11px;
 		font-weight: normal;
 		padding: 0px;
 		margin: 0;
+	}
+	> a {
+		text-decoration: none;
+		cursor: pointer;
 	}
 `;

@@ -63,7 +63,7 @@ const HomeNavigation: React.FC = () => {
 
 	const logIn = useRouteLoaderData("root");
 	useEffect(() => {
-		logIn && setHomeUrl("home");
+		logIn && setHomeUrl("/home");
 		!logIn && setHomeUrl("/");
 	}, [logIn]);
 

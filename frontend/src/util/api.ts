@@ -130,9 +130,24 @@ export const getUserEvents = async (email: string) => {
 	return res.getJson;
 };
 
+export const getEvent = async (id: string) => {
+	const res = await apiGet<Broadcast>(`events/${id}`);
+	return res.getJson;
+};
+
 export const createEvent = async (data: Broadcast) => {
 	const res = await apiPost(`events`, data);
 	return res;
+};
+
+export const updateEvent = async (id: string, data: Trip) => {
+	const res = await apiPatch(`events/${id}`, data);
+	return res.getJson;
+};
+
+export const deleteEvent = async (id: string) => {
+	const res = await apiDelete(`events/${id}`);
+	return res.getJson;
 };
 
 // export const getAllData = async (

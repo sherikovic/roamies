@@ -1,11 +1,19 @@
-import { LoaderFunction, json, useLoaderData } from "react-router-dom";
-import PageContent from "../Components/Misc/PageContent";
-// import { Trip } from '../types/trip';
+import { LoaderFunction, Outlet, json, useLoaderData } from "react-router-dom";
 import { getAllTrips } from "util/api";
+import { Trip } from "types/trip";
 
 const TripsPage: React.FC = () => {
-	const tripsArray: any = useLoaderData();
-	return <div></div>;
+	const tripsArray = useLoaderData() as Trip[];
+
+	return (
+		<div>
+			{tripsArray.map((trip) => (
+				<div key={trip._id}>
+					<a href={`trips/${trip._id}`}>{trip.title}</a>
+				</div>
+			))}
+		</div>
+	);
 };
 
 export default TripsPage;

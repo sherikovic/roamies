@@ -6,7 +6,6 @@ import RootHome, { loader as rootHomeLoader } from "./Pages/RootHome";
 import SignupPage from "Pages/Signup";
 
 // Auth and Settings Routes
-import { action as logoutAction } from "./Pages/Logout";
 import ErrorPage from "./Pages/Error";
 import ProfilePage from "./Pages/Profile";
 import SettingsPage, {
@@ -37,7 +36,8 @@ import RootLanding from "Pages/RootLanding";
 // Util functions
 import { isUserLoggedIn } from "util/util";
 import HomePage from "Pages/Home";
-import EventsPage from "Pages/Events";
+import EventsPage, { loader as eventsLoader } from "Pages/Events";
+import EventDetailPage from "Pages/EventDetail";
 
 const router = createBrowserRouter([
 	{
@@ -53,10 +53,6 @@ const router = createBrowserRouter([
 			{
 				path: "signup",
 				element: <SignupPage />,
-			},
-			{
-				path: "logout",
-				action: logoutAction,
 			},
 			{
 				element: <RootLanding />,
@@ -96,42 +92,38 @@ const router = createBrowserRouter([
 						element: <TripsPage />,
 						id: "trips",
 						loader: tripsLoader,
-						children: [
-							{
-								path: ":id",
-								id: "trip-detail",
-								element: <TripDetailPage />,
-								loader: tripDetailLoader,
-								action: deleteTripAction,
-							},
-						],
+					},
+					{
+						path: "trips/:id",
+						id: "trip-detail",
+						element: <TripDetailPage />,
+						loader: tripDetailLoader,
+						action: deleteTripAction,
 					},
 					{
 						path: "events",
 						element: <EventsPage />,
-						children: [
-							{
-								path: ":id",
-								id: "event-detail",
-								element: <TripDetailPage />,
-								loader: tripDetailLoader,
-								action: deleteTripAction,
-							},
-						],
+						id: "events",
+						loader: eventsLoader,
+					},
+					{
+						path: "events/:id",
+						id: "event-detail",
+						element: <EventDetailPage />,
+						loader: tripDetailLoader,
+						action: deleteTripAction,
 					},
 					{
 						path: "locations",
 						element: <LocationsPage />,
 						loader: locationsLoader,
-						children: [
-							{
-								path: ":id",
-								id: "location-detail",
-								element: <LocationDetailPage />,
-								loader: locationDetailLoader,
-								action: deleteLocationAction,
-							},
-						],
+					},
+					{
+						path: "locations/:id",
+						id: "location-detail",
+						element: <LocationDetailPage />,
+						loader: locationDetailLoader,
+						action: deleteLocationAction,
 					},
 					{
 						path: "profile",
