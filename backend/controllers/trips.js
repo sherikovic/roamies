@@ -7,10 +7,12 @@ module.exports.index = async (req, res) => {
 		// TODO filter according to the queries passed, for example by email
 		if (req.query.user) {
 			const user = await User.findOne({ email: req.query.email });
-			const trips = await Trip.find({ owner: { $in: user } });
+			const trips = await Trip.find({ owner: { $in: user } })
+				.populate("owner")
+				.populate("events");
 			res.json({ objects: trips });
 		} else {
-			const trips = await Trip.find({});
+			const trips = await Trip.find({}).populate("owner").populate("events");
 			res.json({ objects: trips });
 		}
 	} catch (e) {
@@ -48,7 +50,9 @@ module.exports.createTrip = async (req, res) => {
 
 module.exports.showTrip = async (req, res) => {
 	try {
-		const trip = await Trip.findById(req.params.id);
+		const trip = await Trip.findById(req.params.id)
+			.populate("owner")
+			.populate("events");
 		res.json({ objects: trip });
 	} catch (e) {
 		res.status(500).json({

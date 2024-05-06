@@ -5,6 +5,7 @@ const broadcasts = require("./broadcastsDummy");
 
 const Trip = require("../models/trip");
 const Broadcast = require("../models/broadcast");
+const User = require("../models/user");
 
 // establish connection to monogodb
 mongoose.connect("mongodb://127.0.0.1:27017/playground");
@@ -30,11 +31,9 @@ const logUserIn = async (data) => {
 };
 
 const seedDB = async () => {
-	// create a user DB
-	const user = await logUserIn({
-		email: "tim@tim.com",
-		password: "tim",
-	});
+	// find a user DB
+	const user = await User.findById("6624eb67a7280a8d077a5a99");
+
 	// clear the database
 	await Trip.deleteMany({});
 	await Broadcast.deleteMany({});
@@ -50,9 +49,11 @@ const seedDB = async () => {
 			startDate: trips[i].startDate,
 			endDate: trips[i].endDate,
 			owner: user,
+			events: [],
 		});
 		await trip.save();
 	}
+	const tripsDB = await Trip.find({});
 	for (let i = 0; i < broadcasts.length; i++) {
 		const broadcast = new Broadcast({
 			title: broadcasts[i].title,
@@ -63,9 +64,13 @@ const seedDB = async () => {
 			rsvp: broadcasts[i].rsvp,
 			participants: [],
 			owner: user,
+			trip: tripsDB[0],
 		});
 		await broadcast.save();
 	}
+	const brDB = await Broadcast.find({});
+	tripsDB[0].events = brDB;
+	await tripsDB[0].save();
 };
 
 seedDB().then(() =>

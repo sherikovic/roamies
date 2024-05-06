@@ -28,12 +28,12 @@ const TripSchema = new Schema({
 	},
 	owner: {
 		type: Schema.Types.ObjectId,
-		ref: "User",
+		ref: "user",
 		required: true,
 	},
 	events: {
 		type: [Schema.Types.ObjectId],
-		ref: "Broadcast",
+		ref: "broadcast",
 		required: false,
 	},
 });

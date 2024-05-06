@@ -57,7 +57,10 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 			sliderRef.current!.scrollWidth / props.events.length;
 
 		if (traveledDistance < totalRemainingDistance) {
-			if (remainingDistance > slidingDistance || traveledDistance === 0) {
+			if (
+				remainingDistance > slidingDistance ||
+				(traveledDistance === 0 && totalRemainingDistance > slidingDistance)
+			) {
 				const travelingDistance = traveledDistance + slidingDistance;
 				setTranslateVal(travelingDistance * -1);
 				setTraveledDistance(travelingDistance);
@@ -65,7 +68,10 @@ const EventsList: React.FC<EventsListProps> = (props) => {
 				setOpacity((prev) => ({ ...prev, left: 1, right: 1 }));
 				setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
 			} else {
-				const travelingDistance = traveledDistance + remainingDistance + 20; // 20 for padding
+				const travelingDistance =
+					traveledDistance !== 0
+						? traveledDistance + remainingDistance + 20
+						: totalRemainingDistance + 20; // 20 for padding
 				setTraveledDistance(travelingDistance);
 				setTranslateVal(travelingDistance * -1);
 				setOpacity((prev) => ({ ...prev, left: 1, right: 0.5 }));

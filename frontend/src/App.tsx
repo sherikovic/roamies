@@ -37,7 +37,9 @@ import RootLanding from "Pages/RootLanding";
 import { isUserLoggedIn } from "util/util";
 import HomePage from "Pages/Home";
 import EventsPage, { loader as eventsLoader } from "Pages/Events";
-import EventDetailPage from "Pages/EventDetail";
+import EventDetailPage, {
+	loader as eventDetailLoader,
+} from "Pages/EventDetail";
 
 const router = createBrowserRouter([
 	{
@@ -55,9 +57,8 @@ const router = createBrowserRouter([
 				element: <SignupPage />,
 			},
 			{
-				element: <RootLanding />,
 				id: "root-landing",
-				errorElement: <ErrorPage />,
+				element: <RootLanding />,
 				children: [
 					{
 						path: "about",
@@ -81,7 +82,6 @@ const router = createBrowserRouter([
 				element: <RootHome />,
 				id: "root-home",
 				loader: rootHomeLoader,
-				errorElement: <ErrorPage />,
 				children: [
 					{
 						path: "home",
@@ -110,8 +110,7 @@ const router = createBrowserRouter([
 						path: "events/:id",
 						id: "event-detail",
 						element: <EventDetailPage />,
-						loader: tripDetailLoader,
-						action: deleteTripAction,
+						loader: eventDetailLoader,
 					},
 					{
 						path: "locations",

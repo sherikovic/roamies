@@ -5,12 +5,12 @@ import LandingNavigation from "Components/Landingpage/LandingNavigation";
 
 const RootLanding: React.FC = () => {
 	return (
-		<>
+		<React.Fragment>
 			<LandingNavigation />
 			<main>
 				<Outlet />
 			</main>
-		</>
+		</React.Fragment>
 	);
 };
 

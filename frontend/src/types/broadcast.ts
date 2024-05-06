@@ -1,4 +1,5 @@
 import { User } from "./user";
+import { Trip } from "./trip";
 import { Comment } from "./comment";
 
 export interface Broadcast {
@@ -11,6 +12,7 @@ export interface Broadcast {
 	images?: File;
 	rsvp?: Number;
 	owner: User;
+	trip: Trip;
 	participants?: User[];
 	comments?: Comment[];
 }

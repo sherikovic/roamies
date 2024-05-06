@@ -53,7 +53,10 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 		const totalRemainingDistance = sliderRef.current!.scrollWidth - offsetWidth;
 		const slidingDistance = sliderRef.current!.scrollWidth / props.trips.length;
 		if (traveledDistance < totalRemainingDistance) {
-			if (remainingDistance > slidingDistance || traveledDistance === 0) {
+			if (
+				remainingDistance > slidingDistance ||
+				(traveledDistance === 0 && totalRemainingDistance > slidingDistance)
+			) {
 				const travelingDistance = traveledDistance + slidingDistance;
 				setTranslateVal(travelingDistance * -1);
 				setTraveledDistance(travelingDistance);
@@ -61,7 +64,10 @@ const TripsList: React.FC<TripsListProps> = (props) => {
 				setOpacity((prev) => ({ ...prev, left: 1, right: 1 }));
 				setCursor((prev) => ({ ...prev, left: "pointer", right: "pointer" }));
 			} else {
-				const travelingDistance = traveledDistance + remainingDistance + 20; // 20 for padding
+				const travelingDistance =
+					traveledDistance !== 0
+						? traveledDistance + remainingDistance + 20
+						: totalRemainingDistance + 20; // 20 for padding
 				setTranslateVal(travelingDistance * -1);
 				setTraveledDistance(travelingDistance);
 				setRemainingDistance(sliderRef.current!.scrollWidth - offsetWidth + 20);

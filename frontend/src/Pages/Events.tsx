@@ -4,7 +4,6 @@ import { getAllEvents } from "util/api";
 
 const EventsPage: React.FC = () => {
 	const eventsArray = useLoaderData() as Broadcast[];
-	console.log(eventsArray);
 	return (
 		<div>
 			{eventsArray.map((event) => (
@@ -20,9 +19,9 @@ export default EventsPage;
 
 export const loader: LoaderFunction = async () => {
 	const res = await getAllEvents();
-	if (!res.error) {
-		return res.objects;
+	if (res.ok) {
+		return res.getJson.objects;
 	} else {
-		throw json({ message: res.error.message }, { status: res.error.status });
+		throw json({ message: res.getJson.error.message }, { status: res.status });
 	}
 };

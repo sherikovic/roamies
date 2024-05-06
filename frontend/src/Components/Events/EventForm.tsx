@@ -3,54 +3,65 @@ import styled from "styled-components";
 import { FlexboxCol, FlexboxRow, XClose } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { Broadcast } from "types/broadcast";
-import { createEvent } from "util/api";
+import { createEvent, deleteEvent, updateEvent } from "util/api";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface NewEventProps {
 	cancelHandler: () => void;
+	eventData?: Broadcast;
 	children?: React.ReactNode;
 }
 
-const fields = {
-	rsvp: {
-		val: "",
-		valid: true,
-		errorMessage: "",
-	},
-	images: {
-		val: "",
-		valid: true,
-		errorMessage: "",
-	},
-	description: {
-		val: "",
-		valid: true,
-		errorMessage: "Description can't be empty",
-	},
-	datetime: {
-		val: "",
-		valid: true,
-		errorMessage: "Date can't be empty",
-	},
-	category: {
-		val: "",
-		valid: true,
-		errorMessage: "Category can't be empty",
-	},
-	location: {
-		val: "",
-		valid: true,
-		errorMessage: "Location can't be empty",
-	},
-	title: {
-		val: "",
-		valid: true,
-		errorMessage: "Title can't be empty",
-	},
-};
+const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
+	const fields = {
+		rsvp: {
+			val: eventData ? eventData.rsvp : "",
+			valid: true,
+			errorMessage: "",
+		},
+		images: {
+			val: "",
+			valid: true,
+			errorMessage: "",
+		},
+		description: {
+			val: eventData ? eventData.description : "",
+			valid: true,
+			errorMessage: "Description can't be empty",
+		},
+		datetime: {
+			val: "",
+			valid: true,
+			errorMessage: "Date can't be empty",
+		},
+		category: {
+			val: eventData ? eventData.category : "",
+			valid: true,
+			errorMessage: "Category can't be empty",
+		},
+		location: {
+			val: eventData ? eventData.location : "",
+			valid: true,
+			errorMessage: "Location can't be empty",
+		},
+		title: {
+			val: eventData ? eventData.title : "",
+			valid: true,
+			errorMessage: "Title can't be empty",
+		},
+	};
 
-const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
+	const location = useLocation();
+	const params = useParams();
+	// TODO: if no id exists, then it must be coming from the home page and
+	// should be retrieved from the ongoing trip instead
+
+	const tripId: string | null | undefined = location.pathname.includes("trips")
+		? params.id
+		: null;
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
@@ -75,23 +86,52 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 		return isValid;
 	};
 
-	const createNewEvent = async (data: Broadcast) => {
-		const response = await createEvent(data);
-		if (!response.ok) {
-			setErrorMessage(response.getJson.message);
+	const doEvent = async (mode: String, data?: Broadcast | any) => {
+		let response: any;
+		if (mode === "create") {
+			response = await createEvent(data);
+		} else if (mode === "update") {
+			response = await updateEvent(eventData!._id, data);
 		} else {
+			const proceed = window.confirm("Operation irreversable, are you sure?");
+			response = proceed && (await deleteEvent(eventData!._id));
+		}
+		if (response.ok) {
 			cancelHandler();
-			// TODO redirect to some other page
+			mode === "create"
+				? location.pathname.includes("trips")
+					? window.location.reload()
+					: navigate(`/events/${response.getJson.objects._id}`)
+				: mode === "update"
+				? window.location.reload()
+				: navigate("/events");
+		} else {
+			setErrorMessage(response.getJson.message);
 		}
 	};
 
 	const newEventSubmit = (event: any) => {
 		event.preventDefault();
-		const formData: Broadcast | any = Object.fromEntries(
+		let formData: Broadcast | any = Object.fromEntries(
 			new FormData(event.target as HTMLFormElement).entries()
 		);
+		formData.trip = tripId;
 		const isValid = validateInputsForSubmit();
-		isValid && createNewEvent(formData);
+		isValid && doEvent("create", formData);
+	};
+
+	const updateEventSubmit = (event: any) => {
+		event.preventDefault();
+		let formData: Broadcast | any = Object.fromEntries(
+			new FormData(document.forms[0]).entries()
+		);
+		formData.trip = tripId || eventData!.trip._id;
+		const isValid = validateInputsForSubmit();
+		isValid && doEvent("update", formData);
+	};
+
+	const deleteEventSubmit = (event: any) => {
+		doEvent("delete");
 	};
 
 	const inputOnChange = ({
@@ -142,6 +182,7 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 						type="text"
 						name="title"
 						id="title"
+						defaultValue={formInputs.title.val}
 						onChange={(e) => {
 							inputOnChange({ type: "title", value: e.target.value });
 						}}
@@ -153,6 +194,7 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 						type="text"
 						name="location"
 						id="location"
+						defaultValue={formInputs.location.val}
 						onChange={(e) => {
 							inputOnChange({ type: "location", value: e.target.value });
 						}}
@@ -164,6 +206,7 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 						type="datetime-local"
 						name="datetime"
 						id="datetime"
+						// TODO update the value of the date and time when the date picker is finished
 						onChange={(e) => {
 							inputOnChange({ type: "datetime", value: e.target.value });
 						}}
@@ -174,6 +217,7 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 					<textarea
 						name="description"
 						id="description"
+						defaultValue={formInputs.description.val}
 						cols={30}
 						rows={3}
 						onChange={(e) => {
@@ -186,6 +230,7 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 					<input
 						list="categories"
 						name="category"
+						defaultValue={formInputs.category.val}
 						onChange={(e) => {
 							inputOnChange({ type: "category", value: e.target.value });
 						}}
@@ -202,7 +247,9 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 					<input
 						type="number"
 						name="rsvp"
+						min={0}
 						id="rsvp"
+						defaultValue={Number(formInputs.rsvp.val)}
 						onChange={(e) => {
 							inputOnChange({ type: "rsvp", value: e.target.value });
 						}}
@@ -219,13 +266,20 @@ const NewEvent: React.FC<NewEventProps> = ({ cancelHandler }) => {
 						}}
 					/>
 				</FlexboxRow>
-				<Submit type="submit">Create</Submit>
+				{location.pathname.includes("events") ? (
+					<FlexboxRow>
+						<Submit onClick={deleteEventSubmit}>Delete</Submit>
+						<Submit onClick={updateEventSubmit}>Save</Submit>
+					</FlexboxRow>
+				) : (
+					<Submit type="submit">Create</Submit>
+				)}
 			</EventFormContents>
 		</FlexboxCol>
 	);
 };
 
-export default NewEvent;
+export default EventForm;
 
 const EventFormHeader = styled.h4`
 	font-size: 23px;

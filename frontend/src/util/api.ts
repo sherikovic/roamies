@@ -13,9 +13,7 @@ const apiFetch = async <T>(
 	ok: boolean;
 	isClientError: boolean;
 	status: number;
-	getJson:
-		| ({ error?: { message: string; status: number } } & { objects: T })
-		| any;
+	getJson: ({ error?: { message: string; error: any } } & { objects: T }) | any;
 }> => {
 	try {
 		const response = await backOff(
@@ -122,7 +120,7 @@ export const getAllEvents = async (queryOptions?: string) => {
 	const res = await apiGet<Broadcast[]>(
 		queryOptions ? `events?${queryOptions}` : "events"
 	);
-	return res.getJson;
+	return res;
 };
 
 export const getUserEvents = async (email: string) => {
@@ -132,7 +130,7 @@ export const getUserEvents = async (email: string) => {
 
 export const getEvent = async (id: string) => {
 	const res = await apiGet<Broadcast>(`events/${id}`);
-	return res.getJson;
+	return res;
 };
 
 export const createEvent = async (data: Broadcast) => {
@@ -140,14 +138,14 @@ export const createEvent = async (data: Broadcast) => {
 	return res;
 };
 
-export const updateEvent = async (id: string, data: Trip) => {
+export const updateEvent = async (id: string, data: Broadcast) => {
 	const res = await apiPatch(`events/${id}`, data);
-	return res.getJson;
+	return res;
 };
 
 export const deleteEvent = async (id: string) => {
 	const res = await apiDelete(`events/${id}`);
-	return res.getJson;
+	return res;
 };
 
 // export const getAllData = async (

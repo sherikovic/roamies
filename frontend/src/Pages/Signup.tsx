@@ -1,6 +1,5 @@
 import SignupForm from "Components/Auth/SignupForm";
 import { useRouteLoaderData } from "react-router";
-import signup from "../images/signup.jpeg";
 
 import logo from "../images/logo.svg";
 import { LogoLink, LogoWhite } from "util/common_styles";
@@ -50,7 +49,7 @@ const SignupBackground = styled.div`
 	background-size: 50% 100%;
 	background-position: left;
 	background-repeat: no-repeat;
-	background-image: url(${signup});
+	background-image: url(${require("../images/signup.jpeg")});
 	filter: brightness(0.5);
 	&::before {
 		content: "";

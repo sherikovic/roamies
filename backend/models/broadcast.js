@@ -32,15 +32,19 @@ const BroadcastSchema = new Schema({
 	},
 	owner: {
 		type: Schema.Types.ObjectId,
-		ref: "User",
+		ref: "user",
+	},
+	trip: {
+		type: Schema.Types.ObjectId,
+		ref: "trip",
 	},
 	participants: {
 		type: [Schema.Types.ObjectId],
-		ref: "User",
+		ref: "user",
 	},
 	comments: {
 		type: [Schema.Types.ObjectId],
-		ref: "Comment",
+		ref: "comment",
 	},
 });
 
