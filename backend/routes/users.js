@@ -32,5 +32,5 @@ module.exports = router
 	)
 	.get("/google/login/failure", usersCtls.googleFailure)
 	.post("/logout", checkNotAuthenticated, usersCtls.logout)
-	.get("/getusername", usersCtls.getLoggedInUser)
+	.get("/getLoggedInUser", usersCtls.getLoggedInUser)
 	.get("/getUsers", usersCtls.getUsers);

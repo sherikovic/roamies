@@ -15,7 +15,7 @@ interface NewEventProps {
 const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 	const fields = {
 		rsvp: {
-			val: eventData ? eventData.rsvp : "",
+			val: eventData ? eventData.rsvp : 0,
 			valid: true,
 			errorMessage: "",
 		},
@@ -86,52 +86,45 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 		return isValid;
 	};
 
-	const doEvent = async (mode: String, data?: Broadcast | any) => {
+	const sendEventRequestToBE = async (mode: String, data?: Broadcast | any) => {
 		let response: any;
 		if (mode === "create") {
 			response = await createEvent(data);
 		} else if (mode === "update") {
 			response = await updateEvent(eventData!._id, data);
 		} else {
-			const proceed = window.confirm("Operation irreversable, are you sure?");
-			response = proceed && (await deleteEvent(eventData!._id));
+			response =
+				window.confirm("Operation irreversable, are you sure?") &&
+				(await deleteEvent(eventData!._id));
 		}
-		if (response.ok) {
-			cancelHandler();
-			mode === "create"
-				? location.pathname.includes("trips")
+		if (response) {
+			if (response.ok) {
+				cancelHandler();
+				mode === "create"
+					? location.pathname.includes("trips")
+						? window.location.reload()
+						: navigate(`/events/${response.getJson.objects._id}`)
+					: mode === "update"
 					? window.location.reload()
-					: navigate(`/events/${response.getJson.objects._id}`)
-				: mode === "update"
-				? window.location.reload()
-				: navigate("/events");
-		} else {
-			setErrorMessage(response.getJson.message);
+					: navigate("/events");
+			} else {
+				setErrorMessage(response.getJson.error);
+			}
 		}
 	};
 
-	const newEventSubmit = (event: any) => {
+	const submitEventForm = (event: any, mode: String) => {
 		event.preventDefault();
-		let formData: Broadcast | any = Object.fromEntries(
-			new FormData(event.target as HTMLFormElement).entries()
-		);
-		formData.trip = tripId;
-		const isValid = validateInputsForSubmit();
-		isValid && doEvent("create", formData);
-	};
-
-	const updateEventSubmit = (event: any) => {
-		event.preventDefault();
-		let formData: Broadcast | any = Object.fromEntries(
-			new FormData(document.forms[0]).entries()
-		);
-		formData.trip = tripId || eventData!.trip._id;
-		const isValid = validateInputsForSubmit();
-		isValid && doEvent("update", formData);
-	};
-
-	const deleteEventSubmit = (event: any) => {
-		doEvent("delete");
+		if (mode === "create" || mode === "update") {
+			let formData: Broadcast | any = Object.fromEntries(
+				new FormData(document.forms[0] as HTMLFormElement).entries()
+			);
+			formData.trip = tripId || eventData!.trip._id;
+			const isValid = validateInputsForSubmit();
+			isValid && sendEventRequestToBE(mode, formData);
+		} else {
+			sendEventRequestToBE(mode);
+		}
 	};
 
 	const inputOnChange = ({
@@ -169,7 +162,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 		<FlexboxCol>
 			<EventFormHeader>Start a new event</EventFormHeader>
 			<XClose type="button" onClick={cancelHandler} />
-			<EventFormContents onSubmit={newEventSubmit} method="post">
+			<EventFormContents method="post">
 				{errorMessage && (
 					<Error>
 						<Img src={warningIcon} alt="warning icon" />
@@ -268,11 +261,26 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 				</FlexboxRow>
 				{location.pathname.includes("events") ? (
 					<FlexboxRow>
-						<Submit onClick={deleteEventSubmit}>Delete</Submit>
-						<Submit onClick={updateEventSubmit}>Save</Submit>
+						<Submit
+							type="button"
+							onClick={(event) => submitEventForm(event, "delete")}
+						>
+							Delete
+						</Submit>
+						<Submit
+							type="button"
+							onClick={(event) => submitEventForm(event, "update")}
+						>
+							Save
+						</Submit>
 					</FlexboxRow>
 				) : (
-					<Submit type="submit">Create</Submit>
+					<Submit
+						type="button"
+						onClick={(event) => submitEventForm(event, "create")}
+					>
+						Create
+					</Submit>
 				)}
 			</EventFormContents>
 		</FlexboxCol>

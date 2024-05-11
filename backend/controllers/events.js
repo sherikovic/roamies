@@ -10,12 +10,16 @@ module.exports.index = async (req, res) => {
 			const user = await User.findOne({ email: req.query.email });
 			const events = await Broadcast.find({ owner: { $in: user } })
 				.populate("owner")
-				.populate("trip");
+				.populate("trip")
+				.populate("participants")
+				.populate("comments");
 			res.json({ objects: events });
 		} else {
 			const events = await Broadcast.find({})
 				.populate("owner")
-				.populate("trip");
+				.populate("trip")
+				.populate("participants")
+				.populate(["comments"]);
 			res.json({ objects: events });
 		}
 	} catch (e) {
@@ -29,19 +33,13 @@ module.exports.index = async (req, res) => {
 
 module.exports.createEvent = async (req, res) => {
 	try {
-		const user = await User.findById(req.user.id);
+		const owner = await User.findById(req.user.id);
 		const trip = await Trip.findById(req.body.trip);
+		// TODO images are set to empty array until we incorporate aws
 		const newBroadcast = new Broadcast({
-			title: req.body.title,
-			location: req.body.location,
-			category: req.body.category,
-			datetime: new Date(req.body.datetime),
-			description: req.body.description,
-			rsvp: req.body.rsvp,
-			trip: trip,
-			owner: user,
+			...req.body,
+			...{ images: [], trip, owner },
 		});
-		// newBroadcast.rsvp = req.body.rsvp && req.body.rsvp;
 		await newBroadcast.save();
 		trip.events.push(newBroadcast);
 		await trip.save();
@@ -61,7 +59,9 @@ module.exports.showEvent = async (req, res) => {
 	try {
 		const event = await Broadcast.findById(req.params.id)
 			.populate("owner")
-			.populate("trip");
+			.populate("trip")
+			.populate("participants")
+			.populate("comments");
 		res.json({ objects: event });
 	} catch (e) {
 		res.status(500).json({
@@ -74,15 +74,10 @@ module.exports.showEvent = async (req, res) => {
 
 module.exports.updateEvent = async (req, res) => {
 	try {
+		// TODO images are set to empty array until we incorporate aws
 		await Broadcast.findByIdAndUpdate(req.params.id, {
-			...{
-				title: req.body.title,
-				location: req.body.location,
-				category: req.body.category,
-				datetime: req.body.datetime,
-				description: req.body.description,
-				rsvp: req.body.rsvp,
-			},
+			...req.body,
+			images: [],
 		});
 		res.json({ message: "Event was successfully updated!" });
 	} catch (e) {

@@ -1,3 +1,6 @@
+import { Broadcast } from "./broadcast";
+import { Trip } from "./trip";
+
 export interface User {
 	_id: string;
 	email: string;
@@ -8,4 +11,6 @@ export interface User {
 	country: string;
 	bio?: string;
 	social?: [string];
+	trips: [Trip];
+	events: [Broadcast];
 }

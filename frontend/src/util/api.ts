@@ -111,8 +111,13 @@ export const authUser = async (mode: string, data: User | null) => {
 	return res;
 };
 
-export const getUser = async () => {
-	const res = await apiGet("auth/getusername");
+export const getUsers = async (id?: string) => {
+	const res = await apiGet(id ? `auth/getUsers?id=${id}` : "auth/getUsers");
+	return res;
+};
+
+export const getCurrentUser = async () => {
+	const res = await apiGet("auth/getLoggedInUser");
 	return res;
 };
 
@@ -125,7 +130,7 @@ export const getAllEvents = async (queryOptions?: string) => {
 
 export const getUserEvents = async (email: string) => {
 	const res = await apiGet<Trip[]>(`events?email=${email}`);
-	return res.getJson;
+	return res;
 };
 
 export const getEvent = async (id: string) => {

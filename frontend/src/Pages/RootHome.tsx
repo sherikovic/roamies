@@ -22,7 +22,7 @@ const loadEvents = async () => {
 	if (res.ok) {
 		return res.getJson.objects;
 	} else {
-		throw json({ message: res.getJson.message }, { status: res.status });
+		throw json({ message: res.getJson.error }, { status: res.status });
 	}
 };
 

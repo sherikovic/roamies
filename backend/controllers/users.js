@@ -3,8 +3,10 @@ const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
 
 module.exports.getUsers = async (req, res) => {
-	const users = await User.find({});
-	res.json({ objects: users });
+	const ret = req.query.id
+		? await User.findById(req.query.id).populate("trips").populate("events")
+		: await User.find({}).populate("trips").populate("events");
+	res.json({ objects: ret });
 };
 
 module.exports.signup = async (req, res) => {
@@ -19,8 +21,13 @@ module.exports.signup = async (req, res) => {
 		const newUser = new User({
 			email,
 			password: hashedPassword,
+			googleId: undefined,
 			firstname,
 			lastname,
+			country: "",
+			age: undefined,
+			bio: "",
+			social: { instagram: "", twitter: "" },
 		});
 		await newUser.save();
 		req.logIn(newUser, (e) => {
@@ -77,8 +84,8 @@ module.exports.logout = async (req, res) => {
 
 module.exports.getLoggedInUser = async (req, res) => {
 	if (req.user) {
-		res.status(201).json({ user: req.user });
+		res.status(201).json({ objects: req.user });
 	} else {
-		res.json({ user: null });
+		res.status(401).json({ objects: null });
 	}
 };

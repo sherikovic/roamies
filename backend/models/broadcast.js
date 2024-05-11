@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
+const Comment = require("./comment");
 
 const BroadcastSchema = new Schema({
 	title: {
@@ -23,12 +24,12 @@ const BroadcastSchema = new Schema({
 		required: true,
 	},
 	images: {
-		type: Buffer,
+		type: [Buffer],
 		required: false,
 	},
 	rsvp: {
 		type: Number,
-		required: false,
+		required: true,
 	},
 	owner: {
 		type: Schema.Types.ObjectId,
@@ -44,7 +45,8 @@ const BroadcastSchema = new Schema({
 	},
 	comments: {
 		type: [Schema.Types.ObjectId],
-		ref: "comment",
+		ref: Comment.modelName,
+		// ref: "comment",
 	},
 });
 

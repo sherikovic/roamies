@@ -9,10 +9,10 @@ export interface Broadcast {
 	category: string;
 	datetime: Date;
 	description: string;
-	images?: File;
-	rsvp?: Number;
+	images: File[];
+	rsvp: Number;
 	owner: User;
 	trip: Trip;
-	participants?: User[];
-	comments?: Comment[];
+	participants: User[];
+	comments: Comment[];
 }

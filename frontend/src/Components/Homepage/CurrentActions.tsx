@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Broadcast } from "types/broadcast";
 import { Trip } from "types/trip";
-import { getUser, getUserEvents, getUserTrips } from "util/api";
+import { getCurrentUser, getUserEvents, getUserTrips } from "util/api";
 import { useRouteLoaderData } from "react-router-dom";
 import styled from "styled-components";
 import { FlexboxCol } from "util/common_styles";
@@ -14,11 +14,12 @@ const CurrentActions: React.FC = () => {
 
 	useEffect(() => {
 		async function runThis() {
-			const response = await getUser();
-			if (response.getJson.user) {
-				setEvents(await getUserEvents(response.getJson.user.email));
-				setTrips(await getUserTrips(response.getJson.user.email));
-			}
+			let response = await getCurrentUser();
+			const email = response.getJson.objects && response.getJson.objects.email;
+			response = await getUserEvents(email);
+			response.ok && setEvents(response.getJson.objects);
+			response = await getUserTrips(email);
+			response.ok && setTrips(response.getJson.objects);
 		}
 		logIn && runThis();
 	}, [logIn]);

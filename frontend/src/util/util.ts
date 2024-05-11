@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { getUser } from "util/api";
+import { getCurrentUser } from "util/api";
 
 export const baseURL =
 	process.env.NODE_ENV === "development"
@@ -20,8 +20,8 @@ export const useIsFirstRender = () => {
 };
 
 export const isUserLoggedIn = async () => {
-	const res = await getUser();
-	if (res.getJson.user) {
+	const response = await getCurrentUser();
+	if (response.getJson.objects) {
 		return true;
 	} else {
 		return false;

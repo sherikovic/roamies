@@ -32,6 +32,14 @@ const UserSchema = new Schema({
 		instagram: String,
 		twitter: String,
 	},
+	trips: {
+		type: [Schema.Types.ObjectId],
+		ref: "trip",
+	},
+	events: {
+		type: [Schema.Types.ObjectId],
+		ref: "broadcast",
+	},
 });
 
 module.exports = mongoose.model("user", UserSchema);

@@ -63,7 +63,12 @@ module.exports = function (app, passport) {
 							email: profile.emails[0].value,
 							firstname: profile.name.givenName,
 							lastname: profile.name.familyName,
+							password: undefined,
 							googleId: profile.id,
+							country: "",
+							age: undefined,
+							bio: "",
+							social: { instagram: "", twitter: "" },
 						});
 						await newUser.save();
 						return done(null, newUser, {
@@ -83,11 +88,7 @@ module.exports = function (app, passport) {
 	passport.serializeUser((user, done) => done(null, user.id));
 	passport.deserializeUser((id, done) => {
 		User.findById(id).then((user) => {
-			const userInfo = {
-				id: user.id,
-				email: user.email,
-			};
-			done(null, userInfo);
+			done(null, user);
 		});
 	});
 };
