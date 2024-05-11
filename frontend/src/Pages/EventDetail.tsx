@@ -37,7 +37,7 @@ const EventDetailPage: React.FC = () => {
 		response.ok && window.location.reload();
 	};
 	const displayListOfParticipants = () => {
-		console.log(eventData.participants);
+		// console.log(eventData.participants);
 		// create a dropdown list with nice transitioning, profile pic and name as a link to the profile
 	};
 

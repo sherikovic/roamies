@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate, useRouteLoaderData } from "react-router";
 
 import EventsList from "Components/Homepage/EventsList";
@@ -9,18 +9,19 @@ import { Trip } from "types/trip";
 import HomeActions from "Components/Homepage/HomeActions";
 import styled from "styled-components";
 import { FlexboxCol, FlexboxRow } from "util/common_styles";
+import { AuthContext } from "util/auth-context";
 
 const HomePage: React.FC = () => {
+	const authContext = useContext(AuthContext);
 	const navigate = useNavigate();
-	const logIn = useRouteLoaderData("root");
 	const { events, trips } = useRouteLoaderData("root-home") as {
 		events: Broadcast[];
 		trips: Trip[];
 	};
 
 	useEffect(() => {
-		!logIn && navigate("/");
-	}, [logIn, navigate]);
+		!authContext.isAuthenticated && navigate("/");
+	}, [authContext.isAuthenticated, navigate]);
 
 	return (
 		<FlexboxCol>

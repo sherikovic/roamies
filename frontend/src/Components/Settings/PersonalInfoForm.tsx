@@ -11,6 +11,7 @@ interface PersonalInfoFormProps {
 const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 	const data: any = useActionData();
 	const userInfo = props.userData;
+	console.log(userInfo);
 
 	return (
 		<Form method="patch">

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation, useRouteLoaderData } from "react-router";
 
 import LoginForm from "Components/Auth/LoginForm";
@@ -13,16 +13,17 @@ import landing from "../images/landing_page.jpeg";
 import logo from "../images/logo.svg";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
+import { AuthContext } from "util/auth-context";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const logIn = useRouteLoaderData("root");
+	const authContext = useContext(AuthContext);
 
 	useEffect(() => {
-		logIn && navigate("/home");
-	}, [logIn, navigate]);
+		authContext.isAuthenticated && navigate("/home");
+	}, [authContext.isAuthenticated, navigate]);
 
 	return (
 		<FlexboxCol>

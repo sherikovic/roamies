@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { authUser } from "util/api";
 import { User } from "types/user";
 import { useLocation, useNavigate } from "react-router";
@@ -8,6 +8,7 @@ import warningIcon from "../../images/warningicon.png";
 import { XClose } from "util/common_styles";
 import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components";
+import { AuthContext } from "util/auth-context";
 
 interface LoginFormProps {
 	cancelHandler: () => void;
@@ -34,6 +35,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
+	const authContext = useContext(AuthContext);
 
 	const validateInputsForSubmit = () => {
 		let isInvalid: boolean = false;
@@ -58,9 +60,9 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 	const sendAuthRequest = async (mode: string, data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser(mode, formData);
-		if (res.status === 201) {
-			location.includes("signup") ? navigate(-1) : window.location.reload();
-		}
+		res.status === 201 && location.includes("signup")
+			? navigate(-1)
+			: window.location.reload();
 		res.status === 300 && setErrorMessage("A user is already logged in!");
 		res.status === 401 &&
 			setErrorMessage("Either email or password is invalid!");
