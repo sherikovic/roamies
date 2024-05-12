@@ -9,6 +9,7 @@ import { XClose } from "util/common_styles";
 import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components";
 import { AuthContext } from "util/auth-context";
+import { Link } from "react-router-dom";
 
 interface LoginFormProps {
 	cancelHandler: () => void;
@@ -169,7 +170,10 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 					</GoogleLogin>
 					<div>
 						<span>Not a member yet?</span>
-						<Join href={process.env.NODE_ENV === "production" ? "#" : "signup"}>
+						<Join
+							to={process.env.NODE_ENV === "production" ? "#" : "/signup"}
+							state={{ from: location }}
+						>
 							Join
 						</Join>
 					</div>
@@ -308,7 +312,7 @@ const GoogleLogin = styled.a`
 	}
 `;
 
-const Join = styled.a`
+const Join = styled(Link)`
 	width: 25%;
 	margin: 10px auto;
 	padding: 8px 12px;
