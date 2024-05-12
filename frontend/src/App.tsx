@@ -14,10 +14,7 @@ import SettingsPage, {
 } from "./Pages/Settings";
 
 // Trips Routes
-import TripDetailPage, {
-	loader as tripDetailLoader,
-	action as deleteTripAction,
-} from "./Pages/TripDetail";
+import TripDetailPage, { loader as tripDetailLoader } from "./Pages/TripDetail";
 import TripsPage, { loader as tripsLoader } from "./Pages/Trips";
 
 // Locations Routes
@@ -99,7 +96,6 @@ const router = createBrowserRouter([
 						id: "trip-detail",
 						element: <TripDetailPage />,
 						loader: tripDetailLoader,
-						action: deleteTripAction,
 					},
 					{
 						path: "events",

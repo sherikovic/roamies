@@ -85,7 +85,7 @@ export const getUserTrips = async (email: string) => {
 // only to display a single trip, no filtering, no gimmicks, just retrieve info
 export const getTrip = async (id: string) => {
 	const res = await apiGet<Trip>(`trips/${id}`);
-	return res.getJson;
+	return res;
 };
 
 export const createTrip = async (data: Trip) => {
@@ -95,12 +95,12 @@ export const createTrip = async (data: Trip) => {
 
 export const updateTrip = async (id: string, data: Trip) => {
 	const res = await apiPatch(`trips/${id}`, data);
-	return res.getJson;
+	return res;
 };
 
 export const deleteTrip = async (id: string) => {
 	const res = await apiDelete(`trips/${id}`);
-	return res.getJson;
+	return res;
 };
 
 export const authUser = async (mode: string, data: User | null) => {

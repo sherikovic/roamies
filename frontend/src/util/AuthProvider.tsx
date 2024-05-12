@@ -26,6 +26,7 @@ const reducer = (_: any, action: { flag: string; payload?: User }) => {
 const AuthProvider = (props: any) => {
 	const [authState, dispatcher] = useReducer(reducer, defaultAuthState);
 
+	// TODO use sessionStorage instead
 	useEffect(() => {
 		getCurrentUser()
 			.then((res) => {

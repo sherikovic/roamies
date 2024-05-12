@@ -1,5 +1,5 @@
 import EventForm from "Components/Events/EventForm";
-import NewTrip from "Components/Trip/NewTrip";
+import TripForm from "Components/Trip/TripForm";
 import { useState } from "react";
 import { CardOverlay, OverlayContent } from "util/common_styles";
 
@@ -28,7 +28,7 @@ const HomeActions: React.FC = () => {
 			{showTripForm && (
 				<CardOverlay>
 					<OverlayContent>
-						<NewTrip cancelHandler={() => setShowTripForm(false)} />
+						<TripForm cancelHandler={() => setShowTripForm(false)} />
 					</OverlayContent>
 				</CardOverlay>
 			)}

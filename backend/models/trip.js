@@ -23,7 +23,7 @@ const TripSchema = new Schema({
 		required: false,
 	},
 	images: {
-		type: Buffer,
+		type: [Buffer],
 		required: false,
 	},
 	owner: {

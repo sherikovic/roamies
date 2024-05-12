@@ -108,7 +108,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 					? window.location.reload()
 					: navigate("/events");
 			} else {
-				setErrorMessage(response.getJson.error);
+				setErrorMessage(response.getJson);
 			}
 		}
 	};

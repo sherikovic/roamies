@@ -1,58 +1,62 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Trip } from "types/trip";
-import { createTrip } from "util/api";
+import { createTrip, deleteTrip, updateTrip } from "util/api";
 import { XClose, FlexboxRow, FlexboxCol } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
+import { useLocation, useNavigate } from "react-router-dom";
 
-interface NewTripProps {
+interface TripFormProps {
 	cancelHandler: () => void;
+	tripData?: Trip;
 	children?: React.ReactNode;
 }
 
-const fields = {
-	images: {
-		val: "",
-		valid: true,
-		errorMessage: "",
-	},
-	endDate: {
-		val: "",
-		valid: true,
-		errorMessage: "",
-	},
-	startDate: {
-		val: "",
-		valid: true,
-		errorMessage: "Start date can't be empty",
-	},
-	description: {
-		val: "",
-		valid: true,
-		errorMessage: "",
-	},
-	location: {
-		val: "",
-		valid: true,
-		errorMessage: "Location can't be empty",
-	},
-	title: {
-		val: "",
-		valid: true,
-		errorMessage: "Title can't be empty",
-	},
-};
+const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
+	const fields = {
+		images: {
+			val: "",
+			valid: true,
+			errorMessage: "",
+		},
+		endDate: {
+			val: "",
+			valid: true,
+			errorMessage: "",
+		},
+		startDate: {
+			val: "",
+			valid: true,
+			errorMessage: "Start date can't be empty",
+		},
+		description: {
+			val: tripData ? tripData.description : "",
+			valid: true,
+			errorMessage: "",
+		},
+		location: {
+			val: tripData ? tripData.location : "",
+			valid: true,
+			errorMessage: "Location can't be empty",
+		},
+		title: {
+			val: tripData ? tripData.title : "",
+			valid: true,
+			errorMessage: "Title can't be empty",
+		},
+	};
 
-const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
+	const navigate = useNavigate();
+	const location = useLocation();
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
 		Object.keys(formInputs).forEach((key: any) => {
 			const input = formInputs[key];
 			if (
-				(key === "title" || key === "location" || key === "date") &&
+				(key === "title" || key === "location" || key === "startDate") &&
 				input.val === ""
 			) {
 				isValid = false;
@@ -66,23 +70,42 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 		return isValid;
 	};
 
-	const createNewTrip = async (data: Trip) => {
-		const response = await createTrip(data);
-		if (!response.ok) {
-			setErrorMessage(response.getJson.message);
+	const sendEventRequestToBE = async (mode: String, data?: Trip | any) => {
+		let response: any;
+		if (mode === "create") {
+			response = await createTrip(data);
+		} else if (mode === "update") {
+			response = await updateTrip(tripData!._id, data);
 		} else {
-			cancelHandler();
-			// TODO redirect to some other page
+			response =
+				window.confirm("Operation irreversable, are you sure?") &&
+				(await deleteTrip(tripData!._id));
+		}
+		if (response) {
+			if (response.ok) {
+				cancelHandler();
+				mode === "create"
+					? navigate(`/trips/${response.getJson.objects._id}`)
+					: mode === "update"
+					? window.location.reload()
+					: navigate("/home");
+			} else {
+				setErrorMessage(response.getJson.message);
+			}
 		}
 	};
 
-	const newTipSubmit = (event: any) => {
+	const submitTripForm = (event: any, mode: String) => {
 		event.preventDefault();
-		const formData: Trip | any = Object.fromEntries(
-			new FormData(event.target as HTMLFormElement).entries()
-		);
-		const isValid = validateInputsForSubmit();
-		isValid && createNewTrip(formData);
+		if (mode === "create" || mode === "update") {
+			let formData: Trip | any = Object.fromEntries(
+				new FormData(document.forms[0] as HTMLFormElement).entries()
+			);
+			const isValid = validateInputsForSubmit();
+			isValid && sendEventRequestToBE(mode, formData);
+		} else {
+			sendEventRequestToBE(mode);
+		}
 	};
 
 	const inputOnChange = ({
@@ -116,7 +139,7 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 		<FlexboxCol>
 			<TripFormHeader>Start a new trip</TripFormHeader>
 			<XClose type="button" onClick={cancelHandler} />
-			<TripFormContents onSubmit={newTipSubmit} method="post">
+			<TripFormContents method="post">
 				{errorMessage && (
 					<Error>
 						<Img src={warningIcon} alt="warning icon" />
@@ -129,6 +152,7 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 						type="text"
 						name="title"
 						id="title"
+						defaultValue={formInputs.title.val}
 						onChange={(e) => {
 							inputOnChange({ type: "title", value: e.target.value });
 						}}
@@ -140,6 +164,7 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 						type="text"
 						name="location"
 						id="location"
+						defaultValue={formInputs.location.val}
 						onChange={(e) => {
 							inputOnChange({ type: "location", value: e.target.value });
 						}}
@@ -150,6 +175,7 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 					<textarea
 						name="description"
 						id="description"
+						defaultValue={formInputs.description.val}
 						cols={30}
 						rows={3}
 						onChange={(e) => {
@@ -194,13 +220,35 @@ const NewTrip: React.FC<NewTripProps> = ({ cancelHandler }) => {
 						}}
 					/>
 				</FlexboxRow>
-				<Submit type="submit">Create</Submit>
+				{location.pathname.includes("trips") ? (
+					<FlexboxRow>
+						<Submit
+							type="button"
+							onClick={(event) => submitTripForm(event, "delete")}
+						>
+							Delete
+						</Submit>
+						<Submit
+							type="button"
+							onClick={(event) => submitTripForm(event, "update")}
+						>
+							Save
+						</Submit>
+					</FlexboxRow>
+				) : (
+					<Submit
+						type="button"
+						onClick={(event) => submitTripForm(event, "create")}
+					>
+						Create
+					</Submit>
+				)}
 			</TripFormContents>
 		</FlexboxCol>
 	);
 };
 
-export default NewTrip;
+export default TripForm;
 
 const TripFormHeader = styled.h4`
 	font-size: 23px;

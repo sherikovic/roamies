@@ -1,4 +1,5 @@
 import EventForm from "Components/Events/EventForm";
+import TripForm from "Components/Trip/TripForm";
 import { useState } from "react";
 import {
 	ActionFunction,
@@ -20,10 +21,15 @@ import {
 const TripDetailPage: React.FC = () => {
 	const tripData = useRouteLoaderData("trip-detail") as Trip;
 	const [showEventForm, setShowEventForm] = useState(false);
+	const [showTripForm, setShowTripForm] = useState(false);
 
 	return (
 		<FlexboxCol>
-			{tripData.description}
+			<h1>{tripData.title}</h1>
+			<FlexboxRow style={{ justifyContent: "space-between" }}>
+				{tripData.description}
+				<button onClick={() => setShowTripForm(true)}>Edit</button>
+			</FlexboxRow>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				<h1>Events</h1>
 				<button onClick={() => setShowEventForm(true)}>Start an event</button>
@@ -46,6 +52,16 @@ const TripDetailPage: React.FC = () => {
 					</OverlayContent>
 				</CardOverlay>
 			)}
+			{showTripForm && (
+				<CardOverlay>
+					<OverlayContent>
+						<TripForm
+							tripData={tripData}
+							cancelHandler={() => setShowTripForm(false)}
+						/>
+					</OverlayContent>
+				</CardOverlay>
+			)}
 		</FlexboxCol>
 	);
 };
@@ -54,20 +70,13 @@ export default TripDetailPage;
 
 export const loader: LoaderFunction = async ({ params }) => {
 	const id: any = params.id;
-	const res = await getTrip(id);
-	if (!res.error) {
-		return res.objects;
+	const response = await getTrip(id);
+	if (response.ok) {
+		return response.getJson.objects;
 	} else {
-		throw json({ message: res.error.message }, { status: 500 });
+		throw json(
+			{ title: response.getJson.message, message: response.getJson.error },
+			{ status: 500 }
+		);
 	}
-};
-
-export const action: ActionFunction = async ({ params }) => {
-	const id: any = params.id;
-	const res = await deleteTrip(id);
-
-	if (res.error) {
-		throw json({ message: res.error.message }, { status: res.error.status });
-	}
-	return redirect("/trips");
 };

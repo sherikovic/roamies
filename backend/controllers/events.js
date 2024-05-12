@@ -13,14 +13,14 @@ module.exports.index = async (req, res) => {
 				.populate("trip")
 				.populate("participants")
 				.populate("comments");
-			res.json({ objects: events });
+			res.status(201).json({ objects: events });
 		} else {
 			const events = await Broadcast.find({})
 				.populate("owner")
 				.populate("trip")
 				.populate("participants")
 				.populate(["comments"]);
-			res.json({ objects: events });
+			res.status(201).json({ objects: events });
 		}
 	} catch (e) {
 		res.status(500).json({
@@ -40,9 +40,11 @@ module.exports.createEvent = async (req, res) => {
 			...req.body,
 			...{ images: [], trip, owner },
 		});
-		await newBroadcast.save();
-		trip.events.push(newBroadcast);
+		const response = await newBroadcast.save();
+		trip.events.push(response._id);
 		await trip.save();
+		owner.events.push(response._id);
+		await owner.save();
 		res.status(201).json({
 			message: "Event was successfully created.",
 			objects: newBroadcast,
@@ -62,13 +64,16 @@ module.exports.showEvent = async (req, res) => {
 			.populate("trip")
 			.populate("participants")
 			.populate("comments");
-		res.json({ objects: event });
+		res.status(201).json({ objects: event });
 	} catch (e) {
-		res.status(500).json({
-			message:
-				"An error occured while fetching event details from the database",
-			error: e.name + ": " + e.message,
-		});
+		res
+			.status(201)
+			.status(500)
+			.json({
+				message:
+					"An error occured while fetching event details from the database",
+				error: e.name + ": " + e.message,
+			});
 	}
 };
 
@@ -79,7 +84,7 @@ module.exports.updateEvent = async (req, res) => {
 			...req.body,
 			images: [],
 		});
-		res.json({ message: "Event was successfully updated!" });
+		res.status(201).json({ message: "Event was successfully updated!" });
 	} catch (e) {
 		res.status(500).json({
 			message: "An error occured while updating event details!",
@@ -90,8 +95,24 @@ module.exports.updateEvent = async (req, res) => {
 
 module.exports.deleteEvent = async (req, res) => {
 	try {
-		await Broadcast.findByIdAndDelete(req.params.id);
-		res.json({ message: "Event was sucessfully deleted!" });
+		const deletedEvent = await Broadcast.findByIdAndDelete(req.params.id);
+		if (deletedEvent.owner) {
+			const owner = await User.findById(deletedEvent.owner);
+			let updatedEvents = owner.events.filter((event) => {
+				return event.toString() !== deletedEvent._id.toString();
+			});
+			owner.events = updatedEvents;
+			await owner.save();
+		}
+		if (deletedEvent.trip) {
+			const trip = await Trip.findById(deletedEvent.trip);
+			updatedEvents = trip.events.filter((event) => {
+				return event.toString() !== deletedEvent._id.toString();
+			});
+			trip.events = updatedEvents;
+			await trip.save();
+		}
+		res.status(201).json({ message: "Event was sucessfully deleted!" });
 	} catch (e) {
 		res.status(500).json({
 			message: "An error occured while deleting event!",

@@ -14,7 +14,7 @@ import {
 
 const EventDetailPage: React.FC = () => {
 	const eventData = useRouteLoaderData("event-detail") as Broadcast;
-	const [showEditEventForm, setShowEditEventForm] = useState(false);
+	const [showEventForm, setShowEventForm] = useState(false);
 	const [currentUser, setCurrentUser] = useState<User | any>();
 
 	useEffect(() => {
@@ -37,7 +37,7 @@ const EventDetailPage: React.FC = () => {
 		response.ok && window.location.reload();
 	};
 	const displayListOfParticipants = () => {
-		// console.log(eventData.participants);
+		console.log(eventData.participants);
 		// create a dropdown list with nice transitioning, profile pic and name as a link to the profile
 	};
 
@@ -53,7 +53,7 @@ const EventDetailPage: React.FC = () => {
 			</FlexboxRow>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				{eventData.description}
-				<button onClick={() => setShowEditEventForm(true)}>Edit</button>
+				<button onClick={() => setShowEventForm(true)}>Edit</button>
 			</FlexboxRow>
 			<FlexboxRow
 				style={{ justifyContent: "space-between", marginTop: "20px" }}
@@ -102,12 +102,12 @@ const EventDetailPage: React.FC = () => {
 			) : (
 				<h6>No related trips</h6>
 			)}
-			{showEditEventForm && (
+			{showEventForm && (
 				<CardOverlay>
 					<OverlayContent>
 						<EventForm
 							eventData={eventData}
-							cancelHandler={() => setShowEditEventForm(false)}
+							cancelHandler={() => setShowEventForm(false)}
 						/>
 					</OverlayContent>
 				</CardOverlay>
