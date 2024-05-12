@@ -1,40 +1,43 @@
-import EventForm from "Components/Events/EventForm";
-import { useEffect, useState } from "react";
+import EventForm from "Components/Event/EventForm";
+import { useContext, useState } from "react";
 import { LoaderFunction, json, useRouteLoaderData } from "react-router-dom";
 import { Broadcast } from "types/broadcast";
-import { User } from "types/user";
-
-import { getEvent, getCurrentUser, updateEvent } from "util/api";
+import { getDBEntry, updateDBEntry } from "util/api";
 import {
 	CardOverlay,
 	FlexboxCol,
 	FlexboxRow,
 	OverlayContent,
 } from "util/common_styles";
+import { AuthContext } from "util/auth-context";
 
 const EventDetailPage: React.FC = () => {
 	const eventData = useRouteLoaderData("event-detail") as Broadcast;
 	const [showEventForm, setShowEventForm] = useState(false);
-	const [currentUser, setCurrentUser] = useState<User | any>();
-
-	useEffect(() => {
-		const runThis = async () => {
-			let response = await getCurrentUser();
-			response.ok && setCurrentUser(response.getJson.objects);
-		};
-		runThis();
-	}, []);
+	const authContext = useContext(AuthContext);
 
 	const joinEvent = async () => {
-		eventData.participants.push(currentUser);
-		const response = await updateEvent(eventData._id, eventData);
-		response.ok && window.location.reload();
+		if (authContext.userInfo) {
+			eventData.participants.push(authContext.userInfo);
+			const response = await updateDBEntry<Broadcast>(
+				"events",
+				eventData._id,
+				eventData
+			);
+			response.ok && window.location.reload();
+		}
 	};
 	const leaveEvent = async () => {
-		const idx = eventData.participants.indexOf(currentUser);
-		eventData.participants.splice(idx, 1);
-		const response = await updateEvent(eventData._id, eventData);
-		response.ok && window.location.reload();
+		if (authContext.userInfo) {
+			const idx = eventData.participants.indexOf(authContext.userInfo);
+			eventData.participants.splice(idx, 1);
+			const response = await updateDBEntry<Broadcast>(
+				"events",
+				eventData._id,
+				eventData
+			);
+			response.ok && window.location.reload();
+		}
 	};
 	const displayListOfParticipants = () => {
 		console.log(eventData.participants);
@@ -64,9 +67,9 @@ const EventDetailPage: React.FC = () => {
 				<button onClick={displayListOfParticipants}>
 					Show me who's coming
 				</button>
-				{eventData.owner._id !== currentUser?._id &&
+				{eventData.owner._id !== authContext.userInfo?._id &&
 					(eventData.participants.find(
-						(user) => user._id === currentUser?._id
+						(user) => user._id === authContext.userInfo?._id
 					) ? (
 						<button onClick={leaveEvent}>Leave</button>
 					) : (
@@ -77,16 +80,6 @@ const EventDetailPage: React.FC = () => {
 							Join
 						</button>
 					))}
-				{/* {eventData.participants.includes(currentUser) ? (
-					<button onClick={leaveEvent}>Leave</button>
-				) : (
-					<button
-						disabled={eventData.participants.length === eventData.rsvp}
-						onClick={joinEvent}
-					>
-						Join
-					</button>
-				)} */}
 			</FlexboxRow>
 			<h3>Comments</h3>
 			<FlexboxCol style={{ margin: "20px" }}>
@@ -120,7 +113,7 @@ export default EventDetailPage;
 
 export const loader: LoaderFunction = async ({ params }) => {
 	const id: any = params.id;
-	const response = await getEvent(id);
+	const response = await getDBEntry<Broadcast>("events", id);
 	if (response.ok) {
 		return response.getJson.objects;
 	} else {

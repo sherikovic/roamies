@@ -9,6 +9,12 @@ const CommentSchema = new Schema({
 	owner: {
 		type: Schema.Types.ObjectId,
 		ref: "user",
+		required: true,
+	},
+	event: {
+		type: Schema.Types.ObjectId,
+		ref: "broadcast",
+		required: true,
 	},
 });
 

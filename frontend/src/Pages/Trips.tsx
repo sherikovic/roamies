@@ -1,5 +1,5 @@
 import { LoaderFunction, json, useLoaderData } from "react-router-dom";
-import { getAllTrips } from "util/api";
+import { getAllDBEntries } from "util/api";
 import { Trip } from "types/trip";
 import styled from "styled-components";
 import { FlexboxCol } from "util/common_styles";
@@ -25,11 +25,14 @@ const TripsPage: React.FC = () => {
 export default TripsPage;
 
 export const loader: LoaderFunction = async () => {
-	const res = await getAllTrips();
-	if (!res.error) {
-		return res.objects;
+	const response = await getAllDBEntries<Trip>("trips");
+	if (response.ok) {
+		return response.getJson.objects;
 	} else {
-		throw json({ message: res.error.message }, { status: res.error.status });
+		throw json(
+			{ message: response.getJson.message },
+			{ status: response.status }
+		);
 	}
 };
 

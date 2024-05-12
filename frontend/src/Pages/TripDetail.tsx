@@ -1,16 +1,9 @@
-import EventForm from "Components/Events/EventForm";
+import EventForm from "Components/Event/EventForm";
 import TripForm from "Components/Trip/TripForm";
 import { useState } from "react";
-import {
-	ActionFunction,
-	LoaderFunction,
-	json,
-	redirect,
-	useRouteLoaderData,
-} from "react-router-dom";
+import { LoaderFunction, json, useRouteLoaderData } from "react-router-dom";
 import { Trip } from "types/trip";
-
-import { deleteTrip, getTrip } from "util/api";
+import { getDBEntry } from "util/api";
 import {
 	CardOverlay,
 	FlexboxCol,
@@ -70,7 +63,7 @@ export default TripDetailPage;
 
 export const loader: LoaderFunction = async ({ params }) => {
 	const id: any = params.id;
-	const response = await getTrip(id);
+	const response = await getDBEntry<Trip>("trips", id);
 	if (response.ok) {
 		return response.getJson.objects;
 	} else {

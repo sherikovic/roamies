@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import {
 	Link,
 	NavLink,
@@ -16,11 +16,12 @@ import {
 	OverlayContent,
 } from "util/common_styles";
 import styled from "styled-components";
+import { AuthContext } from "util/auth-context";
 
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 	const location = useLocation();
-	const logIn = useRouteLoaderData("root");
+	const authContext = useContext(AuthContext);
 
 	const logOutHandler = async () => {
 		const res = await authUser("logout", null);
@@ -47,7 +48,7 @@ const LandingNavigation: React.FC = () => {
 					Contact
 				</NavLink>
 			</LandingNavContainer>
-			{logIn ? (
+			{authContext.isAuthenticated ? (
 				<LandingNavLoginOptions>
 					<button onClick={logOutHandler}>Log out</button>
 				</LandingNavLoginOptions>

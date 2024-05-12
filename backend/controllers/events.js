@@ -4,16 +4,11 @@ const Trip = require("../models/trip");
 
 module.exports.index = async (req, res) => {
 	try {
-		// get all events in the database
+		// getAllEvents in the database
 		// TODO filter according to the queries passed, for example by email
-		if (req.query.user) {
-			const user = await User.findOne({ email: req.query.email });
-			const events = await Broadcast.find({ owner: { $in: user } })
-				.populate("owner")
-				.populate("trip")
-				.populate("participants")
-				.populate("comments");
-			res.status(201).json({ objects: events });
+		if (req.query.userId) {
+			const user = await User.findById(req.query.userId).populate("events");
+			res.status(201).json({ objects: user.events });
 		} else {
 			const events = await Broadcast.find({})
 				.populate("owner")

@@ -4,14 +4,11 @@ const Broadcast = require("../models/broadcast");
 
 module.exports.index = async (req, res) => {
 	try {
-		// get all trips in the database
+		// getAllTrips in the database
 		// TODO filter according to the queries passed, for example by email
-		if (req.query.user) {
-			const user = await User.findOne({ email: req.query.email });
-			const trips = await Trip.find({ owner: { $in: user } })
-				.populate("owner")
-				.populate("events");
-			res.status(201).json({ objects: trips });
+		if (req.query.userId) {
+			const user = await User.findById(req.query.userId).populate("trips");
+			res.status(201).json({ objects: user.trips });
 		} else {
 			const trips = await Trip.find({}).populate("owner").populate("events");
 			res.status(201).json({ objects: trips });

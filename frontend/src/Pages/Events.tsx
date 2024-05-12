@@ -1,6 +1,6 @@
 import { LoaderFunction, json, useLoaderData } from "react-router-dom";
 import { Broadcast } from "types/broadcast";
-import { getAllEvents } from "util/api";
+import { getAllDBEntries } from "util/api";
 
 const EventsPage: React.FC = () => {
 	const eventsArray = useLoaderData() as Broadcast[];
@@ -18,7 +18,7 @@ const EventsPage: React.FC = () => {
 export default EventsPage;
 
 export const loader: LoaderFunction = async () => {
-	const res = await getAllEvents();
+	const res = await getAllDBEntries<Broadcast>("events");
 	if (res.ok) {
 		return res.getJson.objects;
 	} else {

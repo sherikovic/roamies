@@ -59,105 +59,35 @@ const apiFetch = async <T>(
 
 export const apiGet = async <T>(path: string) =>
 	await apiFetch<T>("GET", path, null);
-
 export const apiPost = async <T>(path: string, data: any) =>
 	await apiFetch<T>("POST", path, data);
-
 export const apiPatch = async <T>(path: string, data: any) =>
 	await apiFetch<T>("PATCH", path, data);
-
 export const apiDelete = async <T>(path: string) =>
 	await apiFetch<T>("DELETE", path, null);
 
-export const getAllTrips = async (queryOptions?: string) => {
-	const res = await apiGet<Trip[]>(
-		queryOptions ? `trips?${queryOptions}` : "trips"
-	);
-	return res.getJson;
-};
-
-// kinda redundant, could use queryOptions in getAllTrips but this is more direct
-export const getUserTrips = async (email: string) => {
-	const res = await apiGet<Trip[]>(`trips?email=${email}`);
-	return res.getJson;
-};
-
-// only to display a single trip, no filtering, no gimmicks, just retrieve info
-export const getTrip = async (id: string) => {
-	const res = await apiGet<Trip>(`trips/${id}`);
-	return res;
-};
-
-export const createTrip = async (data: Trip) => {
-	const res = await apiPost(`trips`, data);
-	return res;
-};
-
-export const updateTrip = async (id: string, data: Trip) => {
-	const res = await apiPatch(`trips/${id}`, data);
-	return res;
-};
-
-export const deleteTrip = async (id: string) => {
-	const res = await apiDelete(`trips/${id}`);
-	return res;
-};
-
-export const authUser = async (mode: string, data: User | null) => {
+// AUTH APIs
+export const authUser = async (mode: string, data: User | null) =>
 	// logout doesn't take any data
-	const res = data
+	data
 		? await apiPost(`auth/${mode}`, data)
 		: await apiPost(`auth/${mode}`, null);
-	return res;
-};
+export const getUsers = async (id?: string) =>
+	await apiGet(id ? `auth/getUsers?id=${id}` : "auth/getUsers");
+export const getCurrentUser = async () => await apiGet("auth/getLoggedInUser");
 
-export const getUsers = async (id?: string) => {
-	const res = await apiGet(id ? `auth/getUsers?id=${id}` : "auth/getUsers");
-	return res;
-};
-
-export const getCurrentUser = async () => {
-	const res = await apiGet("auth/getLoggedInUser");
-	return res;
-};
-
-export const getAllEvents = async (queryOptions?: string) => {
-	const res = await apiGet<Broadcast[]>(
-		queryOptions ? `events?${queryOptions}` : "events"
-	);
-	return res;
-};
-
-export const getUserEvents = async (email: string) => {
-	const res = await apiGet<Trip[]>(`events?email=${email}`);
-	return res;
-};
-
-export const getEvent = async (id: string) => {
-	const res = await apiGet<Broadcast>(`events/${id}`);
-	return res;
-};
-
-export const createEvent = async (data: Broadcast) => {
-	const res = await apiPost(`events`, data);
-	return res;
-};
-
-export const updateEvent = async (id: string, data: Broadcast) => {
-	const res = await apiPatch(`events/${id}`, data);
-	return res;
-};
-
-export const deleteEvent = async (id: string) => {
-	const res = await apiDelete(`events/${id}`);
-	return res;
-};
-
-// export const getAllData = async (
-// 	select: string,
-// 	path: string,
-// 	queryOptions?: string
-// ) => {
-// let path: string;
-// path = select === 'trip' ? 'trips'
-// };
+// DB APIs
+// type should be either "events" or "trips"
+// T is either Broadcast or Trip respectively
+export const getAllDBEntries = async <T>(type: string, queryOptions?: string) =>
+	await apiGet<T[]>(queryOptions ? `${type}?${queryOptions}` : type);
+export const getUserDBEntries = async <T>(type: string, id: string) =>
+	await getAllDBEntries<T>(type, `userId=${id}`);
+export const getDBEntry = async <T>(type: string, id: string) =>
+	await apiGet<T>(`${type}/${id}`);
+export const createDBEntry = async <T>(type: string, data: T) =>
+	await apiPost<T>(type, data);
+export const updateDBEntry = async <T>(type: string, id: string, data: T) =>
+	await apiPatch<T>(`${type}/${id}`, data);
+export const deleteDBEntry = async <T>(type: string, id: string) =>
+	await apiDelete<T>(`${type}/${id}`);

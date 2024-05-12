@@ -1,7 +1,7 @@
 import { useState } from "react";
 import styled from "styled-components";
 import { Trip } from "types/trip";
-import { createTrip, deleteTrip, updateTrip } from "util/api";
+import { createDBEntry, deleteDBEntry, updateDBEntry } from "util/api";
 import { XClose, FlexboxRow, FlexboxCol } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -73,13 +73,13 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
 	const sendEventRequestToBE = async (mode: String, data?: Trip | any) => {
 		let response: any;
 		if (mode === "create") {
-			response = await createTrip(data);
+			response = await createDBEntry<Trip>("trips", data);
 		} else if (mode === "update") {
-			response = await updateTrip(tripData!._id, data);
+			response = await updateDBEntry<Trip>("trips", tripData!._id, data);
 		} else {
 			response =
 				window.confirm("Operation irreversable, are you sure?") &&
-				(await deleteTrip(tripData!._id));
+				(await deleteDBEntry<Trip>("trips", tripData!._id));
 		}
 		if (response) {
 			if (response.ok) {
@@ -90,7 +90,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
 					? window.location.reload()
 					: navigate("/home");
 			} else {
-				setErrorMessage(response.getJson.message);
+				setErrorMessage(response.getJson.error);
 			}
 		}
 	};

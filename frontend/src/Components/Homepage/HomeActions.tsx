@@ -1,4 +1,4 @@
-import EventForm from "Components/Events/EventForm";
+import EventForm from "Components/Event/EventForm";
 import TripForm from "Components/Trip/TripForm";
 import { useState } from "react";
 import { CardOverlay, OverlayContent } from "util/common_styles";
@@ -23,7 +23,7 @@ const HomeActions: React.FC = () => {
 					setShowTripForm(false);
 				}}
 			>
-				Share an event
+				Post an event
 			</button>
 			{showTripForm && (
 				<CardOverlay>

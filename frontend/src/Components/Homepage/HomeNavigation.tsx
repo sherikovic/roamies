@@ -10,11 +10,11 @@ import logo from "../../images/logo.svg";
 
 import { clientUrl, useOutsideAlerter } from "../../util/util";
 
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { authUser } from "util/api";
-import { useRouteLoaderData } from "react-router-dom";
 import { LogoBlack, LogoLink } from "util/common_styles";
 import styled from "styled-components";
+import { AuthContext } from "util/auth-context";
 
 const HomeNavigation: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
@@ -28,6 +28,7 @@ const HomeNavigation: React.FC = () => {
 	const filterDDRef = useRef(null);
 	const profileDDRef = useRef(null);
 	const [homeUrl, setHomeUrl] = useState("/");
+	const authContext = useContext(AuthContext);
 
 	const searchInputOnChange = (e: any) => {
 		setSearchText(e.target.value);
@@ -61,11 +62,10 @@ const HomeNavigation: React.FC = () => {
 		// TODO handle errors coming from the logout
 	};
 
-	const logIn = useRouteLoaderData("root");
 	useEffect(() => {
-		logIn && setHomeUrl("/home");
-		!logIn && setHomeUrl("/");
-	}, [logIn]);
+		authContext.isAuthenticated && setHomeUrl("/home");
+		!authContext.isAuthenticated && setHomeUrl("/");
+	}, [authContext.isAuthenticated]);
 
 	return (
 		<HomeNavBar>

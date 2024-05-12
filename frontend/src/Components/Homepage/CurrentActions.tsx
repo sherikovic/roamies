@@ -1,28 +1,32 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Broadcast } from "types/broadcast";
 import { Trip } from "types/trip";
-import { getCurrentUser, getUserEvents, getUserTrips } from "util/api";
-import { useRouteLoaderData } from "react-router-dom";
+import { getUserDBEntries } from "util/api";
 import styled from "styled-components";
 import { FlexboxCol } from "util/common_styles";
+import { AuthContext } from "util/auth-context";
 
 const CurrentActions: React.FC = () => {
 	const [activeState, setActiveState] = useState("events");
 	const [events, setEvents] = useState<{ objects: Broadcast }>();
 	const [trips, setTrips] = useState<{ objects: Trip }>();
-	const logIn = useRouteLoaderData("root") as boolean;
+	const authContext = useContext(AuthContext);
 
 	useEffect(() => {
 		async function runThis() {
-			let response = await getCurrentUser();
-			const email = response.getJson.objects && response.getJson.objects.email;
-			response = await getUserEvents(email);
+			let response = await getUserDBEntries<Broadcast>(
+				"events",
+				authContext.userInfo!._id
+			);
 			response.ok && setEvents(response.getJson.objects);
-			response = await getUserTrips(email);
+			response = await getUserDBEntries<Trip>(
+				"trips",
+				authContext.userInfo!._id
+			);
 			response.ok && setTrips(response.getJson.objects);
 		}
-		logIn && runThis();
-	}, [logIn]);
+		authContext.isAuthenticated && runThis();
+	}, [authContext.isAuthenticated]);
 
 	return (
 		<FlexboxCol style={{ minHeight: "250px" }}>
@@ -36,7 +40,7 @@ const CurrentActions: React.FC = () => {
 			{logIn && activeState === "trips" && trips && (
 				<FlexboxCol style={{margin: "20px 30px 0px 30px"}}>{trips?.objects[2].name}</FlexboxCol>
 			)} */}
-			{!logIn && <div>Couldn't load information</div>}
+			{!authContext.isAuthenticated && <div>Couldn't load information</div>}
 		</FlexboxCol>
 	);
 };

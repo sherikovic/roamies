@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { FlexboxCol, FlexboxRow, XClose } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { Broadcast } from "types/broadcast";
-import { createEvent, deleteEvent, updateEvent } from "util/api";
+import { createDBEntry, deleteDBEntry, updateDBEntry } from "util/api";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 
 interface NewEventProps {
@@ -89,13 +89,13 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 	const sendEventRequestToBE = async (mode: String, data?: Broadcast | any) => {
 		let response: any;
 		if (mode === "create") {
-			response = await createEvent(data);
+			response = await createDBEntry<Broadcast>("events", data);
 		} else if (mode === "update") {
-			response = await updateEvent(eventData!._id, data);
+			response = await updateDBEntry<Broadcast>("events", eventData!._id, data);
 		} else {
 			response =
 				window.confirm("Operation irreversable, are you sure?") &&
-				(await deleteEvent(eventData!._id));
+				(await deleteDBEntry<Broadcast>("events", eventData!._id));
 		}
 		if (response) {
 			if (response.ok) {
