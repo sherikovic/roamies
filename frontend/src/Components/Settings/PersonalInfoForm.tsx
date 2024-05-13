@@ -2,16 +2,24 @@ import { Form, useActionData } from "react-router-dom";
 import APIFormTextInputLabel from "./APIFormTextInputLabel";
 import classes from "./APInfoForm.module.css";
 import { User } from "types/user";
+import { useContext, useEffect } from "react";
+import { AuthContext } from "util/auth-context";
 
 interface PersonalInfoFormProps {
-  userData: User;
   children?: React.ReactNode;
 }
 
 const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
   const data: any = useActionData();
-  const userInfo = props.userData;
-  console.log(userInfo);
+  const userContext = useContext(AuthContext);
+  const userData = userContext.userInfo as User;
+
+  useEffect(() => {
+    if (data && data.ok) {
+      const updateUser = userContext.updateUserInfo;
+      updateUser(data.data, userData);
+    }
+  }, [data]);
 
   return (
     <Form method="patch">
@@ -33,7 +41,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="first name"
-            value={props.userData ? userInfo.firstname : ""}
+            value={userData ? userData.firstname : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
@@ -41,7 +49,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="last name"
-            value={props.userData ? userInfo.lastname : ""}
+            value={userData ? userData.lastname : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
@@ -51,7 +59,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="age"
-            value={props.userData ? userInfo.age : ""}
+            value={userData ? userData.age : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
@@ -59,7 +67,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="country"
-            value={props.userData ? userInfo.country : ""}
+            value={userData ? userData.country : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
@@ -68,7 +76,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
         <APIFormTextInputLabel
           type="textarea"
           name="bio"
-          value={props.userData ? userInfo.bio : ""}
+          value={userData ? userData.bio : ""}
           classDiv={classes.api_form_item}
           classInput={classes.api_input_field}
           classLabel={classes.api_input_label}
@@ -78,7 +86,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="instagram"
-            value={props.userData ? userInfo.social?.instagram : ""}
+            value={userData ? userData.social?.instagram : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
@@ -86,7 +94,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
           <APIFormTextInputLabel
             type="text"
             name="twitter"
-            value={props.userData ? userInfo.social?.twitter : ""}
+            value={userData ? userData.social?.twitter : ""}
             classDiv={classes.api_form_item}
             classInput={classes.api_input_field}
             classLabel={classes.api_input_label}
