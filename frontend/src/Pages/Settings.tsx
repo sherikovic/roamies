@@ -37,7 +37,10 @@ export const action: ActionFunction = async ({ request, params }) => {
       age: data.get("age"),
       country: data.get("country"),
       bio: data.get("bio"),
-      socials: data.get("socials"),
+      social: {
+        instagram: data.get("instagram"),
+        twitter: data.get("twitter"),
+      },
       type: "personal",
     };
 
