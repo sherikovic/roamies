@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import { User } from "types/user";
 
 export interface AuthContextType {
@@ -12,3 +12,8 @@ export const AuthContext = React.createContext<AuthContextType>({
   userInfo: null,
   updateUserInfo: () => {},
 });
+
+export const useUser = () => {
+  const { userInfo } = useContext(AuthContext);
+  return userInfo;
+};

@@ -22,7 +22,7 @@ const AccountSettingsForm: React.FC = () => {
       updateUser({ email, password }, userData);
     }
   }, [data]);
-  console.log("userData", userData);
+
   return (
     <div className={classes.api_form}>
       <p className={classes.api_form_header}>What would you like to change?</p>

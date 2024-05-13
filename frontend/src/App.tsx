@@ -7,7 +7,6 @@ import SignupPage from "Pages/Signup";
 
 // Auth and Settings Routes
 import ErrorPage from "./Pages/Error";
-import ProfilePage from "./Pages/Profile";
 import SettingsPage, { action as settingsFormAction } from "./Pages/Settings";
 
 // Trips Routes
@@ -35,6 +34,7 @@ import EventDetailPage, {
   loader as eventDetailLoader,
 } from "Pages/EventDetail";
 import AuthProvider from "util/AuthProvider";
+import ProfilePage from "Components/Profile";
 
 const router = createBrowserRouter([
   {

@@ -2,8 +2,9 @@ import { Form, useActionData } from "react-router-dom";
 import APIFormTextInputLabel from "./APIFormTextInputLabel";
 import classes from "./APInfoForm.module.css";
 import { User } from "types/user";
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "util/auth-context";
+import { FlexboxRow } from "util/common_styles";
 
 interface PersonalInfoFormProps {
   children?: React.ReactNode;
@@ -13,6 +14,7 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
   const data: any = useActionData();
   const userContext = useContext(AuthContext);
   const userData = userContext.userInfo as User;
+  const fileInput = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (data && data.ok) {
@@ -27,6 +29,19 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
         <p className={classes.api_form_header}>
           Update your personal information
         </p>
+        <FlexboxRow>
+          <button
+            onClick={() => fileInput.current && fileInput.current.click()}
+          >
+            Upload image
+          </button>
+          <input
+            style={{ display: "none" }}
+            type="file"
+            accept="image/*"
+            ref={fileInput}
+          />
+        </FlexboxRow>
         {data && data.errorMessage && data.type === "personal" && (
           <p className={classes.api_form_header} style={{ color: "orange" }}>
             {data.errorMessage}
