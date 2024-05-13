@@ -7,6 +7,7 @@ export interface User {
   password: string;
   firstname: string;
   lastname: string;
+  profile_picture: string;
   age: string;
   country: string;
   bio?: string;

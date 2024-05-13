@@ -26,14 +26,6 @@ const reducer = (
     } else {
       updatedUser = action.payload;
     }
-    console.log(
-      "prev",
-      action.prevState,
-      "payload",
-      action.payload,
-      "updatedUser",
-      updatedUser
-    );
     return {
       isAuthenticated: true,
       userInfo: updatedUser,
