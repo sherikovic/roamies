@@ -5,6 +5,15 @@ import warningIcon from "../../images/warningicon.png";
 import { Broadcast } from "types/broadcast";
 import { createDBEntry, deleteDBEntry, updateDBEntry } from "util/api";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import {
+  ErrorMessage,
+  FormContents,
+  FormHeader,
+  Img,
+  ImgWithMargin,
+  InputLabel,
+  FormSubmitButton,
+} from "styles";
 
 interface NewEventProps {
   cancelHandler: () => void;
@@ -160,17 +169,17 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 
   return (
     <FlexboxCol>
-      <EventFormHeader>Start a new event</EventFormHeader>
+      <FormHeader>Start a new event</FormHeader>
       <XClose type="button" onClick={cancelHandler} />
-      <EventFormContents method="post">
+      <FormContents method="post">
         {errorMessage && (
-          <Error>
-            <Img src={warningIcon} alt="warning icon" />
+          <ErrorMessage>
+            <ImgWithMargin src={warningIcon} alt="warning icon" />
             {errorMessage}
-          </Error>
+          </ErrorMessage>
         )}
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="title">Title:</Label>
+          <InputLabel htmlFor="title">Title:</InputLabel>
           <input
             type="text"
             name="title"
@@ -182,7 +191,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="location">Location:</Label>
+          <InputLabel htmlFor="location">Location:</InputLabel>
           <input
             type="text"
             name="location"
@@ -194,7 +203,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="datetime">Date:</Label>
+          <InputLabel htmlFor="datetime">Date:</InputLabel>
           <input
             type="datetime-local"
             name="datetime"
@@ -206,7 +215,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="description">Description:</Label>
+          <InputLabel htmlFor="description">Description:</InputLabel>
           <textarea
             name="description"
             id="description"
@@ -219,7 +228,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="category">Category:</Label>
+          <InputLabel htmlFor="category">Category:</InputLabel>
           <input
             list="categories"
             name="category"
@@ -236,7 +245,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           </datalist>
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="rsvp">Rsvp:</Label>
+          <InputLabel htmlFor="rsvp">Rsvp:</InputLabel>
           <input
             type="number"
             name="rsvp"
@@ -249,7 +258,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="images">Images:</Label>
+          <InputLabel htmlFor="images">Images:</InputLabel>
           <input
             type="file"
             name="images"
@@ -261,81 +270,30 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
         </FlexboxRow>
         {location.pathname.includes("events") ? (
           <FlexboxRow>
-            <Submit
+            <FormSubmitButton
               type="button"
               onClick={(event) => submitEventForm(event, "delete")}
             >
               Delete
-            </Submit>
-            <Submit
+            </FormSubmitButton>
+            <FormSubmitButton
               type="button"
               onClick={(event) => submitEventForm(event, "update")}
             >
               Save
-            </Submit>
+            </FormSubmitButton>
           </FlexboxRow>
         ) : (
-          <Submit
+          <FormSubmitButton
             type="button"
             onClick={(event) => submitEventForm(event, "create")}
           >
             Create
-          </Submit>
+          </FormSubmitButton>
         )}
-      </EventFormContents>
+      </FormContents>
     </FlexboxCol>
   );
 };
 
 export default EventForm;
-
-const EventFormHeader = styled.h4`
-  font-size: 23px;
-  font-weight: 550;
-  color: black;
-  margin: 0;
-  text-align: center;
-  padding: 30px 0 30px 0;
-  &:after {
-    content: "______";
-    display: block;
-    color: #868080;
-  }
-`;
-
-const EventFormContents = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 5px 40px;
-`;
-
-const Label = styled.label`
-  margin-right: 10px;
-`;
-
-const Submit = styled.button`
-  margin: 10px 40px;
-`;
-
-const Img = styled.img`
-  height: 18px;
-  width: 18px;
-  min-height: 18px;
-  min-width: 18px;
-  margin-right: 8px;
-  text-indent: 0px;
-`;
-
-const Error = styled.p`
-  border: 1px solid #eac8c8;
-  background-color: #eac8c8;
-  font-size: 14px;
-  color: #6c2f2f;
-  margin-top: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;

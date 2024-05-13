@@ -5,6 +5,14 @@ import { createDBEntry, deleteDBEntry, updateDBEntry } from "util/api";
 import { XClose, FlexboxRow, FlexboxCol } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { useLocation, useNavigate } from "react-router-dom";
+import {
+  ErrorMessage,
+  FormContents,
+  FormHeader,
+  ImgWithMargin,
+  InputLabel,
+  FormSubmitButton,
+} from "styles";
 
 interface TripFormProps {
   cancelHandler: () => void;
@@ -139,15 +147,15 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
     <FlexboxCol>
       <TripFormHeader>Start a new trip</TripFormHeader>
       <XClose type="button" onClick={cancelHandler} />
-      <TripFormContents method="post">
+      <FormContents method="post">
         {errorMessage && (
-          <Error>
-            <Img src={warningIcon} alt="warning icon" />
+          <ErrorMessage>
+            <ImgWithMargin src={warningIcon} alt="warning icon" />
             {errorMessage}
-          </Error>
+          </ErrorMessage>
         )}
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="title">Title:</Label>
+          <InputLabel htmlFor="title">Title:</InputLabel>
           <input
             type="text"
             name="title"
@@ -159,7 +167,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="location">Location:</Label>
+          <InputLabel htmlFor="location">Location:</InputLabel>
           <input
             type="text"
             name="location"
@@ -171,7 +179,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="description">Description:</Label>
+          <InputLabel htmlFor="description">Description:</InputLabel>
           <textarea
             name="description"
             id="description"
@@ -184,7 +192,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
           />
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="startDate">Start date:</Label>
+          <InputLabel htmlFor="startDate">Start date:</InputLabel>
           <FlexboxRow>
             <input
               type="date"
@@ -197,7 +205,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
           </FlexboxRow>
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="endDate">End date:</Label>
+          <InputLabel htmlFor="endDate">End date:</InputLabel>
           <FlexboxRow>
             <input
               type="date"
@@ -210,7 +218,7 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
           </FlexboxRow>
         </FlexboxRow>
         <FlexboxRow style={{ marginBottom: "10px" }}>
-          <Label htmlFor="images">Images:</Label>
+          <InputLabel htmlFor="images">Images:</InputLabel>
           <input
             type="file"
             name="images"
@@ -222,81 +230,34 @@ const TripForm: React.FC<TripFormProps> = ({ tripData, cancelHandler }) => {
         </FlexboxRow>
         {location.pathname.includes("trips") ? (
           <FlexboxRow>
-            <Submit
+            <FormSubmitButton
               type="button"
               onClick={(event) => submitTripForm(event, "delete")}
             >
               Delete
-            </Submit>
-            <Submit
+            </FormSubmitButton>
+            <FormSubmitButton
               type="button"
               onClick={(event) => submitTripForm(event, "update")}
             >
               Save
-            </Submit>
+            </FormSubmitButton>
           </FlexboxRow>
         ) : (
-          <Submit
+          <FormSubmitButton
             type="button"
             onClick={(event) => submitTripForm(event, "create")}
           >
             Create
-          </Submit>
+          </FormSubmitButton>
         )}
-      </TripFormContents>
+      </FormContents>
     </FlexboxCol>
   );
 };
 
 export default TripForm;
 
-const TripFormHeader = styled.h4`
-  font-size: 23px;
-  font-weight: 550;
+const TripFormHeader = styled(FormHeader)`
   color: black;
-  margin: 0;
-  text-align: center;
-  padding: 30px 0 30px 0;
-  &:after {
-    content: "______";
-    display: block;
-    color: #868080;
-  }
-`;
-
-const TripFormContents = styled.form`
-  display: flex;
-  flex-direction: column;
-  padding: 5px 40px;
-`;
-
-const Label = styled.label`
-  margin-right: 10px;
-`;
-
-const Submit = styled.button`
-  margin: 10px 40px;
-`;
-
-const Img = styled.img`
-  height: 18px;
-  width: 18px;
-  min-height: 18px;
-  min-width: 18px;
-  margin-right: 8px;
-  text-indent: 0px;
-`;
-
-const Error = styled.p`
-  border: 1px solid #eac8c8;
-  background-color: #eac8c8;
-  font-size: 14px;
-  color: #6c2f2f;
-  margin-top: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

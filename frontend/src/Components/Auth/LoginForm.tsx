@@ -10,6 +10,7 @@ import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components/macro";
 import { AuthContext } from "util/auth-context";
 import { Link } from "react-router-dom";
+import { ErrorMessage, FormHeader, Img, ImgWithMargin, Info } from "styles";
 
 interface LoginFormProps {
   cancelHandler: () => void;
@@ -103,18 +104,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 
   return (
     <Login method="post" onSubmit={submitLoginForm}>
-      <LoginHeader>Log in</LoginHeader>
+      <FormHeader>Log in</FormHeader>
       <XClose type="button" onClick={cancelHandler} />
       <LoginContents>
         {errorMessage !== "" && (
           <Error>
-            <Img src={warningIcon} alt="warning icon" />
+            <ImgWithMargin src={warningIcon} alt="warning icon" />
             {errorMessage}
           </Error>
         )}
         {process.env.NODE_ENV === "production" && (
           <Info>
-            <Img src={warningIcon} alt="warning icon" />
+            <ImgWithMargin src={warningIcon} alt="warning icon" />
             We're currently still in development, logging in is disabled, check
             us out later ^^
           </Info>
@@ -192,20 +193,6 @@ const Login = styled.form`
   margin: 30px auto;
 `;
 
-const LoginHeader = styled.header`
-  font-size: 23px;
-  font-weight: 550;
-  color: black;
-  margin: 0;
-  text-align: center;
-  padding-bottom: 30px;
-  &:after {
-    content: "______";
-    display: block;
-    color: #868080;
-  }
-`;
-
 const LoginContents = styled.div`
   padding: 5px 40px;
 `;
@@ -245,15 +232,6 @@ const LoginOptionsSection = styled.section`
       color: grey;
     }
   }
-`;
-
-const Img = styled.img`
-  height: 18px;
-  width: 18px;
-  min-height: 18px;
-  min-width: 18px;
-  margin-right: 8px;
-  text-indent: 0px;
 `;
 
 const LoginActions = styled.div`
@@ -329,32 +307,7 @@ const Join = styled(Link)`
   }
 `;
 
-const Info = styled.p`
-  border: 1px solid #9cae9c;
-  background-color: #9cae9c;
-  width: 100%;
-  font-size: 14px;
-  color: #152515;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Error = styled.p`
-  border: 1px solid #eac8c8;
-  background-color: #eac8c8;
+const Error = styled(ErrorMessage)`
   width: 100%;
   height: 40px;
-  font-size: 14px;
-  color: #6c2f2f;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

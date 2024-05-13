@@ -7,6 +7,13 @@ import rightArrowIcon from "../../images/rightarrow.png";
 import { useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { FlexboxRow, SliderBtn } from "util/common_styles";
+import {
+  ContentBox,
+  InnerSlider,
+  ListPageHeader,
+  PageHeaderText,
+  SliderContents,
+} from "styles";
 
 interface TripsListProps {
   trips: Trip[];
@@ -78,15 +85,15 @@ const TripsList: React.FC<TripsListProps> = (props) => {
   };
 
   return (
-    <TripsListPage>
-      <TripsListPageHeader>
-        <EventsListHeaderText>
+    <ContentBox>
+      <ListPageHeader>
+        <PageHeaderText>
           <h4>Trips</h4>
           <a href="trips">
             Explore
             <img src={rightArrowIcon} alt="right arrow" />
           </a>
-        </EventsListHeaderText>
+        </PageHeaderText>
         <FlexboxRow style={{ justifyContent: "flex-end" }}>
           <SliderBtn
             onClick={slideLeft}
@@ -103,7 +110,7 @@ const TripsList: React.FC<TripsListProps> = (props) => {
             <img src={sliderRightArrow} alt="slider right arrow" />
           </SliderBtn>
         </FlexboxRow>
-      </TripsListPageHeader>
+      </ListPageHeader>
       <SliderContents>
         <InnerSlider $translate={translateVal} ref={sliderRef}>
           {props.trips.map((trip, index) => (
@@ -111,57 +118,8 @@ const TripsList: React.FC<TripsListProps> = (props) => {
           ))}
         </InnerSlider>
       </SliderContents>
-    </TripsListPage>
+    </ContentBox>
   );
 };
 
 export default TripsList;
-
-const TripsListPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border: 1px solid #c2c2d1;
-  border-radius: 8px;
-  padding: 0px;
-  margin-bottom: 25px;
-  overflow: hidden;
-  background-color: white;
-`;
-
-const TripsListPageHeader = styled.section`
-  display: flex;
-  margin: 10px 0 10px 0;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const EventsListHeaderText = styled.div`
-  display: flex;
-  align-items: center;
-  > h4 {
-    display: inline-flex;
-    font-size: 15px;
-    font-weight: 550;
-    margin: 0;
-    padding: 0px 15px 0px 20px;
-  }
-  > a {
-    display: flex;
-    font-size: 13px;
-    text-decoration: none;
-    color: black;
-  }
-`;
-
-const SliderContents = styled.section`
-  overflow: hidden;
-  padding-bottom: 20px;
-`;
-
-const InnerSlider = styled.div<{ $translate: number }>`
-  display: flex;
-  padding: 0 20px 0 20px;
-  transform: translateX(${(p) => p.$translate}px);
-  transition: transform 0.5s ease-in-out;
-`;

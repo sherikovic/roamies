@@ -1,6 +1,12 @@
 import { Broadcast } from "types/broadcast";
 import sherikovic from "../../images/sherikovic.jpg";
 import styled from "styled-components/macro";
+import {
+  Img,
+  EventItemNameDate,
+  EventItemContent,
+  EventItemFooter,
+} from "styles";
 
 interface EventItemProps {
   event: Broadcast;
@@ -21,10 +27,10 @@ const EventItem: React.FC<EventItemProps> = (props) => {
     : (imgType = undefined);
 
   return (
-    <EventItemLayout>
+    <EventContainer>
       <EventItemHeader>
         <a href="profile">
-          <Img
+          <StyledImg
             src={sherikovic}
             alt="user profile"
             $height={35}
@@ -41,7 +47,13 @@ const EventItem: React.FC<EventItemProps> = (props) => {
             }).format(new Date(props.event.datetime))}
           </h6>
         </EventItemNameDate>
-        <Img src={imgType} alt="event type" $height={25} $width={25} $br={0} />
+        <StyledImg
+          src={imgType}
+          alt="event type"
+          $height={25}
+          $width={25}
+          $br={0}
+        />
       </EventItemHeader>
       <EventItemContent>
         <h4>{props.event.description}</h4>
@@ -57,13 +69,13 @@ const EventItem: React.FC<EventItemProps> = (props) => {
         </h6>
         <a href={`events/${props.event._id}`}>+1</a>
       </EventItemFooter>
-    </EventItemLayout>
+    </EventContainer>
   );
 };
 
 export default EventItem;
 
-const EventItemLayout = styled.div`
+const EventContainer = styled.div`
   display: flex;
   flex-direction: column;
   margin-right: 20px;
@@ -86,69 +98,6 @@ const EventItemHeader = styled.div`
   }
 `;
 
-const Img = styled.img<{ $height: number; $width: number; $br: number }>`
-  height: ${(p) => p.$height}px;
-  width: ${(p) => p.$width}px;
-  min-height: 18px;
-  min-width: 18px;
-  text-indent: 0px;
+const StyledImg = styled(Img)`
   position: relative;
-  border-radius: ${(p) => p.$br}px;
-`;
-
-const EventItemNameDate = styled.div`
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-  width: 100%;
-  > a {
-    font-size: 14px;
-    padding: 0px;
-    font-weight: 550;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    text-decoration: none;
-    color: black;
-  }
-  > h6 {
-    font-size: 13px;
-    color: grey;
-    margin: 0px;
-    font-weight: normal;
-    line-height: 15px;
-  }
-`;
-
-const EventItemContent = styled.div`
-  display: flex;
-  align-items: flex-start;
-  margin-top: 10px;
-  height: 100%;
-  > h4 {
-    padding: 0px;
-    margin: 0;
-    font-size: 14px;
-    font-weight: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-  }
-`;
-
-const EventItemFooter = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  > h6 {
-    font-size: 11px;
-    font-weight: normal;
-    padding: 0px;
-    margin: 0;
-  }
-  > a {
-    text-decoration: none;
-    cursor: pointer;
-  }
 `;

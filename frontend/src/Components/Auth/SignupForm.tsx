@@ -13,6 +13,7 @@ import LoginForm from "./LoginForm";
 import { CardOverlay, OverlayContent, FlexboxCol } from "util/common_styles";
 import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components/macro";
+import { ErrorMessage, Img, ImgWithMargin, Info } from "styles";
 
 const fields = {
   password: {
@@ -118,14 +119,14 @@ const SignupForm: React.FC = () => {
           <EmailSingup>
             <SignupHeader>Create new account</SignupHeader>
             {errorMessage !== "" && (
-              <Error>
-                <Img src={warningIcon} alt="warning icon" />
+              <ErrorMessage>
+                <ImgWithMargin src={warningIcon} alt="warning icon" />
                 {errorMessage}
-              </Error>
+              </ErrorMessage>
             )}
             {process.env.NODE_ENV === "production" && (
               <Info>
-                <Img src={warningIcon} alt="warning icon" />
+                <ImgWithMargin src={warningIcon} alt="warning icon" />
                 We're currently still in development, sign up is disabled, check
                 us out later ^^
               </Info>
@@ -208,7 +209,7 @@ const SignupForm: React.FC = () => {
                     state.from
               }
             >
-              <Img src={googleIcon} alt="Google logo" />
+              <ImgWithMargin src={googleIcon} alt="Google logo" />
               <p>Google</p>
             </GoogleBtn>
           </GoogleSignup>
@@ -273,15 +274,6 @@ const Icon = styled.img<{ $left: number }>`
   top: 10px;
   left: ${(p) => p.$left}px;
   z-index: 2;
-`;
-
-const Img = styled.img`
-  height: 18px;
-  width: 18px;
-  min-height: 18px;
-  min-width: 18px;
-  margin-right: 8px;
-  text-indent: 0px;
 `;
 
 const FirstLastNamesSection = styled.div`
@@ -400,33 +392,4 @@ const Footer = styled.section`
       text-decoration: none;
     }
   }
-`;
-
-const Error = styled.p`
-  border: 1px solid #eac8c8;
-  background-color: #eac8c8;
-  font-size: 14px;
-  color: #6c2f2f;
-  margin-top: 10px;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
-
-const Info = styled.p`
-  border: 1px solid #9cae9c;
-  background-color: #9cae9c;
-  width: 100%;
-  font-size: 14px;
-  color: #152515;
-  padding: 10px;
-  margin-top: 10px;
-  margin-bottom: 10px;
-  border-radius: 15px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 `;

@@ -7,6 +7,13 @@ import rightArrowIcon from "../../images/rightarrow.png";
 import { useRef, useState } from "react";
 import styled from "styled-components/macro";
 import { SliderBtn } from "util/common_styles";
+import {
+  ContentBox,
+  InnerSlider,
+  ListPageHeader,
+  PageHeaderText,
+  SliderContents,
+} from "styles";
 
 interface EventsListProps {
   events: Broadcast[];
@@ -82,15 +89,15 @@ const EventsList: React.FC<EventsListProps> = (props) => {
   };
 
   return (
-    <EventsListPage>
-      <EventsListHeader>
-        <EventsListHeaderText>
+    <ContentBox>
+      <ListPageHeader>
+        <PageHeaderText>
           <h4>Events</h4>
           <a href="/events">
             Explore
             <img src={rightArrowIcon} alt="explore arrow" />
           </a>
-        </EventsListHeaderText>
+        </PageHeaderText>
         <EventsListHeaderSliderBtns>
           <SliderBtn
             onClick={slideLeft}
@@ -107,7 +114,7 @@ const EventsList: React.FC<EventsListProps> = (props) => {
             <img src={sliderRightArrow} alt="slider right arrow" />
           </SliderBtn>
         </EventsListHeaderSliderBtns>
-      </EventsListHeader>
+      </ListPageHeader>
       <SliderContents>
         <InnerSlider $translate={translateVal} ref={sliderRef}>
           {props.events.map((event) => (
@@ -115,62 +122,13 @@ const EventsList: React.FC<EventsListProps> = (props) => {
           ))}
         </InnerSlider>
       </SliderContents>
-    </EventsListPage>
+    </ContentBox>
   );
 };
 
 export default EventsList;
 
-const EventsListPage = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  border: 1px solid #c2c2d1;
-  border-radius: 8px;
-  padding: 0px;
-  margin-bottom: 25px;
-  overflow: hidden;
-  background-color: white;
-`;
-
-const EventsListHeader = styled.section`
-  display: flex;
-  margin: 10px 0 10px 0;
-  justify-content: space-between;
-  align-items: center;
-`;
-
-const EventsListHeaderText = styled.div`
-  display: flex;
-  align-items: center;
-  > h4 {
-    display: inline-flex;
-    font-size: 15px;
-    font-weight: 550;
-    margin: 0;
-    padding: 0px 15px 0px 20px;
-  }
-  > a {
-    display: flex;
-    font-size: 13px;
-    text-decoration: none;
-    color: black;
-  }
-`;
-
 const EventsListHeaderSliderBtns = styled.div`
   display: flex;
   justify-content: flex-end;
-`;
-
-const SliderContents = styled.section`
-  overflow: hidden;
-  padding-bottom: 20px;
-`;
-
-const InnerSlider = styled.div<{ $translate: number }>`
-  display: flex;
-  padding: 0 20px 0 20px;
-  transform: translateX(${(p) => p.$translate}px);
-  transition: transform 0.5s ease-in-out;
 `;
