@@ -1,10 +1,17 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { FlexboxCol, FlexboxRow, XClose } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { Broadcast } from "types/broadcast";
-import { createDBEntry, deleteDBEntry, updateDBEntry } from "util/api";
+import {
+	createDBEntry,
+	deleteDBEntry,
+	getDBEntry,
+	updateDBEntry,
+} from "util/api";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { Trip } from "types/trip";
+import { AuthContext } from "util/auth-context";
 
 interface NewEventProps {
 	cancelHandler: () => void;
@@ -49,19 +56,41 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			valid: true,
 			errorMessage: "Title can't be empty",
 		},
+		trip: {
+			val: "",
+			valid: true,
+			errorMessage: "",
+		},
 	};
 
+	const authContext = useContext(AuthContext);
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [userTrips, setUserTrips] = useState<Trip[]>();
+	const [tripId, setTripId] = useState<String>();
 	const navigate = useNavigate();
 	const location = useLocation();
 	const params = useParams();
 	// TODO: if no id exists, then it must be coming from the home page and
 	// should be retrieved from the ongoing trip instead
 
-	const tripId: string | null | undefined = location.pathname.includes("trips")
-		? params.id
-		: null;
+	useEffect(() => {
+		async function runThis() {
+			let response: Trip | Trip[] | any;
+			if (location.pathname.includes("home")) {
+				setUserTrips(authContext.userInfo?.trips);
+			} else if (location.pathname.includes("trips")) {
+				setTripId(params.id);
+				response = await getDBEntry<Trip>("trips", String(params.id));
+				response.ok
+					? setUserTrips([response.getJson.objects])
+					: setErrorMessage(response.getJson.message);
+			} else if (location.pathname.includes("events")) {
+				setTripId(eventData?.trip._id);
+			}
+		}
+		runThis();
+	}, [location.pathname, authContext.userInfo]);
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
@@ -119,7 +148,8 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			let formData: Broadcast | any = Object.fromEntries(
 				new FormData(document.forms[0] as HTMLFormElement).entries()
 			);
-			formData.trip = tripId || eventData!.trip._id;
+			// TODO have to add when the location is home
+			formData.trip = tripId;
 			const isValid = validateInputsForSubmit();
 			isValid && sendEventRequestToBE(mode, formData);
 		} else {
@@ -132,6 +162,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 		value,
 	}: {
 		type:
+			| "trip"
 			| "title"
 			| "location"
 			| "category"
@@ -156,6 +187,12 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 						: true,
 			},
 		});
+		type === "trip" &&
+			setTripId(
+				userTrips
+					?.filter((trip) => trip.title === value)
+					.map((trip) => trip._id)[0]
+			);
 	};
 
 	return (
@@ -169,6 +206,35 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 						{errorMessage}
 					</Error>
 				)}
+				<FlexboxRow style={{ marginBottom: "10px" }}>
+					<Label htmlFor="trip">Trip:</Label>
+					{userTrips?.length === 1 ? (
+						<input
+							type="text"
+							name="trip"
+							id="trip"
+							value={userTrips[0].title}
+							readOnly
+						/>
+					) : (
+						<div>
+							<input
+								list="trips"
+								name="trip"
+								id="trip"
+								defaultValue={formInputs.trip.val}
+								onChange={(e) => {
+									inputOnChange({ type: "trip", value: e.target.value });
+								}}
+							/>
+							<datalist id="trips">
+								{userTrips?.map((trip) => (
+									<option key={trip._id} value={trip.title} />
+								))}
+							</datalist>
+						</div>
+					)}
+				</FlexboxRow>
 				<FlexboxRow style={{ marginBottom: "10px" }}>
 					<Label htmlFor="title">Title:</Label>
 					<input

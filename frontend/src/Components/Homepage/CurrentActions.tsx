@@ -8,8 +8,8 @@ import { AuthContext } from "util/auth-context";
 
 const CurrentActions: React.FC = () => {
 	const [activeState, setActiveState] = useState("events");
-	const [events, setEvents] = useState<{ objects: Broadcast }>();
-	const [trips, setTrips] = useState<{ objects: Trip }>();
+	const [events, setEvents] = useState<{ objects: Broadcast[] }>();
+	const [trips, setTrips] = useState<{ objects: Trip[] }>();
 	const authContext = useContext(AuthContext);
 
 	useEffect(() => {
@@ -26,7 +26,7 @@ const CurrentActions: React.FC = () => {
 			response.ok && setTrips(response.getJson.objects);
 		}
 		authContext.isAuthenticated && runThis();
-	}, [authContext.isAuthenticated]);
+	}, [authContext.isAuthenticated, authContext.userInfo]);
 
 	return (
 		<FlexboxCol style={{ minHeight: "250px" }}>
