@@ -90,7 +90,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			}
 		}
 		runThis();
-	}, [location.pathname, authContext.userInfo]);
+	}, [location.pathname, authContext.userInfo, params.id, eventData?.trip._id]);
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
