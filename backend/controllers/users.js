@@ -84,7 +84,10 @@ module.exports.logout = async (req, res) => {
 
 module.exports.getLoggedInUser = async (req, res) => {
 	if (req.user) {
-		res.status(201).json({ objects: req.user });
+		const user = await User.findById(req.user._id)
+			.populate("trips")
+			.populate("events");
+		res.status(201).json({ objects: user });
 	} else {
 		res.status(401).json({ objects: null });
 	}

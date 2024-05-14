@@ -1,10 +1,5 @@
 import { useContext, useState } from "react";
-import {
-  Link,
-  NavLink,
-  useLocation,
-  useRouteLoaderData,
-} from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 
 import LoginForm from "../Auth/LoginForm";
 import { authUser } from "util/api";

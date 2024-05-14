@@ -7,26 +7,26 @@ import { FlexboxCol } from "util/common_styles";
 import { AuthContext } from "util/auth-context";
 
 const CurrentActions: React.FC = () => {
-  const [activeState, setActiveState] = useState("events");
-  const [events, setEvents] = useState<{ objects: Broadcast }>();
-  const [trips, setTrips] = useState<{ objects: Trip }>();
-  const authContext = useContext(AuthContext);
+	const [activeState, setActiveState] = useState("events");
+	const [events, setEvents] = useState<{ objects: Broadcast[] }>();
+	const [trips, setTrips] = useState<{ objects: Trip[] }>();
+	const authContext = useContext(AuthContext);
 
-  useEffect(() => {
-    async function runThis() {
-      let response = await getUserDBEntries<Broadcast>(
-        "events",
-        authContext.userInfo!._id
-      );
-      response.ok && setEvents(response.getJson.objects);
-      response = await getUserDBEntries<Trip>(
-        "trips",
-        authContext.userInfo!._id
-      );
-      response.ok && setTrips(response.getJson.objects);
-    }
-    authContext.isAuthenticated && runThis();
-  }, [authContext.isAuthenticated]);
+	useEffect(() => {
+		async function runThis() {
+			let response = await getUserDBEntries<Broadcast>(
+				"events",
+				authContext.userInfo!._id
+			);
+			response.ok && setEvents(response.getJson.objects);
+			response = await getUserDBEntries<Trip>(
+				"trips",
+				authContext.userInfo!._id
+			);
+			response.ok && setTrips(response.getJson.objects);
+		}
+		authContext.isAuthenticated && runThis();
+	}, [authContext.isAuthenticated, authContext.userInfo]);
 
   return (
     <FlexboxCol style={{ minHeight: "250px" }}>

@@ -1,9 +1,6 @@
 import { backOff } from "exponential-backoff";
-
-import { Trip } from "types/trip";
-import { User } from "types/user";
 import { baseURL } from "./util";
-import { Broadcast } from "types/broadcast";
+import { User } from "types/user";
 
 const apiFetch = async <T>(
   method: "GET" | "POST" | "PATCH" | "DELETE",

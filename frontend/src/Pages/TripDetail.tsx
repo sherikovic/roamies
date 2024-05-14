@@ -25,7 +25,7 @@ const TripDetailPage: React.FC = () => {
 			</FlexboxRow>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				<h1>Events</h1>
-				<button onClick={() => setShowEventForm(true)}>Start an event</button>
+				<button onClick={() => setShowEventForm(true)}>Post an event</button>
 			</FlexboxRow>
 			<FlexboxCol>
 				{tripData.events!.length > 0 ? (
