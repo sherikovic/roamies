@@ -19,7 +19,32 @@
 	-moz-osx-font-smoothing: grayscale;
 	-webkit-text-size-adjust: 100%;
 
-	--color-gray-100: #e3f2fd;
+	--color-green-basic: #515934;
+	--color-green-shade1: #48502e;
+	--color-green-shade2: #404729;
+	--color-green-shade3: #383e24;
+
+	--color-black-basic: #010d00;
+	--color-black-tint1: #000b00;
+	--color-black-tint2: #000a00;
+	--color-black-tint13: #000900;
+
+	--color-greenblue-basic: #2a5559;
+	--color-greenblue-shade1: #254c50;
+	--color-greenblue-shade2: #214447;
+	--color-greenblue-shade3: #1d3b3e;
+
+	--color-lightgray-basic: #ccd5d9;
+	--color-lightgray-shade1: #b7bfc3;
+	--color-lightgray-shade2: #a3aaad;
+	--color-lightgray-shade3: #8e9597;
+
+	--color-normalgray-basic: #92a0a6;
+	--color-normalgray-shade1: #839095;
+	--color-normalgray-shade2: #748084;
+	--color-normalgray-shade3: #667074;
+
+	/* --color-gray-100: #e3f2fd;
 	--color-gray-200: #bbdefb;
 	--color-gray-300: #90caf9;
 	--color-gray-400: #64b5f6;
@@ -37,7 +62,7 @@
 	--color-primary-600: #0466c8;
 	--color-primary-700: #0353a4;
 	--color-primary-800: #0353a4;
-	--color-primary-900: #0353a4;
+	--color-primary-900: #0353a4; */
 }
 
 body {
