@@ -1,59 +1,56 @@
 import { Form, useActionData } from "react-router-dom";
 import { useContext, useEffect, useState } from "react";
 import { AuthContext } from "util/auth-context";
-import { User } from "types/user";
 import {
-	APIBtnSave,
-	APIForm,
-	APIFormBtnSelect,
-	APIFormBtnsSelect,
-	APIFormHeader,
-	APIFormInputLabel,
-	APIFormItem,
-	APIFormInputField,
+	SettingsBtnSave,
+	SettingsForm,
+	SettingsBtnSelect,
+	SettingsBtnsSelect,
+	SettingsHeader,
 	FlexboxRow,
 } from "util/common_styles";
+import { SettingsInputLabelCombo } from "util/common_components";
 
 const AccountSettingsForm: React.FC = () => {
 	const [changeEmail, setChangeEmail] = useState(true);
 	const [changePassword, setChangePassword] = useState(false);
 	const data: any = useActionData();
 
-	const userContext = useContext(AuthContext);
-	const userData = userContext.userInfo as User;
+	const { userInfo, updateUserInfo } = useContext(AuthContext);
+	// const userData = userContext.userInfo as User;
 
 	useEffect(() => {
 		if (data && data.ok) {
-			const updateUser = userContext.updateUserInfo;
-			console.log("data", data);
-			const email = data.data.newEmail ?? userData.email;
-			const password = data.data.newPassword ?? userData.password;
-			updateUser({ email, password }, userData);
+			// const updateUser = userContext.updateUserInfo;
+			// console.log("data", data);
+			const email = data.data.newEmail ?? userInfo!.email;
+			const password = data.data.newPassword ?? userInfo!.password;
+			updateUserInfo({ email, password }, userInfo);
 		}
-	}, [data, userContext.updateUserInfo, userData]);
+	}, [data, updateUserInfo, userInfo]);
 
 	return (
-		<APIForm>
-			<APIFormHeader>What would you like to change?</APIFormHeader>
+		<SettingsForm>
+			<SettingsHeader>What would you like to change?</SettingsHeader>
 			{data &&
 				data.errorMessage &&
 				((changeEmail && data.type === "email") ||
 					(changePassword && data.type === "password")) && (
-					<APIFormHeader style={{ color: "orange" }}>
+					<SettingsHeader style={{ color: "orange" }}>
 						{data.errorMessage}
-					</APIFormHeader>
+					</SettingsHeader>
 				)}
 			{data &&
 				data.successMessage &&
 				((changeEmail && data.type === "email") ||
 					(changePassword && data.type === "password")) && (
-					<APIFormHeader style={{ color: "green" }}>
+					<SettingsHeader style={{ color: "green" }}>
 						{data.successMessage}
-					</APIFormHeader>
+					</SettingsHeader>
 				)}
 			<FlexboxRow style={{ border: "1px solid var(--color-gray-700)" }}>
-				<APIFormBtnsSelect>
-					<APIFormBtnSelect
+				<SettingsBtnsSelect>
+					<SettingsBtnSelect
 						onClick={() => {
 							changePassword && setChangeEmail(true);
 							setChangePassword(false);
@@ -61,8 +58,8 @@ const AccountSettingsForm: React.FC = () => {
 						$selected={changeEmail ?? false}
 					>
 						Update Email Address
-					</APIFormBtnSelect>
-					<APIFormBtnSelect
+					</SettingsBtnSelect>
+					<SettingsBtnSelect
 						onClick={() => {
 							changeEmail && setChangePassword(true);
 							setChangeEmail(false);
@@ -70,74 +67,47 @@ const AccountSettingsForm: React.FC = () => {
 						$selected={changePassword ?? false}
 					>
 						Update Password
-					</APIFormBtnSelect>
-				</APIFormBtnsSelect>
+					</SettingsBtnSelect>
+				</SettingsBtnsSelect>
 				{changeEmail && (
 					<Form method="patch" style={{ width: "60%", padding: "0 20px" }}>
-						<APIFormTextInputLabel type="email" name="old Email" value="" />
-						<APIFormTextInputLabel type="email" name="new Email" value="" />
-						<APIFormTextInputLabel
+						<SettingsInputLabelCombo type="email" name="old Email" value="" />
+						<SettingsInputLabelCombo type="email" name="new Email" value="" />
+						<SettingsInputLabelCombo
 							type="email"
 							name="confirm New Email"
 							value=""
 						/>
-						<APIBtnSave>
+						<SettingsBtnSave>
 							<button name={"accountEmail"}>Save</button>
-						</APIBtnSave>
+						</SettingsBtnSave>
 					</Form>
 				)}
 				{changePassword && (
 					<Form method="patch" style={{ width: "60%", padding: "0 20px" }}>
-						<APIFormTextInputLabel
+						<SettingsInputLabelCombo
 							type="password"
 							name="old Password"
 							value=""
 						/>
-						<APIFormTextInputLabel
+						<SettingsInputLabelCombo
 							type="password"
 							name="new Password"
 							value=""
 						/>
-						<APIFormTextInputLabel
+						<SettingsInputLabelCombo
 							type="password"
 							name="confirm New Password"
 							value=""
 						/>
-						<APIBtnSave>
+						<SettingsBtnSave>
 							<button name={"accountPassword"}>Save</button>
-						</APIBtnSave>
+						</SettingsBtnSave>
 					</Form>
 				)}
 			</FlexboxRow>
-		</APIForm>
+		</SettingsForm>
 	);
 };
 
 export default AccountSettingsForm;
-
-interface APIFormTextInputLabelProps {
-	type: string;
-	name: string;
-	value?: string;
-	classDiv?: string;
-	classInput?: string;
-	classLabel?: string;
-	children?: React.ReactNode;
-}
-
-const APIFormTextInputLabel: React.FC<APIFormTextInputLabelProps> = (props) => {
-	return (
-		<APIFormItem>
-			<APIFormInputField
-				type={props.type}
-				placeholder={props.name}
-				name={props.name}
-				id={props.name}
-				defaultValue={props.value}
-			/>
-			<APIFormInputLabel htmlFor={props.name}>
-				{props.name.toUpperCase()}
-			</APIFormInputLabel>
-		</APIFormItem>
-	);
-};

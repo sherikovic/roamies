@@ -1,17 +1,14 @@
 import { Form, useActionData } from "react-router-dom";
-import { User } from "types/user";
 import { useContext, useEffect, useRef } from "react";
 import { AuthContext } from "util/auth-context";
 import {
-	APIBtnSave,
-	APIForm,
-	APIFormHeader,
-	APIFormInputLabel,
-	APIFormItem,
-	APIGroupCC,
-	APIFormInputField,
+	SettingsBtnSave,
+	SettingsForm,
+	SettingsHeader,
+	SettingsInputsRow,
 	FlexboxRow,
 } from "util/common_styles";
+import { SettingsInputLabelCombo } from "util/common_components";
 
 interface PersonalInfoFormProps {
 	children?: React.ReactNode;
@@ -19,21 +16,21 @@ interface PersonalInfoFormProps {
 
 const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 	const data: any = useActionData();
-	const userContext = useContext(AuthContext);
-	const userData = userContext.userInfo as User;
+	const { userInfo, updateUserInfo } = useContext(AuthContext);
+	// const userData = userContext.userInfo as User;
 	const fileInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (data && data.ok) {
-			const updateUser = userContext.updateUserInfo;
-			updateUser(data.data, userData);
+			// const updateUser = userContext.updateUserInfo;
+			updateUserInfo(data.data, userInfo);
 		}
-	}, [data, userContext.updateUserInfo, userData]);
+	}, [data, updateUserInfo, userInfo]);
 
 	return (
 		<Form method="patch">
-			<APIForm>
-				<APIFormHeader>Update your personal information</APIFormHeader>
+			<SettingsForm>
+				<SettingsHeader>Update your personal information</SettingsHeader>
 				<FlexboxRow>
 					<button
 						onClick={() => fileInput.current && fileInput.current.click()}
@@ -48,90 +45,63 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 					/>
 				</FlexboxRow>
 				{data && data.errorMessage && data.type === "personal" && (
-					<APIFormHeader style={{ color: "orange" }}>
+					<SettingsHeader style={{ color: "orange" }}>
 						{data.errorMessage}
-					</APIFormHeader>
+					</SettingsHeader>
 				)}
 				{data && data.successMessage && data.type === "personal" && (
-					<APIFormHeader style={{ color: "green" }}>
+					<SettingsHeader style={{ color: "green" }}>
 						{data.successMessage}
-					</APIFormHeader>
+					</SettingsHeader>
 				)}
-				<APIGroupCC>
-					<APIFormTextInputLabel
+				<SettingsInputsRow>
+					<SettingsInputLabelCombo
 						type="text"
 						name="first name"
-						value={userData ? userData.firstname : ""}
+						value={userInfo ? userInfo.firstname : ""}
 					/>
-					<APIFormTextInputLabel
+					<SettingsInputLabelCombo
 						type="text"
 						name="last name"
-						value={userData ? userData.lastname : ""}
+						value={userInfo ? userInfo!.lastname : ""}
 					/>
-				</APIGroupCC>
-				<APIGroupCC>
-					<APIFormTextInputLabel
+				</SettingsInputsRow>
+				<SettingsInputsRow>
+					<SettingsInputLabelCombo
 						type="text"
 						name="age"
-						value={userData ? userData.age : ""}
+						value={userInfo ? userInfo!.age : ""}
 					/>
-					<APIFormTextInputLabel
+					<SettingsInputLabelCombo
 						type="text"
 						name="country"
-						value={userData ? userData.country : ""}
+						value={userInfo ? userInfo!.country : ""}
 					/>
-				</APIGroupCC>
-				<APIFormTextInputLabel
+				</SettingsInputsRow>
+				<SettingsInputLabelCombo
 					type="textarea"
 					name="bio"
-					value={userData ? userData.bio : ""}
+					value={userInfo ? userInfo!.bio : ""}
 				/>
-				<APIFormHeader>Socials</APIFormHeader>
-				<APIGroupCC>
-					<APIFormTextInputLabel
+				<SettingsHeader>Socials</SettingsHeader>
+				<SettingsInputsRow>
+					<SettingsInputLabelCombo
 						type="text"
 						name="instagram"
-						value={userData ? userData.social?.instagram : ""}
+						value={userInfo ? userInfo!.social?.instagram : ""}
 					/>
-					<APIFormTextInputLabel
+					<SettingsInputLabelCombo
 						type="text"
 						name="twitter"
-						value={userData ? userData.social?.twitter : ""}
+						value={userInfo ? userInfo!.social?.twitter : ""}
 					/>
-				</APIGroupCC>
-				<APIBtnSave>
+				</SettingsInputsRow>
+				<SettingsBtnSave>
 					<button name={"personal"}>Save</button>
-				</APIBtnSave>
-			</APIForm>
+				</SettingsBtnSave>
+			</SettingsForm>
 		</Form>
 	);
 };
 
 export default PersonalInfoForm;
-
-interface APIFormTextInputLabelProps {
-	type: string;
-	name: string;
-	value?: string;
-	classDiv?: string;
-	classInput?: string;
-	classLabel?: string;
-	children?: React.ReactNode;
-}
-
-const APIFormTextInputLabel: React.FC<APIFormTextInputLabelProps> = (props) => {
-	return (
-		<APIFormItem>
-			<APIFormInputField
-				type={props.type}
-				placeholder={props.name}
-				name={props.name}
-				id={props.name}
-				defaultValue={props.value}
-			/>
-			<APIFormInputLabel htmlFor={props.name}>
-				{props.name.toUpperCase()}
-			</APIFormInputLabel>
-		</APIFormItem>
-	);
-};

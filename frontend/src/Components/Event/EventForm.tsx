@@ -16,7 +16,7 @@ import {
 	ImgWithMargin,
 	InputLabel,
 	FormSubmitButton,
-} from "styles";
+} from "util/common_styles";
 import { Trip } from "types/trip";
 import { AuthContext } from "util/auth-context";
 

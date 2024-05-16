@@ -2,6 +2,7 @@ import { useState } from "react";
 import AccountSettingsForm from "./AccountSettingsForm";
 import PersonalInfoForm from "./PersonalInfoForm";
 import styled from "styled-components/macro";
+import { FlexboxCol, FlexboxRow } from "util/common_styles";
 
 interface SettingsTabsProps {
 	children?: React.ReactNode;
@@ -18,16 +19,10 @@ const SettingsTabs: React.FC<SettingsTabsProps> = (props) => {
 		<TabsContainer>
 			<BlocTabs>
 				<TabIndicator $left={toggleTab === 2 ? 50 : 0} />
-				<Tab
-					onClick={() => toggleTabHandler(1)}
-					$active={toggleTab === 1 ?? false}
-				>
+				<Tab onClick={() => toggleTabHandler(1)} $active={toggleTab === 1}>
 					Personal Information
 				</Tab>
-				<Tab
-					onClick={() => toggleTabHandler(2)}
-					$active={toggleTab === 2 ?? false}
-				>
+				<Tab onClick={() => toggleTabHandler(2)} $active={toggleTab === 2}>
 					Account Settings
 				</Tab>
 			</BlocTabs>
@@ -41,16 +36,12 @@ const SettingsTabs: React.FC<SettingsTabsProps> = (props) => {
 
 export default SettingsTabs;
 
-const TabsContainer = styled.div`
-	display: flex;
-	flex-direction: column;
+const TabsContainer = styled(FlexboxCol)`
 	border: 0.1rem solid var(--color-gray-700);
 	border-radius: 7px;
 `;
 
-const BlocTabs = styled.div`
-	display: flex;
-	flex-direction: row;
+const BlocTabs = styled(FlexboxRow)`
 	position: relative;
 	margin-bottom: 1rem;
 `;
