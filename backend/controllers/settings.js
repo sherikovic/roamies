@@ -49,18 +49,3 @@ module.exports.updateUserPersonalInfo = async (req, res) => {
 		});
 	}
 };
-
-module.exports.getUserPersonalInfo = async (req, res) => {
-	if (req.user) {
-		const userData = await User.findOne({ username: req.user.username });
-		if (userData) {
-			res.status(201).json({ user: userData });
-		} else {
-			res
-				.status(500)
-				.json({ message: "Error occured while retrieving user data!" });
-		}
-	} else {
-		res.status(500).json({ message: "No user is logged in!" });
-	}
-};
