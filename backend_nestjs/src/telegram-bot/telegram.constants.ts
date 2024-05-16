@@ -1,2 +1,0 @@
-export const TELEGRAM_TOKEN = "6528659624:AAHAQKQsPeAwtkdxkyblrPQJTpsWB0pmulY"
-export const OPENWEATHER_APIKEY = "77b9a6ce614253e361e1b9b5b6d752e2"
