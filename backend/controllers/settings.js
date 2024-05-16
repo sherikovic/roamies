@@ -39,12 +39,13 @@ module.exports.updateUserPersonalInfo = async (req, res) => {
 					password: newHashedPassword,
 				});
 				await user.save();
-				res.json({ message: "Password was successfully updated!" });
+				res.status(201).json({ message: "Password was successfully updated!" });
 			}
 		}
 	} catch (e) {
 		res.status(500).json({
 			message: "An error occured while updating user personal details!",
+			error: e.name + ": " + e.message,
 		});
 	}
 };
