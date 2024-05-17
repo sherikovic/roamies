@@ -64,7 +64,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			errorMessage: "Title can't be empty",
 		},
 		trip: {
-			val: "",
+			val: eventData ? eventData.trip.title : "",
 			valid: true,
 			errorMessage: "",
 		},

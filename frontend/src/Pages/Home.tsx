@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { useNavigate, useRouteLoaderData } from "react-router";
 
 import EventsList from "Components/Homepage/EventsList";
@@ -9,10 +9,10 @@ import { Trip } from "types/trip";
 import HomeActions from "Components/Homepage/HomeActions";
 import styled from "styled-components/macro";
 import { FlexboxCol, FlexboxRow } from "util/common_styles";
-import { AuthContext } from "util/auth-context";
+import { useAuthState } from "util/auth-context";
 
 const HomePage: React.FC = () => {
-	const authContext = useContext(AuthContext);
+	const isAuthenticated = useAuthState();
 	const navigate = useNavigate();
 	const { events, trips } = useRouteLoaderData("root-home") as {
 		events: Broadcast[];
@@ -20,8 +20,8 @@ const HomePage: React.FC = () => {
 	};
 
 	useEffect(() => {
-		!authContext.isAuthenticated && navigate("/");
-	}, [authContext.isAuthenticated, navigate]);
+		!isAuthenticated && navigate("/");
+	}, [isAuthenticated, navigate]);
 
 	return (
 		<FlexboxCol>
@@ -44,15 +44,13 @@ const HomePage: React.FC = () => {
 
 export default HomePage;
 
-const HomePageContentsItems = styled.div`
-	display: flex;
-	flex-direction: column;
+const HomePageContentsItems = styled(FlexboxCol)`
 	justify-content: flex-start;
 	width: 850px;
 	margin-right: 25px;
 `;
 
-const CurrentActionsLayout = styled.div`
+const CurrentActionsLayout = styled(FlexboxRow)`
 	display: flex;
 	background-color: white;
 	border: 1px solid #c2c2d1;

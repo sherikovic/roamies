@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const eventsCtls = require("../controllers/events");
+const commentsCtls = require("../controllers/comments");
 
 router
 	.route("/") // the optional parameters are passed as optional queries

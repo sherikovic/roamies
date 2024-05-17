@@ -13,8 +13,7 @@ module.exports.index = async (req, res) => {
 			const events = await Broadcast.find({})
 				.populate("owner")
 				.populate("trip")
-				.populate("participants")
-				.populate(["comments"]);
+				.populate("participants");
 			res.status(201).json({ objects: events });
 		}
 	} catch (e) {
@@ -58,7 +57,7 @@ module.exports.showEvent = async (req, res) => {
 			.populate("owner")
 			.populate("trip")
 			.populate("participants")
-			.populate("comments");
+			.populate({ path: "comments", populate: { path: "owner" } });
 		res.status(201).json({ objects: event });
 	} catch (e) {
 		res
@@ -74,6 +73,7 @@ module.exports.showEvent = async (req, res) => {
 
 module.exports.updateEvent = async (req, res) => {
 	try {
+		console.log(req.body);
 		// TODO images are set to empty array until we incorporate aws
 		await Broadcast.findByIdAndUpdate(req.params.id, {
 			...req.body,

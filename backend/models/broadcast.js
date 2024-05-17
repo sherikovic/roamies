@@ -45,8 +45,8 @@ const BroadcastSchema = new Schema({
 	},
 	comments: {
 		type: [Schema.Types.ObjectId],
-		ref: Comment.modelName,
-		// ref: "comment",
+		// ref: Comment.modelName,
+		ref: "comment",
 	},
 });
 
