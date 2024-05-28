@@ -1,0 +1,6 @@
+<html>
+  <body>
+    <h1>Welcome, {{name}}</h1>
+    <p>Please verify your email address through the code below</p>
+  </body>
+</html>

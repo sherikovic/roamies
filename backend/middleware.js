@@ -1,3 +1,5 @@
+const User = require("./models/user");
+
 module.exports.checkAuthenticated = (req, res, next) => {
 	if (req.isAuthenticated()) {
 		return res.status(300).json({ message: "User already logged in." });
@@ -22,6 +24,15 @@ module.exports.setRedirectUrl = (req, res, next) => {
 				? "http://localhost:3000"
 				: "https://roamies.org"
 		);
+	}
+	next();
+};
+
+module.exports.checkIfEmailExists = async (req, res, next) => {
+	if (await User.findOne({ email: req.body.email })) {
+		return res
+			.status(300)
+			.json({ message: "User with the same email already exists!" });
 	}
 	next();
 };

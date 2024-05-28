@@ -2,21 +2,14 @@ const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
 
-module.exports.getUsers = async (req, res) => {
-	const ret = req.query.id
-		? await User.findById(req.query.id).populate("trips").populate("events")
-		: await User.find({}).populate("trips").populate("events");
-	res.json({ objects: ret });
-};
-
 module.exports.signup = async (req, res) => {
 	try {
 		const { firstname, lastname, email, password } = req.body;
-		if (await User.findOne({ email: email })) {
-			return res
-				.status(401)
-				.json({ message: "User with the same email already exists!" });
-		}
+		// if (await User.findOne({ email: email })) {
+		// 	return res
+		// 		.status(401)
+		// 		.json({ message: "User with the same email already exists!" });
+		// }
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const newUser = new User({
 			email,
@@ -91,4 +84,11 @@ module.exports.getLoggedInUser = async (req, res) => {
 	} else {
 		res.status(401).json({ objects: null });
 	}
+};
+
+module.exports.getUsers = async (req, res) => {
+	const ret = req.query.id
+		? await User.findById(req.query.id).populate("trips").populate("events")
+		: await User.find({}).populate("trips").populate("events");
+	res.json({ objects: ret });
 };

@@ -1,5 +1,5 @@
 import EventForm from "Components/Event/EventForm";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { LoaderFunction, json, useRouteLoaderData } from "react-router-dom";
 import { Broadcast } from "types/broadcast";
 import { createDBEntry, getDBEntry, updateDBEntry } from "util/api";
@@ -9,7 +9,7 @@ import {
 	FlexboxRow,
 	OverlayContent,
 } from "util/common_styles";
-import { useAuthState, useUser } from "util/auth-context";
+import { useUser } from "util/auth-context";
 import { User } from "types/user";
 import { Comment } from "types/comment";
 
@@ -18,7 +18,6 @@ const EventDetailPage: React.FC = () => {
 	const [showEventForm, setShowEventForm] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
 	const user = useUser() as User;
-	const isAuthenticated = useAuthState();
 	const commentTextRef = useRef<HTMLTextAreaElement>(null);
 
 	const joinEvent = async () => {

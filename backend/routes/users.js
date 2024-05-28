@@ -4,11 +4,18 @@ const {
 	checkAuthenticated,
 	checkNotAuthenticated,
 	setRedirectUrl,
+	checkIfEmailExists,
 } = require("../middleware");
 const passport = require("passport");
 
+// module.exports = router.post(
+// 	"/signupLocal",
+// 	checkIfEmailExists,
+// 	usersCtls.signup
+// );
+
 module.exports = router
-	.post("/signupLocal", usersCtls.signup)
+	.post("/signupLocal", checkIfEmailExists, usersCtls.signup)
 	.post(
 		"/login",
 		checkAuthenticated,
