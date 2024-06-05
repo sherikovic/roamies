@@ -8,14 +8,9 @@ const {
 } = require("../middleware");
 const passport = require("passport");
 
-// module.exports = router.post(
-// 	"/signupLocal",
-// 	checkIfEmailExists,
-// 	usersCtls.signup
-// );
-
 module.exports = router
-	.post("/signupLocal", checkIfEmailExists, usersCtls.signup)
+	.post("/verifyEmail", checkIfEmailExists, usersCtls.verifyEmail)
+	.post("/signup", usersCtls.signup)
 	.post(
 		"/login",
 		checkAuthenticated,

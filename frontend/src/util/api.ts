@@ -64,7 +64,7 @@ export const apiDelete = async <T>(path: string) =>
 	await apiFetch<T>("DELETE", path, null);
 
 // AUTH APIs
-export const authUser = async (mode: string, data: User | null) =>
+export const authUser = async (mode: string, data: Partial<User> | any) =>
 	// logout doesn't take any data
 	data
 		? await apiPost(`auth/${mode}`, data)

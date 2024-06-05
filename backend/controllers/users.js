@@ -1,15 +1,47 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
+const mjml2html = require("mjml");
+
+module.exports.verifyEmail = async (req, res) => {
+	try {
+		const sgMail = require("@sendgrid/mail");
+		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+		// const fs = require("fs");
+		// const renderedTemplate = fs.readFileSync("../emails/templates/index.mjml");
+		// console.log("22", renderedTemplate);
+		// const html = mjml2html(renderedTemplate);
+		const msg = {
+			to: req.body.email,
+			from: "no-reply@roamies.org",
+			subject: "Roamies - Please verify your account",
+			text: "Thank you for singing up!",
+			html: `
+        <h1>Thank you for signing up</h1>
+        <p>Please use the following code to verify your email address ${req.body.code}</p>
+      `,
+		};
+		sgMail
+			.send(msg)
+			.then(() => {
+				console.log("Email sent");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+
+		res.status(201).json({ message: "Verification email successfully sent!" });
+	} catch (e) {
+		res.status(500).json({
+			message: "Something went wrong while sending the verification email!",
+			error: e.name + ": " + e.message,
+		});
+	}
+};
 
 module.exports.signup = async (req, res) => {
 	try {
 		const { firstname, lastname, email, password } = req.body;
-		// if (await User.findOne({ email: email })) {
-		// 	return res
-		// 		.status(401)
-		// 		.json({ message: "User with the same email already exists!" });
-		// }
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const newUser = new User({
 			email,
