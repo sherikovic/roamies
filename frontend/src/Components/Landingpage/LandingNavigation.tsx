@@ -16,7 +16,7 @@ import { useAuthCtx } from "util/auth-context";
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 	const location = useLocation();
-	const { isAuthenticated, user } = useAuthCtx();
+	const { isAuthenticated } = useAuthCtx();
 
 	const logOutHandler = async () => {
 		const res = await authUser("logout", null);

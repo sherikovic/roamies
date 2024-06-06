@@ -12,7 +12,6 @@ import { Link } from "react-router-dom";
 import {
 	ErrorMessage,
 	FormHeader,
-	Img,
 	ImgWithMargin,
 	Info,
 } from "util/common_styles";
@@ -170,7 +169,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 								: baseURL + "/auth/google?redirect_url=" + clientUrl + from
 						}
 					>
-						<Img src={googleIcon} alt="Google logo" />
+						<ImgWithMargin src={googleIcon} alt="Google logo" />
 						<p>Continue with Google</p>
 					</GoogleLogin>
 					<div>

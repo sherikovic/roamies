@@ -95,7 +95,13 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			}
 		}
 		runThis();
-	}, [location.pathname, user, params.id, eventData?.trip._id]);
+	}, [
+		location.pathname,
+		isAuthenticated,
+		user,
+		params.id,
+		eventData?.trip._id,
+	]);
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
