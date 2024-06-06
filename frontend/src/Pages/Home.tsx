@@ -9,10 +9,10 @@ import { Trip } from "types/trip";
 import HomeActions from "Components/Homepage/HomeActions";
 import styled from "styled-components/macro";
 import { FlexboxCol, FlexboxRow } from "util/common_styles";
-import { useAuthState } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 const HomePage: React.FC = () => {
-	const isAuthenticated = useAuthState();
+	const { isAuthenticated } = useAuthCtx();
 	const navigate = useNavigate();
 	const { events, trips } = useRouteLoaderData("root-home") as {
 		events: Broadcast[];
@@ -51,7 +51,6 @@ const HomePageContentsItems = styled(FlexboxCol)`
 `;
 
 const CurrentActionsLayout = styled(FlexboxRow)`
-	display: flex;
 	background-color: white;
 	border: 1px solid #c2c2d1;
 	border-radius: 8px;

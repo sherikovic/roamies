@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { FlexboxCol, FlexboxRow, XClose } from "util/common_styles";
 import warningIcon from "../../images/warningicon.png";
 import { Broadcast } from "types/broadcast";
@@ -18,7 +18,7 @@ import {
 	FormSubmitButton,
 } from "util/common_styles";
 import { Trip } from "types/trip";
-import { AuthContext } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 interface NewEventProps {
 	cancelHandler: () => void;
@@ -70,7 +70,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 		},
 	};
 
-	const authContext = useContext(AuthContext);
+	const { isAuthenticated, user } = useAuthCtx();
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
 	const [userTrips, setUserTrips] = useState<Trip[]>();
@@ -82,8 +82,8 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 	useEffect(() => {
 		async function runThis() {
 			let response: Trip | Trip[] | any;
-			if (location.pathname.includes("home")) {
-				setUserTrips(authContext.userInfo?.trips);
+			if (location.pathname.includes("home") && isAuthenticated) {
+				setUserTrips(user?.trips);
 			} else if (location.pathname.includes("trips")) {
 				setTripId(params.id);
 				response = await getDBEntry<Trip>("trips", String(params.id));
@@ -95,7 +95,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 			}
 		}
 		runThis();
-	}, [location.pathname, authContext.userInfo, params.id, eventData?.trip._id]);
+	}, [location.pathname, user, params.id, eventData?.trip._id]);
 
 	const validateInputsForSubmit = () => {
 		let isValid: boolean = true;
@@ -212,7 +212,34 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 				)}
 				<FlexboxRow style={{ marginBottom: "10px" }}>
 					<InputLabel htmlFor="trip">Trip:</InputLabel>
-					{userTrips?.length === 1 ? (
+					{userTrips &&
+						(userTrips?.length === 1 ? (
+							<input
+								type="text"
+								name="trip"
+								id="trip"
+								value={userTrips[0].title}
+								readOnly
+							/>
+						) : (
+							<div>
+								<input
+									list="trips"
+									name="trip"
+									id="trip"
+									defaultValue={formInputs.trip.val}
+									onChange={(e) => {
+										inputOnChange({ type: "trip", value: e.target.value });
+									}}
+								/>
+								<datalist id="trips">
+									{userTrips?.map((trip) => (
+										<option key={trip._id} value={trip.title} />
+									))}
+								</datalist>
+							</div>
+						))}
+					{/* {userTrips?.length === 1 ? (
 						<input
 							type="text"
 							name="trip"
@@ -237,7 +264,7 @@ const EventForm: React.FC<NewEventProps> = ({ eventData, cancelHandler }) => {
 								))}
 							</datalist>
 						</div>
-					)}
+					)} */}
 				</FlexboxRow>
 				<FlexboxRow style={{ marginBottom: "10px" }}>
 					<InputLabel htmlFor="title">Title:</InputLabel>

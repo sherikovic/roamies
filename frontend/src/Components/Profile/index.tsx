@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import { ContentBox } from "util/common_styles";
-import { useUser } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 import { FlexboxCol, FlexboxRow } from "util/common_styles";
 import defaultAvatar from "images/profilepic.png";
 import twitter from "images/twitter.svg";
@@ -9,7 +9,7 @@ import EventsList from "Components/Homepage/EventsList";
 import TripsList from "Components/Homepage/TripsList";
 
 const ProfilePage: React.FC = () => {
-	const user = useUser();
+	const { user } = useAuthCtx();
 	const userFields = [
 		{ label: "First Name", value: user?.firstname ?? "" },
 		{ label: "Last Name", value: user?.lastname ?? "" },

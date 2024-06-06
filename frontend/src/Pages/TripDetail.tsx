@@ -4,6 +4,7 @@ import { useState } from "react";
 import { LoaderFunction, json, useRouteLoaderData } from "react-router-dom";
 import { Trip } from "types/trip";
 import { getDBEntry } from "util/api";
+import { useAuthCtx } from "util/auth-context";
 import {
 	CardOverlay,
 	FlexboxCol,
@@ -15,17 +16,21 @@ const TripDetailPage: React.FC = () => {
 	const tripData = useRouteLoaderData("trip-detail") as Trip;
 	const [showEventForm, setShowEventForm] = useState(false);
 	const [showTripForm, setShowTripForm] = useState(false);
+	const { isAuthenticated, user } = useAuthCtx();
+	const canEdit = isAuthenticated && user?._id === tripData.owner._id;
 
 	return (
 		<FlexboxCol>
 			<h1>{tripData.title}</h1>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				{tripData.description}
-				<button onClick={() => setShowTripForm(true)}>Edit</button>
+				{canEdit && <button onClick={() => setShowTripForm(true)}>Edit</button>}
 			</FlexboxRow>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				<h1>Events</h1>
-				<button onClick={() => setShowEventForm(true)}>Post an event</button>
+				{canEdit && (
+					<button onClick={() => setShowEventForm(true)}>Post an event</button>
+				)}
 			</FlexboxRow>
 			<FlexboxCol>
 				{tripData.events!.length > 0 ? (

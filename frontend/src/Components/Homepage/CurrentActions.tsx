@@ -4,14 +4,13 @@ import { Trip } from "types/trip";
 import { getUserDBEntries } from "util/api";
 import styled from "styled-components";
 import { FlexboxCol } from "util/common_styles";
-import { useAuthState, useUser } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 const CurrentActions: React.FC = () => {
 	const [activeState, setActiveState] = useState("events");
 	const [events, setEvents] = useState<{ objects: Broadcast[] }>();
 	const [trips, setTrips] = useState<{ objects: Trip[] }>();
-	const isAuthenticated = useAuthState();
-	const user = useUser();
+	const { isAuthenticated, user } = useAuthCtx();
 
 	useEffect(() => {
 		async function runThis() {

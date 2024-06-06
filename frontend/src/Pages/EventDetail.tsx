@@ -9,7 +9,7 @@ import {
 	FlexboxRow,
 	OverlayContent,
 } from "util/common_styles";
-import { useUser } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 import { User } from "types/user";
 import { Comment } from "types/comment";
 
@@ -17,12 +17,13 @@ const EventDetailPage: React.FC = () => {
 	const eventData = useRouteLoaderData("event-detail") as Broadcast;
 	const [showEventForm, setShowEventForm] = useState(false);
 	const [errorMessage, setErrorMessage] = useState("");
-	const user = useUser() as User;
+	const { isAuthenticated, user } = useAuthCtx();
+	const canEdit = isAuthenticated && user?._id === eventData.owner._id;
 	const commentTextRef = useRef<HTMLTextAreaElement>(null);
 
 	const joinEvent = async () => {
-		if (user) {
-			eventData.participants.push(user);
+		if (isAuthenticated) {
+			eventData.participants.push(user as User);
 			const response = await updateDBEntry<Broadcast>(
 				"events",
 				eventData._id,
@@ -33,8 +34,8 @@ const EventDetailPage: React.FC = () => {
 	};
 
 	const leaveEvent = async () => {
-		if (user) {
-			const idx = eventData.participants.indexOf(user);
+		if (isAuthenticated) {
+			const idx = eventData.participants.indexOf(user as User);
 			eventData.participants.splice(idx, 1);
 			const response = await updateDBEntry<Broadcast>(
 				"events",
@@ -57,7 +58,7 @@ const EventDetailPage: React.FC = () => {
 			: "";
 		const response = await createDBEntry<Comment>("comments", {
 			text: commentText,
-			owner: user._id,
+			owner: user!._id,
 			event: eventData._id,
 		});
 		response.ok
@@ -77,7 +78,9 @@ const EventDetailPage: React.FC = () => {
 			</FlexboxRow>
 			<FlexboxRow style={{ justifyContent: "space-between" }}>
 				{eventData.description}
-				<button onClick={() => setShowEventForm(true)}>Edit</button>
+				{canEdit && (
+					<button onClick={() => setShowEventForm(true)}>Edit</button>
+				)}
 			</FlexboxRow>
 			<FlexboxRow
 				style={{ justifyContent: "space-between", marginTop: "20px" }}

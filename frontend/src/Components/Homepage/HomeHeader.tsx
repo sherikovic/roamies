@@ -14,7 +14,7 @@ import { useEffect, useRef, useState } from "react";
 import { authUser } from "util/api";
 import { LogoBlack, LogoLink } from "util/common_styles";
 import styled from "styled-components";
-import { useAuthState } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 const HomeNavigation: React.FC = () => {
 	const [searchPlaceholder, setSearchPlaceholder] =
@@ -28,7 +28,7 @@ const HomeNavigation: React.FC = () => {
 	const filterDDRef = useRef(null);
 	const profileDDRef = useRef(null);
 	const [homeUrl, setHomeUrl] = useState("/");
-	const isAuthenticated = useAuthState();
+	const { isAuthenticated } = useAuthCtx();
 
 	const searchInputOnChange = (e: any) => {
 		setSearchText(e.target.value);

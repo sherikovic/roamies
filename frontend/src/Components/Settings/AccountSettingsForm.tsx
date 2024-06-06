@@ -16,18 +16,18 @@ const AccountSettingsForm: React.FC = () => {
 	const [changePassword, setChangePassword] = useState(false);
 	const data: any = useActionData();
 
-	const { userInfo, updateUserInfo } = useContext(AuthContext);
+	const { user, updateUser } = useContext(AuthContext);
 	// const userData = userContext.userInfo as User;
 
 	useEffect(() => {
 		if (data && data.ok) {
 			// const updateUser = userContext.updateUserInfo;
 			// console.log("data", data);
-			const email = data.data.newEmail ?? userInfo!.email;
-			const password = data.data.newPassword ?? userInfo!.password;
-			updateUserInfo({ email, password }, userInfo);
+			const email = data.data.newEmail ?? user!.email;
+			const password = data.data.newPassword ?? user!.password;
+			updateUser({ email, password }, user);
 		}
-	}, [data, updateUserInfo, userInfo]);
+	}, [data, updateUser, user]);
 
 	return (
 		<SettingsForm>

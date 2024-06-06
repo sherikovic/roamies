@@ -13,13 +13,13 @@ import landing from "../images/landing_page.jpeg";
 import logo from "../images/logo.svg";
 import { Link } from "react-router-dom";
 import styled from "styled-components/macro";
-import { useAuthState } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 const LandingPage: React.FC = () => {
 	const navigate = useNavigate();
 	const location = useLocation();
 	const [showLoginPage, setShowLoginPage] = useState(false);
-	const isAuthenticated = useAuthState();
+	const { isAuthenticated } = useAuthCtx();
 
 	useEffect(() => {
 		isAuthenticated && navigate("/home");

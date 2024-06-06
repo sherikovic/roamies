@@ -16,16 +16,16 @@ interface PersonalInfoFormProps {
 
 const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 	const data: any = useActionData();
-	const { userInfo, updateUserInfo } = useContext(AuthContext);
+	const { user, updateUser } = useContext(AuthContext);
 	// const userData = userContext.userInfo as User;
 	const fileInput = useRef<HTMLInputElement>(null);
 
 	useEffect(() => {
 		if (data && data.ok) {
 			// const updateUser = userContext.updateUserInfo;
-			updateUserInfo(data.data, userInfo);
+			updateUser(data.data, user);
 		}
-	}, [data, updateUserInfo, userInfo]);
+	}, [data, updateUser, user]);
 
 	return (
 		<Form method="patch">
@@ -58,42 +58,42 @@ const PersonalInfoForm: React.FC<PersonalInfoFormProps> = (props) => {
 					<SettingsInputLabelCombo
 						type="text"
 						name="first name"
-						value={userInfo ? userInfo.firstname : ""}
+						value={user ? user.firstname : ""}
 					/>
 					<SettingsInputLabelCombo
 						type="text"
 						name="last name"
-						value={userInfo ? userInfo!.lastname : ""}
+						value={user ? user!.lastname : ""}
 					/>
 				</SettingsInputsRow>
 				<SettingsInputsRow>
 					<SettingsInputLabelCombo
 						type="text"
 						name="age"
-						value={userInfo ? userInfo!.age : ""}
+						value={user ? user!.age : ""}
 					/>
 					<SettingsInputLabelCombo
 						type="text"
 						name="country"
-						value={userInfo ? userInfo!.country : ""}
+						value={user ? user!.country : ""}
 					/>
 				</SettingsInputsRow>
 				<SettingsInputLabelCombo
 					type="textarea"
 					name="bio"
-					value={userInfo ? userInfo!.bio : ""}
+					value={user ? user!.bio : ""}
 				/>
 				<SettingsHeader>Socials</SettingsHeader>
 				<SettingsInputsRow>
 					<SettingsInputLabelCombo
 						type="text"
 						name="instagram"
-						value={userInfo ? userInfo!.social?.instagram : ""}
+						value={user ? user!.social?.instagram : ""}
 					/>
 					<SettingsInputLabelCombo
 						type="text"
 						name="twitter"
-						value={userInfo ? userInfo!.social?.twitter : ""}
+						value={user ? user!.social?.twitter : ""}
 					/>
 				</SettingsInputsRow>
 				<SettingsBtnSave>

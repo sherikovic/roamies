@@ -11,12 +11,12 @@ import {
 	OverlayContent,
 } from "util/common_styles";
 import styled from "styled-components/macro";
-import { useAuthState } from "util/auth-context";
+import { useAuthCtx } from "util/auth-context";
 
 const LandingNavigation: React.FC = () => {
 	const [showLoginOverlay, setShowLoginOverlay] = useState(false);
 	const location = useLocation();
-	const isAuthenticated = useAuthState();
+	const { isAuthenticated, user } = useAuthCtx();
 
 	const logOutHandler = async () => {
 		const res = await authUser("logout", null);
