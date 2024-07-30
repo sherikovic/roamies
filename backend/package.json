@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "main": "app.js",
   "scripts": {
+    "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
@@ -19,7 +20,6 @@
     "http-proxy-middleware": "^3.0.0",
     "mjml": "^4.15.3",
     "mongoose": "^8.0.0",
-    "nanoid": "^5.0.2",
     "nodemon": "^3.0.3",
     "passport": "^0.6.0",
     "passport-google-oauth20": "^2.0.0",
