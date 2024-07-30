@@ -73,7 +73,6 @@ module.exports.showEvent = async (req, res) => {
 
 module.exports.updateEvent = async (req, res) => {
 	try {
-		console.log(req.body);
 		// TODO images are set to empty array until we incorporate aws
 		await Broadcast.findByIdAndUpdate(req.params.id, {
 			...req.body,

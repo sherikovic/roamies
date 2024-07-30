@@ -75,7 +75,6 @@ module.exports.signup = async (req, res) => {
 };
 
 module.exports.login = (req, res) => {
-	console.log(req.body.remember_me);
 	if (req.body.remember_me) {
 		req.session.cookie.maxAge = 1000 * 60 * 60 * 168; // 1 week
 	}

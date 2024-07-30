@@ -75,7 +75,6 @@ const LocationForm: React.FC<LocationFormProps> = (props) => {
 			}
 			props.cancelHandler();
 			if (props.method === 'POST') {
-				console.log(resObj);
 				navigate('/Locations/' + resObj.Location._id);
 			} else {
 				navigate('/Locations/' + params.id);

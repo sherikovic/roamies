@@ -1,39 +1,18 @@
-import { useEffect, useState } from "react";
-import { Broadcast } from "types/broadcast";
-import { Trip } from "types/trip";
-import { getUserDBEntries } from "util/api";
-import styled from "styled-components";
+import { useState } from "react";
 import { FlexboxCol } from "util/common_styles";
 import { useAuthCtx } from "util/auth-context";
+import styled from "styled-components";
 
 const CurrentActions: React.FC = () => {
-	const [activeState, setActiveState] = useState("events");
-	const [events, setEvents] = useState<{ objects: Broadcast[] }>();
-	const [trips, setTrips] = useState<{ objects: Trip[] }>();
+	const [activeTab, setActiveTab] = useState("events");
 	const { isAuthenticated, user } = useAuthCtx();
-
-	useEffect(() => {
-		async function runThis() {
-			let response = await getUserDBEntries<Broadcast>("events", user!._id);
-			response.ok && setEvents(response.getJson.objects);
-			response = await getUserDBEntries<Trip>("trips", user!._id);
-			response.ok && setTrips(response.getJson.objects);
-		}
-		isAuthenticated && runThis();
-	}, [isAuthenticated, user]);
 
 	return (
 		<FlexboxCol style={{ minHeight: "250px" }}>
-			<CurrentActionsHeader $activeState={activeState}>
-				<span onClick={() => setActiveState("events")}>Current Events</span>
-				<span onClick={() => setActiveState("trips")}>My Trips</span>
+			<CurrentActionsHeader $activeTab={activeTab}>
+				<span onClick={() => setActiveTab("events")}>Current Events</span>
+				<span onClick={() => setActiveTab("trips")}>My Trips</span>
 			</CurrentActionsHeader>
-			{/* {logIn && activeState === "events" && events && (
-				<FlexboxCol style={{margin: "20px 30px 0px 30px"}}>{events?.objects[2].name}</FlexboxCol>
-			)}
-			{logIn && activeState === "trips" && trips && (
-				<FlexboxCol style={{margin: "20px 30px 0px 30px"}}>{trips?.objects[2].name}</FlexboxCol>
-			)} */}
 			{!isAuthenticated && <div>Couldn't load information</div>}
 		</FlexboxCol>
 	);
@@ -59,13 +38,13 @@ const CurrentActionsHeader = styled.div<{ $activeState: string }>`
 			transition: 0.2s ease-in-out;
 		}
 		&:first-child {
-			color: ${(p) => (p.$activeState === "events" ? "black" : "grey")};
-			transition: ${(p) => p.$activeState === "events" && "0.2s ease-in-out"};
+			color: ${(p) => (p.$activeTab === "events" ? "black" : "grey")};
+			transition: ${(p) => p.$activeTab === "events" && "0.2s ease-in-out"};
 			padding-right: 10px;
 		}
 		&:last-child {
-			color: ${(p) => (p.$activeState === "trips" ? "black" : "grey")};
-			transition: ${(p) => p.$activeState === "events" && "0.2s ease-in-out"};
+			color: ${(p) => (p.$activeTab === "trips" ? "black" : "grey")};
+			transition: ${(p) => p.$activeTab === "events" && "0.2s ease-in-out"};
 		}
 	}
 `;

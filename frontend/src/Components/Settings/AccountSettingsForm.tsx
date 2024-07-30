@@ -21,8 +21,6 @@ const AccountSettingsForm: React.FC = () => {
 
 	useEffect(() => {
 		if (data && data.ok) {
-			// const updateUser = userContext.updateUserInfo;
-			// console.log("data", data);
 			const email = data.data.newEmail ?? user!.email;
 			const password = data.data.newPassword ?? user!.password;
 			updateUser({ email, password }, user);
