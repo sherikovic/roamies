@@ -1,5 +1,5 @@
 const HomeFooter: React.FC = () => {
-	return <div></div>;
-};
+  return <div></div>
+}
 
-export default HomeFooter;
+export default HomeFooter

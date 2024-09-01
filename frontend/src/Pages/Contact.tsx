@@ -1,7 +1,7 @@
-import UnderConstructionPage from "Components/Misc/UnderConstruction";
+import UnderConstructionPage from 'Components/Misc/UnderConstruction'
 
 const ContactPage: React.FC = () => {
-	return <UnderConstructionPage />;
-};
+  return <UnderConstructionPage />
+}
 
-export default ContactPage;
+export default ContactPage

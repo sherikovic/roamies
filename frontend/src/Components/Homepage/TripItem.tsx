@@ -1,40 +1,39 @@
-import { Trip } from "types/trip";
-import styled from "styled-components/macro";
+import { Trip } from 'types/trip'
+import styled from 'styled-components/macro'
 
 interface TripItemProps {
-  trip: Trip;
-  index: number;
-  children?: React.ReactNode;
+  trip: Trip
+  key: string
 }
 
-const TripItem: React.FC<TripItemProps> = (props) => {
+const TripItem: React.FC<TripItemProps> = ({ trip, key }) => {
   return (
-    <TripItemLayout>
+    <TripItemLayout key={key}>
       {/* <div style={{width: "100%"}}>
 				<img src={china} alt="trip cover" style={{width: "100%", height: "100%"}} />
 			</div> */}
       <TripItemContents>
-        <a href={`trips/${props.trip._id}`}>{props.trip.title}</a>
-        <p>{props.trip.description}</p>
+        <a href={`trips/${trip._id}`}>{trip.title}</a>
+        <p>{trip.description}</p>
         <h6>
-          {props.trip.endDate
-            ? new Intl.DateTimeFormat("en", {
-                dateStyle: "short",
-              }).format(new Date(props.trip.startDate)) +
-              "-" +
-              new Intl.DateTimeFormat("en", {
-                dateStyle: "short",
-              }).format(new Date(props.trip.endDate))
-            : new Intl.DateTimeFormat("en", {
-                dateStyle: "short",
-              }).format(new Date(props.trip.startDate))}
+          {trip.endDate
+            ? new Intl.DateTimeFormat('en', {
+                dateStyle: 'short',
+              }).format(new Date(trip.startDate)) +
+              '-' +
+              new Intl.DateTimeFormat('en', {
+                dateStyle: 'short',
+              }).format(new Date(trip.endDate))
+            : new Intl.DateTimeFormat('en', {
+                dateStyle: 'short',
+              }).format(new Date(trip.startDate))}
         </h6>
       </TripItemContents>
     </TripItemLayout>
-  );
-};
+  )
+}
 
-export default TripItem;
+export default TripItem
 
 const TripItemLayout = styled.div`
   display: flex;
@@ -47,7 +46,7 @@ const TripItemLayout = styled.div`
   transition: all 0.2s ease-in-out;
   overflow: visible;
   filter: blur(0px);
-`;
+`
 
 const TripItemContents = styled.div`
   display: flex;
@@ -95,18 +94,18 @@ const TripItemContents = styled.div`
       overflow: hidden;
     }
   }
-`;
+`
 
 // <div className={styles.trip_item}>
 // 	<div className={styles.trip_image}>
 // 		<img src={china} alt="trip icon" />
 // 	</div>
 // 	<div className={styles.trip_content}>
-// 		<a href={`trips/${props.trip._id}`} id={styles.name}>
-// 			{props.trip.name}
+// 		<a href={`trips/${trip._id}`} id={styles.name}>
+// 			{trip.name}
 // 		</a>
 // 		<h6 id={styles.date}>
-// 			{new Date(props.trip.startdate.toString()).toLocaleDateString(
+// 			{new Date(trip.startdate.toString()).toLocaleDateString(
 // 				"en-US",
 // 				{
 // 					// weekday: "short",
@@ -116,7 +115,7 @@ const TripItemContents = styled.div`
 // 				}
 // 			) +
 // 				" - " +
-// 				new Date(props.trip.enddate.toString()).toLocaleDateString(
+// 				new Date(trip.enddate.toString()).toLocaleDateString(
 // 					"en-US",
 // 					{
 // 						// weekday: "short",
@@ -126,6 +125,6 @@ const TripItemContents = styled.div`
 // 					}
 // 				)}
 // 		</h6>
-// 		<p id={styles.description}>{props.trip.description}</p>
+// 		<p id={styles.description}>{trip.description}</p>
 // 	</div>
 // </div>

@@ -1,15 +1,15 @@
 interface ErrorContentProps {
-	title: String;
-	children?: React.ReactNode;
+  title: string
+  children?: React.ReactNode
 }
 
-const ErrorContent: React.FC<ErrorContentProps> = (props) => {
-	return (
-		<div style={{ textAlign: "center" }}>
-			<h1>{props.title}</h1>
-			<p>{props.children}</p>
-		</div>
-	);
-};
+const ErrorContent: React.FC<ErrorContentProps> = ({ title, children }) => {
+  return (
+    <div style={{ textAlign: 'center' }}>
+      <h1>{title}</h1>
+      <p>{children}</p>
+    </div>
+  )
+}
 
-export default ErrorContent;
+export default ErrorContent
