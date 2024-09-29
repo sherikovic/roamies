@@ -29,7 +29,8 @@ module.exports.setRedirectUrl = (req, res, next) => {
 };
 
 module.exports.checkIfEmailExists = async (req, res, next) => {
-	if (await User.findOne({ email: req.body.email })) {
+	const user = await User.findOne({ email: req.body.email });
+	if (user && user.status === true) {
 		return res
 			.status(300)
 			.json({ message: "User with the same email already exists!" });

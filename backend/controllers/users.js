@@ -5,6 +5,23 @@ const mjml2html = require("mjml");
 
 module.exports.verifyEmail = async (req, res) => {
 	try {
+		const { firstname, lastname, email, password } = req.body;
+		const hashedPassword = await bcrypt.hash(password, 10);
+		const randomPin = Math.floor(Math.random() * 90000) + 10000;
+		const newUser = new User({
+			email,
+			password: hashedPassword,
+			googleId: undefined,
+			status: false,
+			verCode: randomPin,
+			firstname,
+			lastname,
+			country: "",
+			age: undefined,
+			bio: "",
+			social: { instagram: "", twitter: "" },
+		});
+		await newUser.save();
 		const sgMail = require("@sendgrid/mail");
 		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 		// const fs = require("fs");
@@ -12,13 +29,13 @@ module.exports.verifyEmail = async (req, res) => {
 		// console.log("22", renderedTemplate);
 		// const html = mjml2html(renderedTemplate);
 		const msg = {
-			to: req.body.email,
+			to: email,
 			from: "no-reply@roamies.org",
 			subject: "Roamies - Please verify your account",
 			text: "Thank you for singing up!",
 			html: `
         <h1>Thank you for signing up</h1>
-        <p>Please use the following code to verify your email address ${req.body.code}</p>
+        <p>Please use the following code to verify your email address ${randomPin}</p>
       `,
 		};
 		sgMail
@@ -29,7 +46,7 @@ module.exports.verifyEmail = async (req, res) => {
 			.catch((error) => {
 				console.error(error);
 			});
-
+		setTimeout(() => eraseVerCode(email), 900000); // 15 minutes
 		res.status(201).json({ message: "Verification email successfully sent!" });
 	} catch (e) {
 		res.status(500).json({
@@ -39,23 +56,21 @@ module.exports.verifyEmail = async (req, res) => {
 	}
 };
 
+const eraseVerCode = async (email) => {
+	const user = await User.findOne({ email: email });
+	if (user.status === false) {
+		user.verCode = 0;
+		await user.save();
+	}
+};
+
 module.exports.signup = async (req, res) => {
 	try {
-		const { firstname, lastname, email, password } = req.body;
-		const hashedPassword = await bcrypt.hash(password, 10);
-		const newUser = new User({
-			email,
-			password: hashedPassword,
-			googleId: undefined,
-			firstname,
-			lastname,
-			country: "",
-			age: undefined,
-			bio: "",
-			social: { instagram: "", twitter: "" },
-		});
-		await newUser.save();
-		req.logIn(newUser, (e) => {
+		const user = await User.findOne({ email: req.body.email });
+		if (user.verCode !== req.body.verCode) {
+			return res.status(500).json({ message: "Invalid code!" });
+		}
+		req.logIn(user, (e) => {
 			if (e) {
 				return res.status(500).json({
 					message:
@@ -63,6 +78,9 @@ module.exports.signup = async (req, res) => {
 					error: e,
 				});
 			}
+			user.status = true;
+			user.verCode = 0;
+			user.save();
 			res
 				.status(201)
 				.json({ message: "User was successfully created and logged in." });
@@ -92,7 +110,7 @@ module.exports.googleFailure = async (req, res) => {
 		clientUrl +
 			"/signup?redirect=true&error=" +
 			encodeURIComponent(
-				"A record for the same email was found, try logging in with a different method!"
+				"A record for the same email was found, use a different email or log in!"
 			)
 	);
 };

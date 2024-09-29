@@ -8,7 +8,7 @@ const Broadcast = require("../models/broadcast");
 const User = require("../models/user");
 
 // establish connection to monogodb
-mongoose.connect("mongodb://127.0.0.1:27017/playground");
+mongoose.connect("mongodb://127.0.0.1:27017/roamies");
 const db = mongoose.connection;
 db.on("error", (err) => {
 	console.error("Connection error:", err);

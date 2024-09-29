@@ -7,6 +7,8 @@ export interface User {
   password: string;
   firstname: string;
   lastname: string;
+  status: boolean;
+  verCode: number;
   profile_picture: string;
   age: string;
   country: string;

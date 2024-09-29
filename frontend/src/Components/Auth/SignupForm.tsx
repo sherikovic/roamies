@@ -51,7 +51,6 @@ const SignupForm: React.FC = () => {
 	const [formInputs, setFormInputs] = useState(fields);
 	const [showLoginPage, setShowLoginPage] = useState(false);
 	const [showVerTab, setShowVerTab] = useState(false);
-	const [verCode, setVerCode] = useState(0);
 	const [otpSegments, setOTPSegments] = useState(["", "", "", "", ""]);
 	const otpRef = useRef<HTMLDivElement>(null);
 	const [errorMessage, setErrorMessage] = useState("");
@@ -109,30 +108,27 @@ const SignupForm: React.FC = () => {
 	};
 
 	const sendAuthRequest = async (path: string) => {
+		const verCode = Number(otpSegments.join(""));
+		const res = await authUser(path, {
+			verCode,
+			email: formInputs.email.val,
+		});
+		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
+	};
+
+	const completeSignup = async (event: any) => {
+		event.preventDefault();
+		sendAuthRequest("signup");
+	};
+
+	const sendVerificationEmail = async () => {
 		const userInputs: Partial<User> = {
 			firstname: formInputs.firstName.val,
 			lastname: formInputs.lastName.val,
 			email: formInputs.email.val,
 			password: formInputs.password.val,
 		};
-		const res = await authUser(path, userInputs);
-		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
-	};
-
-	const completeSignup = async (event: any) => {
-		event.preventDefault();
-		verCode === Number(otpSegments.join(""))
-			? sendAuthRequest("signup")
-			: setErrorMessage("The code you entered is not correct.");
-	};
-
-	const sendVerificationEmail = async () => {
-		const randomPin = Math.floor(Math.random() * 90000) + 10000;
-		setVerCode(randomPin);
-		const res = await authUser("verifyEmail", {
-			email: formInputs.email.val,
-			code: randomPin,
-		});
+		const res = await authUser("verifyEmail", userInputs);
 		res.ok ? setShowVerTab(true) : setErrorMessage(res.getJson.message);
 	};
 
@@ -140,10 +136,6 @@ const SignupForm: React.FC = () => {
 		event.preventDefault();
 		setErrorMessage("");
 		!validateInputsForSubmit() && sendVerificationEmail();
-		// set a timer
-		// const data = new FormData(event.target as HTMLFormElement);
-		// const userInputs: Partial<User> = Object.fromEntries(data.entries());
-		// !isInvalid && res.ok && sendAuthRequest("signupLocal", userInputs);
 	};
 
 	const inputOnChange = ({
@@ -270,9 +262,9 @@ const SignupForm: React.FC = () => {
 									process.env.NODE_ENV === "production"
 										? "#"
 										: baseURL +
-										  "/auth/google?redirect_url=" +
-										  clientUrl +
-										  state.from
+												"/auth/google?redirect_url=" +
+												clientUrl +
+												state ?? state.from
 								}
 							>
 								<ImgWithMargin src={googleIcon} alt="Google logo" />
