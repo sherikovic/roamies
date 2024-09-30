@@ -135,6 +135,7 @@ const SignupForm: React.FC = () => {
 	const submitSignupForm = async (event: any) => {
 		event.preventDefault();
 		setErrorMessage("");
+		setOTPSegments(["", "", "", "", ""]);
 		!validateInputsForSubmit() && sendVerificationEmail();
 	};
 

@@ -1,42 +1,45 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
-const mjml2html = require("mjml");
 
 module.exports.verifyEmail = async (req, res) => {
 	try {
 		const { firstname, lastname, email, password } = req.body;
 		const hashedPassword = await bcrypt.hash(password, 10);
 		const randomPin = Math.floor(Math.random() * 90000) + 10000;
-		const newUser = new User({
-			email,
-			password: hashedPassword,
-			googleId: undefined,
-			status: false,
-			verCode: randomPin,
-			firstname,
-			lastname,
-			country: "",
-			age: undefined,
-			bio: "",
-			social: { instagram: "", twitter: "" },
-		});
-		await newUser.save();
+		let user = await User.findOne({ email: req.body.email });
+		if (!user) {
+			user = new User({
+				email,
+				password: hashedPassword,
+				googleId: undefined,
+				status: false,
+				verCode: randomPin,
+				firstname,
+				lastname,
+				country: "",
+				age: undefined,
+				bio: "",
+				social: { instagram: "", twitter: "" },
+			});
+		} else {
+			user.firstname = req.body.firstname;
+			user.lastname = req.body.lastname;
+			user.email = req.body.email;
+			user.password = hashedPassword;
+			user.verCode = randomPin;
+		}
+		await user.save();
 		const sgMail = require("@sendgrid/mail");
 		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-		// const fs = require("fs");
-		// const renderedTemplate = fs.readFileSync("../emails/templates/index.mjml");
-		// console.log("22", renderedTemplate);
-		// const html = mjml2html(renderedTemplate);
 		const msg = {
 			to: email,
 			from: "no-reply@roamies.org",
-			subject: "Roamies - Please verify your account",
-			text: "Thank you for singing up!",
-			html: `
-        <h1>Thank you for signing up</h1>
-        <p>Please use the following code to verify your email address ${randomPin}</p>
-      `,
+			template_id: "d-f1fcdee077b84a1ea782f4d7cd66d3ed",
+			dynamic_template_data: {
+				name: firstname,
+				code: randomPin,
+			},
 		};
 		sgMail
 			.send(msg)
@@ -58,7 +61,7 @@ module.exports.verifyEmail = async (req, res) => {
 
 const eraseVerCode = async (email) => {
 	const user = await User.findOne({ email: email });
-	if (user.status === false) {
+	if (user.verified === false) {
 		user.verCode = 0;
 		await user.save();
 	}
@@ -68,6 +71,7 @@ module.exports.signup = async (req, res) => {
 	try {
 		const user = await User.findOne({ email: req.body.email });
 		if (user.verCode !== req.body.verCode) {
+			console.log(user.verCode);
 			return res.status(500).json({ message: "Invalid code!" });
 		}
 		req.logIn(user, (e) => {
@@ -78,7 +82,7 @@ module.exports.signup = async (req, res) => {
 					error: e,
 				});
 			}
-			user.status = true;
+			user.verified = true;
 			user.verCode = 0;
 			user.save();
 			res

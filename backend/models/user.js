@@ -14,14 +14,14 @@ const UserSchema = new Schema({
 		type: String,
 		required: false,
 	},
-  status: {
-    type: Boolean,
-    required: true,
-  },
-  verCode: {
-    type: Number,
-    required: true,
-  },
+	verified: {
+		type: Boolean,
+		required: true,
+	},
+	verCode: {
+		type: Number,
+		required: true,
+	},
 	firstname: {
 		type: String,
 		required: true,
