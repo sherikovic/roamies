@@ -102,11 +102,12 @@ module.exports.login = (req, res) => {
 module.exports.googleSuccess = (req, res) => {
 	const redirectUrl = req.cookies.redirectUrl;
 	res.clearCookie("redirectUrl");
-	res.redirect(redirectUrl);
+	return res.redirect(redirectUrl);
 };
 
 module.exports.googleFailure = async (req, res) => {
-	res.redirect(
+	req.session.destroy((err) => err && console.error(err));
+	return res.redirect(
 		clientUrl +
 			"/signup?redirect=true&error=" +
 			encodeURIComponent(

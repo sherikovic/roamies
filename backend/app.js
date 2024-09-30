@@ -4,7 +4,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 require("./config/mongodb-cfg");
-require("./config/express.cfg")(app);
+require("./config/express-cfg")(app);
 require("./config/passport-cfg")(app, passport);
 
 app.use("/trips", require("./routes/trips"));

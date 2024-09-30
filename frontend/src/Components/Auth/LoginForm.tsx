@@ -65,13 +65,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 	const sendAuthRequest = async (mode: string, data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		const res = await authUser(mode, formData);
-		res.status === 201 && location.includes("signup")
-			? navigate(-1)
-			: window.location.reload();
-		res.status === 300 && setErrorMessage("A user is already logged in!");
+		res.status === 409 && setErrorMessage("A user is already logged in!");
 		res.status === 401 &&
 			setErrorMessage("Either email or password is invalid!");
 		res.status === 500 && setErrorMessage("An error occured.");
+		res.status === 201 && navigate("/home");
 	};
 
 	const submitLoginForm = async (event: any) => {
