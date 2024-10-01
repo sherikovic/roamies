@@ -137,10 +137,9 @@ module.exports.logout = async (req, res) => {
 module.exports.resetPassword = async (req, res) => {
 	try {
 		const user = await User.findOne({ email: req.body.email });
-		// user.verified = false;
 		const token = randomBytes(32).toString("hex");
 		user.resetPasswordToken = token;
-		user.resetPasswordExpires = Date.now() + 9000000;
+		user.resetPasswordExpires = Date.now() + 900000; // 15 minutes
 		await user.save();
 		const resetUrl = `http://localhost:3000/reset-password/${token}`;
 		const msg = {

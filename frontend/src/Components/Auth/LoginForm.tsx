@@ -86,7 +86,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 		const formData: User | any = Object.fromEntries(data.entries());
 		if (/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(formData.email)) {
 			sendAuthRequest("resetPassword", data);
-			// do something
+			// maybe depending on the returned status, display a different message
 		} else {
 			setErrorMessage("Please enter a valid email address.");
 		}
@@ -159,17 +159,18 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 					/>
 				</InputSection>
 				<LoginOptionsSection>
-					<div>
+					<div style={{ width: "100%" }}>
 						<input type="checkbox" name="remember_me" id="remember_me" />
 						<label htmlFor="remember_me">Remember me</label>
 					</div>
-					<button
+					<ForgotPassword
+						type="button"
 						onClick={() => {
 							setShowForgotPassword(true);
 						}}
 					>
 						Forgot password?
-					</button>
+					</ForgotPassword>
 				</LoginOptionsSection>
 				<LoginActions>
 					<LoginBtn
@@ -203,7 +204,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 		</Login>
 	) : (
 		<Login method="post" onSubmit={sendNewPassword}>
-			<FormHeader>Forgot Password</FormHeader>
+			<FormHeader>Forgot Your Password?</FormHeader>
 			<XClose type="button" onClick={cancelHandler} />
 			<BackClose type="button" onClick={() => setShowForgotPassword(false)} />
 			<LoginContents>
@@ -304,6 +305,23 @@ const LoginBtn = styled.button`
 	border: none;
 	&:hover {
 		background-color: #1c2727;
+	}
+`;
+
+const ForgotPassword = styled.button`
+	display: flex;
+	justify-content: center;
+	width: 30%;
+	font-size: 12px;
+	line-height: 1.6;
+	padding: 0px;
+	border-radius: 15px;
+	background-color: transparent;
+	color: black;
+	border: none;
+	&:hover {
+		color: grey;
+		cursor: pointer;
 	}
 `;
 

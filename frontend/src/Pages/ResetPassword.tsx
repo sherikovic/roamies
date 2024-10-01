@@ -1,4 +1,4 @@
-import { LoaderFunction, useLoaderData } from "react-router-dom";
+import { LoaderFunction, json, useLoaderData } from "react-router-dom";
 import { User } from "types/user";
 import { getUsers, updateUserInfo } from "util/api";
 import styled from "styled-components/macro";
@@ -80,17 +80,38 @@ export const loader: LoaderFunction = async ({ params }) => {
 	const token: string | undefined = params.id;
 	if (token) {
 		const res = await getUsers(`resetPasswordToken=${token}`);
-		if (res.getJson.objects) {
+		if (res.getJson.objects.length > 0) {
 			if (res.getJson.objects[0].resetPasswordExpires > Date.now()) {
 				return res.getJson.objects[0];
 			} else {
 				// redirect to expired link page
+				throw json(
+					{
+						title: "Expired link",
+						message: "This link has expired. Please request a new one.",
+					},
+					{ status: 410 }
+				);
 			}
 		} else {
 			// redirect to unknown token
+			throw json(
+				{
+					title: "Unkown user",
+					message: "No record for the requested email was found.",
+				},
+				{ status: 404 }
+			);
 		}
 	} else {
 		// redirect to 404
+		throw json(
+			{
+				title: "Unkown location",
+				message: "Oops..this shouldn't have happened :/",
+			},
+			{ status: 404 }
+		);
 	}
 };
 
