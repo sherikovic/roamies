@@ -69,10 +69,12 @@ export const authUser = async (mode: string, data: Partial<User> | any) =>
 	data
 		? await apiPost(`auth/${mode}`, data)
 		: await apiPost(`auth/${mode}`, null);
-export const getUsers = async (id?: string) =>
-	await apiGet(id ? `auth/getUsers?id=${id}` : "auth/getUsers");
+export const getUsers = async (queryOptions?: string) =>
+	await apiGet(
+		queryOptions ? `auth/getUsers?${queryOptions}` : "auth/getUsers"
+	);
 export const getCurrentUser = async () => await apiGet("auth/getLoggedInUser");
-export const updateUserInfo = async (data: User) => {
+export const updateUserInfo = async (data: User | any) => {
 	const res = await apiPatch(`settings/updateuserpersonalinfo`, data);
 	return res;
 };

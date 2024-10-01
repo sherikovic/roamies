@@ -1,6 +1,9 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const { randomBytes } = require("node:crypto");
 
 module.exports.verifyEmail = async (req, res) => {
 	try {
@@ -13,7 +16,7 @@ module.exports.verifyEmail = async (req, res) => {
 				email,
 				password: hashedPassword,
 				googleId: undefined,
-				status: false,
+				verified: false,
 				verCode: randomPin,
 				firstname,
 				lastname,
@@ -30,8 +33,7 @@ module.exports.verifyEmail = async (req, res) => {
 			user.verCode = randomPin;
 		}
 		await user.save();
-		const sgMail = require("@sendgrid/mail");
-		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+
 		const msg = {
 			to: email,
 			from: "no-reply@roamies.org",
@@ -71,7 +73,6 @@ module.exports.signup = async (req, res) => {
 	try {
 		const user = await User.findOne({ email: req.body.email });
 		if (user.verCode !== req.body.verCode) {
-			console.log(user.verCode);
 			return res.status(500).json({ message: "Invalid code!" });
 		}
 		req.logIn(user, (e) => {
@@ -133,6 +134,36 @@ module.exports.logout = async (req, res) => {
 	});
 };
 
+module.exports.resetPassword = async (req, res) => {
+	try {
+		const user = await User.findOne({ email: req.body.email });
+		// user.verified = false;
+		const token = randomBytes(32).toString("hex");
+		user.resetPasswordToken = token;
+		user.resetPasswordExpires = Date.now() + 9000000;
+		await user.save();
+		const resetUrl = `http://localhost:3000/reset-password/${token}`;
+		const msg = {
+			to: user.email,
+			from: "no-reply@roamies.org",
+			template_id: "d-edb1ee6a03924e9485fa70816bb47cad",
+			dynamic_template_data: {
+				name: user.firstname,
+				resetUrl,
+			},
+		};
+		sgMail
+			.send(msg)
+			.then(() => {
+				console.log("Email sent");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		res.status(201).json({ message: "Verification email successfully sent!" });
+	} catch (e) {}
+};
+
 module.exports.getLoggedInUser = async (req, res) => {
 	if (req.user) {
 		const user = await User.findById(req.user._id)
@@ -145,8 +176,13 @@ module.exports.getLoggedInUser = async (req, res) => {
 };
 
 module.exports.getUsers = async (req, res) => {
-	const ret = req.query.id
-		? await User.findById(req.query.id).populate("trips").populate("events")
+	const users = req.query
+		? await User.find(req.query).populate("trips").populate("events")
 		: await User.find({}).populate("trips").populate("events");
-	res.json({ objects: ret });
+	res.status(201).json({ objects: users });
+
+	// const ret = req.query.id
+	// 	? await User.findById(req.query.id).populate("trips").populate("events")
+	// 	: await User.find({}).populate("trips").populate("events");
+	// res.json({ objects: ret });
 };

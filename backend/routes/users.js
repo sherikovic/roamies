@@ -5,6 +5,7 @@ const {
 	checkNotAuthenticated,
 	setRedirectUrl,
 	checkIfEmailExists,
+	checkIfEmailNotExists,
 } = require("../middleware");
 const passport = require("passport");
 
@@ -34,5 +35,6 @@ module.exports = router
 	)
 	.get("/google/login/failure", usersCtls.googleFailure)
 	.post("/logout", checkNotAuthenticated, usersCtls.logout)
+	.post("/resetPassword", checkIfEmailNotExists, usersCtls.resetPassword)
 	.get("/getLoggedInUser", usersCtls.getLoggedInUser)
 	.get("/getUsers", usersCtls.getUsers);

@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router";
 
 import googleIcon from "../../images/googlelogo.svg";
 import warningIcon from "../../images/warningicon.png";
-import { XClose } from "util/common_styles";
+import { BackClose, XClose } from "util/common_styles";
 import { baseURL, clientUrl } from "util/util";
 import styled from "styled-components/macro";
 import { Link } from "react-router-dom";
@@ -26,12 +26,12 @@ const fields = {
 	password: {
 		val: "",
 		valid: true,
-		errorMessage: "Please enter valid password.",
+		errorMessage: "Please enter a valid password.",
 	},
 	email: {
 		val: "",
 		valid: true,
-		errorMessage: "Please enter valid email address.",
+		errorMessage: "Please enter a valid email address.",
 	},
 };
 
@@ -41,6 +41,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 
 	const [formInputs, setFormInputs] = useState(fields);
 	const [errorMessage, setErrorMessage] = useState("");
+	const [showForgotPassword, setShowForgotPassword] = useState(false);
 
 	const validateInputsForSubmit = () => {
 		let isInvalid: boolean = false;
@@ -72,11 +73,23 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 		res.status === 201 && navigate("/home");
 	};
 
-	const submitLoginForm = async (event: any) => {
+	const submitLoginForm = (event: any) => {
 		event.preventDefault();
 		const data = new FormData(event.target as HTMLFormElement);
 		const isInvalid = validateInputsForSubmit();
 		!isInvalid && sendAuthRequest("login", data);
+	};
+
+	const sendNewPassword = async (event: any) => {
+		event.preventDefault();
+		const data = new FormData(event.target as HTMLFormElement);
+		const formData: User | any = Object.fromEntries(data.entries());
+		if (/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(formData.email)) {
+			sendAuthRequest("resetPassword", data);
+			// do something
+		} else {
+			setErrorMessage("Please enter a valid email address.");
+		}
 	};
 
 	const inputOnChange = ({
@@ -103,7 +116,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 		setErrorMessage("");
 	};
 
-	return (
+	return !showForgotPassword ? (
 		<Login method="post" onSubmit={submitLoginForm}>
 			<FormHeader>Log in</FormHeader>
 			<XClose type="button" onClick={cancelHandler} />
@@ -150,7 +163,13 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 						<input type="checkbox" name="remember_me" id="remember_me" />
 						<label htmlFor="remember_me">Remember me</label>
 					</div>
-					<a href="#">Forgot password?</a>
+					<button
+						onClick={() => {
+							setShowForgotPassword(true);
+						}}
+					>
+						Forgot password?
+					</button>
 				</LoginOptionsSection>
 				<LoginActions>
 					<LoginBtn
@@ -180,6 +199,25 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 						</Join>
 					</div>
 				</LoginActions>
+			</LoginContents>
+		</Login>
+	) : (
+		<Login method="post" onSubmit={sendNewPassword}>
+			<FormHeader>Forgot Password</FormHeader>
+			<XClose type="button" onClick={cancelHandler} />
+			<BackClose type="button" onClick={() => setShowForgotPassword(false)} />
+			<LoginContents>
+				{errorMessage !== "" && (
+					<Error>
+						<ImgWithMargin src={warningIcon} alt="warning icon" />
+						{errorMessage}
+					</Error>
+				)}
+				<InputSection>
+					<label htmlFor="email" />
+					<input type="email" name="email" id="email" placeholder="Email" />
+				</InputSection>
+				<LoginBtn type="submit">Submit</LoginBtn>
 			</LoginContents>
 		</Login>
 	);

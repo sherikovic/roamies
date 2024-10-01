@@ -38,5 +38,15 @@ module.exports.checkIfEmailExists = async (req, res, next) => {
 	next();
 };
 
+module.exports.checkIfEmailNotExists = async (req, res, next) => {
+	const user = await User.findOne({ email: req.body.email });
+	if (!user || user.verified === false) {
+		return res
+			.status(404)
+			.json({ message: "Couldn't find a user with the registered email!" });
+	}
+	next();
+};
+
 module.exports.clientUrl =
 	process.env.MODE === "dev" ? process.env.CLIENT_DEV : process.env.CLIENT_PROD;

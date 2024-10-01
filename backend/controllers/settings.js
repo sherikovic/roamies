@@ -41,6 +41,21 @@ module.exports.updateUserPersonalInfo = async (req, res) => {
 				await user.save();
 				res.status(201).json({ message: "Password was successfully updated!" });
 			}
+		} else {
+			// this is coming from forgot password
+			try {
+				const newHashedPassword = await bcrypt.hash(req.body.password, 10);
+				const user = await User.findById(req.body._id);
+				user.password = newHashedPassword;
+				await user.save();
+				res.status(201).json({ message: "Password was successfully updated!" });
+			} catch (e) {
+				res
+					.status(500)
+					.json({
+						message: "Something went wrong, couldn't change the password!",
+					});
+			}
 		}
 	} catch (e) {
 		res.status(500).json({
