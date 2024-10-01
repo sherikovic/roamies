@@ -61,15 +61,19 @@ export const apiDelete = async <T>(path: string) => await apiFetch<T>('DELETE', 
 
 // AUTH APIs
 export const authUser = async (mode: string, data: Partial<User> | any) =>
-  // logout doesn't take any data
-  data ? await apiPost(`auth/${mode}`, data) : await apiPost(`auth/${mode}`, null)
-export const getUsers = async (id?: string) =>
-  await apiGet(id ? `auth/getUsers?id=${id}` : 'auth/getUsers')
-export const getCurrentUser = async () => await apiGet('auth/getLoggedInUser')
-export const updateUserInfo = async (data: User) => {
-  const res = await apiPatch(`settings/updateuserpersonalinfo`, data)
-  return res
-}
+	// logout doesn't take any data
+	data
+		? await apiPost(`auth/${mode}`, data)
+		: await apiPost(`auth/${mode}`, null);
+export const getUsers = async (queryOptions?: string) =>
+	await apiGet(
+		queryOptions ? `auth/getUsers?${queryOptions}` : "auth/getUsers"
+	);
+export const getCurrentUser = async () => await apiGet("auth/getLoggedInUser");
+export const updateUserInfo = async (data: User | any) => {
+	const res = await apiPatch(`settings/updateuserpersonalinfo`, data);
+	return res;
+};
 
 // DB APIs
 // type should be either "events" or "trips"

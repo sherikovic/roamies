@@ -43,13 +43,12 @@ const SignupForm: React.FC = () => {
   const { state } = useLocation()
   const [searchParams]: any = useSearchParams()
 
-  const [formInputs, setFormInputs] = useState(fields)
-  const [showLoginPage, setShowLoginPage] = useState(false)
-  const [showVerTab, setShowVerTab] = useState(false)
-  const [verCode, setVerCode] = useState(0)
-  const [otpSegments, setOTPSegments] = useState(['', '', '', '', ''])
-  const otpRef = useRef<HTMLDivElement>(null)
-  const [errorMessage, setErrorMessage] = useState('')
+	const [formInputs, setFormInputs] = useState(fields);
+	const [showLoginPage, setShowLoginPage] = useState(false);
+	const [showVerTab, setShowVerTab] = useState(false);
+	const [otpSegments, setOTPSegments] = useState(["", "", "", "", ""]);
+	const otpRef = useRef<HTMLDivElement>(null);
+	const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     if (searchParams.get('redirect')) {
@@ -104,55 +103,37 @@ const SignupForm: React.FC = () => {
     return isInvalid
   }
 
-  const sendAuthRequest = async (path: string) => {
-    const userInputs: Partial<User> = {
-      firstname: formInputs.firstName.val,
-      lastname: formInputs.lastName.val,
-      email: formInputs.email.val,
-      password: formInputs.password.val,
-    }
-    const res = await authUser(path, userInputs)
-    if (res.status === 201) {
-      navigate(-1)
-    } else {
-      setErrorMessage(res.getJson.message)
-    }
-  }
+	const sendAuthRequest = async (path: string) => {
+		const verCode = Number(otpSegments.join(""));
+		const res = await authUser(path, {
+			verCode,
+			email: formInputs.email.val,
+		});
+		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
+	};
 
-  const completeSignup = async (event: any) => {
-    event.preventDefault()
-    if (verCode === Number(otpSegments.join(''))) {
-      sendAuthRequest('signup')
-    } else {
-      setErrorMessage('The code you entered is not correct.')
-    }
-  }
+	const completeSignup = async (event: any) => {
+		event.preventDefault();
+		sendAuthRequest("signup");
+	};
 
-  const sendVerificationEmail = async () => {
-    const randomPin = Math.floor(Math.random() * 90000) + 10000
-    setVerCode(randomPin)
-    const res = await authUser('verifyEmail', {
-      email: formInputs.email.val,
-      code: randomPin,
-    })
-    if (res.ok) {
-      setShowVerTab(true)
-    } else {
-      setErrorMessage(res.getJson.message)
-    }
-  }
+	const sendVerificationEmail = async () => {
+		const userInputs: Partial<User> = {
+			firstname: formInputs.firstName.val,
+			lastname: formInputs.lastName.val,
+			email: formInputs.email.val,
+			password: formInputs.password.val,
+		};
+		const res = await authUser("verifyEmail", userInputs);
+		res.ok ? setShowVerTab(true) : setErrorMessage(res.getJson.message);
+	};
 
-  const submitSignupForm = async (event: any) => {
-    event.preventDefault()
-    setErrorMessage('')
-    if (!validateInputsForSubmit()) {
-      sendVerificationEmail()
-    }
-    // set a timer
-    // const data = new FormData(event.target as HTMLFormElement);
-    // const userInputs: Partial<User> = Object.fromEntries(data.entries());
-    // !isInvalid && res.ok && sendAuthRequest("signupLocal", userInputs);
-  }
+	const submitSignupForm = async (event: any) => {
+		event.preventDefault();
+		setErrorMessage("");
+		setOTPSegments(["", "", "", "", ""]);
+		!validateInputsForSubmit() && sendVerificationEmail();
+	};
 
   const inputOnChange = ({
     type,
@@ -177,169 +158,181 @@ const SignupForm: React.FC = () => {
     setErrorMessage('')
   }
 
-  return (
-    <div>
-      {!showVerTab ? (
-        <Signup method="post" onSubmit={submitSignupForm}>
-          <FlexboxCol>
-            <EmailSingup>
-              <SignupHeader>Create new account</SignupHeader>
-              {errorMessage !== '' && (
-                <ErrorMessage>
-                  <ImgWithMargin src={warningIcon} alt="warning icon" />
-                  {errorMessage}
-                </ErrorMessage>
-              )}
-              {process.env.NODE_ENV === 'production' && (
-                <Info>
-                  <ImgWithMargin src={warningIcon} alt="warning icon" />
-                  We&apos;re currently still in development, sign up is disabled, check us out later
-                  ^^
-                </Info>
-              )}
-              <FirstLastNamesSection>
-                <InputSection $isInvalid={!formInputs['firstName'].valid}>
-                  <label htmlFor="firstname">
-                    <Icon src={personalIcon} alt="personal icon" $left={140} />
-                  </label>
-                  <input
-                    type="text"
-                    name="firstname"
-                    id="firstname"
-                    placeholder="First Name"
-                    defaultValue={formInputs.firstName.val}
-                    onChange={(e) =>
-                      inputOnChange({
-                        type: 'firstName',
-                        value: e.target.value,
-                      })
-                    }
-                  />
-                </InputSection>
-                <InputSection $isInvalid={!formInputs['lastName'].valid}>
-                  <label htmlFor="lastname">
-                    <Icon src={personalIcon} alt="personal icon" $left={140} />
-                  </label>
-                  <input
-                    type="text"
-                    name="lastname"
-                    id="lastname"
-                    defaultValue={formInputs.lastName.val}
-                    placeholder="Last Name"
-                    onChange={(e) => inputOnChange({ type: 'lastName', value: e.target.value })}
-                  />
-                </InputSection>
-              </FirstLastNamesSection>
-              <InputSection $isInvalid={!formInputs['email'].valid}>
-                <label htmlFor="email">
-                  <Icon src={emailIcon} alt="email icon" $left={315} />
-                </label>
-                <input
-                  type="email"
-                  name="email"
-                  id="email"
-                  defaultValue={formInputs.email.val}
-                  placeholder="Email"
-                  onChange={(e) => inputOnChange({ type: 'email', value: e.target.value })}
-                />
-              </InputSection>
-              <InputSection $isInvalid={!formInputs['password'].valid}>
-                <label htmlFor="password">
-                  <Icon src={passwordIcon} alt="password icon" $left={315} />
-                </label>
-                <input
-                  type="password"
-                  name="password"
-                  id="password"
-                  defaultValue={''}
-                  placeholder="Password"
-                  onChange={(e) => inputOnChange({ type: 'password', value: e.target.value })}
-                />
-              </InputSection>
-              <SignupBtn
-                name="signup"
-                type="submit"
-                disabled={process.env.NODE_ENV === 'production' ? true : false}
-              >
-                Sign up
-              </SignupBtn>
-            </EmailSingup>
-            <Separator>or</Separator>
-            <GoogleSignup>
-              <GoogleBtn
-                href={
-                  process.env.NODE_ENV === 'production'
-                    ? '#'
-                    : baseURL + '/auth/google?redirect_url=' + clientUrl + state.from
-                }
-              >
-                <ImgWithMargin src={googleIcon} alt="Google logo" />
-                <p>Google</p>
-              </GoogleBtn>
-            </GoogleSignup>
-          </FlexboxCol>
-          <Footer>
-            <span>Already have an account?</span>
-            <button type="button" onClick={() => setShowLoginPage(true)}>
-              Log in
-            </button>
-          </Footer>
-        </Signup>
-      ) : (
-        <div>
-          <form autoComplete="off" method="post" onSubmit={completeSignup}>
-            <h3 style={{ color: 'white' }}>
-              Please enter the 5-digit code we sent to your email address:
-            </h3>
-            {errorMessage !== '' && (
-              <ErrorMessage>
-                <ImgWithMargin src={warningIcon} alt="warning icon" />
-                {errorMessage}
-              </ErrorMessage>
-            )}
-            <FlexboxRow ref={otpRef}>
-              {otpSegments.map((value, key) => (
-                <OTP
-                  type="text"
-                  key={key}
-                  value={value}
-                  pattern="\d{1}"
-                  maxLength={1}
-                  autoComplete="off"
-                  onPaste={onOTPPaste}
-                  onChange={(e) => onOTPUpdate(key, e)}
-                />
-              ))}
-            </FlexboxRow>
-            <div>
-              <button type="submit">Finish</button>
-            </div>
-          </form>
-          <FlexboxCol style={{ color: 'white' }}>
-            Didn&apos;t receive the code?
-            <br />
-            <button onClick={submitSignupForm}>Resend code</button>
-            <button
-              onClick={() => {
-                setShowVerTab(false)
-                inputOnChange({ type: 'password', value: '' })
-              }}
-            >
-              Change email address
-            </button>
-          </FlexboxCol>
-        </div>
-      )}
-      {showLoginPage && (
-        <CardOverlay>
-          <OverlayContent>
-            <LoginForm cancelHandler={() => setShowLoginPage(false)} from={'/'} />
-          </OverlayContent>
-        </CardOverlay>
-      )}
-    </div>
-  )
-}
+	return (
+		<div>
+			{!showVerTab ? (
+				<Signup method="post" onSubmit={submitSignupForm}>
+					<FlexboxCol>
+						<EmailSingup>
+							<SignupHeader>Create new account</SignupHeader>
+							{errorMessage !== "" && (
+								<ErrorMessage>
+									<ImgWithMargin src={warningIcon} alt="warning icon" />
+									{errorMessage}
+								</ErrorMessage>
+							)}
+							{process.env.NODE_ENV === "production" && (
+								<Info>
+									<ImgWithMargin src={warningIcon} alt="warning icon" />
+									We're currently still in development, sign up is disabled,
+									check us out later ^^
+								</Info>
+							)}
+							<FirstLastNamesSection>
+								<InputSection $isInvalid={!formInputs["firstName"].valid}>
+									<label htmlFor="firstname">
+										<Icon src={personalIcon} alt="personal icon" $left={140} />
+									</label>
+									<input
+										type="text"
+										name="firstname"
+										id="firstname"
+										placeholder="First Name"
+										defaultValue={formInputs.firstName.val}
+										onChange={(e) =>
+											inputOnChange({
+												type: "firstName",
+												value: e.target.value,
+											})
+										}
+									/>
+								</InputSection>
+								<InputSection $isInvalid={!formInputs["lastName"].valid}>
+									<label htmlFor="lastname">
+										<Icon src={personalIcon} alt="personal icon" $left={140} />
+									</label>
+									<input
+										type="text"
+										name="lastname"
+										id="lastname"
+										defaultValue={formInputs.lastName.val}
+										placeholder="Last Name"
+										onChange={(e) =>
+											inputOnChange({ type: "lastName", value: e.target.value })
+										}
+									/>
+								</InputSection>
+							</FirstLastNamesSection>
+							<InputSection $isInvalid={!formInputs["email"].valid}>
+								<label htmlFor="email">
+									<Icon src={emailIcon} alt="email icon" $left={315} />
+								</label>
+								<input
+									type="email"
+									name="email"
+									id="email"
+									defaultValue={formInputs.email.val}
+									placeholder="Email"
+									onChange={(e) =>
+										inputOnChange({ type: "email", value: e.target.value })
+									}
+								/>
+							</InputSection>
+							<InputSection $isInvalid={!formInputs["password"].valid}>
+								<label htmlFor="password">
+									<Icon src={passwordIcon} alt="password icon" $left={315} />
+								</label>
+								<input
+									type="password"
+									name="password"
+									id="password"
+									defaultValue={""}
+									placeholder="Password"
+									onChange={(e) =>
+										inputOnChange({ type: "password", value: e.target.value })
+									}
+								/>
+							</InputSection>
+							<SignupBtn
+								name="signup"
+								type="submit"
+								disabled={process.env.NODE_ENV === "production" ? true : false}
+							>
+								Sign up
+							</SignupBtn>
+						</EmailSingup>
+						<Separator>or</Separator>
+						<GoogleSignup>
+							<GoogleBtn
+								href={
+									process.env.NODE_ENV === "production"
+										? "#"
+										: baseURL +
+												"/auth/google?redirect_url=" +
+												clientUrl +
+												state ?? state.from
+								}
+							>
+								<ImgWithMargin src={googleIcon} alt="Google logo" />
+								<p>Google</p>
+							</GoogleBtn>
+						</GoogleSignup>
+					</FlexboxCol>
+					<Footer>
+						<span>Already have an account?</span>
+						<button type="button" onClick={() => setShowLoginPage(true)}>
+							Log in
+						</button>
+					</Footer>
+				</Signup>
+			) : (
+				<div>
+					<form autoComplete="off" method="post" onSubmit={completeSignup}>
+						<h3 style={{ color: "white" }}>
+							Please enter the 5-digit code we sent to your email address:
+						</h3>
+						{errorMessage !== "" && (
+							<ErrorMessage>
+								<ImgWithMargin src={warningIcon} alt="warning icon" />
+								{errorMessage}
+							</ErrorMessage>
+						)}
+						<FlexboxRow ref={otpRef}>
+							{otpSegments.map((value, key) => (
+								<OTP
+									type="text"
+									key={key}
+									value={value}
+									pattern="\d{1}"
+									maxLength={1}
+									autoComplete="off"
+									onPaste={onOTPPaste}
+									onChange={(e) => onOTPUpdate(key, e)}
+								/>
+							))}
+						</FlexboxRow>
+						<div>
+							<button type="submit">Finish</button>
+						</div>
+					</form>
+					<FlexboxCol style={{ color: "white" }}>
+						Didn't receive the code?
+						<br />
+						<button onClick={submitSignupForm}>Resend code</button>
+						<button
+							onClick={() => {
+								setShowVerTab(false);
+								inputOnChange({ type: "password", value: "" });
+							}}
+						>
+							Change email address
+						</button>
+					</FlexboxCol>
+				</div>
+			)}
+			{showLoginPage && (
+				<CardOverlay>
+					<OverlayContent>
+						<LoginForm
+							cancelHandler={() => setShowLoginPage(false)}
+							from={"/"}
+						/>
+					</OverlayContent>
+				</CardOverlay>
+			)}
+		</div>
+	);
+};
 
 export default SignupForm
 

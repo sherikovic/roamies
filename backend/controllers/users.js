@@ -1,25 +1,47 @@
 const User = require("../models/user");
 const bcrypt = require("bcrypt");
 const { clientUrl } = require("../middleware");
-const mjml2html = require("mjml");
+const sgMail = require("@sendgrid/mail");
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const { randomBytes } = require("node:crypto");
 
 module.exports.verifyEmail = async (req, res) => {
 	try {
-		const sgMail = require("@sendgrid/mail");
-		sgMail.setApiKey(process.env.SENDGRID_API_KEY);
-		// const fs = require("fs");
-		// const renderedTemplate = fs.readFileSync("../emails/templates/index.mjml");
-		// console.log("22", renderedTemplate);
-		// const html = mjml2html(renderedTemplate);
+		const { firstname, lastname, email, password } = req.body;
+		const hashedPassword = await bcrypt.hash(password, 10);
+		const randomPin = Math.floor(Math.random() * 90000) + 10000;
+		let user = await User.findOne({ email: req.body.email });
+		if (!user) {
+			user = new User({
+				email,
+				password: hashedPassword,
+				googleId: undefined,
+				verified: false,
+				verCode: randomPin,
+				firstname,
+				lastname,
+				country: "",
+				age: undefined,
+				bio: "",
+				social: { instagram: "", twitter: "" },
+			});
+		} else {
+			user.firstname = req.body.firstname;
+			user.lastname = req.body.lastname;
+			user.email = req.body.email;
+			user.password = hashedPassword;
+			user.verCode = randomPin;
+		}
+		await user.save();
+
 		const msg = {
-			to: req.body.email,
+			to: email,
 			from: "no-reply@roamies.org",
-			subject: "Roamies - Please verify your account",
-			text: "Thank you for singing up!",
-			html: `
-        <h1>Thank you for signing up</h1>
-        <p>Please use the following code to verify your email address ${req.body.code}</p>
-      `,
+			template_id: "d-f1fcdee077b84a1ea782f4d7cd66d3ed",
+			dynamic_template_data: {
+				name: firstname,
+				code: randomPin,
+			},
 		};
 		sgMail
 			.send(msg)
@@ -29,7 +51,7 @@ module.exports.verifyEmail = async (req, res) => {
 			.catch((error) => {
 				console.error(error);
 			});
-
+		setTimeout(() => eraseVerCode(email), 900000); // 15 minutes
 		res.status(201).json({ message: "Verification email successfully sent!" });
 	} catch (e) {
 		res.status(500).json({
@@ -39,23 +61,21 @@ module.exports.verifyEmail = async (req, res) => {
 	}
 };
 
+const eraseVerCode = async (email) => {
+	const user = await User.findOne({ email: email });
+	if (user.verified === false) {
+		user.verCode = 0;
+		await user.save();
+	}
+};
+
 module.exports.signup = async (req, res) => {
 	try {
-		const { firstname, lastname, email, password } = req.body;
-		const hashedPassword = await bcrypt.hash(password, 10);
-		const newUser = new User({
-			email,
-			password: hashedPassword,
-			googleId: undefined,
-			firstname,
-			lastname,
-			country: "",
-			age: undefined,
-			bio: "",
-			social: { instagram: "", twitter: "" },
-		});
-		await newUser.save();
-		req.logIn(newUser, (e) => {
+		const user = await User.findOne({ email: req.body.email });
+		if (user.verCode !== req.body.verCode) {
+			return res.status(500).json({ message: "Invalid code!" });
+		}
+		req.logIn(user, (e) => {
 			if (e) {
 				return res.status(500).json({
 					message:
@@ -63,6 +83,9 @@ module.exports.signup = async (req, res) => {
 					error: e,
 				});
 			}
+			user.verified = true;
+			user.verCode = 0;
+			user.save();
 			res
 				.status(201)
 				.json({ message: "User was successfully created and logged in." });
@@ -84,15 +107,16 @@ module.exports.login = (req, res) => {
 module.exports.googleSuccess = (req, res) => {
 	const redirectUrl = req.cookies.redirectUrl;
 	res.clearCookie("redirectUrl");
-	res.redirect(redirectUrl);
+	return res.redirect(redirectUrl);
 };
 
 module.exports.googleFailure = async (req, res) => {
-	res.redirect(
+	req.session.destroy((err) => err && console.error(err));
+	return res.redirect(
 		clientUrl +
 			"/signup?redirect=true&error=" +
 			encodeURIComponent(
-				"A record for the same email was found, try logging in with a different method!"
+				"A record for the same email was found, use a different email or log in!"
 			)
 	);
 };
@@ -110,6 +134,35 @@ module.exports.logout = async (req, res) => {
 	});
 };
 
+module.exports.resetPassword = async (req, res) => {
+	try {
+		const user = await User.findOne({ email: req.body.email });
+		const token = randomBytes(32).toString("hex");
+		user.resetPasswordToken = token;
+		user.resetPasswordExpires = Date.now() + 900000; // 15 minutes
+		await user.save();
+		const resetUrl = `http://localhost:3000/reset-password/${token}`;
+		const msg = {
+			to: user.email,
+			from: "no-reply@roamies.org",
+			template_id: "d-edb1ee6a03924e9485fa70816bb47cad",
+			dynamic_template_data: {
+				name: user.firstname,
+				resetUrl,
+			},
+		};
+		sgMail
+			.send(msg)
+			.then(() => {
+				console.log("Email sent");
+			})
+			.catch((error) => {
+				console.error(error);
+			});
+		res.status(201).json({ message: "Verification email successfully sent!" });
+	} catch (e) {}
+};
+
 module.exports.getLoggedInUser = async (req, res) => {
 	if (req.user) {
 		const user = await User.findById(req.user._id)
@@ -122,8 +175,13 @@ module.exports.getLoggedInUser = async (req, res) => {
 };
 
 module.exports.getUsers = async (req, res) => {
-	const ret = req.query.id
-		? await User.findById(req.query.id).populate("trips").populate("events")
+	const users = req.query
+		? await User.find(req.query).populate("trips").populate("events")
 		: await User.find({}).populate("trips").populate("events");
-	res.json({ objects: ret });
+	res.status(201).json({ objects: users });
+
+	// const ret = req.query.id
+	// 	? await User.findById(req.query.id).populate("trips").populate("events")
+	// 	: await User.find({}).populate("trips").populate("events");
+	// res.json({ objects: ret });
 };

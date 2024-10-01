@@ -14,6 +14,22 @@ const UserSchema = new Schema({
 		type: String,
 		required: false,
 	},
+	verified: {
+		type: Boolean,
+		required: true,
+	},
+	verCode: {
+		type: Number,
+		required: true,
+	},
+	resetPasswordToken: {
+		type: String,
+		required: false,
+	},
+	resetPasswordExpires: {
+		type: String,
+		required: false,
+	},
 	firstname: {
 		type: String,
 		required: true,

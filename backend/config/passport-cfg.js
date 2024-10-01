@@ -64,6 +64,8 @@ module.exports = function (app, passport) {
 							firstname: profile.name.givenName,
 							lastname: profile.name.familyName,
 							password: undefined,
+							status: true,
+							verCode: 0,
 							googleId: profile.id,
 							country: "",
 							age: undefined,

@@ -43,6 +43,24 @@ export const XClose = styled.button`
   }
 `
 
+export const BackClose = styled.button`
+	background: none;
+	color: #afb7c3;
+	font-size: 30px;
+	position: absolute;
+	top: 30px;
+	left: 30px;
+	border: none;
+	padding: 0;
+	&:after {
+		content: "\\2190";
+		cursor: pointer;
+	}
+	&:hover {
+		color: #afb7c3bc;
+	}
+`;
+
 export const LogoLink = styled.a`
   display: flex;
   align-items: center;

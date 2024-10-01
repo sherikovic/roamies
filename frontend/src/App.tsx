@@ -20,6 +20,7 @@ import LocationDetailPage, {
   action as deleteLocationAction,
 } from './Pages/LocationDetail'
 
+
 import AboutPage from './Pages/About'
 import HowToUsePage from 'Pages/HowToUse'
 import FAQPage from 'Pages/FAQ'
