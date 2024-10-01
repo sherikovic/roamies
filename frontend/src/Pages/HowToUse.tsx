@@ -1,7 +1,7 @@
-import UnderConstructionPage from "Components/Misc/UnderConstruction";
+import UnderConstructionPage from 'Components/Misc/UnderConstruction'
 
 const HowToUsePage: React.FC = () => {
-	return <UnderConstructionPage />;
-};
+  return <UnderConstructionPage />
+}
 
-export default HowToUsePage;
+export default HowToUsePage

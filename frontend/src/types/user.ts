@@ -1,5 +1,5 @@
-import { Broadcast } from "./broadcast";
-import { Trip } from "./trip";
+import { Broadcast } from './broadcast'
+import { Trip } from './trip'
 
 export interface User {
 	_id: string;

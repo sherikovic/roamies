@@ -1,19 +1,19 @@
-import { ActionFunction, LoaderFunction } from "react-router-dom";
+import { ActionFunction, LoaderFunction } from 'react-router-dom'
 
 const LocationDetailPage: React.FC = () => {
-	return (
-		<>
-			<p>Location Detail page</p>
-		</>
-	);
-};
+  return (
+    <>
+      <p>Location Detail page</p>
+    </>
+  )
+}
 
-export default LocationDetailPage;
+export default LocationDetailPage
 
-export const loader: LoaderFunction = async ({ request, params }) => {
-	return null;
-};
+export const loader: LoaderFunction = async () => {
+  return null
+}
 
-export const action: ActionFunction = async ({ request, params }) => {
-	return null;
-};
+export const action: ActionFunction = async () => {
+  return null
+}

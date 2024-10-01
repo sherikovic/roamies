@@ -1,19 +1,18 @@
-import SignupForm from "Components/Auth/SignupForm";
-import { useRouteLoaderData } from "react-router";
+import SignupForm from 'Components/Auth/SignupForm'
+import { useRouteLoaderData } from 'react-router'
 
-import logo from "../images/logo.svg";
-import { LogoLink, LogoWhite } from "util/common_styles";
-import styled from "styled-components/macro";
+import logo from '../images/logo.svg'
+import bgImage from '../images/signup.jpeg'
+import { LogoLink, LogoWhite } from 'util/common_styles'
+import styled from 'styled-components/macro'
 
 const SignupPage: React.FC = () => {
-  const logIn = useRouteLoaderData("root");
+  const logIn = useRouteLoaderData('root')
 
   return (
     <div>
       {logIn ? (
-        <h4 style={{ textAlign: "center" }}>
-          You are not authorized to view this page!
-        </h4>
+        <h4 style={{ textAlign: 'center' }}>You are not authorized to view this page!</h4>
       ) : (
         <div>
           <SignupBackground />
@@ -36,10 +35,10 @@ const SignupPage: React.FC = () => {
         </div>
       )}
     </div>
-  );
-};
+  )
+}
 
-export default SignupPage;
+export default SignupPage
 
 const SignupBackground = styled.div`
   display: block;
@@ -49,21 +48,17 @@ const SignupBackground = styled.div`
   background-size: 50% 100%;
   background-position: left;
   background-repeat: no-repeat;
-  background-image: url(${require("../images/signup.jpeg")});
+  background-image: ${bgImage};
   filter: brightness(0.5);
   &::before {
-    content: "";
+    content: '';
     display: block;
     position: inherit;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-      to right,
-      rgba(18, 18, 24, 0.63) 15%,
-      rgb(40, 42, 54) 45%
-    );
+    background: linear-gradient(to right, rgba(18, 18, 24, 0.63) 15%, rgb(40, 42, 54) 45%);
   }
-`;
+`
 
 const SignupPageLayout = styled.div`
   display: flex;
@@ -72,11 +67,11 @@ const SignupPageLayout = styled.div`
   align-items: stretch;
   justify-content: stretch;
   height: 100vh;
-`;
+`
 
 const SignupHeader = styled.div`
   padding: 20px 60px;
-`;
+`
 
 const SignupContent = styled.div`
   display: flex;
@@ -84,7 +79,7 @@ const SignupContent = styled.div`
   margin: 70px 50px 70px 130px;
   height: 100%;
   gap: 150px;
-`;
+`
 
 const SignupText = styled.section`
   display: flex;
@@ -100,11 +95,11 @@ const SignupText = styled.section`
       font-size: 20px;
     }
   }
-`;
+`
 
 const SignupFormLayout = styled.div`
   display: flex;
   width: 100%;
   justify-content: center;
   align-items: center;
-`;
+`

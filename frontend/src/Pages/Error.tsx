@@ -3,7 +3,7 @@ import ErrorContent from "../Components/Misc/ErrorContent";
 import LandingNavigation from "Components/Landingpage/LandingNavigation";
 
 const ErrorPage: React.FC = () => {
-	const error: any = useRouteError();
+  const error: any = useRouteError()
 
 	let title = error.data.title ?? "An error occured!";
 	let message = error.data.message ?? "Something went wrong!";
@@ -24,4 +24,4 @@ const ErrorPage: React.FC = () => {
 	);
 };
 
-export default ErrorPage;
+export default ErrorPage

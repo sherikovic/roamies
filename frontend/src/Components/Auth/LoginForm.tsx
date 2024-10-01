@@ -1,67 +1,60 @@
-import { useState } from "react";
-import { authUser } from "util/api";
-import { User } from "types/user";
-import { useLocation, useNavigate } from "react-router";
+import { useState } from 'react'
+import { authUser } from 'util/api'
+import { User } from 'types/user'
+import { useLocation, useNavigate } from 'react-router'
 
-import googleIcon from "../../images/googlelogo.svg";
-import warningIcon from "../../images/warningicon.png";
-import { BackClose, XClose } from "util/common_styles";
-import { baseURL, clientUrl } from "util/util";
-import styled from "styled-components/macro";
-import { Link } from "react-router-dom";
-import {
-	ErrorMessage,
-	FormHeader,
-	ImgWithMargin,
-	Info,
-} from "util/common_styles";
+import googleIcon from '../../images/googlelogo.svg'
+import warningIcon from '../../images/warningicon.png'
+import { BackClose, XClose } from 'util/common_styles'
+import { baseURL, clientUrl } from 'util/util'
+import styled from 'styled-components/macro'
+import { Link } from 'react-router-dom'
+import { ErrorMessage, FormHeader, ImgWithMargin, Info } from 'util/common_styles'
 
 interface LoginFormProps {
-	cancelHandler: () => void;
-	from: String;
-	children?: React.ReactNode;
+  cancelHandler: () => void
+  from: string
 }
 
 const fields = {
-	password: {
-		val: "",
-		valid: true,
-		errorMessage: "Please enter a valid password.",
-	},
-	email: {
-		val: "",
-		valid: true,
-		errorMessage: "Please enter a valid email address.",
-	},
-};
+  password: {
+    val: '',
+    valid: true,
+    errorMessage: 'Please enter valid password.',
+  },
+  email: {
+    val: '',
+    valid: true,
+    errorMessage: 'Please enter valid email address.',
+  },
+}
 
 const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
-	const navigate = useNavigate();
-	const location = useLocation().pathname;
+  const navigate = useNavigate()
+  const location = useLocation().pathname
 
-	const [formInputs, setFormInputs] = useState(fields);
-	const [errorMessage, setErrorMessage] = useState("");
-	const [showForgotPassword, setShowForgotPassword] = useState(false);
+  const [formInputs, setFormInputs] = useState(fields)
+  const [errorMessage, setErrorMessage] = useState('')
+  const [showForgotPassword, setShowForgotPassword] = useState(false);
 
-	const validateInputsForSubmit = () => {
-		let isInvalid: boolean = false;
-		Object.keys(formInputs).forEach((key: any) => {
-			const input = formInputs[key];
-			if (
-				input.val === "" ||
-				(key === "email" &&
-					!/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
-			) {
-				isInvalid = true;
-				setErrorMessage(input.errorMessage);
-				setFormInputs((prev) => ({
-					...prev,
-					[key]: { ...input, valid: false },
-				}));
-			}
-		});
-		return isInvalid;
-	};
+  const validateInputsForSubmit = () => {
+    let isInvalid: boolean = false
+    Object.keys(formInputs).forEach((key: any) => {
+      const input = formInputs[key]
+      if (
+        input.val === '' ||
+        (key === 'email' && !/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
+      ) {
+        isInvalid = true
+        setErrorMessage(input.errorMessage)
+        setFormInputs((prev) => ({
+          ...prev,
+          [key]: { ...input, valid: false },
+        }))
+      }
+    })
+    return isInvalid
+  }
 
 	const sendAuthRequest = async (mode: string, data: any) => {
 		const formData: User | any = Object.fromEntries(data.entries());
@@ -224,89 +217,89 @@ const LoginForm: React.FC<LoginFormProps> = ({ cancelHandler, from }) => {
 	);
 };
 
-export default LoginForm;
+export default LoginForm
 
 const Login = styled.form`
-	display: flex;
-	flex-direction: column;
-	max-width: 40rem;
-	margin: 30px auto;
-`;
+  display: flex;
+  flex-direction: column;
+  max-width: 40rem;
+  margin: 30px auto;
+`
 
 const LoginContents = styled.div`
-	padding: 5px 40px;
-`;
+  padding: 5px 40px;
+`
 
 const InputSection = styled.section<{ $isInvalid: boolean }>`
-	padding: 5px 0px;
-	> input {
-		width: 100%;
-		background-color: white;
-		border: 1.5px solid #d8d0d0;
-		border-radius: 15px;
-		padding: 12px 8px;
-		font-size: 15px;
-		${(p) => p.$isInvalid && "border-color: rgba(255, 0, 0, 0.296);"}
-		&:focus,
+  padding: 5px 0px;
+  > input {
+    width: 100%;
+    background-color: white;
+    border: 1.5px solid #d8d0d0;
+    border-radius: 15px;
+    padding: 12px 8px;
+    font-size: 15px;
+    ${(p) => p.$isInvalid && 'border-color: rgba(255, 0, 0, 0.296);'}
+    &:focus,
 		&:hover {
-			outline: none;
-			border: 1.5px solid grey;
-		}
-	}
-`;
+      outline: none;
+      border: 1.5px solid grey;
+    }
+  }
+`
 
 const LoginOptionsSection = styled.section`
-	display: flex;
-	justify-content: space-between;
-	margin-bottom: 30px;
-	> div > label {
-		cursor: pointer;
-		color: black;
-		font-size: 12px;
-	}
-	> a {
-		color: black;
-		text-decoration: none;
-		font-size: 12px;
-		&:hover {
-			color: grey;
-		}
-	}
-`;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  > div > label {
+    cursor: pointer;
+    color: black;
+    font-size: 12px;
+  }
+  > a {
+    color: black;
+    text-decoration: none;
+    font-size: 12px;
+    &:hover {
+      color: grey;
+    }
+  }
+`
 
 const LoginActions = styled.div`
-	display: flex;
-	flex-direction: column;
-	> span,
-	> div > span {
-		padding: 20px 10px;
-		text-align: center;
-		font-size: 15px;
-		font-weight: 500;
-		line-height: 0.7;
-		color: grey;
-	}
-	> div {
-		display: flex;
-		flex-direction: column;
-		margin-top: 20px;
-	}
-`;
+  display: flex;
+  flex-direction: column;
+  > span,
+  > div > span {
+    padding: 20px 10px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: 500;
+    line-height: 0.7;
+    color: grey;
+  }
+  > div {
+    display: flex;
+    flex-direction: column;
+    margin-top: 20px;
+  }
+`
 
 const LoginBtn = styled.button`
-	width: 100%;
-	font-size: 15px;
-	line-height: 1.6;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 15px;
-	background-color: #2c3333;
-	color: white;
-	border: none;
-	&:hover {
-		background-color: #1c2727;
-	}
-`;
+  width: 100%;
+  font-size: 15px;
+  line-height: 1.6;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background-color: #2c3333;
+  color: white;
+  border: none;
+  &:hover {
+    background-color: #1c2727;
+  }
+`
 
 const ForgotPassword = styled.button`
 	display: flex;
@@ -326,45 +319,45 @@ const ForgotPassword = styled.button`
 `;
 
 const GoogleLogin = styled.a`
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	width: 100%;
-	cursor: pointer;
-	padding: 8px 12px;
-	border-radius: 15px;
-	background-color: white;
-	border: 1px solid black;
-	text-decoration: none;
-	&:hover {
-		background-color: rgb(244, 244, 243);
-	}
-	> p {
-		margin: 0;
-		font-size: 15px;
-		line-height: 1.6;
-		color: black;
-	}
-`;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 15px;
+  background-color: white;
+  border: 1px solid black;
+  text-decoration: none;
+  &:hover {
+    background-color: rgb(244, 244, 243);
+  }
+  > p {
+    margin: 0;
+    font-size: 15px;
+    line-height: 1.6;
+    color: black;
+  }
+`
 
 const Join = styled(Link)`
-	width: 25%;
-	margin: 10px auto;
-	padding: 8px 12px;
-	font-size: 15px;
-	font-weight: 500;
-	line-height: 1.6;
-	text-align: center;
-	text-decoration: none;
-	border-radius: 15px;
-	background-color: #2c3333;
-	color: white;
-	&:hover {
-		background-color: #1c2727;
-	}
-`;
+  width: 25%;
+  margin: 10px auto;
+  padding: 8px 12px;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.6;
+  text-align: center;
+  text-decoration: none;
+  border-radius: 15px;
+  background-color: #2c3333;
+  color: white;
+  &:hover {
+    background-color: #1c2727;
+  }
+`
 
 const Error = styled(ErrorMessage)`
-	width: 100%;
-	height: 40px;
-`;
+  width: 100%;
+  height: 40px;
+`
