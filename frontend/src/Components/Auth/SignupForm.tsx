@@ -1,19 +1,24 @@
-import { useEffect, useRef, useState } from 'react'
-import { authUser } from 'util/api'
-import { User } from 'types/user'
-import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
+import { useEffect, useRef, useState } from 'react';
+import { authUser } from 'util/api';
+import { User } from 'types/user';
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom';
 
-import googleIcon from '../../images/googlelogo.svg'
-import emailIcon from '../../images/emailicon.png'
-import passwordIcon from '../../images/passwordicon.png'
-import personalIcon from '../../images/personalicon.png'
-import warningIcon from '../../images/warningicon.png'
+import googleIcon from '../../images/googlelogo.svg';
+import emailIcon from '../../images/emailicon.png';
+import passwordIcon from '../../images/passwordicon.png';
+import personalIcon from '../../images/personalicon.png';
+import warningIcon from '../../images/warningicon.png';
 
-import LoginForm from './LoginForm'
-import { CardOverlay, OverlayContent, FlexboxCol, FlexboxRow } from 'util/common_styles'
-import { baseURL, clientUrl } from 'util/util'
-import styled from 'styled-components/macro'
-import { ErrorMessage, ImgWithMargin, Info } from 'util/common_styles'
+import LoginForm from './LoginForm';
+import {
+  CardOverlay,
+  OverlayContent,
+  FlexboxCol,
+  FlexboxRow,
+} from 'util/common_styles';
+import { baseURL, clientUrl } from 'util/util';
+import styled from 'styled-components/macro';
+import { ErrorMessage, ImgWithMargin, Info } from 'util/common_styles';
 
 const fields = {
   password: {
@@ -36,31 +41,31 @@ const fields = {
     valid: true,
     errorMessage: 'Please enter valid first name.',
   },
-}
+};
 
 const SignupForm: React.FC = () => {
-  const navigate = useNavigate()
-  const { state } = useLocation()
-  const [searchParams]: any = useSearchParams()
+  const navigate = useNavigate();
+  const { state } = useLocation();
+  const [searchParams]: any = useSearchParams();
 
-	const [formInputs, setFormInputs] = useState(fields);
-	const [showLoginPage, setShowLoginPage] = useState(false);
-	const [showVerTab, setShowVerTab] = useState(false);
-	const [otpSegments, setOTPSegments] = useState(["", "", "", "", ""]);
-	const otpRef = useRef<HTMLDivElement>(null);
-	const [errorMessage, setErrorMessage] = useState("");
+  const [formInputs, setFormInputs] = useState(fields);
+  const [showLoginPage, setShowLoginPage] = useState(false);
+  const [showVerTab, setShowVerTab] = useState(false);
+  const [otpSegments, setOTPSegments] = useState(['', '', '', '', '']);
+  const otpRef = useRef<HTMLDivElement>(null);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     if (searchParams.get('redirect')) {
-      setErrorMessage(searchParams.get('error'))
+      setErrorMessage(searchParams.get('error'));
     }
-  }, [searchParams])
+  }, [searchParams]);
 
   const onOTPPaste = (event: any) => {
-    event.preventDefault()
-    const pasted = event.clipboardData.getData('text/plain')
-    setOTPSegments(pasted.split('').slice(0, otpSegments.length))
-  }
+    event.preventDefault();
+    const pasted = event.clipboardData.getData('text/plain');
+    setOTPSegments(pasted.split('').slice(0, otpSegments.length));
+  };
 
   const onOTPUpdate = (index: number, event: any) => {
     if (/^\d+$/.test(event.target.value)) {
@@ -68,79 +73,80 @@ const SignupForm: React.FC = () => {
         ...otpSegments.slice(0, index),
         event.target.value,
         ...otpSegments.slice(index + 1),
-      ])
+      ]);
       if (index !== 4) {
-        ;(otpRef.current!.children[index + 1] as HTMLDivElement).focus()
+        (otpRef.current!.children[index + 1] as HTMLDivElement).focus();
       }
     } else if (event.target.value === '') {
       setOTPSegments([
         ...otpSegments.slice(0, index),
         event.target.value,
         ...otpSegments.slice(index + 1),
-      ])
+      ]);
       if (index !== 0) {
-        ;(otpRef.current!.children[index - 1] as HTMLDivElement).focus()
+        (otpRef.current!.children[index - 1] as HTMLDivElement).focus();
       }
     }
-  }
+  };
 
   const validateInputsForSubmit = () => {
-    let isInvalid: boolean = false
+    let isInvalid: boolean = false;
     Object.keys(formInputs).forEach((key: any) => {
-      const input = formInputs[key]
+      const input = formInputs[key];
       if (
         input.val === '' ||
-        (key === 'email' && !/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
+        (key === 'email' &&
+          !/[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(input.val))
       ) {
-        isInvalid = true
-        setErrorMessage(input.errorMessage)
+        isInvalid = true;
+        setErrorMessage(input.errorMessage);
         setFormInputs((prev) => ({
           ...prev,
           [key]: { ...input, valid: false },
-        }))
+        }));
       }
-    })
-    return isInvalid
-  }
+    });
+    return isInvalid;
+  };
 
-	const sendAuthRequest = async (path: string) => {
-		const verCode = Number(otpSegments.join(""));
-		const res = await authUser(path, {
-			verCode,
-			email: formInputs.email.val,
-		});
-		res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
-	};
+  const sendAuthRequest = async (path: string) => {
+    const verCode = Number(otpSegments.join(''));
+    const res = await authUser(path, {
+      verCode,
+      email: formInputs.email.val,
+    });
+    res.status === 201 ? navigate(-1) : setErrorMessage(res.getJson.message);
+  };
 
-	const completeSignup = async (event: any) => {
-		event.preventDefault();
-		sendAuthRequest("signup");
-	};
+  const completeSignup = async (event: any) => {
+    event.preventDefault();
+    sendAuthRequest('signup');
+  };
 
-	const sendVerificationEmail = async () => {
-		const userInputs: Partial<User> = {
-			firstname: formInputs.firstName.val,
-			lastname: formInputs.lastName.val,
-			email: formInputs.email.val,
-			password: formInputs.password.val,
-		};
-		const res = await authUser("verifyEmail", userInputs);
-		res.ok ? setShowVerTab(true) : setErrorMessage(res.getJson.message);
-	};
+  const sendVerificationEmail = async () => {
+    const userInputs: Partial<User> = {
+      firstname: formInputs.firstName.val,
+      lastname: formInputs.lastName.val,
+      email: formInputs.email.val,
+      password: formInputs.password.val,
+    };
+    const res = await authUser('verifyEmail', userInputs);
+    res.ok ? setShowVerTab(true) : setErrorMessage(res.getJson.message);
+  };
 
-	const submitSignupForm = async (event: any) => {
-		event.preventDefault();
-		setErrorMessage("");
-		setOTPSegments(["", "", "", "", ""]);
-		!validateInputsForSubmit() && sendVerificationEmail();
-	};
+  const submitSignupForm = async (event: any) => {
+    event.preventDefault();
+    setErrorMessage('');
+    setOTPSegments(['', '', '', '', '']);
+    !validateInputsForSubmit() && sendVerificationEmail();
+  };
 
   const inputOnChange = ({
     type,
     value,
   }: {
-    type: 'firstName' | 'lastName' | 'email' | 'password'
-    value: string
+    type: 'firstName' | 'lastName' | 'email' | 'password';
+    value: string;
   }) => {
     setFormInputs({
       ...formInputs,
@@ -149,192 +155,197 @@ const SignupForm: React.FC = () => {
         val: value,
         valid:
           type === 'email'
-            ? /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value) || value === ''
+            ? /[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/.test(value) ||
+              value === ''
               ? true
               : false
             : true,
       },
-    })
-    setErrorMessage('')
-  }
+    });
+    setErrorMessage('');
+  };
 
-	return (
-		<div>
-			{!showVerTab ? (
-				<Signup method="post" onSubmit={submitSignupForm}>
-					<FlexboxCol>
-						<EmailSingup>
-							<SignupHeader>Create new account</SignupHeader>
-							{errorMessage !== "" && (
-								<ErrorMessage>
-									<ImgWithMargin src={warningIcon} alt="warning icon" />
-									{errorMessage}
-								</ErrorMessage>
-							)}
-							{process.env.NODE_ENV === "production" && (
-								<Info>
-									<ImgWithMargin src={warningIcon} alt="warning icon" />
-									We're currently still in development, sign up is disabled,
-									check us out later ^^
-								</Info>
-							)}
-							<FirstLastNamesSection>
-								<InputSection $isInvalid={!formInputs["firstName"].valid}>
-									<label htmlFor="firstname">
-										<Icon src={personalIcon} alt="personal icon" $left={140} />
-									</label>
-									<input
-										type="text"
-										name="firstname"
-										id="firstname"
-										placeholder="First Name"
-										defaultValue={formInputs.firstName.val}
-										onChange={(e) =>
-											inputOnChange({
-												type: "firstName",
-												value: e.target.value,
-											})
-										}
-									/>
-								</InputSection>
-								<InputSection $isInvalid={!formInputs["lastName"].valid}>
-									<label htmlFor="lastname">
-										<Icon src={personalIcon} alt="personal icon" $left={140} />
-									</label>
-									<input
-										type="text"
-										name="lastname"
-										id="lastname"
-										defaultValue={formInputs.lastName.val}
-										placeholder="Last Name"
-										onChange={(e) =>
-											inputOnChange({ type: "lastName", value: e.target.value })
-										}
-									/>
-								</InputSection>
-							</FirstLastNamesSection>
-							<InputSection $isInvalid={!formInputs["email"].valid}>
-								<label htmlFor="email">
-									<Icon src={emailIcon} alt="email icon" $left={315} />
-								</label>
-								<input
-									type="email"
-									name="email"
-									id="email"
-									defaultValue={formInputs.email.val}
-									placeholder="Email"
-									onChange={(e) =>
-										inputOnChange({ type: "email", value: e.target.value })
-									}
-								/>
-							</InputSection>
-							<InputSection $isInvalid={!formInputs["password"].valid}>
-								<label htmlFor="password">
-									<Icon src={passwordIcon} alt="password icon" $left={315} />
-								</label>
-								<input
-									type="password"
-									name="password"
-									id="password"
-									defaultValue={""}
-									placeholder="Password"
-									onChange={(e) =>
-										inputOnChange({ type: "password", value: e.target.value })
-									}
-								/>
-							</InputSection>
-							<SignupBtn
-								name="signup"
-								type="submit"
-								disabled={process.env.NODE_ENV === "production" ? true : false}
-							>
-								Sign up
-							</SignupBtn>
-						</EmailSingup>
-						<Separator>or</Separator>
-						<GoogleSignup>
-							<GoogleBtn
-								href={
-									process.env.NODE_ENV === "production"
-										? "#"
-										: baseURL +
-												"/auth/google?redirect_url=" +
-												clientUrl +
-												state ?? state.from
-								}
-							>
-								<ImgWithMargin src={googleIcon} alt="Google logo" />
-								<p>Google</p>
-							</GoogleBtn>
-						</GoogleSignup>
-					</FlexboxCol>
-					<Footer>
-						<span>Already have an account?</span>
-						<button type="button" onClick={() => setShowLoginPage(true)}>
-							Log in
-						</button>
-					</Footer>
-				</Signup>
-			) : (
-				<div>
-					<form autoComplete="off" method="post" onSubmit={completeSignup}>
-						<h3 style={{ color: "white" }}>
-							Please enter the 5-digit code we sent to your email address:
-						</h3>
-						{errorMessage !== "" && (
-							<ErrorMessage>
-								<ImgWithMargin src={warningIcon} alt="warning icon" />
-								{errorMessage}
-							</ErrorMessage>
-						)}
-						<FlexboxRow ref={otpRef}>
-							{otpSegments.map((value, key) => (
-								<OTP
-									type="text"
-									key={key}
-									value={value}
-									pattern="\d{1}"
-									maxLength={1}
-									autoComplete="off"
-									onPaste={onOTPPaste}
-									onChange={(e) => onOTPUpdate(key, e)}
-								/>
-							))}
-						</FlexboxRow>
-						<div>
-							<button type="submit">Finish</button>
-						</div>
-					</form>
-					<FlexboxCol style={{ color: "white" }}>
-						Didn't receive the code?
-						<br />
-						<button onClick={submitSignupForm}>Resend code</button>
-						<button
-							onClick={() => {
-								setShowVerTab(false);
-								inputOnChange({ type: "password", value: "" });
-							}}
-						>
-							Change email address
-						</button>
-					</FlexboxCol>
-				</div>
-			)}
-			{showLoginPage && (
-				<CardOverlay>
-					<OverlayContent>
-						<LoginForm
-							cancelHandler={() => setShowLoginPage(false)}
-							from={"/"}
-						/>
-					</OverlayContent>
-				</CardOverlay>
-			)}
-		</div>
-	);
+  return (
+    <div>
+      {!showVerTab ? (
+        <Signup method="post" onSubmit={submitSignupForm}>
+          <FlexboxCol>
+            <EmailSingup>
+              <SignupHeader>Create new account</SignupHeader>
+              {errorMessage !== '' && (
+                <ErrorMessage>
+                  <ImgWithMargin src={warningIcon} alt="warning icon" />
+                  {errorMessage}
+                </ErrorMessage>
+              )}
+              {process.env.NODE_ENV === 'production' && (
+                <Info>
+                  <ImgWithMargin src={warningIcon} alt="warning icon" />
+                  We're currently still in development, sign up is disabled,
+                  check us out later ^^
+                </Info>
+              )}
+              <FirstLastNamesSection>
+                <InputSection $isInvalid={!formInputs['firstName'].valid}>
+                  <label htmlFor="firstname">
+                    <Icon src={personalIcon} alt="personal icon" $left={140} />
+                  </label>
+                  <input
+                    type="text"
+                    name="firstname"
+                    id="firstname"
+                    placeholder="First Name"
+                    autoComplete="given-name"
+                    defaultValue={formInputs.firstName.val}
+                    onChange={(e) =>
+                      inputOnChange({
+                        type: 'firstName',
+                        value: e.target.value,
+                      })
+                    }
+                  />
+                </InputSection>
+                <InputSection $isInvalid={!formInputs['lastName'].valid}>
+                  <label htmlFor="lastname">
+                    <Icon src={personalIcon} alt="personal icon" $left={140} />
+                  </label>
+                  <input
+                    type="text"
+                    name="lastname"
+                    id="lastname"
+                    placeholder="Last Name"
+                    autoComplete="family-name"
+                    defaultValue={formInputs.lastName.val}
+                    onChange={(e) =>
+                      inputOnChange({ type: 'lastName', value: e.target.value })
+                    }
+                  />
+                </InputSection>
+              </FirstLastNamesSection>
+              <InputSection $isInvalid={!formInputs['email'].valid}>
+                <label htmlFor="email">
+                  <Icon src={emailIcon} alt="email icon" $left={315} />
+                </label>
+                <input
+                  type="email"
+                  name="email"
+                  id="email"
+                  placeholder="Email"
+                  autoComplete="email"
+                  defaultValue={formInputs.email.val}
+                  onChange={(e) =>
+                    inputOnChange({ type: 'email', value: e.target.value })
+                  }
+                />
+              </InputSection>
+              <InputSection $isInvalid={!formInputs['password'].valid}>
+                <label htmlFor="password">
+                  <Icon src={passwordIcon} alt="password icon" $left={315} />
+                </label>
+                <input
+                  type="password"
+                  name="password"
+                  id="password"
+                  placeholder="Password"
+                  autoComplete="off"
+                  defaultValue={''}
+                  onChange={(e) =>
+                    inputOnChange({ type: 'password', value: e.target.value })
+                  }
+                />
+              </InputSection>
+              <SignupBtn
+                name="signup"
+                type="submit"
+                disabled={process.env.NODE_ENV === 'production' ? true : false}
+              >
+                Sign up
+              </SignupBtn>
+            </EmailSingup>
+            <Separator>or</Separator>
+            <GoogleSignup>
+              <GoogleBtn
+                href={
+                  process.env.NODE_ENV === 'production'
+                    ? '#'
+                    : baseURL +
+                        '/auth/google?redirect_url=' +
+                        clientUrl +
+                        state ?? state.from
+                }
+              >
+                <ImgWithMargin src={googleIcon} alt="Google logo" />
+                <p>Google</p>
+              </GoogleBtn>
+            </GoogleSignup>
+          </FlexboxCol>
+          <Footer>
+            <span>Already have an account?</span>
+            <button type="button" onClick={() => setShowLoginPage(true)}>
+              Log in
+            </button>
+          </Footer>
+        </Signup>
+      ) : (
+        <div>
+          <form autoComplete="off" method="post" onSubmit={completeSignup}>
+            <h3 style={{ color: 'white' }}>
+              Please enter the 5-digit code we sent to your email address:
+            </h3>
+            {errorMessage !== '' && (
+              <ErrorMessage>
+                <ImgWithMargin src={warningIcon} alt="warning icon" />
+                {errorMessage}
+              </ErrorMessage>
+            )}
+            <FlexboxRow ref={otpRef}>
+              {otpSegments.map((value, key) => (
+                <OTP
+                  type="text"
+                  key={key}
+                  value={value}
+                  pattern="\d{1}"
+                  maxLength={1}
+                  autoComplete="off"
+                  onPaste={onOTPPaste}
+                  onChange={(e) => onOTPUpdate(key, e)}
+                />
+              ))}
+            </FlexboxRow>
+            <div>
+              <button type="submit">Finish</button>
+            </div>
+          </form>
+          <FlexboxCol style={{ color: 'white' }}>
+            Didn't receive the code?
+            <br />
+            <button onClick={submitSignupForm}>Resend code</button>
+            <button
+              onClick={() => {
+                setShowVerTab(false);
+                inputOnChange({ type: 'password', value: '' });
+              }}
+            >
+              Change email address
+            </button>
+          </FlexboxCol>
+        </div>
+      )}
+      {showLoginPage && (
+        <CardOverlay>
+          <OverlayContent>
+            <LoginForm
+              cancelHandler={() => setShowLoginPage(false)}
+              from={'/'}
+            />
+          </OverlayContent>
+        </CardOverlay>
+      )}
+    </div>
+  );
 };
 
-export default SignupForm
+export default SignupForm;
 
 const Signup = styled.form`
   display: flex;
@@ -342,14 +353,14 @@ const Signup = styled.form`
   justify-content: space-evenly;
   border-radius: 8px;
   width: 340px;
-`
+`;
 
 const EmailSingup = styled.section`
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 100%;
-`
+`;
 
 const SignupHeader = styled.header`
   font-size: 50px;
@@ -360,7 +371,7 @@ const SignupHeader = styled.header`
   padding-bottom: 20px;
   line-height: 50px;
   /* text-wrap: pretty; */
-`
+`;
 
 const Icon = styled.img<{ $left: number }>`
   height: 18px;
@@ -373,13 +384,13 @@ const Icon = styled.img<{ $left: number }>`
   top: 10px;
   left: ${(p) => p.$left}px;
   z-index: 2;
-`
+`;
 
 const FirstLastNamesSection = styled(FlexboxRow)`
   justify-content: space-between;
   position: relative;
   gap: 10px;
-`
+`;
 
 const InputSection = styled.section<{ $isInvalid: boolean }>`
   padding: 10px 0px;
@@ -405,7 +416,7 @@ const InputSection = styled.section<{ $isInvalid: boolean }>`
   > label {
     position: absolute;
   }
-`
+`;
 
 const SignupBtn = styled.button`
   margin-top: 30px;
@@ -423,7 +434,7 @@ const SignupBtn = styled.button`
     /* background-color: rgb(37, 88, 155); */
     background-color: #1c2727;
   }
-`
+`;
 
 const Separator = styled.span`
   text-align: center;
@@ -434,7 +445,7 @@ const Separator = styled.span`
   line-height: 0.7;
   color: grey;
   padding: 20px 0;
-`
+`;
 
 const GoogleSignup = styled.section`
   display: flex;
@@ -442,7 +453,7 @@ const GoogleSignup = styled.section`
   justify-content: center;
   margin: auto;
   width: 100%;
-`
+`;
 
 const GoogleBtn = styled.a`
   display: flex;
@@ -464,7 +475,7 @@ const GoogleBtn = styled.a`
     line-height: 1.6;
     color: black;
   }
-`
+`;
 
 const Footer = styled.section`
   margin-top: 30px;
@@ -490,7 +501,7 @@ const Footer = styled.section`
       text-decoration: none;
     }
   }
-`
+`;
 
 const OTP = styled.input`
   margin-right: 5px;
@@ -505,4 +516,4 @@ const OTP = styled.input`
     appearance: none;
     margin: 0;
   }
-`
+`;

@@ -1,41 +1,51 @@
-import { Broadcast } from 'types/broadcast'
-import sherikovic from '../../images/sherikovic.jpg'
-import styled from 'styled-components/macro'
-import { Img, EventItemNameDate, EventItemContent, EventItemFooter } from 'util/common_styles'
-import rideShareIcon from '../../images/rideshareicon.png'
-import natureIcon from '../../images/trekkingicon.png'
-import tourIcon from '../../images/touricon.png'
-import cityWalksIcon from '../../images/sightseeingicon.png'
+import { Broadcast } from 'types/broadcast';
+import sherikovic from '../../images/sherikovic.jpg';
+import styled from 'styled-components/macro';
+import {
+  Img,
+  EventItemNameDate,
+  EventItemContent,
+  EventItemFooter,
+} from 'util/common_styles';
+import rideShareIcon from '../../images/rideshareicon.png';
+import natureIcon from '../../images/trekkingicon.png';
+import tourIcon from '../../images/touricon.png';
+import cityWalksIcon from '../../images/sightseeingicon.png';
 
 interface EventItemProps {
-  event: Broadcast
-  key: string
+  event: Broadcast;
 }
 
-const EventItem: React.FC<EventItemProps> = ({ event, key }) => {
-  let imgType: string
+const EventItem: React.FC<EventItemProps> = ({ event }) => {
+  let imgType: string;
   switch (event.category) {
     case 'Ride Share':
-      imgType = rideShareIcon
-      break
+      imgType = rideShareIcon;
+      break;
     case 'Nature':
-      imgType = natureIcon
-      break
+      imgType = natureIcon;
+      break;
     case 'Tour':
-      imgType = tourIcon
-      break
+      imgType = tourIcon;
+      break;
     case 'City Walks':
-      imgType = cityWalksIcon
-      break
+      imgType = cityWalksIcon;
+      break;
     default:
-      imgType = ''
+      imgType = '';
   }
 
   return (
-    <EventContainer key={key}>
+    <EventContainer>
       <EventItemHeader>
         <a href="profile">
-          <StyledImg src={sherikovic} alt="user profile" $height={35} $width={35} $br={25} />
+          <StyledImg
+            src={sherikovic}
+            alt="user profile"
+            $height={35}
+            $width={35}
+            $br={25}
+          />
         </a>
         <EventItemNameDate>
           <a href={`events/${event._id}`}>{event.title}</a>
@@ -46,22 +56,31 @@ const EventItem: React.FC<EventItemProps> = ({ event, key }) => {
             }).format(new Date(event.datetime))}
           </h6>
         </EventItemNameDate>
-        <StyledImg src={imgType} alt="event type" $height={25} $width={25} $br={0} />
+        <StyledImg
+          src={imgType}
+          alt="event type"
+          $height={25}
+          $width={25}
+          $br={0}
+        />
       </EventItemHeader>
       <EventItemContent>
         <h4>{event.description}</h4>
       </EventItemContent>
       <EventItemFooter>
         <h6>
-          RSVP: {event.rsvp ? event.participants?.length + '/' + event.rsvp?.toString() : 'NA'}
+          RSVP:{' '}
+          {event.rsvp
+            ? event.participants?.length + '/' + event.rsvp?.toString()
+            : 'NA'}
         </h6>
         <a href={`events/${event._id}`}>+1</a>
       </EventItemFooter>
     </EventContainer>
-  )
-}
+  );
+};
 
-export default EventItem
+export default EventItem;
 
 const EventContainer = styled.div`
   display: flex;
@@ -73,7 +92,7 @@ const EventContainer = styled.div`
   padding: 10px;
   border-radius: 8px;
   background-color: #f4f0f0;
-`
+`;
 
 const EventItemHeader = styled.div`
   display: flex;
@@ -84,8 +103,8 @@ const EventItemHeader = styled.div`
     padding: 0px;
     font-size: 14px;
   }
-`
+`;
 
 const StyledImg = styled(Img)`
   position: relative;
-`
+`;

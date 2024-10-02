@@ -1,11 +1,11 @@
-import { useState } from 'react'
-import { FlexboxCol } from 'util/common_styles'
-import { useAuthCtx } from 'util/auth-context'
-import styled from 'styled-components'
+import { useState } from 'react';
+import { FlexboxCol } from 'util/common_styles';
+import { useAuthCtx } from 'util/auth-context';
+import styled from 'styled-components';
 
 const CurrentActions: React.FC = () => {
-  const [activeTab, setActiveTab] = useState('events')
-  const { isAuthenticated } = useAuthCtx()
+  const [activeTab, setActiveTab] = useState('events');
+  const { isAuthenticated } = useAuthCtx();
 
   return (
     <FlexboxCol style={{ minHeight: '250px' }}>
@@ -15,10 +15,10 @@ const CurrentActions: React.FC = () => {
       </CurrentActionsHeader>
       {!isAuthenticated && <div>Couldn&apos;t load information</div>}
     </FlexboxCol>
-  )
-}
+  );
+};
 
-export default CurrentActions
+export default CurrentActions;
 
 const CurrentActionsHeader = styled.div<{ $activeState: string }>`
   display: flex;
@@ -47,4 +47,4 @@ const CurrentActionsHeader = styled.div<{ $activeState: string }>`
       transition: ${(p) => p.$activeTab === 'events' && '0.2s ease-in-out'};
     }
   }
-`
+`;

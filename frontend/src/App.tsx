@@ -1,39 +1,43 @@
-import { RouterProvider, createBrowserRouter } from 'react-router-dom'
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 
 // Main Routes
-import LandingPage from './Pages/Landing'
-import RootHome, { loader as rootHomeLoader } from './Pages/RootHome'
-import SignupPage from 'Pages/Signup'
+import LandingPage from './Pages/Landing';
+import RootHome, { loader as rootHomeLoader } from './Pages/RootHome';
+import SignupPage from 'Pages/Signup';
 
 // Auth and Settings Routes
-import ErrorPage from './Pages/Error'
-import SettingsPage, { action as settingsFormAction } from './Pages/Settings'
+import ErrorPage from './Pages/Error';
+import SettingsPage, { action as settingsFormAction } from './Pages/Settings';
 
 // Trips Routes
-import TripDetailPage, { loader as tripDetailLoader } from './Pages/TripDetail'
-import TripsPage, { loader as tripsLoader } from './Pages/Trips'
+import TripDetailPage, { loader as tripDetailLoader } from './Pages/TripDetail';
+import TripsPage, { loader as tripsLoader } from './Pages/Trips';
 
 // Locations Routes
-import LocationsPage, { loader as locationsLoader } from './Pages/Locations'
+import LocationsPage, { loader as locationsLoader } from './Pages/Locations';
 import LocationDetailPage, {
   loader as locationDetailLoader,
   action as deleteLocationAction,
-} from './Pages/LocationDetail'
+} from './Pages/LocationDetail';
 
-
-import AboutPage from './Pages/About'
-import HowToUsePage from 'Pages/HowToUse'
-import FAQPage from 'Pages/FAQ'
-import ContactPage from 'Pages/Contact'
-import RootLanding from 'Pages/RootLanding'
+import AboutPage from './Pages/About';
+import HowToUsePage from 'Pages/HowToUse';
+import FAQPage from 'Pages/FAQ';
+import ContactPage from 'Pages/Contact';
+import RootLanding from 'Pages/RootLanding';
 
 // Util functions
-import { isUserLoggedIn } from 'util/util'
-import HomePage from 'Pages/Home'
-import EventsPage, { loader as eventsLoader } from 'Pages/Events'
-import EventDetailPage, { loader as eventDetailLoader } from 'Pages/EventDetail'
-import AuthProvider from 'util/AuthProvider'
-import ProfilePage from 'Components/Profile'
+import { isUserLoggedIn } from 'util/util';
+import HomePage from 'Pages/Home';
+import EventsPage, { loader as eventsLoader } from 'Pages/Events';
+import EventDetailPage, {
+  loader as eventDetailLoader,
+} from 'Pages/EventDetail';
+import AuthProvider from 'util/AuthProvider';
+import ProfilePage from 'Components/Profile';
+import ResetPassword, {
+  loader as resetPasswordLoader,
+} from 'Pages/ResetPassword';
 
 const router = createBrowserRouter([
   {
@@ -54,6 +58,11 @@ const router = createBrowserRouter([
         id: 'root-landing',
         element: <RootLanding />,
         children: [
+          {
+            path: 'reset-password/:id',
+            element: <ResetPassword />,
+            loader: resetPasswordLoader,
+          },
           {
             path: 'about',
             element: <AboutPage />,
@@ -130,14 +139,14 @@ const router = createBrowserRouter([
       },
     ],
   },
-])
+]);
 
 function App() {
   return (
     <AuthProvider>
       <RouterProvider router={router} />
     </AuthProvider>
-  )
+  );
 }
 
-export default App
+export default App;

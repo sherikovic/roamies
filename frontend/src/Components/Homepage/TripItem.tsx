@@ -1,14 +1,13 @@
-import { Trip } from 'types/trip'
-import styled from 'styled-components/macro'
+import { Trip } from 'types/trip';
+import styled from 'styled-components/macro';
 
 interface TripItemProps {
-  trip: Trip
-  key: string
+  trip: Trip;
 }
 
-const TripItem: React.FC<TripItemProps> = ({ trip, key }) => {
+const TripItem: React.FC<TripItemProps> = ({ trip }) => {
   return (
-    <TripItemLayout key={key}>
+    <TripItemLayout>
       {/* <div style={{width: "100%"}}>
 				<img src={china} alt="trip cover" style={{width: "100%", height: "100%"}} />
 			</div> */}
@@ -30,10 +29,10 @@ const TripItem: React.FC<TripItemProps> = ({ trip, key }) => {
         </h6>
       </TripItemContents>
     </TripItemLayout>
-  )
-}
+  );
+};
 
-export default TripItem
+export default TripItem;
 
 const TripItemLayout = styled.div`
   display: flex;
@@ -46,7 +45,7 @@ const TripItemLayout = styled.div`
   transition: all 0.2s ease-in-out;
   overflow: visible;
   filter: blur(0px);
-`
+`;
 
 const TripItemContents = styled.div`
   display: flex;
@@ -94,7 +93,7 @@ const TripItemContents = styled.div`
       overflow: hidden;
     }
   }
-`
+`;
 
 // <div className={styles.trip_item}>
 // 	<div className={styles.trip_image}>
