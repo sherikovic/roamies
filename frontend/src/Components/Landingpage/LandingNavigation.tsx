@@ -1,25 +1,11 @@
-import { useState } from 'react'
-import { Link, NavLink, useLocation } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 
-import LoginForm from '../Auth/LoginForm'
-import { authUser } from 'util/api'
 import logo from '../../images/logo.svg'
-import { CardOverlay, LogoLink, LogoWhite, OverlayContent } from 'util/common_styles'
+import { LogoLink, LogoWhite } from 'util/common_styles'
 import styled from 'styled-components/macro'
-import { useAuthCtx } from 'util/auth-context'
 
 const LandingNavigation: React.FC = () => {
-  const [showLoginOverlay, setShowLoginOverlay] = useState(false)
   const location = useLocation()
-  const { isAuthenticated } = useAuthCtx()
-
-  const logOutHandler = async () => {
-    const res = await authUser('logout', null)
-    if (res.status === 200) {
-      window.location.reload()
-    }
-    // TODO handle errors coming from the logout
-  }
 
   return (
     <LandingNavBar>
@@ -40,25 +26,6 @@ const LandingNavigation: React.FC = () => {
           Contact
         </NavLink>
       </LandingNavContainer>
-      {isAuthenticated ? (
-        <LandingNavLoginOptions>
-          <button onClick={logOutHandler}>Log out</button>
-        </LandingNavLoginOptions>
-      ) : (
-        <LandingNavLoginOptions>
-          <button onClick={() => setShowLoginOverlay(true)}>Log in</button>
-          <Link to="signup" state={{ from: location.pathname }}>
-            Sign up
-          </Link>
-        </LandingNavLoginOptions>
-      )}
-      {showLoginOverlay && (
-        <CardOverlay>
-          <OverlayContent>
-            <LoginForm cancelHandler={() => setShowLoginOverlay(false)} from={location.pathname} />
-          </OverlayContent>
-        </CardOverlay>
-      )}
     </LandingNavBar>
   )
 }
@@ -95,35 +62,35 @@ const LandingNavContainer = styled.nav`
   }
 `
 
-const LandingNavLoginOptions = styled.nav`
-  display: flex;
-  gap: 10px;
-  > button {
-    border: 1px solid transparent;
-    padding: 5px 15px;
-    cursor: pointer;
-    border-radius: 15px;
-    color: white;
-    background-color: transparent;
-    text-decoration: none;
-    font-size: 15px;
-    font-weight: 550;
-    &:hover {
-      border-color: grey;
-    }
-  }
-  > a {
-    border: 1px solid white;
-    padding: 5px 15px;
-    cursor: pointer;
-    border-radius: 15px;
-    font-size: 15px;
-    font-weight: 550;
-    color: black;
-    background-color: white;
-    text-decoration: none;
-    &:hover {
-      background-color: rgb(244, 244, 243);
-    }
-  }
-`
+// const LandingNavLoginOptions = styled.nav`
+//   display: flex;
+//   gap: 10px;
+//   > button {
+//     border: 1px solid transparent;
+//     padding: 5px 15px;
+//     cursor: pointer;
+//     border-radius: 15px;
+//     color: white;
+//     background-color: transparent;
+//     text-decoration: none;
+//     font-size: 15px;
+//     font-weight: 550;
+//     &:hover {
+//       border-color: grey;
+//     }
+//   }
+//   > a {
+//     border: 1px solid white;
+//     padding: 5px 15px;
+//     cursor: pointer;
+//     border-radius: 15px;
+//     font-size: 15px;
+//     font-weight: 550;
+//     color: black;
+//     background-color: white;
+//     text-decoration: none;
+//     &:hover {
+//       background-color: rgb(244, 244, 243);
+//     }
+//   }
+// `
