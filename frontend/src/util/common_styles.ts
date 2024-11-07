@@ -86,11 +86,6 @@ export const FlexboxRow = styled.div`
   display: flex;
 `
 
-export const FlexboxCol = styled.div`
-  display: flex;
-  flex-direction: column;
-`
-
 export const SliderBtn = styled.div<{ $opacity: number; $cursor: string }>`
   > img {
     opacity: ${(p) => p.$opacity};
@@ -101,12 +96,6 @@ export const SliderBtn = styled.div<{ $opacity: number; $cursor: string }>`
     cursor: ${(p) => p.$cursor};
     height: 30px;
   }
-`
-
-export const SettingsForm = styled(FlexboxCol)`
-  padding: 15px 30px 15px 30px;
-  margin: 0 auto 0;
-  width: 100%;
 `
 
 export const SettingsHeader = styled.p`
@@ -124,11 +113,6 @@ export const SettingsItem = styled(FlexboxRow)`
   padding: 20px 0;
   margin-top: 0;
   width: 100%;
-`
-
-export const SettingsBtnsSelect = styled(FlexboxCol)`
-  align-items: flex-start;
-  border-right: 1px solid var(--color-gray-700);
 `
 
 export const SettingsBtnSelect = styled.button<{ $selected: boolean }>`
@@ -281,28 +265,6 @@ export const Img = styled.img<{
 
 export const ImgWithMargin = styled(Img)`
   margin-right: 8px;
-`
-
-export const EventItemNameDate = styled(FlexboxCol)`
-  overflow: hidden;
-  width: 100%;
-  > a {
-    font-size: 14px;
-    padding: 0px;
-    font-weight: 550;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    text-decoration: none;
-    color: black;
-  }
-  > h6 {
-    font-size: 13px;
-    color: grey;
-    margin: 0px;
-    font-weight: normal;
-    line-height: 15px;
-  }
 `
 
 export const EventItemContent = styled(FlexboxRow)`

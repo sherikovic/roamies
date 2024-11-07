@@ -65,6 +65,9 @@
 	--color-primary-900: #0353a4; */
 }
 
+html { scroll-behavior: smooth; }
+
+
 body {
 	margin: 0;
 	font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
