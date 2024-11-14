@@ -13,3 +13,5 @@ export const useIsFirstRender = () => {
   }, [])
   return isMountRef.current
 }
+
+export const getIsMobile = () => window.matchMedia(`screen and (max-width: ${668}px)`).matches

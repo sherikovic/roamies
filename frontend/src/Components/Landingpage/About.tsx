@@ -4,52 +4,42 @@ import styled from 'styled-components/macro'
 
 export const About = () => {
   return (
-    <div id="/about">
-      <LandingPageBackground />
-      <LandingPageMainText>
-        <p>It&apos;s better, together!</p>
-        <p>From solo traverels, for solo traverels.</p>
-      </LandingPageMainText>
-    </div>
+    <LandingPageBackground>
+      <p className="text-4xl lg:text-8xl text-off-white z-10">It&apos;s better, together!</p>
+      <p className="text-xl lg:text-3xl text-off-white z-10">
+        From solo traverels, for solo traverels.
+      </p>
+      <Overlay />
+    </LandingPageBackground>
   )
 }
 
 const LandingPageBackground = styled.div`
-  display: block;
-  position: absolute;
   width: 100vw;
   height: 100vh;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-image: url(${landing});
-  filter: brightness(0.5);
-  &::before {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+
+  ::before {
+    filter: brightness(0.5);
+    background-image: url(${landing});
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
     content: '';
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(46, 45, 53, 0.527);
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
   }
 `
 
-const LandingPageMainText = styled.div`
-  > p:first-child {
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    top: 40%;
-    margin: auto;
-    font-size: 100px;
-    color: white;
-  }
-  > p:last-child {
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    top: 50%;
-    margin: auto;
-    font-size: 30px;
-    color: white;
-  }
+const Overlay = styled.div`
+  position: absolute;
+  width: 100%;
+  height: 100dvh;
+  background-color: rgba(46, 45, 53, 0.527);
 `

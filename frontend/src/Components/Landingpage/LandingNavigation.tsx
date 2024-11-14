@@ -1,51 +1,41 @@
-import logo from '../../images/logo.svg'
-import { LogoWhite } from 'util/common_styles'
-import styled from 'styled-components/macro'
+import SVG from 'react-inlinesvg'
+import logo from 'images/logo.svg'
+import { getIsMobile } from 'util/util'
 
 const LandingNavigation: React.FC = () => {
+  const isMobile = getIsMobile()
+  window.onscroll = function () {
+    if (isMobile) return
+    const nav = document.getElementById('navbar-container')
+    const logoElem = document.getElementById('logo-elem')
+    const navLinks = document.getElementById('nav-links')
+    if (this.scrollY >= 200) {
+      nav?.classList.remove('nav-normal')
+      nav?.classList.add('nav-scroll')
+      logoElem?.classList.remove('logo-large')
+      logoElem?.classList.add('logo-small')
+      navLinks?.classList.remove('nav-links-normal')
+      navLinks?.classList.add('nav-links-scroll')
+    } else {
+      nav?.classList.remove('nav-scroll')
+      nav?.classList.add('nav-normal')
+      logoElem?.classList.remove('logo-small')
+      logoElem?.classList.add('logo-large')
+      navLinks?.classList.remove('nav-links-scroll')
+      navLinks?.classList.add('nav-links-normal')
+    }
+  }
+
   return (
-    <LandingPageNavigation>
-      <LogoWhite src={logo} />
-      <LandingPageNavigationContainer>
-        <a href="/#about">About</a>
-        <a href="/#how-to-use">How to Use</a>
-        <a href="/#faq">FAQ</a>
-        <a href="/#contact">Contact</a>
-      </LandingPageNavigationContainer>
-    </LandingPageNavigation>
+    <div id="navbar-container" className="nav-normal">
+      <SVG id="logo-elem" src={logo} className="logo-large" />
+      <nav id="nav-links" className="nav-links-normal">
+        <a href="#about">About</a>
+        <a href="#features">Features</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
   )
 }
 
 export default LandingNavigation
-
-const LandingPageNavigation = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: transparent;
-  position: fixed;
-  z-index: 100;
-  width: 100%;
-  padding: 20px 60px;
-`
-
-const LandingPageNavigationContainer = styled.nav`
-  position: fixed;
-  left: 50%;
-  transform: translateX(-50%);
-  border: 1px solid transparent;
-  border-radius: 15px;
-  background-color: #00000029;
-  padding: 10px 45px;
-  > a {
-    margin: 0 30px;
-    text-decoration: none;
-    color: rgba(208, 202, 202, 0.926);
-    &:hover {
-      color: white;
-    }
-  }
-  > a.active {
-    color: white;
-  }
-`

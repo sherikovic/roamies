@@ -1,9 +1,12 @@
 /** @type {import('tailwindcss').Config} */
-module.exports = {
-  content: [],
+export default {
+  content: ['./src/**/*.html', './src/**/*.vue', './src/**/*.tsx'],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'off-white': '#e9ebf1',
+      },
+    },
   },
   plugins: [],
 }
-
