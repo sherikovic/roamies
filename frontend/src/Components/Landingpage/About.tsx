@@ -1,6 +1,7 @@
 import React from 'react'
 import landing from '../../images/landing_page.jpeg'
 import styled from 'styled-components/macro'
+import downloadApp from 'images/download-app.svg'
 
 export const About = () => {
   return (
@@ -9,6 +10,10 @@ export const About = () => {
       <p className="text-xl lg:text-3xl text-off-white z-10">
         From solo traverels, for solo traverels.
       </p>
+      <div className="flex gap-1 z-10 flex-col items-center mt-24">
+        <img src={downloadApp} alt="download app" className="z-10 w-48" />
+        <p className="text-xl lg:text-2xl text-off-white z-10">(Coming soon!)</p>
+      </div>
       <Overlay />
     </LandingPageBackground>
   )
