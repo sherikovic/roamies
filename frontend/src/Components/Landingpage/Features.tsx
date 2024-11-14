@@ -86,7 +86,7 @@ export const Features = () => {
       <div ref={mainContainerRef} className="flex justify-center items-center flex-col lg:flex-row">
         <div
           ref={container1ref}
-          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 left-24"
+          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 left-16"
         >
           <div
             ref={text1ref}
@@ -132,7 +132,7 @@ export const Features = () => {
         </div>
         <div
           ref={container3ref}
-          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 right-24"
+          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 right-16"
         >
           <div
             ref={text3ref}
