@@ -5,10 +5,9 @@ const cors = require("cors");
 
 const app = express();
 
-const MODE = "dev"
 const corsOptions = {
     origin:
-    MODE === "dev"
+    process.env.MODE === "dev"
     ? "http://localhost:3000"
     : /^https?:\/\/(?:.*\.)?roamies\.org$/,
     methods: ["GET", "POST", "PATCH", "DELETE", "OPTIONS"],
