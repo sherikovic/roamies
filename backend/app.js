@@ -17,8 +17,9 @@ app.use(bodyParser.json());
 app.use(cors(corsOptions));
 app.options("*", cors(corsOptions));
 
-app.listen(8080, () => {
-    console.log("Serving on Port 8080");
+const PORT = process.env.MODE === "dev" ? 8080 : process.env.PORT;
+app.listen(PORT, () => {
+    console.log(`Serving on Port ${PORT}`);
 });
 
 app.post("/sendemail", async (req, res) => {
