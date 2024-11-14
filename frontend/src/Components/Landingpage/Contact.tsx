@@ -1,14 +1,22 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { sendEmail } from 'util/api'
 
 export const Contact = () => {
-  const [name, setName] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [message, setMessage] = React.useState('')
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [success, setSuccess] = useState('')
 
-  const sendEmail = () => {
-    const link = `mailto:sherif.amer@gmail.com` + '&subject=' + '&body=' + message
-    window.location.href = link
+  const submitEmail = async () => {
+    const res = await sendEmail({ email, name, msg: message })
+    setSuccess(res.getJson.message)
+    if (res.ok) {
+      setName('')
+      setEmail('')
+      setMessage('')
+    }
   }
+
   return (
     <div
       id="contact"
@@ -39,18 +47,10 @@ export const Contact = () => {
         placeholder="Message"
         className="p-3 w-full rounded resize-none overflow-hidden bg-[rgba(255,255,255,0.10)] border border-[rgba(255,255,255,0.10)]"
       />
-      <button
-        onClick={() => {
-          sendEmail()
-          alert('Message sent!')
-          setName('')
-          setEmail('')
-          setMessage('')
-        }}
-        className="bg-[#214189] p-2 rounded-lg w-full"
-      >
+      <button onClick={() => submitEmail()} className="bg-[#214189] p-2 rounded-lg w-full">
         Send
       </button>
+      {success !== '' && <p className="text-off-white text-center">{success}</p>}
     </div>
   )
 }
