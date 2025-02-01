@@ -1,0 +1,23 @@
+{
+  "applinks": {
+    "apps": [],
+    "components": [
+      {
+        "/": "/reset-password/*",
+        "comment": "Matches any URL whose path starts with /reset-password/"
+      }
+    ],
+    "details": [
+      {
+        "appID": "H2HDLPCP63.org.roamies.frontend",
+        "paths": ["/reset-password/*"]
+      }
+    ]
+  },
+  "activitycontinuation": {
+    "apps": ["H2HDLPCP63.org.roamies.frontend"]
+  },
+  "webcredentials": {
+    "apps": ["H2HDLPCP63.org.roamies.frontend"]
+  }
+}

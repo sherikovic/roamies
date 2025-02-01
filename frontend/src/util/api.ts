@@ -72,4 +72,4 @@ export const deleteDBEntry = async <T>(type: string, id: string) =>
   await apiDelete<T>(`${type}/${id}`)
 
 export const sendEmail = async (data: { email: string; name: string; msg: string }) =>
-  await apiPost('sendemail', data)
+  await apiPost('utils/contact-support', data)
