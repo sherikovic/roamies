@@ -56,20 +56,5 @@ export const apiPost = async <T>(path: string, data: any) => await apiFetch<T>('
 export const apiPatch = async <T>(path: string, data: any) => await apiFetch<T>('PATCH', path, data)
 export const apiDelete = async <T>(path: string) => await apiFetch<T>('DELETE', path, null)
 
-// DB APIs
-// type should be either "events" or "trips"
-// T is either Broadcast or Trip respectively
-export const getAllDBEntries = async <T>(type: string, queryOptions?: string) =>
-  await apiGet<T[]>(queryOptions ? `${type}?${queryOptions}` : type)
-export const getUserDBEntries = async <T>(type: string, id: string) =>
-  await getAllDBEntries<T>(type, `userId=${id}`)
-export const getDBEntry = async <T>(type: string, id: string) => await apiGet<T>(`${type}/${id}`)
-export const createDBEntry = async <T>(type: string, data: Partial<T> | any) =>
-  await apiPost<T>(type, data)
-export const updateDBEntry = async <T>(type: string, id: string, data: Partial<T> | any) =>
-  await apiPatch<T>(`${type}/${id}`, data)
-export const deleteDBEntry = async <T>(type: string, id: string) =>
-  await apiDelete<T>(`${type}/${id}`)
-
 export const sendEmail = async (data: { email: string; name: string; msg: string }) =>
   await apiPost('utils/contact-support', data)
