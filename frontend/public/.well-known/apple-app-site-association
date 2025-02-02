@@ -10,14 +10,21 @@
     "details": [
       {
         "appID": "H2HDLPCP63.org.roamies.frontend",
-        "paths": ["/reset-password/*"]
+        "paths": [
+          "/reset-password/*",
+          "/event/*"
+        ]
       }
     ]
   },
   "activitycontinuation": {
-    "apps": ["H2HDLPCP63.org.roamies.frontend"]
+    "apps": [
+      "H2HDLPCP63.org.roamies.frontend"
+    ]
   },
   "webcredentials": {
-    "apps": ["H2HDLPCP63.org.roamies.frontend"]
+    "apps": [
+      "H2HDLPCP63.org.roamies.frontend"
+    ]
   }
 }
