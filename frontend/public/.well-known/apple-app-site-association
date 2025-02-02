@@ -5,6 +5,10 @@
       {
         "/": "/reset-password/*",
         "comment": "Matches any URL whose path starts with /reset-password/"
+      },
+      {
+        "/": "/event/*",
+        "comment": "Matches any URL whose path starts with /event/"
       }
     ],
     "details": [
