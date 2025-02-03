@@ -1,9 +1,10 @@
-import { About } from 'Components/Landingpage/About'
-import { Contact } from 'Components/Landingpage/Contact'
+import LandingNavigation from 'Components/Landingpage/LandingNavigation'
 import { CoolMobileApp } from 'Components/Landingpage/CoolMobileApp'
 import { Description } from 'Components/Landingpage/Description'
 import { Features } from 'Components/Landingpage/Features'
-import LandingNavigation from 'Components/Landingpage/LandingNavigation'
+import { Contact } from 'Components/Landingpage/Contact'
+import { About } from 'Components/Landingpage/About'
+import Footer from 'Components/Landingpage/Footer'
 
 const LandingPage: React.FC = () => {
   return (
@@ -15,6 +16,7 @@ const LandingPage: React.FC = () => {
         <CoolMobileApp />
         <Features />
         <Contact />
+        <Footer />
       </div>
     </>
   )
