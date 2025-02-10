@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { sendEmail } from 'util/api'
 
 export const Contact = () => {
@@ -9,11 +9,13 @@ export const Contact = () => {
 
   const submitEmail = async () => {
     const res = await sendEmail({ email, name, msg: message })
-    setSuccess(res.getJson.message)
     if (res.ok) {
+      setSuccess(res.getJson.message)
       setName('')
       setEmail('')
       setMessage('')
+    } else {
+      setSuccess('An error occured!')
     }
   }
 
@@ -47,7 +49,7 @@ export const Contact = () => {
         placeholder="Message"
         className="p-3 w-full rounded resize-none overflow-hidden bg-[rgba(255,255,255,0.10)] border border-[rgba(255,255,255,0.10)]"
       />
-      <button onClick={() => submitEmail()} className="bg-[#214189] p-2 rounded-lg w-full">
+      <button onClick={submitEmail} className="bg-[#214189] p-2 rounded-lg w-full">
         Send
       </button>
       {success !== '' && <p className="text-off-white text-center">{success}</p>}

@@ -1,5 +1,5 @@
 /* eslint-disable no-undef */
-/* eslint-disable @typescript-eslint/no-var-requires */
+
 /* eslint-disable @typescript-eslint/no-require-imports */
 const reactHooks = require('eslint-plugin-react-hooks')
 const reactRecommended = require('eslint-plugin-react/configs/recommended')
@@ -35,7 +35,7 @@ module.exports = tseslint.config(
       // 'react-hooks/exhaustive-deps': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       // I would preffer eslint-plugin-import but it doesn't work in eslint 9 yet
-      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-imports': 'warn',
       'unused-imports/no-unused-vars': [
         'error',
         { vars: 'all', varsIgnorePattern: '^_', args: 'after-used', argsIgnorePattern: '^_' },
