@@ -1,6 +1,6 @@
-import SVG from 'react-inlinesvg'
-import logo from 'images/logo.svg'
 import { getIsMobile } from 'util/util'
+import logo from 'images/icon.svg'
+import SVG from 'react-inlinesvg'
 
 const LandingNavigation: React.FC = () => {
   const isMobile = getIsMobile()
@@ -28,7 +28,12 @@ const LandingNavigation: React.FC = () => {
 
   return (
     <div id="navbar-container" className="nav-normal">
-      <SVG id="logo-elem" src={logo} className="logo-large" />
+      <div className="logo-container">
+        <SVG src={logo} id="logo-elem" className="logo-large" />
+        <p id="logo-elem" className="logo-large">
+          Roamies
+        </p>
+      </div>
       <nav id="nav-links" className="nav-links-normal">
         <a href="#about">About</a>
         <a href="#features">Features</a>

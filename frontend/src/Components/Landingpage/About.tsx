@@ -11,8 +11,17 @@ export const About = () => {
         From solo traverels, for solo traverels.
       </p>
       <div className="flex gap-1 z-10 flex-col items-center mt-24">
-        <img src={downloadApp} alt="download app" className="z-10 w-48" />
-        <p className="text-xl lg:text-2xl text-off-white z-10">(Coming soon!)</p>
+        <img
+          src={downloadApp}
+          alt="download app"
+          className="z-10 w-48 cursor-pointer"
+          onClick={() =>
+            window.open(
+              'https://apps.apple.com/us/app/roamies-adventure-together/id6740840624',
+              '_blank',
+            )
+          }
+        />
       </div>
       <Overlay />
     </LandingPageBackground>
