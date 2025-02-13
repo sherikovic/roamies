@@ -139,6 +139,22 @@
 	}
 }
 
+.logo-text-large {
+	font-size: large;
+	font-weight: bold;
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
+}
+
+.logo-text-small {
+	font-size: medium;
+	font-weight: bold;
+	@media screen and (max-width: 768px) {
+		display: none;
+	}
+}
+
 :root {
 	font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
 
