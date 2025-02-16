@@ -22,7 +22,7 @@ module.exports.setRedirectUrl = (req, res, next) => {
 			"redirectUrl",
 			process.env.MODE === "dev"
 				? "http://localhost:3000"
-				: "https://roamies.org"
+				: "https://roamies.xyz"
 		);
 	}
 	next();

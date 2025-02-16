@@ -36,7 +36,7 @@ module.exports.verifyEmail = async (req, res) => {
 
     const msg = {
       to: email,
-      from: 'no-reply@roamies.org',
+      from: 'no-reply@roamies.xyz',
       template_id: 'd-f1fcdee077b84a1ea782f4d7cd66d3ed',
       dynamic_template_data: {
         name: firstname,
@@ -144,7 +144,7 @@ module.exports.resetPassword = async (req, res) => {
     const resetUrl = `http://localhost:3000/reset-password/${token}`;
     const msg = {
       to: user.email,
-      from: 'no-reply@roamies.org',
+      from: 'no-reply@roamies.xyz',
       template_id: 'd-edb1ee6a03924e9485fa70816bb47cad',
       dynamic_template_data: {
         name: user.firstname,
