@@ -1,59 +1,39 @@
-import React from 'react'
-import landing from '../../images/landing_page.jpeg'
-import styled from 'styled-components/macro'
-import downloadApp from 'images/download-app.svg'
+import arrowDownShort from 'assets/icons/arrow-down-short.svg'
+import SVG from 'react-inlinesvg'
 
 export const About = () => {
   return (
-    <LandingPageBackground>
-      <p className="text-4xl lg:text-8xl text-off-white z-10">It&apos;s better, together!</p>
-      <p className="text-xl lg:text-3xl text-off-white z-10">
-        From solo traverels, for solo traverels.
-      </p>
-      <div className="flex gap-1 z-10 flex-col items-center mt-24">
-        <img
-          src={downloadApp}
-          alt="download app"
-          className="z-10 w-48 cursor-pointer"
-          onClick={() =>
-            window.open(
-              'https://apps.apple.com/us/app/roamies-adventure-together/id6740840624',
-              '_blank',
-            )
-          }
-        />
+    <section className="flex flex-col items-center w-svw h-svh background">
+      <div className="flex flex-col flex-1 justify-between items-center w-full h-full mt-80 px-20 max-w-[70vw]">
+        <div className="flex flex-col justify-center items-center gap-10">
+          <p className="font-drukSuper text-lg lg:text-4xl text-[#ebe7e7] z-10 text-center">
+            Turn Solo Travel into Shared Adventures
+          </p>
+          <p className="poppins-medium text-base lg:text-xl text-[#dfdbdb] z-10 text-center">
+            Discover events, meet like-minded travelers, and make plans instantly.
+            <br />
+            No endless chats—just real connections.
+          </p>
+        </div>
+        <button
+          onClick={() => {}} //TODO show a QR code
+          className="poppins-semibold text-black lg:text-base cursor-pointer z-10 bg-[#ffa600] hover:bg-[#cf9b3a] px-11 py-4 rounded-full shadow-sm shadow-[#302e2e] mt-20 transition-colors ease-in-out duration-300"
+        >
+          Get the app
+        </button>
+        <div className="flex flex-col items-center gap-5 w-full">
+          <a
+            href="#jump-down"
+            className="z-10 mb-5"
+            onClick={(e) => {
+              e.preventDefault()
+              e.currentTarget.scrollIntoView({ behavior: 'auto', block: 'start' })
+            }}
+          >
+            <SVG src={arrowDownShort} className="arrow-down z-30" />
+          </a>
+        </div>
       </div>
-      <Overlay />
-    </LandingPageBackground>
+    </section>
   )
 }
-
-const LandingPageBackground = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-
-  ::before {
-    filter: brightness(0.5);
-    background-image: url(${landing});
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    content: '';
-    position: absolute;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
-  }
-`
-
-const Overlay = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100dvh;
-  background-color: rgba(46, 45, 53, 0.527);
-`

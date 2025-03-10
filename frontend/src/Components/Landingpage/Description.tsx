@@ -1,93 +1,49 @@
-import React, { useEffect } from 'react'
-import descImg1 from 'images/About photo 1.png'
-import descImg2 from 'images/About photo 2.png'
-import descImg3 from 'images/About photo 3.png'
-import { animate, inView } from 'motion'
+import { useRef } from 'react'
+import descImg3 from 'assets/images/alone-at-dawn.png'
 
 export const Description = () => {
-  const container1ref = React.useRef<HTMLDivElement>(null)
-  const container2ref = React.useRef<HTMLDivElement>(null)
-  const container3ref = React.useRef<HTMLDivElement>(null)
-  const img1ref = React.useRef<HTMLImageElement>(null)
-  const img2ref = React.useRef<HTMLImageElement>(null)
-  const img3ref = React.useRef<HTMLImageElement>(null)
-  const text1ref = React.useRef<HTMLParagraphElement>(null)
-  const text2ref = React.useRef<HTMLParagraphElement>(null)
-  const text3ref = React.useRef<HTMLParagraphElement>(null)
-
-  useEffect(() => {
-    inView(container1ref.current!, () => {
-      animate(
-        img1ref.current!,
-        { transform: ['translateX(-100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text1ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
-  useEffect(() => {
-    inView(container2ref.current!, () => {
-      animate(
-        img2ref.current!,
-        { transform: ['translateX(100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text2ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
-  useEffect(() => {
-    inView(container3ref.current!, () => {
-      animate(
-        img3ref.current!,
-        { transform: ['translateX(-100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text3ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
+  const container1ref = useRef<HTMLDivElement>(null)
+  const container2ref = useRef<HTMLDivElement>(null)
+  const container3ref = useRef<HTMLDivElement>(null)
+  const img1ref = useRef<HTMLImageElement>(null)
+  const text1ref = useRef<HTMLParagraphElement>(null)
+  const text2ref = useRef<HTMLParagraphElement>(null)
+  const text3ref = useRef<HTMLParagraphElement>(null)
 
   return (
-    <div id="about" className="bg-[#000900] py-5 lg:px-32 px-4">
-      <p className="text-off-white text-xl lg:text-4xl text-center">
-        Join Roamies and start your next amazing journey!
-      </p>
-      <div className="flex flex-col justify-center items-center py-4 lg:py-16 gap-4 lg:gap-0">
-        <div ref={container1ref} className="gap-4  lg:gap-20 flex justify-center items-center">
+    <div id="about" className="bg-white py-5 lg:px-32 px-4">
+      <div className="flex flex-col justify-center items-center py-4 lg:py-16 gap-4 lg:gap-32">
+        <div ref={container1ref} className="relative w-full flex self-start items-center">
+          {/* TODO add shadows to the images */}
           <img
             ref={img1ref}
-            src={descImg1}
+            src={descImg3}
             alt="descImg1"
-            className="lg:w-full w-[50vw] translate-x-[-100%] rounded"
+            className="lg:w-[50%] w-[50vw] h-[600px] rounded sepia-[0.25] brightness-[0.75]"
           />
-          <p ref={text1ref} className="text-off-white opacity-0 text-xs lg:text-2xl">
-            Roamies is designed specifically for solo travelers, allowing travelers from around the
-            world to create and join travel activities or plans.{' '}
+          {/* TODO slow y translate down the text as you scroll down */}
+          <p
+            ref={text1ref}
+            className="font-drukMedium absolute left-[550px] top-20 text-black text-xs lg:text-3xl w-[42%] z-10"
+          >
+            There’s a difference between choosing solitude… and feeling alone in a crowd of
+            strangers.
           </p>
         </div>
-        <div ref={container2ref} className="gap-4  lg:gap-20 flex justify-center items-center">
-          <p ref={text2ref} className="text-off-white opacity-0 text-xs lg:text-2xl">
-            Here, you can not only meet new friends but also travel together to share
-            transportation, accommodation, and activity costs, saving on travel expenses.{' '}
+        <div ref={container2ref} className="gap-4 lg:gap-20 flex justify-center items-center">
+          <p
+            ref={text2ref}
+            className="font-drukMedium text-black text-xs lg:text-3xl w-[60%] text-justify"
+          >
+            Strangers cross paths, but opportunities slip away. You wish there was an easy way to
+            find like-minded travelers nearby.
           </p>
-          <img
-            ref={img2ref}
-            src={descImg2}
-            alt="descImg2"
-            className="lg:w-full w-[50vw] translate-x-full rounded"
-          />
+          {/* <img ref={img2ref} src={descImg2} alt="descImg2" className="lg:w-full w-[50vw] rounded" /> */}
         </div>
         <div ref={container3ref} className="gap-4 lg:gap-20 flex justify-center items-center">
-          <img
-            ref={img3ref}
-            src={descImg3}
-            alt="descImg3"
-            className="lg:w-full w-[50vw] translate-x-[-100%] rounded"
-          />
-          <p ref={text3ref} className="text-off-white opacity-0 text-xs lg:text-2xl">
-            We believe that travel should not be a lonely adventure but a wonderful journey filled
-            with friendships and memories.{' '}
+          <p ref={text3ref} className="font-drukMedium text-black text-xs lg:text-3xl text-center">
+            So we created something that does exactly that. To help you find companions and{' '}
+            <span className="font-drukSuper text-blue-800">share your journey.</span>
           </p>
         </div>
       </div>

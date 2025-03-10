@@ -2,6 +2,77 @@
 @tailwind components;
 @tailwind utilities;
 
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,900;1,400&display=swap');
+
+
+@font-face {
+	font-family: 'Druk-Bold';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-Bold-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-BoldItalic';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-BoldItalic-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-Heavy';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-Heavy-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-HeavyItalic';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-HeavyItalic-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-Medium';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-Medium-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-Medium-Italic';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-MediumItalic-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-Super';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-Super-Trial.otf');
+}
+@font-face {
+	font-family: 'Druk-Super-Italic';
+	src: url('./assets/fonts/Druk_Text_Wide/DrukTextWide-SuperItalic-Trial.otf');
+}
+
+.poppins-light {
+  font-family: "Poppins", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-italic {
+  font-family: "Poppins", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-black {
+  font-family: "Poppins", serif;
+  font-weight: 900;
+  font-style: normal;
+}
 
 * {
 	box-sizing: border-box;
@@ -17,7 +88,7 @@
 	z-index: 100;
 	width: 100%;
 	padding: 20px 60px;
-	transition: all 150ms ease;
+	transition: all 250ms ease;
 
 	@media screen and (max-width: 768px) {
 		position: fixed;
@@ -26,7 +97,7 @@
 		width: 100%;
 		z-index: 1000;
 		background-color: #060606bf;
-		transition: all 150ms ease;
+		transition: all 250ms ease;
 		box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 		padding: 12px;
 		backdrop-filter: blur(10px);
@@ -41,11 +112,13 @@
 	width: 100%;
 	z-index: 1000;
 	background-color: #060606bf;
-	transition: all 150ms ease;
+	transition: all 250ms ease;
 	box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+	height: 70px;
 	padding: 12px;
 	backdrop-filter: blur(10px);
 	box-shadow: 1px 1px 10px 1px rgba(0, 0, 0, 0.1);
+	mask-image: linear-gradient(180deg,#060606 90%,transparent);
 	-webkit-mask-image: linear-gradient(180deg,#060606 90%,transparent);
 
 }
@@ -117,7 +190,7 @@
 	font-weight: bold;
 
 	> g {
-		fill: #ffffff;
+		fill: blue;
 	  }
 	@media screen and (max-width: 768px) {
 		max-width: 3rem;
@@ -155,8 +228,65 @@
 	}
 }
 
+.arrow-container {
+	display: inline-block;
+	position: relative;
+	width: 2rem;
+	height: 2rem;
+}
+
+.arrow-down {
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+	transform: scaleX(1.5);
+	> path {
+		fill: #ffffff;
+	}
+	&:hover {
+		transform: scaleX(2);
+	}
+}
+
+/* Initial state */
+/* .normal {
+  opacity: 1;
+  visibility: visible;
+  transform: scaleX(2);
+}
+.hover {
+	opacity: 0;
+	visibility: hidden;
+}
+  
+.arrow-container:hover .normal {
+	opacity: 0;
+	visibility: hidden;
+}
+.arrow-container:hover .hover {
+	opacity: 1;
+	visibility: visible;
+}
+.arrow-container:hover .arrow-down {
+	transform: translateY(3px);
+} */
+
+.background::before {
+	filter: brightness(0.4);
+	background-image: url('./assets/images/group-friends.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	content: '';
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+
 :root {
-	font-family: Inter, Avenir, Helvetica, Arial, sans-serif;
+	font-family: Duke Wide, Inter, Avenir, Helvetica, Arial, sans-serif;
 
 	/* color-scheme: light dark; */
 	color: #e9ebf1;
@@ -222,9 +352,7 @@ background-color: #060606;
 
 body {
 	margin: 0;
-	font-family: sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI",
-		"Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
-		"Helvetica Neue", sans-serif;
+	font-family: "Duke Wide";
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	/* padding: 7rem 15rem; */
@@ -239,6 +367,11 @@ ul {
 	padding: 0;
 }
 
+video {
+	display: inline-block;
+	max-width: 100%;
+}
+
 input, textarea {
 	font-family: inherit;
 	font-size: inherit;
@@ -248,4 +381,42 @@ input, textarea {
 	&:focus-visible {
 		outline: none;
 	}
+}
+
+.video-container {
+	grid-column: 1;
+	grid-row: 1;
+	height: 100%;
+	width: 100%;
+	--overlay-opacity: 1;
+}
+
+.video-container::before {
+	background: radial-gradient(50% 50% at 50% 50%,#0c101800 0,#0c101880);
+	content: "";
+	display: block;
+	height: 100%;
+	left: 0;
+	position: absolute;
+	top: 0;
+	width: 100%;
+	
+}
+
+.video-container::after {
+	/* background: radial-gradient(50% 50% at 50% 50%,#0c101800 0,#0c101880); */
+	content: "";
+	display: block;
+	height: 100%;
+	left: 0;
+	opacity: var(--overlay-opacity);
+	position: absolute;
+	top: 0;
+	width: 100%;
+}
+
+.video-container video {
+	height: 100%;
+	object-fit: cover;
+	width: 100%;
 }

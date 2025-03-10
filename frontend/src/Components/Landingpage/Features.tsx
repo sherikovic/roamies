@@ -1,157 +1,54 @@
-import React, { useEffect } from 'react'
-import createEvent from 'images/create-event.png'
-import findEvents from 'images/find-events.png'
-import filter from 'images/filter.png'
-import { inView, animate } from 'motion'
-import { getIsMobile } from 'util/util'
+import EventPage from 'assets/images/screenshots/event_page.jpeg'
+import Dashboard from 'assets/images/screenshots/dashboard.jpeg'
+import Comments from 'assets/images/screenshots/comments.jpeg'
+import Create from 'assets/images/screenshots/create.png'
 
-export const Features = () => {
-  const isMobile = getIsMobile()
-  const mainContainerRef = React.useRef<HTMLDivElement>(null)
-  const container1ref = React.useRef<HTMLDivElement>(null)
-  const container2ref = React.useRef<HTMLDivElement>(null)
-  const container3ref = React.useRef<HTMLDivElement>(null)
-  const img1ref = React.useRef<HTMLImageElement>(null)
-  const img2ref = React.useRef<HTMLImageElement>(null)
-  const img3ref = React.useRef<HTMLImageElement>(null)
-  const text1ref = React.useRef<HTMLParagraphElement>(null)
-  const text2ref = React.useRef<HTMLParagraphElement>(null)
-  const text3ref = React.useRef<HTMLParagraphElement>(null)
-
-  useEffect(() => {
-    if (isMobile) return
-    inView(mainContainerRef.current!, () => {
-      animate(
-        img1ref.current!,
-        { transform: ['translateY(100%)', 'translateY(0%)'] },
-        { duration: 0.5, delay: 0.3 },
-      )
-      animate(text1ref.current!, { opacity: 1 }, { duration: 0.5 })
-      animate(
-        img2ref.current!,
-        { transform: ['translateY(100%)', 'translateY(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text2ref.current!, { opacity: 1 }, { duration: 0.5 })
-      animate(
-        img3ref.current!,
-        { transform: ['translateY(100%)', 'translateY(0%)'] },
-        { duration: 0.5, delay: 0.5 },
-      )
-      animate(text3ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!isMobile) return
-    inView(container1ref.current!, () => {
-      animate(
-        img1ref.current!,
-        { transform: ['translateX(-100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text1ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!isMobile) return
-    inView(container2ref.current!, () => {
-      animate(
-        img2ref.current!,
-        { transform: ['translateX(100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text2ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
-  useEffect(() => {
-    if (!isMobile) return
-    inView(container3ref.current!, () => {
-      animate(
-        img3ref.current!,
-        { transform: ['translateX(-100%)', 'translateX(0%)'] },
-        { duration: 0.5 },
-      )
-      animate(text3ref.current!, { opacity: 1 }, { duration: 0.5 })
-    })
-  }, [])
-
+export default function Features() {
   return (
-    <div id="features" className="bg-[#000900] py-10 lg:px-32 px-4 gap-12 flex flex-col">
-      <p className="text-off-white  text-xl lg:text-4xl text-center">
-        Discover the Features That Make Travel Better
-      </p>
-      <div ref={mainContainerRef} className="flex justify-center items-center flex-col lg:flex-row">
-        <div
-          ref={container1ref}
-          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 left-16"
-        >
-          <div
-            ref={text1ref}
-            className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
-          >
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-xl">
-              Create & Share Events
-            </p>
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-md">
-              Easily organize and share travel events, meetups, or group activities with the
-              community.
-            </p>
-          </div>
-          <img
-            ref={img1ref}
-            className="max-w-[50%] lg:max-w-full lg:w-full translate-x-[-100%] lg:translate-x-0"
-            src={findEvents}
-            alt="createEvent"
-          />
+    <div className="flex flex-col w-svw gap-32 bg-white px-[80px]">
+      <div className="relative flex justify-between items-center">
+        <div className="w-full flex justify-center">
+          <img src={EventPage} alt="Event page" className="lg:h-[700px] lg:w-[320px]" />
+          <img src={Comments} alt="Event page" className="lg:h-[700px] lg:w-[320px]" />
         </div>
-        <div
-          ref={container2ref}
-          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row lg:z-10"
-        >
-          <div
-            ref={text2ref}
-            className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
-          >
-            <p className="text-off-white max-w-full lg:max-w-[60%] text-right lg:text-center text-xl">
-              Search & Join Experiences
-            </p>
-            <p className="text-off-white max-w-full lg:max-w-[60%] text-right lg:text-center text-md">
-              Discover and join events that match your interests, from city tours to outdoor
-              adventures.
-            </p>
-          </div>
-          <img
-            ref={img2ref}
-            className="max-w-[50%] lg:max-w-full lg:w-full translate-x-[100%] lg:translate-x-0"
-            src={createEvent}
-            alt="findEvent"
-          />
+        <div className="flex flex-col w-full gap-5">
+          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">
+            We made it personal, not just social
+          </p>
+          <p className="poppins-regular text-black lg:text-xl w-[75%]">
+            No endless chats. No lost messages in a sea of conversations. Just direct, personal
+            connections. Pick an event, join instantly, and meet people in real life—without the
+            small talk holding you back.
+          </p>
         </div>
-        <div
-          ref={container3ref}
-          className="gap-5 lg:gap-5 flex-1 lg:flex-col flex justify-center items-center flex-row-reverse lg:relative top-12 right-16"
-        >
-          <div
-            ref={text3ref}
-            className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
-          >
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-xl">
-              Filter Your Search
-            </p>
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-md">
-              Use filters to quickly find events by location, activity, or budget that fit your
-              needs.
-            </p>
-          </div>
-          <img
-            ref={img3ref}
-            className="max-w-[50%] lg:max-w-full lg:w-full translate-x-[-100%] lg:translate-x-0"
-            src={filter}
-            alt="filter"
-          />
+      </div>
+      <div className="relative flex justify-between items-center">
+        <div className="w-full flex justify-center">
+          <img src={Dashboard} alt="Event page" className="lg:h-[700px] lg:w-[320px]" />
+        </div>
+        <div className="flex flex-col w-full gap-5">
+          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">Plan Less, Do More</p>
+          <p className="poppins-regular text-black lg:text-xl w-[75%]">
+            All your events and trips in one place—effortlessly managed, so you can focus on the
+            experience, not the planning. Whether you&apos;re hosting or joining, everything stays
+            clear and simple.
+          </p>
+        </div>
+      </div>
+      <div className="relative flex justify-between items-center">
+        <div className="w-full flex justify-center">
+          <img src={Create} alt="Event page" className="lg:h-[700px]" />
+        </div>
+        <div className="flex flex-col w-full gap-5">
+          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">
+            Pick a time, add the vibe, and you&apos;re set!
+          </p>
+          <p className="poppins-regular text-black lg:text-xl w-[75%]">
+            We wanted Roamies to be more than just another event app. It&apos;s about giving you the
+            freedom to shape your own experiences. Whether it&apos;s setting the vibe, choosing the
+            details, or deciding who joins in—you&apos;re in control. No rigid plans, no
+            restrictions. Just effortless planning, made personal.
+          </p>
         </div>
       </div>
     </div>

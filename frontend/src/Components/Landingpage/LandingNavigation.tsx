@@ -1,5 +1,5 @@
 import { getIsMobile } from 'util/util'
-import logo from 'images/icon.svg'
+import logo from 'assets/images/icon.svg'
 import SVG from 'react-inlinesvg'
 
 const LandingNavigation: React.FC = () => {
@@ -35,14 +35,37 @@ const LandingNavigation: React.FC = () => {
     <div id="navbar-container" className="nav-normal">
       <div className="logo-container">
         <SVG src={logo} id="logo-elem" className="logo-large" />
-        <p id="logo-text" className="logo-text-large">
-          Roamies
-        </p>
       </div>
       <nav id="nav-links" className="nav-links-normal">
-        <a href="#about">About</a>
-        <a href="#features">Features</a>
-        <a href="#contact">Contact</a>
+        <a
+          href="#about"
+          onClick={(e) => {
+            e.preventDefault()
+            document.querySelector('#about')?.scrollIntoView({ behavior: 'auto', block: 'start' })
+          }}
+        >
+          About
+        </a>
+        <a
+          href="#features"
+          onClick={(e) => {
+            e.preventDefault()
+            document
+              .querySelector('#features')
+              ?.scrollIntoView({ behavior: 'auto', block: 'start' })
+          }}
+        >
+          Features
+        </a>
+        <a
+          href="#contact"
+          onClick={(e) => {
+            e.preventDefault()
+            document.querySelector('#contact')?.scrollIntoView({ behavior: 'auto', block: 'start' })
+          }}
+        >
+          Contact
+        </a>
       </nav>
     </div>
   )

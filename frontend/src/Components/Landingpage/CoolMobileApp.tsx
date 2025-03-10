@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import appScreenshot from 'images/app-screenshot.png'
+import appScreenshot from 'assets/images/app-screenshot.png'
 import { inView, animate } from 'motion'
 
 export const CoolMobileApp = () => {

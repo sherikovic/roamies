@@ -22,7 +22,7 @@ export const Contact = () => {
   return (
     <div
       id="contact"
-      className="flex flex-col items-center justify-centerbg-[#0f1012] py-32 gap-5 lg:max-w-[600px] self-center max-w-full w-full p-7 lg:w-[600px]"
+      className="flex flex-col items-center justify-center py-32 gap-5 lg:max-w-[600px] self-center max-w-full w-full p-7 lg:w-[600px]"
     >
       <p className="text-off-white lg:text-4xl text-center text-xl">Contact Us</p>
       <div className="flex items-center justify-center gap-5 lg:gap-7 w-full flex-col lg:flex-row">

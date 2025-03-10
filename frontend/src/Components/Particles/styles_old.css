@@ -1,0 +1,70 @@
+/* Replace all previous .principles-container rules with: */
+.principles-container {
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #0a0a0a; /* Add dark background */
+    padding: 4rem 0;
+  }
+  
+  .timeline-connector {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    height: 80%;
+    width: 2px;
+    background: rgba(255,255,255,0.3);
+    opacity: 0;
+  }
+  
+  .principle-orb {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    backdrop-filter: blur(5px);
+    border: 1px solid rgba(255,255,255,0.2);
+    opacity: 0;
+    transform: translateY(50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: white;
+  }
+  
+  .principle-orb {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%; /* Ensures circular shape */
+    background: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.3); /* Visible border */
+    backdrop-filter: blur(5px);
+    opacity: 0;
+    transform: translateY(50px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2rem;
+    color: white;
+    /* Add shadow for depth */
+    box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+  }
+  
+  /* Temporary debug styling */
+  .principles-container {
+    border: 1px solid red; /* To verify container bounds */
+  }
+  
+  .timeline-connector {
+    background: #fff !important; /* Force visible line */
+    opacity: 1 !important; /* Override animations temporarily */
+  }
