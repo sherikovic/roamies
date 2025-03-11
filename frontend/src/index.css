@@ -367,56 +367,95 @@ ul {
 	padding: 0;
 }
 
-video {
-	display: inline-block;
-	max-width: 100%;
-}
-
-input, textarea {
-	font-family: inherit;
-	font-size: inherit;
-	&:focus {
-		outline: none;
-	}
-	&:focus-visible {
-		outline: none;
-	}
-}
-
-.video-container {
-	grid-column: 1;
-	grid-row: 1;
-	height: 100%;
-	width: 100%;
-	--overlay-opacity: 1;
-}
-
-.video-container::before {
-	background: radial-gradient(50% 50% at 50% 50%,#0c101800 0,#0c101880);
-	content: "";
-	display: block;
-	height: 100%;
-	left: 0;
+.qr-code-container {
 	position: absolute;
-	top: 0;
-	width: 100%;
-	
+	left: 100%;
+	margin-left: 12px;
+	background: white;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	z-index: 30;
+	&::before {
+		content: "";
+		position: absolute;
+		left: -12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 0;
+		height: 0;
+		border-top: 12px solid transparent;
+		border-bottom: 12px solid transparent;
+		border-right: 12px solid white;
+	}
 }
 
-.video-container::after {
-	/* background: radial-gradient(50% 50% at 50% 50%,#0c101800 0,#0c101880); */
-	content: "";
-	display: block;
-	height: 100%;
-	left: 0;
-	opacity: var(--overlay-opacity);
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.bg-gradient {
+  background: linear-gradient(-45deg, #ffa600, #ff6b6b, #6b89ff, #34d399);
+  background-size: 300% 300%;
+}
+  
+.animate-gradient {
+  animation: gradientShift 8s ease-in-out infinite;
+}
+
+.anticipation-section {
+	position: relative;
+	height: 100vh;
+	width: 100%;
+	background: white;
+	overflow: hidden;
+}
+
+.lines-overlay {
 	position: absolute;
-	top: 0;
-	width: 100%;
+	inset: 0;
+	background-image: linear-gradient(135deg, rgba(0, 0, 0, 0.1) 10%, transparent 10%),
+					  linear-gradient(225deg, rgba(0, 0, 0, 0.1) 10%, transparent 10%);
+	background-size: 50px 50px;
+	animation: moveLines 6s linear infinite;
 }
 
-.video-container video {
-	height: 100%;
-	object-fit: cover;
-	width: 100%;
+@keyframes moveLines {
+	0% { background-position: 0 0; }
+	100% { background-position: 50px 50px; }
 }
+
+.content-container {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100%;
+	z-index: 1;
+}
+
+@keyframes scaleFade {
+	0% { transform: scale(0); opacity: 0; }
+	50% { transform: scale(1); opacity: 1; }
+	100% { transform: scale(0); opacity: 0; }
+  }
+  
+  .bubble {
+	position: absolute;
+	border-radius: 50%;
+	animation: scaleFade 6s ease-in-out infinite;
+  }
+  
+  /* Different timing variations for randomness */
+  .bubble:nth-child(1) { animation-duration: 7s; animation-delay: 0s; }
+  .bubble:nth-child(2) { animation-duration: 5s; animation-delay: 2s; }
+  .bubble:nth-child(3) { animation-duration: 8s; animation-delay: 1s; }
+  .bubble:nth-child(4) { animation-duration: 6s; animation-delay: 3s; }
+
+  

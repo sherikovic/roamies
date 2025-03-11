@@ -31,7 +31,7 @@ export default function Roamies() {
       >
         <motion.p
           style={{ scale: scaleText }}
-          className="font-drukHeavy text-black text-6xl lg:text-8xl z-0"
+          className="font-drukHeavy text-black text-6xl lg:text-8xl pointer-events-none z-20"
         >
           Roamies
         </motion.p>

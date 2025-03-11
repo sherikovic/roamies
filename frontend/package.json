@@ -5,6 +5,9 @@
   "dependencies": {
     "@eslint/js": "^9.20.0",
     "@react-spring/three": "^9.7.5",
+    "@tsparticles/plugin-polygon-mask": "^3.8.1",
+    "@tsparticles/react": "^3.0.0",
+    "@tsparticles/slim": "^3.8.1",
     "@types/jest": "^27.5.2",
     "@types/node": "^16.18.58",
     "@types/react": "^18.2.28",
@@ -22,7 +25,6 @@
     "react-router-dom": "^6.29.0",
     "react-scripts": "^5.0.1",
     "styled-components": "^5.2.1",
-    "three": "^0.174.0",
     "web-vitals": "^2.1.4"
   },
   "scripts": {

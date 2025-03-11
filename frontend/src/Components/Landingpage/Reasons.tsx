@@ -1,9 +1,8 @@
-import { motion, useScroll, useTransform } from 'motion/react'
 import Solitary from 'assets/videos/Solitary_Train_Arrival.mp4'
-import LonelyHike from 'assets/videos/lonely-hike.mp4'
+import { motion, useScroll, useTransform } from 'motion/react'
 import GroupRunning from 'assets/videos/group-running.mp4'
-
-import { useRef } from 'react'
+import LonelyHike from 'assets/videos/lonely-hike.mp4'
+import { useEffect, useRef } from 'react'
 
 export default function Reasons() {
   const containerRef = useRef(null)
@@ -11,6 +10,38 @@ export default function Reasons() {
     target: containerRef,
     offset: ['start center', 'end end'],
   })
+
+  const video1Ref = useRef<HTMLVideoElement | null>(null)
+  const video2Ref = useRef<HTMLVideoElement | null>(null)
+  const video3Ref = useRef<HTMLVideoElement | null>(null)
+
+  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+
+  const isVideo1Active = useTransform(scrollYProgress, [0.25, 0.5], [0, 1])
+  const isVideo2Active = useTransform(scrollYProgress, [0.5, 0.75], [0, 1])
+  const isVideo3Active = useTransform(scrollYProgress, [0.75, 1], [0, 1])
+
+  useEffect(() => {
+    const playPauseVideo = (video: HTMLVideoElement | null, isActive: number) => {
+      if (!video) return
+      if (isActive > 0.02) {
+        video.play()
+      } else {
+        video.pause()
+      }
+    }
+
+    // Sync videos with scroll position
+    isVideo1Active.on('change', (val) => playPauseVideo(video1Ref.current, val))
+    isVideo2Active.on('change', (val) => playPauseVideo(video2Ref.current, val))
+    isVideo3Active.on('change', (val) => playPauseVideo(video3Ref.current, val))
+
+    return () => {
+      isVideo1Active.destroy()
+      isVideo2Active.destroy()
+      isVideo3Active.destroy()
+    }
+  }, [isVideo1Active, isVideo2Active, isVideo3Active])
 
   // First text layer (initial hero text)
   const heroTextY = useTransform(scrollYProgress, [0, 0.25], [300, 0])
@@ -35,7 +66,7 @@ export default function Reasons() {
     <div ref={containerRef} className="h-[400vh]">
       {/* Initial Hero Text */}
       <motion.div
-        className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center"
+        className="fixed top-0 left-0 w-full h-screen flex flex-col items-center justify-center pointer-events-none"
         style={{
           y: heroTextY,
           opacity: heroTextOpacity,
@@ -46,10 +77,11 @@ export default function Reasons() {
       </motion.div>
 
       {/* Video 1 Section */}
-      <div className="fixed top-0 left-0 right-0 bottom-0 justify-center items-center">
+      <div className="fixed top-0 left-0 right-0 bottom-0 justify-center items-center pointer-events-none">
         <motion.video
+          ref={video1Ref}
           className="w-full h-full brightness-50"
-          autoPlay
+          // autoPlay
           muted
           loop
           src={Solitary}
@@ -67,10 +99,11 @@ export default function Reasons() {
       </div>
 
       {/* Video 2 Section */}
-      <div className="fixed top-0 left-0 right-0 bottom-0 justify-center items-center">
+      <div className="fixed top-0 left-0 right-0 bottom-0 justify-center items-center pointer-events-none">
         <motion.video
+          ref={video2Ref}
           className="w-full h-full brightness-50"
-          autoPlay
+          // autoPlay
           muted
           loop
           src={LonelyHike}
@@ -92,10 +125,11 @@ export default function Reasons() {
       </div>
 
       {/* Video 3 Section */}
-      <div className="sticky top-0 left-0 right-0 bottom-0 justify-center items-center">
+      <div className="sticky top-0 left-0 right-0 bottom-0 justify-center items-center pointer-events-none">
         <motion.video
+          ref={video3Ref}
           className="w-svw h-svh brightness-50"
-          autoPlay
+          // autoPlay
           muted
           loop
           src={GroupRunning}
