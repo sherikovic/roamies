@@ -1,8 +1,9 @@
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
-import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
+import Features from './Features'
 
 export default function Anticipation() {
   const [init, setInit] = useState(false)
@@ -12,9 +13,19 @@ export default function Anticipation() {
     offset: ['start end', 'end end'],
   })
 
-  const scaleA = useTransform(scrollYProgress, [0.9, 1], [1, 65])
-  const scaleText = useTransform(scrollYProgress, [0.5, 0.9], [0.7, 1])
-  const xA = useTransform(scrollYProgress, [0.9, 1], [0, 660])
+  // const scaleA = useTransform(scrollYProgress, [0.6, 0.85], [1, 75])
+  const scaleA = useTransform(scrollYProgress, [0.3, 0.5], [1, 75])
+  // const scaleText = useTransform(scrollYProgress, [0.5, 0.9], [0.7, 1])
+  const scaleText = useTransform(scrollYProgress, [0.1, 0.3], [0.7, 1])
+  // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 845]) // lg
+  const xA = useTransform(scrollYProgress, [0.3, 0.5], [0, 845]) // lg
+  // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 400]) // sm
+  // const yA = useTransform(scrollYProgress, [0.6, 0.85], [0, 300]) // lg
+  const yA = useTransform(scrollYProgress, [0.3, 0.5], [0, 300]) // lg
+  // const yA = useTransform(scrollYProgress, [0.6, 0.85], [0, 400]) // sm
+  // const opacityC = useTransform(scrollYProgress, [0.83, 1], [0, 1])
+  const opacityC = useTransform(scrollYProgress, [0.5, 0.55], [0, 1])
+  const yC = useTransform(scrollYProgress, [0.5, 0.6], [100, 0])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -124,7 +135,7 @@ export default function Anticipation() {
     [],
   )
 
-  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
 
   return (
     <section ref={containerRef} className="flex flex-col items-center relative w-svw">
@@ -137,11 +148,11 @@ export default function Anticipation() {
             WebkitTextFillColor: 'transparent',
             WebkitTextStrokeWidth: '1.5px',
             WebkitTextStrokeColor: '#242323',
-            // fontSize: '5.5rem',
             lineHeight: '5.75rem',
             letterSpacing: '-0.05em',
+            fontSize: 'clamp(3rem, 5vw, 5.5rem)',
           }}
-          className="font-drukMedium text-center lg:text-[5.5rem] text-[3rem]"
+          className="font-drukMedium text-center"
         >
           So we created{' '}
           <span
@@ -166,17 +177,19 @@ export default function Anticipation() {
         </p>
       </div>
       <motion.div
-        style={{ scale: scaleA, x: xA }}
+        style={{ scale: scaleA, x: xA, y: yA }}
         className="flex py-[30rem] w-svw justify-center items-center"
       >
         <motion.p
-          style={{ scale: scaleText }}
-          className="font-drukHeavy text-black text-6xl lg:text-8xl pointer-events-none z-0"
+          style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)' }}
+          className="font-drukHeavy text-black pointer-events-none"
         >
           Roamies
         </motion.p>
       </motion.div>
-      <motion.div className="sticky top-0 h-20" />
+      <motion.div style={{ opacity: opacityC, y: yC }} className="sticky inset-0 w-svw">
+        <Features />
+      </motion.div>
     </section>
   )
 }

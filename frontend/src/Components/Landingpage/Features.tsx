@@ -1,3 +1,4 @@
+import EventsOnMap from 'assets/images/screenshots/events_on_map.jpeg'
 import EventPage from 'assets/images/screenshots/event_page.jpeg'
 import Dashboard from 'assets/images/screenshots/dashboard.jpeg'
 import Comments from 'assets/images/screenshots/comments.jpeg'
@@ -5,7 +6,22 @@ import Create from 'assets/images/screenshots/create.png'
 
 export default function Features() {
   return (
-    <div className="flex flex-col w-svw gap-32 bg-white px-[80px]">
+    <section className="flex flex-col w-svw gap-32 bg-white px-[80px] pt-40 h-[400vh]">
+      <div className="relative flex justify-between items-center">
+        <div className="w-full flex justify-center">
+          <img src={EventsOnMap} alt="Events on map" className="lg:h-[700px] lg:w-[320px]" />
+        </div>
+        <div className="flex flex-col w-full gap-5">
+          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">
+            Get straight to the action
+          </p>
+          <p className="poppins-regular text-black lg:text-xl w-[75%]">
+            We designed Roamies to make joining an event as effortless as possible — no groups, no
+            unnecessary steps. Just scroll through the map, find what&apos;s happening near you, and
+            jump right in.
+          </p>
+        </div>
+      </div>
       <div className="relative flex justify-between items-center">
         <div className="w-full flex justify-center">
           <img src={EventPage} alt="Event page" className="lg:h-[700px] lg:w-[320px]" />
@@ -51,6 +67,6 @@ export default function Features() {
           </p>
         </div>
       </div>
-    </div>
+    </section>
   )
 }

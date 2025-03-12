@@ -2,20 +2,38 @@ import ArrowDownShort from 'assets/icons/arrow-down-short.svg'
 import { AnimatePresence, motion } from 'motion/react'
 import QrCode from 'assets/images/qr-code.svg'
 import SVG from 'react-inlinesvg'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 export const About = () => {
   const [showQR, setShowQR] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      if (showQR) setShowQR(false)
+    }
+
+    window.addEventListener('scroll', handleScroll)
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  }, [showQR])
 
   return (
     <section className="flex flex-col items-center w-svw h-svh background">
       <div className="flex flex-col flex-1 justify-between items-center w-full h-full mt-80 px-20 lg:max-w-[80vw] max-w-vw">
         {/* Headline */}
         <div className="flex flex-col justify-center items-center gap-10">
-          <p className="font-drukSuper text-lg lg:text-4xl text-[#f2eeee] z-10 text-center">
+          <p
+            style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
+            className="font-drukSuper text-[#f2eeee] z-10 text-center"
+          >
             Turn Solo Travel into Shared Adventures
           </p>
-          <p className="poppins-medium text-base lg:text-xl text-[#dfdbdb] z-10 text-center">
+          <p
+            style={{ fontSize: 'clamp(1rem, 1.3vw, 2.5rem)' }}
+            className="poppins-medium text-[#dfdbdb] z-10 text-center"
+          >
             Discover events, meet like-minded travelers, and make plans instantly.
             <br />
             No endless chats—just real connections.
@@ -25,8 +43,12 @@ export const About = () => {
         {/* Button */}
         <div className="relative flex items-center z-30">
           <motion.button
-            initial={{ backgroundColor: '#ffa600' }}
-            whileHover={{ backgroundColor: '#cf9b3a' }}
+            initial={{
+              backgroundColor: '#ffa600',
+            }}
+            whileHover={{
+              backgroundColor: '#e09302',
+            }}
             transition={{ duration: 0.3 }}
             onClick={() => {
               if (window.innerWidth < 640) {
@@ -36,7 +58,7 @@ export const About = () => {
                 setShowQR(!showQR)
               }
             }}
-            className="poppins-semibold text-black lg:text-base cursor-pointer px-11 py-4 rounded-full shadow-sm shadow-[#302e2e]"
+            className="poppins-semibold text-black lg:text-base cursor-pointer px-11 py-4 rounded-full"
           >
             Get the app
           </motion.button>

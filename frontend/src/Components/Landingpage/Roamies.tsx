@@ -1,8 +1,8 @@
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import EventsOnMap from 'assets/images/screenshots/events_on_map.jpeg'
 import EventPage from 'assets/images/screenshots/event_page.jpeg'
 // import Dashboard from 'assets/images/screenshots/dashboard.jpeg'
 // import Comments from 'assets/images/screenshots/comments.jpeg'
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import { useRef, useState } from 'react'
 
 export default function Roamies() {

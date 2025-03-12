@@ -72,8 +72,15 @@ export default function Reasons() {
           opacity: heroTextOpacity,
         }}
       >
-        <p className="font-drukHeavy text-xl lg:text-8xl text-white">Travel Solo</p>
-        <p className="font-drukMediumItalic text-lg lg:text-7xl text-white">never alone</p>
+        <p style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }} className="font-drukHeavy text-white">
+          Travel Solo
+        </p>
+        <p
+          style={{ fontSize: 'clamp(2.5rem, 4vw, 5rem)' }}
+          className="font-drukMediumItalic text-white"
+        >
+          never alone
+        </p>
       </motion.div>
 
       {/* Video 1 Section */}
@@ -89,10 +96,11 @@ export default function Reasons() {
         />
         <motion.p
           style={{
+            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
             y: video1TextY,
             opacity: video1TextOpacity,
           }}
-          className="font-drukMedium lg:text-4xl text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-white text-center w-[75%] mx-auto"
         >
           Sometimes, it feels like you&apos;re just passing through, a stranger everywhere you go.
         </motion.p>
@@ -111,10 +119,11 @@ export default function Reasons() {
         />
         <motion.p
           style={{
+            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
             y: video2TextY,
             opacity: video2TextOpacity,
           }}
-          className="font-drukMedium lg:text-4xl text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-white text-center w-[75%] mx-auto"
         >
           Finding a place to stay is easy.
           <br />
@@ -137,10 +146,11 @@ export default function Reasons() {
         />
         <motion.p
           style={{
+            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
             y: video3TextY,
             opacity: video3TextOpacity,
           }}
-          className="font-drukMedium lg:text-4xl text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-white text-center w-[75%] mx-auto"
         >
           What if meeting like-minded travelers was effortless? Without endless chats and awkward
           silences?

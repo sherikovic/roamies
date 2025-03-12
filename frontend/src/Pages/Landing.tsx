@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import Lenis from 'lenis'
 import Download from 'Components/Landingpage/Download'
 // import Footer from 'Components/Landingpage/Footer'
-import Roamies from 'Components/Landingpage/Roamies'
+// import Roamies from 'Components/Landingpage/Roamies'
 
 const LandingPage: React.FC = () => {
   useEffect(() => {
@@ -27,7 +27,7 @@ const LandingPage: React.FC = () => {
       <div id="jump-down" />
       <Reasons />
       <Anticipation />
-      <Roamies />
+      {/* <Roamies /> */}
       {/* <Features /> */}
       <Download />
       {/* <Footer /> */}
