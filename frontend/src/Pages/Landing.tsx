@@ -4,9 +4,8 @@ import { About } from 'Components/Landingpage/About'
 import Reasons from 'Components/Landingpage/Reasons'
 import { useEffect } from 'react'
 import Lenis from 'lenis'
-import Features from 'Components/Landingpage/Features'
 import Download from 'Components/Landingpage/Download'
-import Footer from 'Components/Landingpage/Footer'
+// import Footer from 'Components/Landingpage/Footer'
 import Roamies from 'Components/Landingpage/Roamies'
 
 const LandingPage: React.FC = () => {
@@ -29,9 +28,9 @@ const LandingPage: React.FC = () => {
       <Reasons />
       <Anticipation />
       <Roamies />
-      <Features />
+      {/* <Features /> */}
       <Download />
-      <Footer />
+      {/* <Footer /> */}
       {/* <Contact /> */}
     </div>
   )

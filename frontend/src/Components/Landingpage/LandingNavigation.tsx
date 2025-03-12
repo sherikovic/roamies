@@ -32,7 +32,7 @@ const LandingNavigation: React.FC = () => {
   }
 
   return (
-    <div id="navbar-container" className="nav-normal">
+    <section id="navbar-container" className="nav-normal">
       <div className="logo-container">
         <SVG src={logo} id="logo-elem" className="logo-large" />
       </div>
@@ -67,7 +67,7 @@ const LandingNavigation: React.FC = () => {
           Contact
         </a>
       </nav>
-    </div>
+    </section>
   )
 }
 

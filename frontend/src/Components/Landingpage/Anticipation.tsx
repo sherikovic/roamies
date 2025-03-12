@@ -1,124 +1,24 @@
-// export default function Anticipation() {
-//   return (
-//     <section className="flex relative h-svh w-full bg-white">
-//       <div className="flex w-[60%] mx-auto items-center justify-center">
-//         <p className="font-drukMedium text-black text-xs lg:text-6xl text-center">
-//           So we created something.
-//           <br />
-//           Something we believe makes a difference.
-//         </p>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default function Anticipation() {
-//   return (
-//     <section className="flex relative h-svh w-full bg-white z-50">
-//       <div className="absolute inset-0 bg-gradient animate-gradient" />
-//       <div className="flex w-[60%] mx-auto items-center justify-center z-50">
-//         <p className="font-drukMedium text-black text-xs lg:text-6xl text-center">
-//           So we created something.
-//           <br />
-//           Something we believe makes a difference.
-//         </p>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default function Anticipation() {
-//   return (
-//     <section className="anticipation-section">
-//       <div className="lines-overlay"></div>
-//       <div className="content-container">
-//         <p className="font-drukMedium text-black text-xs lg:text-6xl text-center">
-//           So we created something.
-//           <br />
-//           Something we believe makes a difference.
-//         </p>
-//       </div>
-//     </section>
-//   )
-// }
-
-// export default function Anticipation() {
-//   return (
-//     <section className="flex relative h-svh w-full bg-white items-center justify-center">
-//       <motion.p
-//         className="font-drukMedium text-black text-xs lg:text-6xl text-center"
-//         initial={{ scale: 1, textShadow: '2px 2px 0px rgba(0,0,0,0.2)' }}
-//         whileHover={{
-//           scale: 1.05,
-//           textShadow: '6px 6px 0px rgba(0,0,0,0.2)',
-//           transition: { duration: 0.3, ease: 'easeInOut' },
-//         }}
-//       >
-//         So we created something.
-//         <br />
-//         Something we believe makes a difference.
-//       </motion.p>
-//     </section>
-//   )
-// }
-
-// export default function Anticipation() {
-//   return (
-//     <section className="flex relative h-svh w-full bg-white overflow-hidden">
-//       {/* Animated lines pattern */}
-//       <motion.div
-//         animate={{
-//           x: ['-100%', '100%'],
-//         }}
-//         transition={{
-//           duration: 2,
-//           repeat: Infinity,
-//           repeatType: 'loop',
-//         }}
-//         className="absolute inset-0 opacity-15"
-//       >
-//         {[...Array(12)].map((_, i) => (
-//           <div
-//             key={i}
-//             className="absolute h-px bg-gradient-to-r from-transparent via-black to-transparent"
-//             style={{
-//               top: `${Math.random() * 100}%`,
-//               left: `${Math.random() * 100}%`,
-//               width: `${Math.random() * 40 + 20}%`,
-//               animation: `drift ${Math.random() * 8 + 4}s infinite linear`,
-//             }}
-//           />
-//         ))}
-//       </motion.div>
-
-//       {/* Content */}
-//       <div className="flex w-[60%] mx-auto items-center justify-center relative">
-//         <p className="font-drukMedium text-black text-xs lg:text-6xl text-center">
-//           So we created something.
-//           <br />
-//           Something we believe makes a difference.
-//         </p>
-//       </div>
-//     </section>
-//   )
-// }
-
-import { ISourceOptions } from '@tsparticles/engine'
-import { loadPolygonMaskPlugin } from '@tsparticles/plugin-polygon-mask'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { motion, useScroll, useTransform } from 'motion/react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
-import { useEffect, useMemo, useState } from 'react'
-import { tsParticles } from '@tsparticles/engine'
-
-// const colors = ['#60A5FA', '#EC4899', '#8B5CF6'] // Blue, Pink, Purple
 
 export default function Anticipation() {
   const [init, setInit] = useState(false)
+  const containerRef = useRef(null)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ['start end', 'end end'],
+  })
+
+  const scaleA = useTransform(scrollYProgress, [0.9, 1], [1, 65])
+  const scaleText = useTransform(scrollYProgress, [0.5, 0.9], [0.7, 1])
+  const xA = useTransform(scrollYProgress, [0.9, 1], [0, 660])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
       await loadSlim(engine)
-      await loadPolygonMaskPlugin(tsParticles)
     }).then(() => {
       setInit(true)
     })
@@ -128,7 +28,7 @@ export default function Anticipation() {
     () => ({
       background: {
         color: {
-          value: '#fff',
+          value: '#d9a13b',
         },
       },
       fpsLimit: 120,
@@ -174,38 +74,33 @@ export default function Anticipation() {
           },
         },
         color: {
-          value: '#ffa600',
+          value: ['#fff', '#f07443', '#ff4800'],
         },
         shape: {
           type: 'circle',
         },
         opacity: {
-          value: 0.1,
+          value: { min: 0.05, max: 0.15 },
           random: true,
-          animation: {
-            enable: true,
-            speed: 3,
-            opacity_min: 0.03,
-            sync: true,
-          },
         },
         collisions: {
           enable: true,
           mode: 'bounce',
         },
         size: {
-          value: 100,
+          value: { min: 45, max: 200 },
           random: true,
           animation: {
             mode: 'random',
             enable: true,
-            speed: 80,
-            startValue: 'max',
+            speed: 10,
+            sync: false,
+            startValue: 'random',
           },
         },
         move: {
           enable: true,
-          speed: 2,
+          speed: 3,
           direction: 'none',
           random: true,
           straight: false,
@@ -229,18 +124,59 @@ export default function Anticipation() {
     [],
   )
 
+  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+
   return (
-    <section className="flex relative h-svh w-full bg-white overflow-hidden">
+    <section ref={containerRef} className="flex flex-col items-center relative w-svw">
       {/* Background Particles */}
       {init && <Particles id="tsparticles" options={options} className="absolute inset-0" />}
       {/* Content */}
-      <div className="flex w-[60%] mx-auto items-center justify-center relative z-10">
-        <p className="font-drukMedium text-black text-xs lg:text-6xl text-center">
-          So we created something.
-          <br />
-          Something we believe makes a difference.
+      <div className="flex pt-72 w-[60%] z-10 justify-center">
+        <p
+          style={{
+            WebkitTextFillColor: 'transparent',
+            WebkitTextStrokeWidth: '1.5px',
+            WebkitTextStrokeColor: '#242323',
+            // fontSize: '5.5rem',
+            lineHeight: '5.75rem',
+            letterSpacing: '-0.05em',
+          }}
+          className="font-drukMedium text-center lg:text-[5.5rem] text-[3rem]"
+        >
+          So we created{' '}
+          <span
+            style={{
+              WebkitTextFillColor: '#1f1f1f',
+              WebkitTextStrokeWidth: '0px',
+            }}
+          >
+            something
+          </span>{' '}
+          <span>
+            we believe makes a{' '}
+            <span
+              style={{
+                WebkitTextFillColor: '#1f1f1f',
+                WebkitTextStrokeWidth: '0px',
+              }}
+            >
+              difference.
+            </span>
+          </span>
         </p>
       </div>
+      <motion.div
+        style={{ scale: scaleA, x: xA }}
+        className="flex py-[30rem] w-svw justify-center items-center"
+      >
+        <motion.p
+          style={{ scale: scaleText }}
+          className="font-drukHeavy text-black text-6xl lg:text-8xl pointer-events-none z-0"
+        >
+          Roamies
+        </motion.p>
+      </motion.div>
+      <motion.div className="sticky top-0 h-20" />
     </section>
   )
 }
