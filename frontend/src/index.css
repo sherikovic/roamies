@@ -266,7 +266,7 @@
 
 	/* color-scheme: light dark; */
 	color: #e9ebf1;
-	background-color: #060606;
+	background-color: #ffffff;
 	scrollbar-width: none;
 
 	font-synthesis: none;
@@ -304,7 +304,7 @@
 }
 
 html { scroll-behavior: smooth;
-background-color: #060606;
+background-color: #ffffff;
 }
 
 
@@ -315,6 +315,7 @@ body {
 	-moz-osx-font-smoothing: grayscale;
 	margin-left: auto;
 	margin-right: auto;
+	background-color: #ffffff;
 }
 
 ul {

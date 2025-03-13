@@ -25,7 +25,7 @@ export const CoolMobileApp = () => {
 
   return (
     <div className="bg-[#0f1012] py-5 lg:px-32 px-4 lg:gap-24 gap-4 flex flex-col">
-      <p className="text-off-white text-xl lg:text-4xl text-center">
+      <p className="text-offWhite text-xl lg:text-4xl text-center">
         Get Ready to Connect, Share, and Explore
       </p>
       <div
@@ -38,7 +38,7 @@ export const CoolMobileApp = () => {
           alt="app-screenshot"
           className="lg:max-h-[600px] max-w-[80%] translate-y-full"
         />
-        <p ref={textref} className="opacity-0 text-off-white text-sm lg:text-2xl max-w-[400px]">
+        <p ref={textref} className="opacity-0 text-offWhite text-sm lg:text-2xl max-w-[400px]">
           The ultimate travel companion is almost here! Our app is launching soon, giving you a
           platform to meet fellow travelers, share experiences, and split costs effortlessly.
           Whether you’re looking to make new friends, discover hidden gems, or make your journey

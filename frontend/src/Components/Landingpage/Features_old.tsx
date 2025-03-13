@@ -80,7 +80,7 @@ export const Features = () => {
 
   return (
     <div id="features" className="bg-[#000900] py-10 lg:px-32 px-4 gap-12 flex flex-col">
-      <p className="text-off-white  text-xl lg:text-4xl text-center">
+      <p className="text-offWhite  text-xl lg:text-4xl text-center">
         Discover the Features That Make Travel Better
       </p>
       <div ref={mainContainerRef} className="flex justify-center items-center flex-col lg:flex-row">
@@ -92,10 +92,10 @@ export const Features = () => {
             ref={text1ref}
             className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
           >
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-xl">
+            <p className="text-left lg:text-center text-offWhite max-w-full lg:max-w-[60%] text-xl">
               Create & Share Events
             </p>
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-md">
+            <p className="text-left lg:text-center text-offWhite max-w-full lg:max-w-[60%] text-md">
               Easily organize and share travel events, meetups, or group activities with the
               community.
             </p>
@@ -115,10 +115,10 @@ export const Features = () => {
             ref={text2ref}
             className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
           >
-            <p className="text-off-white max-w-full lg:max-w-[60%] text-right lg:text-center text-xl">
+            <p className="text-offWhite max-w-full lg:max-w-[60%] text-right lg:text-center text-xl">
               Search & Join Experiences
             </p>
-            <p className="text-off-white max-w-full lg:max-w-[60%] text-right lg:text-center text-md">
+            <p className="text-offWhite max-w-full lg:max-w-[60%] text-right lg:text-center text-md">
               Discover and join events that match your interests, from city tours to outdoor
               adventures.
             </p>
@@ -138,10 +138,10 @@ export const Features = () => {
             ref={text3ref}
             className="lg:gap-2 opacity-0 flex-col flex justify-center items-center"
           >
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-xl">
+            <p className="text-left lg:text-center text-offWhite max-w-full lg:max-w-[60%] text-xl">
               Filter Your Search
             </p>
-            <p className="text-left lg:text-center text-off-white max-w-full lg:max-w-[60%] text-md">
+            <p className="text-left lg:text-center text-offWhite max-w-full lg:max-w-[60%] text-md">
               Use filters to quickly find events by location, activity, or budget that fit your
               needs.
             </p>

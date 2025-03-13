@@ -4,7 +4,7 @@ import downloadApp from 'assets/images/download-app.svg'
 
 export default function Footer() {
   return (
-    <div className="relative px-32 py-10 bg-off-white flex justify-between items-center">
+    <div className="relative px-32 py-10 bg-offWhite flex justify-between items-center">
       <div className="flex gap-40">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center gap-5">

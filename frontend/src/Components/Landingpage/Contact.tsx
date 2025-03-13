@@ -24,7 +24,7 @@ export const Contact = () => {
       id="contact"
       className="flex flex-col items-center justify-center py-32 gap-5 lg:max-w-[600px] self-center max-w-full w-full p-7 lg:w-[600px]"
     >
-      <p className="text-off-white lg:text-4xl text-center text-xl">Contact Us</p>
+      <p className="text-offWhite lg:text-4xl text-center text-xl">Contact Us</p>
       <div className="flex items-center justify-center gap-5 lg:gap-7 w-full flex-col lg:flex-row">
         <input
           value={name}
@@ -52,7 +52,7 @@ export const Contact = () => {
       <button onClick={submitEmail} className="bg-[#214189] p-2 rounded-lg w-full">
         Send
       </button>
-      {success !== '' && <p className="text-off-white text-center">{success}</p>}
+      {success !== '' && <p className="text-offWhite text-center">{success}</p>}
     </div>
   )
 }

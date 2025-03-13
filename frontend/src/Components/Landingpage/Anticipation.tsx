@@ -17,6 +17,7 @@ export default function Anticipation() {
   const scaleA = useTransform(scrollYProgress, [0.3, 0.5], [1, 75])
   // const scaleText = useTransform(scrollYProgress, [0.5, 0.9], [0.7, 1])
   const scaleText = useTransform(scrollYProgress, [0.1, 0.3], [0.7, 1])
+  const textColor = useTransform(scrollYProgress, [0.48, 0.5], ['#000000', '#dfe4e6'])
   // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 845]) // lg
   const xA = useTransform(scrollYProgress, [0.3, 0.5], [0, 845]) // lg
   // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 400]) // sm
@@ -25,7 +26,7 @@ export default function Anticipation() {
   // const yA = useTransform(scrollYProgress, [0.6, 0.85], [0, 400]) // sm
   // const opacityC = useTransform(scrollYProgress, [0.83, 1], [0, 1])
   const opacityC = useTransform(scrollYProgress, [0.5, 0.55], [0, 1])
-  const yC = useTransform(scrollYProgress, [0.5, 0.6], [100, 0])
+  const yC = useTransform(scrollYProgress, [0.5, 0.6], [200, 0])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -181,7 +182,7 @@ export default function Anticipation() {
         className="flex py-[30rem] w-svw justify-center items-center"
       >
         <motion.p
-          style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)' }}
+          style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
           className="font-drukHeavy text-black pointer-events-none"
         >
           Roamies
