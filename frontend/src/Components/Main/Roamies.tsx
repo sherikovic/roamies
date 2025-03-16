@@ -136,7 +136,7 @@ export default function Anticipation() {
   return (
     <section
       ref={containerRef}
-      className="flex flex-col items-center relative w-svw overflow-x-clip"
+      className="flex flex-col items-center relative w-svw overflow-x-clip overflow-y-clip"
     >
       {/* Background Particles */}
       {init && <Particles id="tsparticles" options={options} className="absolute inset-0" />}

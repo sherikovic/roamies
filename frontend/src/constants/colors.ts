@@ -9,4 +9,6 @@ export const colors = {
   onSurface: '#6C757D',
   onSurfaceVariant: '#404040',
   outline: '#A5A4A4',
+  error: '#B91C1C',
+  errorBackground: '#FEE2E2',
 }

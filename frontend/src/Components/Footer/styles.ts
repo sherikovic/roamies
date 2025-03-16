@@ -1,6 +1,75 @@
 import styled from 'styled-components/macro'
-import { motion } from 'motion/react'
 import { colors } from 'constants/colors'
+import { motion } from 'motion/react'
+
+export const BurgerButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 999;
+`
+
+export const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  overflow: visible;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+
+export const ModalContent = styled.div`
+  background: ${colors.background};
+  height: 90vh;
+  width: 90%;
+  max-width: 1200px;
+  // padding: 2rem;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+`
+
+export const FooterLink = styled.a`
+  font-family: 'Poppins', sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  color: ${colors.textPrimary};
+  cursor: pointer;
+  position: relative;
+  text-decoration: none;
+  transition: color 0.3s ease;
+  width: fit-content;
+
+  &:hover {
+    color: ${colors.textSecondary};
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: -2px;
+    width: 0;
+    height: 1px;
+    background-color: ${colors.textSecondary};
+    transition: width 0.3s ease-in-out;
+  }
+
+  &:hover::after {
+    width: 100%;
+  }
+`
 
 export const TOCContainer = styled(motion.div)`
   position: fixed;
@@ -120,6 +189,7 @@ export const ScrollContent = styled.div`
 export const HeaderSection = styled.div`
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 15px;
   padding: 40px 0;
 `
@@ -165,4 +235,12 @@ export const SecondaryText = styled.p`
 
 export const BoldText = styled.span`
   font-weight: 600;
+`
+
+export const Separator = styled.hr`
+  width: 80vw;
+  border: 0;
+  border-top: 1px solid ${colors.outline};
+  margin: 12px 0;
+  margin-bottom: 0;
 `

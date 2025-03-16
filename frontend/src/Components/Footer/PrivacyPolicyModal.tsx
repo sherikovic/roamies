@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from 'motion/react'
-
 import { colors } from 'constants/colors'
 import { useState } from 'react'
 import { BurgerIcon } from '.'
@@ -94,7 +93,7 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
         )}
       </AnimatePresence>
 
-      <ScrollContent data-lenis-prevent="true" id="scrollable-content">
+      <ScrollContent data-lenis-prevent="true">
         {/* Content Sections */}
         <ContentSection id={TOC_SECTIONS[0].id}>
           <PrimaryText>{TOC_SECTIONS[0].title}</PrimaryText>

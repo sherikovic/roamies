@@ -16,6 +16,7 @@ export const sendEmail = async (data: { email: string; name: string; msg: string
           getJson: await res.json(),
         }
       : res
+
     return response
   } catch (e) {
     return e

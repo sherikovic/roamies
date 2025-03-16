@@ -1,9 +1,9 @@
+import { FooterLink, ModalOverlay, ModalContent, BurgerButton } from './styles'
 import downloadApp from 'assets/images/download-app.svg'
 import TermsOfServiceModal from './TermsOfServiceModal'
 import { AnimatePresence, motion } from 'motion/react'
 import PrivacyPolicyModal from './PrivacyPolicyModal'
 import ContactUsModal from './ContactUsModal'
-import styled from 'styled-components/macro'
 import { useEffect, useState } from 'react'
 import logo from 'assets/images/icon.svg'
 import { colors } from 'constants/colors'
@@ -185,80 +185,3 @@ export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => vo
     </BurgerButton>
   )
 }
-
-const BurgerButton = styled.button`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  border-radius: 8px;
-  padding: 8px;
-  cursor: pointer;
-  z-index: 999;
-`
-
-const ModalOverlay = styled.div`
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.5);
-  backdrop-filter: blur(10px);
-  z-index: 1000;
-  overflow: visible;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`
-
-const ModalContent = styled.div`
-  background: ${colors.background};
-  height: 90vh;
-  width: 90%;
-  max-width: 1200px;
-  // padding: 2rem;
-  border-radius: 12px;
-  display: flex;
-  flex-direction: column;
-  overflow: hidden;
-`
-
-const FooterLink = styled.a`
-  font-family: 'Poppins', sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  color: ${colors.textPrimary};
-  cursor: pointer;
-  position: relative;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  width: fit-content;
-
-  &:hover {
-    color: ${colors.textSecondary};
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 1px;
-    background-color: ${colors.textSecondary};
-    transition: width 0.3s ease-in-out;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-`
-
-// const Separator = styled.hr`
-//   width: 80vw;
-//   border: 0;
-//   border-top: 1px solid ${colors.outline};
-//   margin: 12px 0;
-//   margin-bottom: 0;
-// `
