@@ -49,17 +49,17 @@ export default function Reasons() {
 
   // Video 1 text animation
   const video1TextY = useTransform(scrollYProgress, [0.25, 0.5], [-50, 100 - window.innerHeight])
-  const video1TextOpacity = useTransform(scrollYProgress, [0.25, 0.45, 0.5], [0, 1, 0])
+  const video1TextOpacity = useTransform(scrollYProgress, [0.25, 0.45, 0.48], [0, 1, 0])
   const video1Opacity = useTransform(scrollYProgress, [0.25, 0.35, 0.4, 0.5], [0, 1, 1, 0])
 
   // Video 2 text animation
   const video2TextY = useTransform(scrollYProgress, [0.5, 0.75], [-50, 100 - window.innerHeight])
-  const video2TextOpacity = useTransform(scrollYProgress, [0.5, 0.7, 0.75], [0, 1, 0])
+  const video2TextOpacity = useTransform(scrollYProgress, [0.5, 0.7, 0.73], [0, 1, 0])
   const video2Opacity = useTransform(scrollYProgress, [0.5, 0.6, 0.65, 0.75], [0, 1, 1, 0])
 
   // Video 3 text animation
   const video3TextY = useTransform(scrollYProgress, [0.75, 1], [-50, 100 - window.innerHeight])
-  const video3TextOpacity = useTransform(scrollYProgress, [0.75, 0.95, 1], [0, 1, 0])
+  const video3TextOpacity = useTransform(scrollYProgress, [0.75, 0.95, 0.98], [0, 1, 0])
   const video3Opacity = useTransform(scrollYProgress, [0.75, 0.85, 0.9, 1], [0, 1, 1, 1])
 
   return (
@@ -96,7 +96,7 @@ export default function Reasons() {
         />
         <motion.p
           style={{
-            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
+            fontSize: 'clamp(0.8rem, 2.5vw, 4rem)',
             y: video1TextY,
             opacity: video1TextOpacity,
           }}
@@ -119,7 +119,7 @@ export default function Reasons() {
         />
         <motion.p
           style={{
-            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
+            fontSize: 'clamp(0.8rem, 2.5vw, 4rem)',
             y: video2TextY,
             opacity: video2TextOpacity,
           }}
@@ -146,7 +146,7 @@ export default function Reasons() {
         />
         <motion.p
           style={{
-            fontSize: 'clamp(1.2rem, 2.5vw, 4rem)',
+            fontSize: 'clamp(0.8rem, 2.5vw, 4.5rem)',
             y: video3TextY,
             opacity: video3TextOpacity,
           }}

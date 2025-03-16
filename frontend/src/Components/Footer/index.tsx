@@ -1,4 +1,4 @@
-import { FooterLink, ModalOverlay, ModalContent, BurgerButton } from './styles'
+import { ModalOverlay, ModalContent, BurgerButton } from './styles'
 import downloadApp from 'assets/images/download-app.svg'
 import TermsOfServiceModal from './TermsOfServiceModal'
 import { AnimatePresence, motion } from 'motion/react'
@@ -52,25 +52,29 @@ export default function Footer() {
   }
 
   return (
-    <div className="relative px-32 py-20 bg-offWhite flex justify-between items-start">
-      <div className="flex gap-40">
+    <div className="relative lg:px-16 lg:py-20 p-10 bg-black flex lg:flex-row flex-col lg:gap-0 gap-10 justify-between items-start">
+      <div className="flex lg:flex-row flex-col lg:gap-40 gap-10">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center gap-5">
             <SVG src={logo} id="logo-elem" className="logo-large" />
-            <p className="poppins-semibold lg:text-2xl text-textPrimary">Roamies &copy;</p>
+            <div className="flex flex-col items-start">
+              <p className="font-drukHeavy lg:text-3xl text-background">
+                Roamies <span className="lg:text-lg">&copy;</span>
+              </p>
+              <p className="poppins-medium lg:text-sm text-offWhite">
+                Made with &hearts; from the world
+              </p>
+            </div>
           </div>
-          <p className="poppins-medium lg:text-sm text-[#5a5a5a]">
-            Made with &hearts; from the world
-          </p>
         </div>
         <div className="flex flex-col gap-5">
-          <FooterLink onClick={() => openModal('privacy')}>Privacy Policy</FooterLink>
-          <FooterLink onClick={() => openModal('terms')}>Terms Of Service</FooterLink>
-          <FooterLink onClick={() => openModal('contact')}>Contact</FooterLink>
+          <FooterLink text="Privacy Policy" onClick={() => openModal('privacy')} />
+          <FooterLink text="Terms Of Service" onClick={() => openModal('terms')} />
+          <FooterLink text="Contact" onClick={() => openModal('contact')} />
         </div>
       </div>
       <div className="flex flex-col gap-5">
-        <h2 className="font-drukBold lg:text-2xl text-base text-textPrimary">Download</h2>
+        <h2 className="font-drukHeavy lg:text-2xl text-base text-background">Download</h2>
         <img
           src={downloadApp}
           alt="download app"
@@ -113,47 +117,21 @@ export default function Footer() {
 
 export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => void }) => {
   const topPathVariants = {
-    closed: {
-      d: 'M2 5 L22 5',
-      rotate: 0,
-      translateY: 0,
-    },
-    open: {
-      d: 'M5 5 L19 19',
-      rotate: 90,
-      translateY: 8,
-    },
+    closed: { d: 'M2 5 L22 5', rotate: 0, translateY: 0 },
+    open: { d: 'M5 5 L19 19', rotate: 90, translateY: 8 },
   }
 
   const middlePathVariants = {
-    closed: {
-      d: 'M2 12 L22 12',
-      opacity: 1,
-    },
-    open: {
-      d: 'M5 12 L19 12',
-      opacity: 0,
-    },
+    closed: { d: 'M2 12 L22 12', opacity: 1 },
+    open: { d: 'M5 12 L19 12', opacity: 0 },
   }
 
   const bottomPathVariants = {
-    closed: {
-      d: 'M2 19 L22 19',
-      rotate: 0,
-      translateY: 0,
-    },
-    open: {
-      d: 'M5 19 L19 5',
-      rotate: -90,
-      translateY: -8,
-    },
+    closed: { d: 'M2 19 L22 19', rotate: 0, translateY: 0 },
+    open: { d: 'M5 19 L19 5', rotate: -90, translateY: -8 },
   }
 
-  const springTransition = {
-    type: 'spring',
-    stiffness: 300,
-    damping: 20,
-  }
+  const springTransition = { type: 'spring', stiffness: 300, damping: 20 }
 
   return (
     <BurgerButton as={motion.button} onClick={close}>
@@ -163,26 +141,48 @@ export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => vo
         viewBox="0 0 24 24"
         initial={false}
         animate={isOpen ? 'open' : 'closed'}
+        whileHover={{ stroke: colors.background }}
+        transition={{ duration: 0.15, ease: 'easeInOut' }}
+        stroke={colors.onSurfaceVariant}
+        strokeWidth="2"
       >
-        <motion.path
-          stroke={colors.onSurfaceVariant}
-          strokeWidth="2"
-          variants={topPathVariants}
-          transition={springTransition}
-        />
-        <motion.path
-          stroke={colors.onSurfaceVariant}
-          strokeWidth="2"
-          variants={middlePathVariants}
-          transition={springTransition}
-        />
-        <motion.path
-          stroke={colors.onSurfaceVariant}
-          strokeWidth="2"
-          variants={bottomPathVariants}
-          transition={springTransition}
-        />
+        <motion.path variants={topPathVariants} transition={springTransition} />
+        <motion.path variants={middlePathVariants} transition={springTransition} />
+        <motion.path variants={bottomPathVariants} transition={springTransition} />
       </motion.svg>
     </BurgerButton>
+  )
+}
+
+const FooterLink = ({ text, onClick }: { text: string; onClick: () => void }) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  return (
+    <motion.a
+      className="poppins-regular lg:text-lg cursor-pointer relative no-underline transition-colors duration-100 ease-in-out w-fit"
+      initial={{ color: colors.background }}
+      whileHover={{ color: colors.textSecondary }}
+      transition={{ duration: 0.1 }}
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      {text}
+      <motion.span
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          width: '100%',
+          height: '1px',
+          backgroundColor: colors.textSecondary,
+        }}
+        animate={{
+          scaleX: isHovered ? 1 : 0,
+          transformOrigin: isHovered ? 'left' : 'right',
+        }}
+        transition={{ duration: 0.3, ease: 'easeInOut' }}
+      />
+    </motion.a>
   )
 }

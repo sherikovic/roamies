@@ -5,9 +5,11 @@ import Create from 'assets/images/screenshots/create.png'
 import Event from 'assets/images/screenshots/event.png'
 import { useRef } from 'react'
 import chroma from 'chroma-js'
+import { getIsMobile } from 'util/util'
 
 export default function Features() {
   const containerRef = useRef(null)
+  const isMobile = getIsMobile()
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
@@ -16,7 +18,8 @@ export default function Features() {
   return (
     <section
       ref={containerRef}
-      className="flex flex-col items-center w-svw gap-20 bg-white px-[80px] pb-80"
+      className="flex flex-col items-center w-svw bg-white px-[80px] pb-80"
+      style={{ gap: isMobile ? '10rem' : '5rem' }}
     >
       {[
         {
@@ -65,21 +68,22 @@ const Card = ({
   progress: MotionValue<number>
   index: number
 } & Omit<MotionProps, 'style'>) => {
-  const lightenedColor = chroma('#f7ad23')
+  const lightenedColor = chroma('#f7f1e3')
     .set('hsl.l', 0.8 + (index / (4 - 1)) * 0.15)
     .hex()
   const scale = useTransform(progress, [index * 0.25, 1], [1, 1 - (4 - index) * 0.05])
-  const background = `linear-gradient(135deg, ${lightenedColor} 0%, #ffffff 50%, #f7e9d3 100%)`
+  // const background = `linear-gradient(135deg, ${lightenedColor} 0%, #ffffff 50%, #f7e9d3 100%)`
+  const background = `linear-gradient(180deg, ${lightenedColor} 0%, #fcc490 35%, #ffffff 100%)`
 
   return (
-    <div className="sticky top-0 w-svw">
+    <div className="sticky top-0 lg:w-svw w-[90vw] lg:h-full">
       <motion.div
         className="relative flex flex-col"
         style={{ top: `calc(20vh + ${index * 25}px)`, scale }}
       >
         <motion.div
           style={{ background }}
-          className="relative bg-white flex flex-col lg:flex-row gap-10 w-full h-full items-center justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl"
+          className="relative bg-white flex flex-col lg:flex-row gap-10 w-full lg:h-full items-center justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl"
         >
           <div className="w-1/2 flex justify-center">
             <img loading="lazy" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />

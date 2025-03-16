@@ -40,37 +40,6 @@ export const ModalContent = styled.div`
   overflow: hidden;
 `
 
-export const FooterLink = styled.a`
-  font-family: 'Poppins', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
-  color: ${colors.textPrimary};
-  cursor: pointer;
-  position: relative;
-  text-decoration: none;
-  transition: color 0.3s ease;
-  width: fit-content;
-
-  &:hover {
-    color: ${colors.textSecondary};
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    left: 0;
-    bottom: -2px;
-    width: 0;
-    height: 1px;
-    background-color: ${colors.textSecondary};
-    transition: width 0.3s ease-in-out;
-  }
-
-  &:hover::after {
-    width: 100%;
-  }
-`
-
 export const TOCContainer = styled(motion.div)`
   position: fixed;
   top: 0;
@@ -89,12 +58,7 @@ export const TOCHeader = styled.h1`
   font-weight: 600;
   padding: 120px 20px 80px;
   margin: 0;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 147, 0, 1) 0%,
-    rgba(247, 186, 67, 1) 35%,
-    rgba(254, 254, 254, 1) 100%
-  );
+  background: linear-gradient(180deg, #f7f1e3 0%, #ffb775 35%, #ffffff 100%);
 `
 
 export const TOCList = styled.ul`
@@ -142,12 +106,7 @@ export const Header = styled(motion.div)`
   justify-content: center;
   align-items: center;
   gap: 20px;
-  background: linear-gradient(
-    180deg,
-    rgba(255, 147, 0, 1) 0%,
-    rgba(247, 186, 67, 1) 35%,
-    rgba(254, 254, 254, 1) 100%
-  );
+  background: linear-gradient(180deg, #f7f1e3 0%, #ffb775 35%, #ffffff 100%);
 `
 
 export const CloseButton = styled.button`
@@ -174,14 +133,14 @@ export const ScrollContent = styled.div`
     width: 5px;
   }
   &::-webkit-scrollbar-track {
-    background: ${colors.background};
+    background: rgb(255, 166, 0, 0.5);
     border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb {
-    background: ${colors.surface};
+    background: ${colors.surfaceVariant};
     border-radius: 4px;
     &:hover {
-      background: ${colors.surfaceVariant};
+      background: ${colors.onSurface};
     }
   }
 `

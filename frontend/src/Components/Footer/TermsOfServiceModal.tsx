@@ -96,15 +96,17 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
     <>
       <Header>
         <CloseButton onClick={closeModal}>
-          <svg
+          <motion.svg
             width="30"
             height="30"
             viewBox="0 0 24 24"
             fill="none"
             stroke={colors.onSurfaceVariant}
+            whileHover={{ stroke: colors.background }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
           >
             <path strokeWidth="2" d="M18 6L6 18M6 6l12 12" />
-          </svg>
+          </motion.svg>
         </CloseButton>
         <BurgerIcon isOpen={isTocOpen} close={() => setIsTocOpen(!isTocOpen)} />
         <HeaderSection>

@@ -1,8 +1,9 @@
 import ArrowDownShort from 'assets/icons/arrow-down-short.svg'
 import { AnimatePresence, motion } from 'motion/react'
 import QrCode from 'assets/images/qr-code.svg'
-import SVG from 'react-inlinesvg'
 import { useEffect, useState } from 'react'
+import { colors } from 'constants/colors'
+import SVG from 'react-inlinesvg'
 
 export const About = () => {
   const [showQR, setShowQR] = useState(false)
@@ -26,7 +27,7 @@ export const About = () => {
         <div className="flex flex-col justify-center items-center gap-10">
           <p
             style={{ fontSize: 'clamp(1.5rem, 3vw, 2.5rem)' }}
-            className="font-drukSuper text-[#f2eeee] z-10 text-center"
+            className="font-drukSuper text-offWhite z-10 text-center"
           >
             Turn Solo Travel into Shared Adventures
           </p>
@@ -41,15 +42,39 @@ export const About = () => {
         </div>
 
         {/* Button */}
-        <div className="relative flex items-center z-30">
+        <div
+          className="relative flex items-center z-30"
+          style={{
+            perspective: 1000,
+          }}
+        >
           <motion.button
             initial={{
-              backgroundColor: '#ffa600',
+              background: `linear-gradient(115deg, 
+                ${colors.orange} 0%, 
+                ${colors.surfaceVariant} 50%, 
+                ${colors.orange} 100%)`,
+              backgroundSize: '200% 200%',
+              backgroundPosition: '100% 100%',
+              boxShadow: `0px 4px 8px rgba(0, 0, 0, 0.2), 
+                          0px -2px 4px rgba(255, 255, 255, 0.1)`,
+              transformStyle: 'preserve-3d',
+              transformPerspective: 2000,
+              rotateX: 0,
+              rotateY: 0,
+              scale: 1,
             }}
             whileHover={{
-              backgroundColor: '#e09302',
+              backgroundPosition: '0% 0%',
+              scale: 1.01,
+              boxShadow: `0px 15px 30px rgba(0, 0, 0, 0.5), 
+                          0px -4px 8px rgba(255, 255, 255, 0.25), 
+                          inset 0px 4px 8px rgba(255, 255, 255, 0.15)`,
+              transition: {
+                duration: 0.5,
+                ease: [0.33, 1, 0.68, 1],
+              },
             }}
-            transition={{ duration: 0.3 }}
             onClick={() => {
               if (window.innerWidth < 640) {
                 window.location.href =

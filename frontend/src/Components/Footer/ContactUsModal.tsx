@@ -9,6 +9,7 @@ import {
   HeaderSecondary,
   ScrollContent,
 } from './styles'
+import { motion } from 'motion/react'
 
 const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
   const [name, setName] = useState('')
@@ -89,19 +90,28 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
     }
   }, [message])
 
+  useEffect(() => {
+    if (success) {
+      const timer = setTimeout(() => setSuccess(''), 5000)
+      return () => clearTimeout(timer)
+    }
+  }, [success])
+
   return (
     <>
       <Header>
         <CloseButton onClick={closeModal}>
-          <svg
+          <motion.svg
             width="30"
             height="30"
             viewBox="0 0 24 24"
             fill="none"
             stroke={colors.onSurfaceVariant}
+            whileHover={{ stroke: colors.background }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
           >
             <path strokeWidth="2" d="M18 6L6 18M6 6l12 12" />
-          </svg>
+          </motion.svg>
         </CloseButton>
         <HeaderSection>
           <HeaderPrimary>Contact Us</HeaderPrimary>
@@ -115,18 +125,20 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
       >
         <div className="w-full grid grid-cols-1 lg:grid-cols-2 gap-6">
           <div className="space-y-1">
-            <label className="block text-sm poppins-medium text-textSecondary">Name</label>
+            <label className="block text-sm poppins-medium transition-all text-textSecondary">
+              Name
+            </label>
             <input
               value={name}
               onChange={(e) => {
-                setName(e.target.value)
+                setName(e.target.value.trimStart())
                 setErrors((prev) => ({ ...prev, name: '' }))
               }}
               type="text"
               autoComplete="name"
               className={`w-full px-4 py-3 rounded-lg border ${
                 errors.name ? 'border-error' : 'border-surfaceVariant'
-              } focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
+              } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
             />
             {errors.name && (
               <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
@@ -148,14 +160,14 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
             <input
               value={email}
               onChange={(e) => {
-                setEmail(e.target.value)
+                setEmail(e.target.value.trimStart())
                 setErrors((prev) => ({ ...prev, email: '' }))
               }}
               type="email"
               autoComplete="email"
               className={`w-full px-4 py-3 rounded-lg border ${
                 errors.email ? 'border-error' : 'border-surfaceVariant'
-              } focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
+              } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
             />
             {errors.email && (
               <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
@@ -178,13 +190,13 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
           <textarea
             value={message}
             onChange={(e) => {
-              setMessage(e.target.value)
+              setMessage(e.target.value.trimStart())
               setErrors((prev) => ({ ...prev, message: '' }))
             }}
             rows={4}
             className={`w-full px-4 py-3 rounded-lg border ${
               errors.message ? 'border-error' : 'border-surfaceVariant'
-            } focus:border-primary focus:ring-2 focus:ring-primary/20 transition-all outline-none resize-none poppins-regular text-textSecondary lg:text-base text-sm overflow-y-auto`}
+            } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none resize-none poppins-regular text-textSecondary lg:text-base text-sm overflow-y-auto`}
           />
           {errors.message && (
             <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
@@ -222,7 +234,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
 
         <button
           onClick={submitEmail}
-          className="w-full bg-primary text-white py-3 px-6 rounded-lg poppins-medium hover:bg-[#00306B] transition-colors shadow-sm hover:shadow-md"
+          className="w-full bg-primary text-white py-3 px-6 rounded-lg poppins-medium hover:bg-[#002147] transition-colors shadow-sm hover:shadow-md"
         >
           Send Message
         </button>

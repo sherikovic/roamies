@@ -1,27 +1,32 @@
+import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
-import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
 import Features from './Features'
+import { getIsMobile } from 'util/util'
 
 export default function Anticipation() {
   const [init, setInit] = useState(false)
   const containerRef = useRef(null)
+  const isMobile = getIsMobile()
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end end'],
+    offset: ['start start', 'end end'],
   })
+  // mobile 1157, 534
+  // air 832, 1163 --> 832/0.17
 
-  const scaleA = useTransform(scrollYProgress, [0.33, 0.5], [1, 75])
-  const scaleText = useTransform(scrollYProgress, [0.2, 0.33], [0.6, 1])
-  const xA = useTransform(scrollYProgress, [0.33, 0.5], [0, 765]) // lg
-  const yA = useTransform(scrollYProgress, [0.33, 0.5], [0, 350]) // lg
-  const textColor = useTransform(scrollYProgress, [0.475, 0.48], ['#000000', '#ffffff'])
-  // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 400]) // sm
-  // const yA = useTransform(scrollYProgress, [0.6, 0.85], [0, 400]) // sm
-  const opacityB = useTransform(scrollYProgress, [0.475, 0.52], [0, 1])
-  // const yB = useTransform(scrollYProgress, [0.48, 0.5], [-10, 0])
+  const scaleA = useTransform(scrollYProgress, [0.17, 0.265], [1, 75])
+  const scaleText = useTransform(scrollYProgress, [0.05, 0.17], [0.6, 1])
+  const xA = useTransform(scrollYProgress, [0.17, 0.265], [0, 765])
+  const yA = useTransform(scrollYProgress, [0.17, 0.265], [0, 100])
+  const textColor = useTransform(scrollYProgress, [0.25, 0.3], ['#000000', '#ffffff'])
+  const opacityB = useTransform(
+    scrollYProgress,
+    [isMobile ? 0.17 : 0.27, isMobile ? 0.3 : 0.4],
+    [0, 1],
+  )
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -131,7 +136,7 @@ export default function Anticipation() {
     [],
   )
 
-  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+  useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
 
   return (
     <section
@@ -175,17 +180,44 @@ export default function Anticipation() {
           </span>
         </p>
       </div>
-      <motion.div
-        style={{ scale: scaleA, x: xA, y: yA }}
-        className="flex py-[30rem] w-svw h-svh justify-center items-center"
-      >
-        <motion.p
-          style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
-          className="font-drukHeavy text-textPrimary pointer-events-none"
+      {!isMobile && (
+        <motion.div
+          style={{ scale: scaleA, x: xA, y: yA }}
+          className="flex py-[30rem] w-svw h-svh justify-center items-center"
         >
-          Roamies
-        </motion.p>
-      </motion.div>
+          <motion.p
+            style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
+            className="font-drukHeavy text-textPrimary pointer-events-none"
+          >
+            Roamies
+          </motion.p>
+        </motion.div>
+      )}
+      {/* {isMobile ? (
+        <div className="flex py-[30rem] w-svw h-svh justify-center items-center z-10">
+          <p
+            style={{
+              fontSize: 'clamp(3rem, 8vw, 6rem)',
+              color: colors.textPrimary,
+            }}
+            className="font-drukHeavy text-textPrimary pointer-events-none"
+          >
+            Roamies
+          </p>
+        </div>
+      ) : (
+        <motion.div
+          style={{ scale: scaleA, x: xA, y: yA }}
+          className="flex py-[30rem] w-svw h-svh justify-center items-center"
+        >
+          <motion.p
+            style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
+            className="font-drukHeavy text-textPrimary pointer-events-none"
+          >
+            Roamies
+          </motion.p>
+        </motion.div>
+      )} */}
       <motion.div style={{ opacity: opacityB }} className="sticky inset-0 w-svw">
         <Features />
       </motion.div>

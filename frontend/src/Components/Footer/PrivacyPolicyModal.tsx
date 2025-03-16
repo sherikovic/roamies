@@ -69,15 +69,17 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
     <>
       <Header>
         <CloseButton onClick={closeModal}>
-          <svg
+          <motion.svg
             width="30"
             height="30"
             viewBox="0 0 24 24"
             fill="none"
             stroke={colors.onSurfaceVariant}
+            whileHover={{ stroke: colors.background }}
+            transition={{ duration: 0.15, ease: 'easeInOut' }}
           >
             <path strokeWidth="2" d="M18 6L6 18M6 6l12 12" />
-          </svg>
+          </motion.svg>
         </CloseButton>
         <BurgerIcon isOpen={isTocOpen} close={() => setIsTocOpen(!isTocOpen)} />
         <HeaderSection>
@@ -151,7 +153,7 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
             <BoldText>• Location:</BoldText> We ask for permission to track your location to enhance
             certain services and features, such as finding nearby events or trip locations.{'\n'}
             <BoldText>• Gallery:</BoldText> If you wish to upload photos, we will ask for permission
-            to access your device’s gallery.{'\n'}
+            to access your device&apos;s gallery.{'\n'}
             <BoldText>• Calendar:</BoldText> To save event data, we request access to your calendar
             to add upcoming events.
             {'\n'}
@@ -195,7 +197,9 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
           <SecondaryText>
             If you have any questions about this Privacy Policy or our data practices, please
             contact us at:
-            <span className="font-medium">Email:</span> support@roamies.xyz.
+            <p>
+              <span className="poppins-medium">Email:</span> support@roamies.xyz
+            </p>
           </SecondaryText>
         </ContentSection>
       </ScrollContent>
