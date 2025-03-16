@@ -8,19 +8,7 @@ import { lenis } from 'util/lenis'
 import SVG from 'react-inlinesvg'
 import TermsOfServiceModal from './TermsOfServiceModal'
 import ContactUsModal from './ContactUsModal'
-
-const theme = {
-  primary: '#004089',
-  background: '#FFFFFF',
-  textPrimary: '#333333',
-  textSecondary: '#6C757D',
-  backdrop: '#000000FF',
-  surface: '#F8F9FA',
-  surfaceVariant: '#D4D4D4',
-  onSurface: '#6C757D',
-  onSurfaceVariant: '#404040',
-  outline: '#A5A4A4',
-}
+import { colors } from 'constants/colors'
 
 export default function Footer() {
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false)
@@ -176,19 +164,19 @@ export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => vo
         animate={isOpen ? 'open' : 'closed'}
       >
         <motion.path
-          stroke={theme.onSurfaceVariant}
+          stroke={colors.onSurfaceVariant}
           strokeWidth="2"
           variants={topPathVariants}
           transition={springTransition}
         />
         <motion.path
-          stroke={theme.onSurfaceVariant}
+          stroke={colors.onSurfaceVariant}
           strokeWidth="2"
           variants={middlePathVariants}
           transition={springTransition}
         />
         <motion.path
-          stroke={theme.onSurfaceVariant}
+          stroke={colors.onSurfaceVariant}
           strokeWidth="2"
           variants={bottomPathVariants}
           transition={springTransition}
@@ -225,7 +213,7 @@ const ModalOverlay = styled.div`
 `
 
 const ModalContent = styled.div`
-  background: ${theme.background};
+  background: ${colors.background};
   height: 90vh;
   width: 90%;
   max-width: 1200px;
@@ -240,7 +228,7 @@ const FooterLink = styled.a`
   font-family: 'Poppins', sans-serif;
   font-size: 16px;
   font-weight: 500;
-  color: ${theme.textPrimary};
+  color: ${colors.textPrimary};
   cursor: pointer;
   position: relative;
   text-decoration: none;
@@ -248,7 +236,7 @@ const FooterLink = styled.a`
   width: fit-content;
 
   &:hover {
-    color: ${theme.textSecondary};
+    color: ${colors.textSecondary};
   }
 
   &::after {
@@ -258,7 +246,7 @@ const FooterLink = styled.a`
     bottom: -2px;
     width: 0;
     height: 1px;
-    background-color: ${theme.textSecondary};
+    background-color: ${colors.textSecondary};
     transition: width 0.3s ease-in-out;
   }
 
@@ -270,7 +258,7 @@ const FooterLink = styled.a`
 // const Separator = styled.hr`
 //   width: 80vw;
 //   border: 0;
-//   border-top: 1px solid ${theme.outline};
+//   border-top: 1px solid ${colors.outline};
 //   margin: 12px 0;
 //   margin-bottom: 0;
 // `

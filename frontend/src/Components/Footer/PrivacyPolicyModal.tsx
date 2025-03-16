@@ -2,19 +2,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import styled from 'styled-components/macro'
 import { useState } from 'react'
 import { BurgerIcon } from '.'
-
-const theme = {
-  primary: '#004089',
-  background: '#FFFFFF',
-  textPrimary: '#333333',
-  textSecondary: '#6C757D',
-  backdrop: '#000000FF',
-  surface: '#F8F9FA',
-  surfaceVariant: '#D4D4D4',
-  onSurface: '#6C757D',
-  onSurfaceVariant: '#404040',
-  outline: '#A5A4A4',
-}
+import { colors } from 'constants/colors'
 
 const TOC_SECTIONS = [
   { id: 'information-we-collect', title: 'Information We Collect' },
@@ -61,7 +49,7 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
             height="30"
             viewBox="0 0 24 24"
             fill="none"
-            stroke={theme.onSurfaceVariant}
+            stroke={colors.onSurfaceVariant}
           >
             <path strokeWidth="2" d="M18 6L6 18M6 6l12 12" />
           </svg>
@@ -196,7 +184,7 @@ const TOCContainer = styled(motion.div)`
   left: 0;
   width: 280px;
   height: 100vh;
-  background: ${theme.background};
+  background: ${colors.background};
   padding: 0px 0px 20px;
   box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
   z-index: 999;
@@ -243,19 +231,19 @@ const TOCItem = styled.li`
 const TOCLink = styled.a`
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  color: ${theme.onSurfaceVariant};
+  color: ${colors.onSurfaceVariant};
   text-decoration: none;
   transition: color 0.3s ease;
 
   &:hover {
-    color: ${theme.primary};
+    color: ${colors.primary};
     text-decoration: underline;
   }
 `
 
 const Header = styled(motion.div)`
   position: relative;
-  background: ${theme.background};
+  background: ${colors.background};
   padding: 12px 0;
   display: flex;
   justify-content: center;
@@ -293,14 +281,14 @@ const ScrollContent = styled.div`
     width: 5px;
   }
   &::-webkit-scrollbar-track {
-    background: ${theme.background};
+    background: ${colors.background};
     border-radius: 4px;
   }
   &::-webkit-scrollbar-thumb {
-    background: ${theme.surface};
+    background: ${colors.surface};
     border-radius: 4px;
     &:hover {
-      background: ${theme.surfaceVariant};
+      background: ${colors.surfaceVariant};
     }
   }
 `
@@ -315,7 +303,7 @@ const HeaderSection = styled.div`
 const HeaderPrimary = styled.h1`
   font-family: 'Poppins', sans-serif;
   font-size: 30px;
-  color: ${theme.textPrimary};
+  color: ${colors.textPrimary};
   margin: 0;
   font-weight: 600;
 `
@@ -323,7 +311,7 @@ const HeaderPrimary = styled.h1`
 const HeaderSecondary = styled.p`
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  color: ${theme.textSecondary};
+  color: ${colors.textSecondary};
   margin: 0;
   font-weight: 500;
 `
@@ -337,7 +325,7 @@ const ContentSection = styled.div`
 const PrimaryText = styled.p`
   font-family: 'Poppins', sans-serif;
   font-size: 18px;
-  color: ${theme.textPrimary};
+  color: ${colors.textPrimary};
   margin: 0;
   font-weight: 600;
 `
@@ -345,7 +333,7 @@ const PrimaryText = styled.p`
 const SecondaryText = styled.p`
   font-family: 'Poppins', sans-serif;
   font-size: 14px;
-  color: ${theme.textSecondary};
+  color: ${colors.textSecondary};
   line-height: 30px;
   margin: 0;
   white-space: pre-wrap;

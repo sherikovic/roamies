@@ -2,7 +2,7 @@ import { getIsMobile } from 'util/util'
 import logo from 'assets/images/icon.svg'
 import SVG from 'react-inlinesvg'
 
-const LandingNavigation: React.FC = () => {
+const NavBar: React.FC = () => {
   const isMobile = getIsMobile()
   window.onscroll = function () {
     if (isMobile) return
@@ -71,4 +71,4 @@ const LandingNavigation: React.FC = () => {
   )
 }
 
-export default LandingNavigation
+export default NavBar
