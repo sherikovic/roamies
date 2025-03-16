@@ -1,4 +1,4 @@
-import Solitary from 'assets/videos/Solitary_Train_Arrival.mp4'
+import Solitary from 'assets/videos/solitary_train_arrival.mp4'
 import { motion, useScroll, useTransform } from 'motion/react'
 import GroupRunning from 'assets/videos/group-running.mp4'
 import LonelyHike from 'assets/videos/lonely-hike.mp4'
@@ -84,7 +84,7 @@ export default function Reasons() {
       </motion.div>
 
       {/* Video 1 Section */}
-      <div className="sticky inset-0 justify-center items-center pointer-events-none">
+      <div className="fixed inset-0 justify-center items-center pointer-events-none">
         <motion.video
           ref={video1Ref}
           className="w-svw h-svh brightness-50"
@@ -107,7 +107,7 @@ export default function Reasons() {
       </div>
 
       {/* Video 2 Section */}
-      <div className="sticky inset-0 justify-center items-center pointer-events-none">
+      <div className="fixed inset-0 justify-center items-center pointer-events-none">
         <motion.video
           ref={video2Ref}
           className="w-svw h-svh brightness-50"

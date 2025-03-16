@@ -1,64 +1,194 @@
 import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
-import EventsOnMap from 'assets/images/screenshots/events_on_map.jpeg'
-import EventPage from 'assets/images/screenshots/event_page.jpeg'
-// import Dashboard from 'assets/images/screenshots/dashboard.jpeg'
-// import Comments from 'assets/images/screenshots/comments.jpeg'
-import { useRef, useState } from 'react'
+import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { useEffect, useMemo, useRef, useState } from 'react'
+import { ISourceOptions } from '@tsparticles/engine'
+import { loadSlim } from '@tsparticles/slim'
+import Features from './Features'
 
-export default function Roamies() {
+export default function Anticipation() {
+  const [init, setInit] = useState(false)
   const containerRef = useRef(null)
   const { scrollYProgress } = useScroll({
     target: containerRef,
-    offset: ['start end', 'end start'],
+    offset: ['start end', 'end end'],
   })
-  const [isFixed, setIsFixed] = useState(true)
 
-  const opacityB = useTransform(scrollYProgress, [0, 0.1], [0, 1])
-  const yB = useTransform(scrollYProgress, [0, 0.1], [100, 0])
-  scrollYProgress.on('change', (value) => {
-    setIsFixed(value < 0.1)
-  })
+  const scaleA = useTransform(scrollYProgress, [0.33, 0.5], [1, 75])
+  const scaleText = useTransform(scrollYProgress, [0.2, 0.33], [0.6, 1])
+  const xA = useTransform(scrollYProgress, [0.33, 0.5], [0, 765]) // lg
+  const yA = useTransform(scrollYProgress, [0.33, 0.5], [0, 350]) // lg
+  const textColor = useTransform(scrollYProgress, [0.475, 0.48], ['#000000', '#ffffff'])
+  // const xA = useTransform(scrollYProgress, [0.6, 0.9], [0, 400]) // sm
+  // const yA = useTransform(scrollYProgress, [0.6, 0.85], [0, 400]) // sm
+  const opacityB = useTransform(scrollYProgress, [0.475, 0.52], [0, 1])
+  // const yB = useTransform(scrollYProgress, [0.48, 0.5], [-10, 0])
+
+  useEffect(() => {
+    initParticlesEngine(async (engine) => {
+      await loadSlim(engine)
+    }).then(() => {
+      setInit(true)
+    })
+  }, [])
+
+  const options: ISourceOptions = useMemo(
+    () => ({
+      background: {
+        color: {
+          value: '#d9a13b',
+        },
+      },
+      fpsLimit: 120,
+      interactivity: {
+        detectOn: 'canvas',
+        events: {
+          onHover: {
+            enable: false,
+            mode: 'bubble',
+          },
+          onClick: {
+            enable: true,
+            mode: 'bubble',
+          },
+          resize: {
+            enable: true,
+          },
+        },
+        modes: {
+          grab: {
+            distance: 400,
+            links: {
+              opacity: 0.5,
+            },
+          },
+          repulse: {
+            distance: 56.84,
+            duration: 0.4,
+          },
+          push: {
+            quantity: 4,
+          },
+          remove: {
+            quantity: 2,
+          },
+        },
+      },
+      particles: {
+        number: {
+          value: 15,
+          density: {
+            enable: true,
+          },
+        },
+        color: {
+          value: ['#fff', '#f07443', '#ff4800'],
+        },
+        shape: {
+          type: 'circle',
+        },
+        opacity: {
+          value: { min: 0.05, max: 0.15 },
+          random: true,
+        },
+        collisions: {
+          enable: true,
+          mode: 'bounce',
+        },
+        size: {
+          value: { min: 45, max: 200 },
+          random: true,
+          animation: {
+            mode: 'random',
+            enable: true,
+            speed: 10,
+            sync: false,
+            startValue: 'random',
+          },
+        },
+        move: {
+          enable: true,
+          speed: 3,
+          direction: 'none',
+          random: true,
+          straight: false,
+          out_mode: 'in',
+          bounce: true,
+          attract: {
+            enable: true,
+            rotateX: 600,
+            rotateY: 1200,
+          },
+        },
+        reduceDuplicates: true,
+      },
+      fullScreen: {
+        enable: false,
+        zIndex: 1,
+      },
+      detectRetina: true,
+      pauseOnOutsideViewport: true,
+    }),
+    [],
+  )
 
   useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
 
   return (
-    <section ref={containerRef} className="flex flex-col">
-      {/* <div className="sticky top-0"> */}
-      <motion.div
-        // style={{ opacity: opacityB, y: yB }}
-        className="flex py-40 w-svw justify-between items-center bg-white pointer-events-none"
-      >
-        <div className="w-full flex justify-center">
-          <img src={EventsOnMap} alt="Events on map" className="lg:h-[700px] lg:w-[320px]" />
-        </div>
-        <div className="flex flex-col w-full gap-5">
-          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">
-            Get straight to the action
-          </p>
-          <p className="poppins-regular text-black lg:text-xl w-[75%]">
-            We designed Roamies to make joining an event as effortless as possible — no groups, no
-            unnecessary steps. Just scroll through the map, find what&apos;s happening near you, and
-            jump right in.
-          </p>
-        </div>
-      </motion.div>
-      {/* </div> */}
-      <div className="flex justify-between items-center">
-        <div className="w-full flex justify-center">
-          <img src={EventPage} alt="Event page" className="lg:h-[700px] lg:w-[320px]" />
-          {/* <img src={Comments} alt="Event page" className="lg:h-[700px] lg:w-[320px]" /> */}
-        </div>
-        <div className="flex flex-col w-full gap-5">
-          <p className="poppins-semibold text-black lg:text-3xl sm:text-lg">
-            We made it personal, not just social
-          </p>
-          <p className="poppins-regular text-black lg:text-xl w-[75%]">
-            No endless chats. No lost messages in a sea of conversations. Just direct, personal
-            connections. Pick an event, join instantly, and meet people in real life—without the
-            small talk holding you back.
-          </p>
-        </div>
+    <section
+      ref={containerRef}
+      className="flex flex-col items-center relative w-svw overflow-x-clip"
+    >
+      {/* Background Particles */}
+      {init && <Particles id="tsparticles" options={options} className="absolute inset-0" />}
+      {/* Content */}
+      <div className="flex pt-72 w-[60%] z-10 justify-center">
+        <p
+          style={{
+            WebkitTextFillColor: 'transparent',
+            WebkitTextStrokeWidth: '1.5px',
+            WebkitTextStrokeColor: '#242323',
+            lineHeight: '5.75rem',
+            letterSpacing: '-0.05em',
+            fontSize: 'clamp(3rem, 5vw, 5.5rem)',
+          }}
+          className="font-drukMedium text-center"
+        >
+          So we created{' '}
+          <span
+            style={{
+              WebkitTextFillColor: '#1f1f1f',
+              WebkitTextStrokeWidth: '0px',
+            }}
+          >
+            something
+          </span>{' '}
+          <span>
+            we believe makes a{' '}
+            <span
+              style={{
+                WebkitTextFillColor: '#1f1f1f',
+                WebkitTextStrokeWidth: '0px',
+              }}
+            >
+              difference.
+            </span>
+          </span>
+        </p>
       </div>
+      <motion.div
+        style={{ scale: scaleA, x: xA, y: yA }}
+        className="flex py-[30rem] w-svw h-svh justify-center items-center"
+      >
+        <motion.p
+          style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
+          className="font-drukHeavy text-black pointer-events-none"
+        >
+          Roamies
+        </motion.p>
+      </motion.div>
+      <motion.div style={{ opacity: opacityB }} className="sticky inset-0 w-svw">
+        <Features />
+      </motion.div>
     </section>
   )
 }

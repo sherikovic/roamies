@@ -1,24 +1,13 @@
 import LandingNavigation from 'Components/Landingpage/LandingNavigation'
-import Anticipation from 'Components/Landingpage/Anticipation'
-import { About } from 'Components/Landingpage/About'
-import Reasons from 'Components/Landingpage/Reasons'
-import { useEffect } from 'react'
-import Lenis from 'lenis'
+import Roamies from 'Components/Landingpage/Roamies'
 import Download from 'Components/Landingpage/Download'
-// import Footer from 'Components/Landingpage/Footer'
-// import Roamies from 'Components/Landingpage/Roamies'
+import Reasons from 'Components/Landingpage/Reasons'
+import { About } from 'Components/Landingpage/About'
+import Footer from 'Components/Footer'
+import { lenis } from 'util/lenis'
 
 const LandingPage: React.FC = () => {
-  useEffect(() => {
-    // Initialize Lenis
-    const lenis = new Lenis()
-    // Use requestAnimationFrame to continuously update the scroll
-    function raf(time) {
-      lenis.raf(time)
-      requestAnimationFrame(raf)
-    }
-    requestAnimationFrame(raf)
-  }, [])
+  lenis.start()
 
   return (
     <div>
@@ -26,12 +15,9 @@ const LandingPage: React.FC = () => {
       <About />
       <div id="jump-down" />
       <Reasons />
-      <Anticipation />
-      {/* <Roamies /> */}
-      {/* <Features /> */}
+      <Roamies />
       <Download />
-      {/* <Footer /> */}
-      {/* <Contact /> */}
+      <Footer />
     </div>
   )
 }
