@@ -71,11 +71,19 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
       exit={{ x: '-100%' }}
       transition={{ type: 'tween', duration: 0.3 }}
     >
-      <TOCHeader className="poppins-semibold text-black mb-10">Jump to section..</TOCHeader>
+      <TOCHeader className="poppins-semibold text-textPrimary mb-10">Jump to section..</TOCHeader>
       <TOCList>
         {TOC_SECTIONS.map((item, index) => (
           <TOCItem key={index}>
-            <TOCLink href={`#${item.id}`} onClick={() => setIsTocOpen(false)}>
+            <TOCLink
+              onClick={() => {
+                const section = document.getElementById(item.id)
+                if (section) {
+                  section.scrollIntoView({ behavior: 'smooth' })
+                }
+                setIsTocOpen(false)
+              }}
+            >
               {item.title}
             </TOCLink>
           </TOCItem>

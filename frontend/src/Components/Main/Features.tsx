@@ -85,7 +85,7 @@ const Card = ({
             <img loading="lazy" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />
           </div>
           <div className="flex flex-col w-full lg:w-3/5 gap-4">
-            <h1 className="poppins-semibold text-black text-2xl lg:text-4xl leading-tight">
+            <h1 className="poppins-semibold text-textPrimary text-2xl lg:text-4xl leading-tight">
               {headline}
             </h1>
             <p className="poppins-regular text-gray-700 text-lg lg:text-xl leading-relaxed">

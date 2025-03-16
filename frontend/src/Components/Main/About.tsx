@@ -58,7 +58,7 @@ export const About = () => {
                 setShowQR(!showQR)
               }
             }}
-            className="poppins-semibold text-black lg:text-base cursor-pointer px-11 py-4 rounded-full"
+            className="poppins-semibold text-textPrimary lg:text-base cursor-pointer px-11 py-4 rounded-full"
           >
             Get the app
           </motion.button>
@@ -104,7 +104,7 @@ const QrCodeOverlay = () => {
       className="qr-code-container"
     >
       <SVG src={QrCode} className="lg:w-44 lg:h-44 w-20 h-20" />
-      <p className="poppins-medium text-base lg:text-lg text-center text-black">
+      <p className="poppins-medium text-base lg:text-lg text-center text-textPrimary">
         Scan the QR code to get the app
       </p>
     </motion.div>

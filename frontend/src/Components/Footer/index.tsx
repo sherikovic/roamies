@@ -52,28 +52,29 @@ export default function Footer() {
   }
 
   return (
-    <div className="relative px-32 py-10 bg-offWhite flex justify-between items-start">
+    <div className="relative px-32 py-20 bg-offWhite flex justify-between items-start">
       <div className="flex gap-40">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center gap-5">
             <SVG src={logo} id="logo-elem" className="logo-large" />
-            <p className="poppins-semibold lg:text-lg text-black">2025 Roamies &copy;</p>
+            <p className="poppins-semibold lg:text-2xl text-textPrimary">Roamies &copy;</p>
           </div>
           <p className="poppins-medium lg:text-sm text-[#5a5a5a]">
             Made with &hearts; from the world
           </p>
         </div>
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-5">
           <FooterLink onClick={() => openModal('privacy')}>Privacy Policy</FooterLink>
           <FooterLink onClick={() => openModal('terms')}>Terms Of Service</FooterLink>
-          <FooterLink onClick={() => openModal('contact')}>Contact Us</FooterLink>
+          <FooterLink onClick={() => openModal('contact')}>Contact</FooterLink>
         </div>
       </div>
       <div className="flex flex-col gap-5">
+        <h2 className="font-drukBold lg:text-2xl text-base text-textPrimary">Download</h2>
         <img
           src={downloadApp}
           alt="download app"
-          className="z-10 w-36 cursor-pointer"
+          className="z-10 w-40 cursor-pointer"
           onClick={() =>
             window.open(
               'https://apps.apple.com/us/app/roamies-adventure-together/id6740840624',

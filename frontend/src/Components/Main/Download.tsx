@@ -3,7 +3,7 @@ import downloadApp from 'assets/images/download-app.svg'
 export default function Download() {
   return (
     <div className="relative flex flex-col items-center justify-center py-32 px-6 bg-gradient-to-b from-blue-50 to-white">
-      <p className="poppins-semibold text-black text-center lg:text-4xl mb-4">
+      <p className="poppins-semibold text-textPrimary text-center lg:text-4xl mb-4">
         Your next adventure starts here
       </p>
       <p className="poppins-regular text-gray-600 text-center lg:text-lg max-w-md">

@@ -181,7 +181,7 @@ export default function Anticipation() {
       >
         <motion.p
           style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
-          className="font-drukHeavy text-black pointer-events-none"
+          className="font-drukHeavy text-textPrimary pointer-events-none"
         >
           Roamies
         </motion.p>

@@ -42,7 +42,7 @@ export const ModalContent = styled.div`
 
 export const FooterLink = styled.a`
   font-family: 'Poppins', sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 500;
   color: ${colors.textPrimary};
   cursor: pointer;
@@ -127,7 +127,7 @@ export const TOCLink = styled.a`
   color: ${colors.onSurfaceVariant};
   text-decoration: none;
   transition: color 0.3s ease;
-
+  cursor: pointer;
   &:hover {
     color: ${colors.primary};
     text-decoration: underline;
