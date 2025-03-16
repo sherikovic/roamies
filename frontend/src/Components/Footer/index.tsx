@@ -32,14 +32,14 @@ export default function Footer() {
       if (event.key === 'Escape') closeModal()
     }
 
-    if (isPrivacyModalOpen) {
+    if (isPrivacyModalOpen || isTermsOfServiceOpen || isContactUsOpen) {
       window.addEventListener('keydown', handleKeyDown)
     }
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
     }
-  }, [isPrivacyModalOpen])
+  }, [isPrivacyModalOpen, isTermsOfServiceOpen, isContactUsOpen])
 
   const openModal = (modal: string) => {
     switch (modal) {
@@ -55,9 +55,10 @@ export default function Footer() {
     }
     lenis.stop()
   }
+
   const closeModal = () => {
-    setIsPrivacyModalOpen(false)
     setIsTermsOfServiceOpen(false)
+    setIsPrivacyModalOpen(false)
     setIsContactUsOpen(false)
     lenis.start()
   }
@@ -84,7 +85,7 @@ export default function Footer() {
         <img
           src={downloadApp}
           alt="download app"
-          className="z-10 w-48 cursor-pointer"
+          className="z-10 w-36 cursor-pointer"
           onClick={() =>
             window.open(
               'https://apps.apple.com/us/app/roamies-adventure-together/id6740840624',
@@ -120,6 +121,93 @@ export default function Footer() {
     </div>
   )
 }
+
+export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => void }) => {
+  const topPathVariants = {
+    closed: {
+      d: 'M2 5 L22 5',
+      rotate: 0,
+      translateY: 0,
+    },
+    open: {
+      d: 'M5 5 L19 19',
+      rotate: 90,
+      translateY: 8,
+    },
+  }
+
+  const middlePathVariants = {
+    closed: {
+      d: 'M2 12 L22 12',
+      opacity: 1,
+    },
+    open: {
+      d: 'M5 12 L19 12',
+      opacity: 0,
+    },
+  }
+
+  const bottomPathVariants = {
+    closed: {
+      d: 'M2 19 L22 19',
+      rotate: 0,
+      translateY: 0,
+    },
+    open: {
+      d: 'M5 19 L19 5',
+      rotate: -90,
+      translateY: -8,
+    },
+  }
+
+  const springTransition = {
+    type: 'spring',
+    stiffness: 300,
+    damping: 20,
+  }
+
+  return (
+    <BurgerButton as={motion.button} onClick={close}>
+      <motion.svg
+        width="24"
+        height="24"
+        viewBox="0 0 24 24"
+        initial={false}
+        animate={isOpen ? 'open' : 'closed'}
+      >
+        <motion.path
+          stroke={theme.onSurfaceVariant}
+          strokeWidth="2"
+          variants={topPathVariants}
+          transition={springTransition}
+        />
+        <motion.path
+          stroke={theme.onSurfaceVariant}
+          strokeWidth="2"
+          variants={middlePathVariants}
+          transition={springTransition}
+        />
+        <motion.path
+          stroke={theme.onSurfaceVariant}
+          strokeWidth="2"
+          variants={bottomPathVariants}
+          transition={springTransition}
+        />
+      </motion.svg>
+    </BurgerButton>
+  )
+}
+
+const BurgerButton = styled.button`
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  border-radius: 8px;
+  padding: 8px;
+  cursor: pointer;
+  z-index: 999;
+`
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -178,3 +266,11 @@ const FooterLink = styled.a`
     width: 100%;
   }
 `
+
+// const Separator = styled.hr`
+//   width: 80vw;
+//   border: 0;
+//   border-top: 1px solid ${theme.outline};
+//   margin: 12px 0;
+//   margin-bottom: 0;
+// `

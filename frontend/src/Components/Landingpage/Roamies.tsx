@@ -1,5 +1,5 @@
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
@@ -131,7 +131,7 @@ export default function Anticipation() {
     [],
   )
 
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
 
   return (
     <section

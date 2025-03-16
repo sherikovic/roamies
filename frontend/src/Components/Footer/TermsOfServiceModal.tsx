@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react'
 import styled from 'styled-components/macro'
 import { useState } from 'react'
+import { BurgerIcon } from '.'
 
 const theme = {
   primary: '#004089',
@@ -15,95 +16,48 @@ const theme = {
   outline: '#A5A4A4',
 }
 
-const topPathVariants = {
-  closed: {
-    d: 'M2 5 L22 5',
-    rotate: 0,
+const TOC_SECTIONS = [
+  { id: 'agreement-to-our-legal-terms', title: 'Agreement to Our Legal Terms' },
+  { id: 'our-services', title: 'Our Services' },
+  { id: 'intellectual-property-rights', title: 'Intellectual Property Rights' },
+  { id: 'user-presentations', title: 'User Presentations' },
+  { id: 'user-registration', title: 'User Registration' },
+  { id: 'prohibited-activities', title: 'Prohibited Activities' },
+  { id: 'user-generated-contributions', title: 'User Generated Contributions' },
+  { id: 'contribution-license', title: 'Contribution License' },
+  { id: 'mobile-application-license', title: 'Mobile Application License' },
+  { id: 'third-party-websites-and-content', title: 'Third-Party Websites and Content' },
+  { id: 'service-management', title: 'Service Management' },
+  { id: 'privacy-policy', title: 'Privacy Policy' },
+  {
+    id: 'dmca-notice-and-policy',
+    title: 'Digital Millennium Copyright Act (DMCA) Notice And Policy',
   },
-  open: {
-    d: 'M5 5 L19 19',
-    rotate: 90,
+  { id: 'term-and-termination', title: 'Term and Termination' },
+  { id: 'modifications-and-interruptions', title: 'Modifications and Interruptions' },
+  { id: 'governing-law', title: 'Governing Law' },
+  { id: 'dispute-resolution', title: 'Dispute Resolution' },
+  { id: 'corrections', title: 'Corrections' },
+  { id: 'disclaimer', title: 'Disclaimer' },
+  { id: 'limitations-of-liability', title: 'Limitations of Liability' },
+  { id: 'indemnification', title: 'Indemnification' },
+  { id: 'user-data', title: 'User Data' },
+  {
+    id: 'electronic-communications-transactions-and-signatures',
+    title: 'Electronic Communications, Transactions and Signatures',
   },
-}
-
-const middlePathVariants = {
-  closed: {
-    d: 'M2 12 L22 12',
-    opacity: 1,
-  },
-  open: {
-    d: 'M5 12 L19 12',
-    opacity: 0,
-  },
-}
-
-const bottomPathVariants = {
-  closed: {
-    d: 'M2 19 L22 19',
-    rotate: 0,
-  },
-  open: {
-    d: 'M5 19 L19 5',
-    rotate: -90,
-  },
-}
-
-// const springTransition = {
-//   type: 'spring',
-//   stiffness: 300,
-//   damping: 20,
-// }
+  { id: 'california-users-and-residents', title: 'California Users and Residents' },
+  { id: 'miscellaneous', title: 'Miscellaneous' },
+  { id: 'user-content-and-behavior', title: 'User Content and Behavior' },
+  { id: 'events-liability', title: 'Events Liability' },
+  { id: 'termination-for-violations', title: 'Termination for Violations' },
+  { id: 'changes-to-terms', title: 'Changes to Terms' },
+  { id: 'data-privacy', title: 'Data Privacy' },
+  { id: 'contact-us', title: 'Contact Us' },
+]
 
 const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
   const [isTocOpen, setIsTocOpen] = useState(false)
-
-  const BurgerIcon = () => (
-    <BurgerButton
-      as={motion.button}
-      onClick={() => setIsTocOpen(!isTocOpen)}
-      whileHover={{ scale: 1.05 }}
-    >
-      <motion.svg
-        width="24"
-        height="24"
-        viewBox="0 0 24 24"
-        initial={false}
-        animate={isTocOpen ? 'open' : 'closed'}
-      >
-        {/* All paths */}
-        <motion.path
-          stroke={theme.onSurfaceVariant}
-          strokeWidth="2"
-          variants={topPathVariants}
-          // transition={springTransition}
-          // whileHover={{
-          //   stroke: theme.back,
-          //   transition: { duration: 0.2 },
-          // }}
-        />
-        <motion.path
-          stroke={theme.onSurfaceVariant}
-          strokeWidth="2"
-          variants={middlePathVariants}
-          // transition={springTransition}
-          // whileHover={{
-          //   stroke: theme.primary,
-          //   transition: { duration: 0.2 },
-          // }}
-        />
-        <motion.path
-          stroke={theme.onSurfaceVariant}
-          strokeWidth="2"
-          variants={bottomPathVariants}
-          // transition={springTransition}
-          // whileHover={{
-          //   stroke: theme.primary,
-          //   transition: { duration: 0.2 },
-          // }}
-        />
-      </motion.svg>
-    </BurgerButton>
-  )
 
   const TableOfContents = () => (
     <TOCContainer
@@ -115,45 +69,10 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
     >
       <TOCHeader className="poppins-semibold text-black mb-10">Jump to section..</TOCHeader>
       <TOCList>
-        {[
-          'Agreement to Our Legal Terms',
-          'Our Services',
-          'Intellectual Property Rights',
-          'User Presentations',
-          'User Registration',
-          'Prohibited Activities',
-          'User Generated Contributions',
-          'Contribution License',
-          'Mobile Application License',
-          'Third-Party Websites and Content',
-          'Service Management',
-          'Privacy Policy',
-          'Digital Millenium Copyright Act (DMCA) Notice And Policy',
-          'Term and Termination',
-          'Modifications and Interruptions',
-          'Governing Law',
-          'Dispute resolution',
-          'Corrections',
-          'Disclaimer',
-          'Limitations of Liability',
-          'Indemnification',
-          'User Data',
-          'Electronic Communications, Transactions and Signatures',
-          'California Users and Residents',
-          'Miscellaneous',
-          'User Content and Behavior',
-          'Events Liability',
-          'Termination for Violations',
-          'Changes to Terms',
-          'Data Privacy',
-          'Contact Us',
-        ].map((item, index) => (
+        {TOC_SECTIONS.map((item, index) => (
           <TOCItem key={index}>
-            <TOCLink
-              href={`#${item.toLowerCase().replace(/ /g, '-')}`}
-              onClick={() => setIsTocOpen(false)}
-            >
-              {item}
+            <TOCLink href={`#${item.id}`} onClick={() => setIsTocOpen(false)}>
+              {item.title}
             </TOCLink>
           </TOCItem>
         ))}
@@ -175,7 +94,7 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
             <path strokeWidth="2" d="M18 6L6 18M6 6l12 12" />
           </svg>
         </CloseButton>
-        <BurgerIcon />
+        <BurgerIcon isOpen={isTocOpen} close={() => setIsTocOpen(!isTocOpen)} />
         <HeaderSection>
           <HeaderPrimary>Terms Of Service</HeaderPrimary>
           <HeaderSecondary>Last updated: January 23, 2025</HeaderSecondary>
@@ -199,8 +118,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
 
       <ScrollContent data-lenis-prevent="true" id="scrollable-content">
         {/* Content Sections */}
-        <ContentSection id="information-we-collect">
-          <PrimaryText>Agreement to Our Legal Terms</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[0].id}>
+          <PrimaryText>{TOC_SECTIONS[0].title}</PrimaryText>
           <SecondaryText>
             Thank you for using Roamies.{'\n'}By accessing or using the Roamies mobile application,
             website, or any related services (collectively, the{' '}
@@ -224,8 +143,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="how-we-use-your-information">
-          <PrimaryText>Our Services</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[1].id}>
+          <PrimaryText>{TOC_SECTIONS[1].title}</PrimaryText>
           <SecondaryText>
             Roamies is a social platform designed to connect individuals, particularly solo
             travelers, by enabling them to create and join events and trips. The platform allows
@@ -245,8 +164,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="access-and-control-over-your-data">
-          <PrimaryText>Intellectual Property Rights</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[2].id}>
+          <PrimaryText>{TOC_SECTIONS[2].title}</PrimaryText>
           <SecondaryText>
             All content, including source code, databases, functionality, software, website designs,
             audio, video, text, photographs, graphics, trademarks, service marks, and logos
@@ -263,8 +182,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="data-security">
-          <PrimaryText>User Presentations</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[3].id}>
+          <PrimaryText>{TOC_SECTIONS[3].title}</PrimaryText>
           <SecondaryText>
             By using Roamies, you confirm that:{'\n'}(1) you are at least 18 years old or the age of
             majority in your jurisdiction;{'\n'}(2) you have the legal capacity to agree to and
@@ -282,8 +201,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="permissions-we-request">
-          <PrimaryText>User Registration</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[4].id}>
+          <PrimaryText>{TOC_SECTIONS[4].title}</PrimaryText>
           <SecondaryText>
             To use certain features, you may need to create an account. You are responsible for
             maintaining the confidentiality of your login credentials and all activities under your
@@ -291,8 +210,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="third-party-authentication">
-          <PrimaryText>Prohibited Activities</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[5].id}>
+          <PrimaryText>{TOC_SECTIONS[5].title}</PrimaryText>
           <SecondaryText>
             You agree not to use the Services for any purpose other than as intended. Commercial use
             is prohibited unless authorized. Specifically, you may not:
@@ -309,8 +228,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="your-rights">
-          <PrimaryText>User Generated Contributions</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[6].id}>
+          <PrimaryText>{TOC_SECTIONS[6].title}</PrimaryText>
           <SecondaryText>
             Our Services may allow you to contribute content, such as posts, comments, photos,
             graphics, suggestions, events, or other materials (collectively, “Contributions”). These
@@ -362,8 +281,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="changes-to-this-privacy-policy">
-          <PrimaryText>Contribution License</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[7].id}>
+          <PrimaryText>{TOC_SECTIONS[7].title}</PrimaryText>
           <SecondaryText>
             By posting Contributions on the Services or linking your social accounts, you grant us a
             global, non-exclusive, royalty-free, perpetual license to use, reproduce, distribute,
@@ -380,8 +299,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Mobile Application License</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[8].id}>
+          <PrimaryText>{TOC_SECTIONS[8].title}</PrimaryText>
           <SecondaryText>
             You are granted a limited, non-exclusive, non-transferable, revocable license to use the
             App on your personal devices in compliance with these Legal Terms. Prohibited Actions
@@ -393,8 +312,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Third-Party Websites and Content</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[9].id}>
+          <PrimaryText>{TOC_SECTIONS[9].title}</PrimaryText>
           <SecondaryText>
             The Services may contain links to third-party websites (e.g., Instagram, Google Maps,
             Twitter) or content provided by third parties. We do not monitor or control these
@@ -406,16 +325,16 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Service Management</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[10].id}>
+          <PrimaryText>{TOC_SECTIONS[10].title}</PrimaryText>
           <SecondaryText>
             Roamies reserves the right to manage, modify, or discontinue services at its sole
             discretion without prior notice.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Privacy Policy</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[11].id}>
+          <PrimaryText>{TOC_SECTIONS[11].title}</PrimaryText>
           <SecondaryText>
             We prioritize your data privacy and security. Please review our Privacy Policy. By using
             the Services, you agree to its terms. The Services are hosted in the United States, and
@@ -424,8 +343,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Digital Millenium Copyright Act (DMCA) Notice And Policy</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[12].id}>
+          <PrimaryText>{TOC_SECTIONS[12].title}</PrimaryText>
           <SecondaryText>
             We respect intellectual property rights. If you believe material on the Services
             infringes your copyright, please notify our Designated Copyright Agent at the contact
@@ -441,8 +360,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Term and Termination</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[13].id}>
+          <PrimaryText>{TOC_SECTIONS[13].title}</PrimaryText>
           <SecondaryText>
             These Terms remain in effect while you use the Services. We may, at our discretion, deny
             access or terminate your account at any time, with or without notice, for any reason,
@@ -452,8 +371,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Modifications and Interruptions</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[14].id}>
+          <PrimaryText>{TOC_SECTIONS[14].title}</PrimaryText>
           <SecondaryText>
             We reserve the right to modify, suspend, or discontinue the Services at any time without
             notice. We are not obligated to update content or provide continuous access, and we are
@@ -463,16 +382,16 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Governing Law</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[15].id}>
+          <PrimaryText>{TOC_SECTIONS[15].title}</PrimaryText>
           <SecondaryText>
             These Terms and your use of the Services are governed by the laws of the State of New
             York, without regard to conflict of law principles.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Dispute resolution</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[16].id}>
+          <PrimaryText>{TOC_SECTIONS[16].title}</PrimaryText>
           <SecondaryText>
             <span className="poppins-semibold">Informal Negotiations:</span> The Parties agree to
             attempt informal negotiations for at least 30 days before initiating arbitration.
@@ -491,16 +410,16 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Corrections</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[17].id}>
+          <PrimaryText>{TOC_SECTIONS[17].title}</PrimaryText>
           <SecondaryText>
             Roamies reserves the right to correct errors, inaccuracies, or omissions in the platform
             content at any time without prior notice.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Disclaimer</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[18].id}>
+          <PrimaryText>{TOC_SECTIONS[18].title}</PrimaryText>
           <SecondaryText>
             The platform is provided “as-is” and “as-available.” Roamies makes no warranties about
             its operation, availability, or the accuracy of its content. Participating in events is
@@ -511,8 +430,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Limitations of Liability</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[19].id}>
+          <PrimaryText>{TOC_SECTIONS[19].title}</PrimaryText>
           <SecondaryText>
             ROAMIES, INCLUDING OUR DIRECTORS, EMPLOYEES, AND AGENTS, WILL NOT BE LIABLE FOR ANY
             DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES, INCLUDING LOSS OF PROFITS, DATA, OR REVENUE,
@@ -523,8 +442,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Indemnification</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[20].id}>
+          <PrimaryText>{TOC_SECTIONS[20].title}</PrimaryText>
           <SecondaryText>
             You agree to indemnify and hold Roamies harmless, including our officers, employees, and
             agents, from any claims, damages, or expenses arising from your use of the platform or a
@@ -535,8 +454,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>User Data</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[21].id}>
+          <PrimaryText>{TOC_SECTIONS[21].title}</PrimaryText>
           <SecondaryText>
             Roamies takes reasonable steps to protect user data but does not guarantee protection
             against unauthorized access.{'\n\n'}We maintain certain data you transmit to the
@@ -547,8 +466,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Electronic Communications, Transactions and Signatures</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[22].id}>
+          <PrimaryText>{TOC_SECTIONS[22].title}</PrimaryText>
           <SecondaryText>
             By using Roamies, you consent to receive electronic communications and agree that
             electronic agreements, notices, and records are legally binding. You waive any rights
@@ -557,8 +476,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>California Users and Residents</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[23].id}>
+          <PrimaryText>{TOC_SECTIONS[23].title}</PrimaryText>
           <SecondaryText>
             If your complaint is not resolved to your satisfaction, you can contact the Complaint
             Assistance Unit of the Division of Consumer Services at the California Department of
@@ -567,8 +486,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Miscellaneous</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[24].id}>
+          <PrimaryText>{TOC_SECTIONS[24].title}</PrimaryText>
           <SecondaryText>
             These Legal Terms, along with any policies or rules posted on the Services, form the
             complete and final agreement between you and us. If we do not enforce any right or
@@ -583,8 +502,8 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>User Content and Behavior</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[25].id}>
+          <PrimaryText>{TOC_SECTIONS[25].title}</PrimaryText>
           <SecondaryText>
             You are fully responsible for the content you upload to Roamies, including images,
             comments, and event information. Roamies reserves the right to remove any content that
@@ -592,24 +511,24 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Events Liability</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[26].id}>
+          <PrimaryText>{TOC_SECTIONS[26].title}</PrimaryText>
           <SecondaryText>
             Roamies is not liable for any injuries, losses, or damages that occur during events or
             trips arranged through the platform. Participation is at your own risk.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Termination for Violations</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[27].id}>
+          <PrimaryText>{TOC_SECTIONS[27].title}</PrimaryText>
           <SecondaryText>
             Roamies reserves the right to suspend or terminate your account if you violate these
             Terms and Conditions, engage in fraudulent activity, or misuse the platform.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Changes to Terms</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[28].id}>
+          <PrimaryText>{TOC_SECTIONS[28].title}</PrimaryText>
           <SecondaryText>
             Roamies reserves the right to update these Terms and Conditions at any time. We will
             inform users of significant changes, and continued use of the platform will be
@@ -617,19 +536,19 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Data Privacy</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[29].id}>
+          <PrimaryText>{TOC_SECTIONS[29].title}</PrimaryText>
           <SecondaryText>
             By using Roamies, you consent to the collection and use of your personal data in line
             with our Privacy Policy.
           </SecondaryText>
         </ContentSection>
 
-        <ContentSection id="contact-us">
-          <PrimaryText>Contact Us</PrimaryText>
+        <ContentSection id={TOC_SECTIONS[30].id}>
+          <PrimaryText>{TOC_SECTIONS[30].title}</PrimaryText>
           <SecondaryText>
             If you have any questions, concerns, or feedback regarding these Terms and Conditions or
-            any other aspect of Roamies, feel free to contact us at:{'\n\n'}
+            any other aspect of Roamies, feel free to contact us at:{'\n'}
             <span className="poppins-semibold">Email:</span> support@roamies.xyz
           </SecondaryText>
         </ContentSection>
@@ -637,17 +556,6 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
     </>
   )
 }
-
-const BurgerButton = styled.button`
-  position: absolute;
-  top: 12px;
-  right: 12px;
-  border: none;
-  border-radius: 8px;
-  padding: 8px;
-  cursor: pointer;
-  z-index: 999;
-`
 
 const TOCContainer = styled(motion.div)`
   position: fixed;
@@ -743,15 +651,6 @@ const CloseButton = styled.button`
   padding: 0;
   z-index: 10;
 `
-
-// const Separator = styled.hr`
-//   width: 80vw;
-//   border: 0;
-//   border-top: 1px solid ${theme.outline};
-//   margin: 12px 0;
-//   margin-bottom: 0;
-// `
-
 const ScrollContent = styled.div`
   display: flex;
   flex-direction: column;
