@@ -50,7 +50,7 @@ export const About = () => {
         >
           <motion.button
             initial={{
-              background: `linear-gradient(115deg, 
+              background: `linear-gradient(180deg, 
                 ${colors.orange} 0%, 
                 ${colors.surfaceVariant} 50%, 
                 ${colors.orange} 100%)`,
@@ -65,11 +65,13 @@ export const About = () => {
               scale: 1,
             }}
             whileHover={{
-              backgroundPosition: '0% 0%',
+              backgroundPosition: '115% 85%',
               scale: 1.01,
-              boxShadow: `0px 15px 30px rgba(0, 0, 0, 0.5), 
-                          0px -4px 8px rgba(255, 255, 255, 0.25), 
-                          inset 0px 4px 8px rgba(255, 255, 255, 0.15)`,
+              boxShadow: `0px 23px 6px 0px rgba(255, 255, 255, 0.00),
+          0px 15px 6px 0px rgba(255, 255, 255, 0.01),
+          0px 8px 5px 0px rgba(255, 255, 255, 0.05),
+          0px 4px 4px 0px rgba(255, 255, 255, 0.09),
+          0px 1px 2px 0px rgba(255, 255, 255, 0.10)`,
               transition: {
                 duration: 0.5,
                 ease: [0.33, 1, 0.68, 1],

@@ -18,7 +18,7 @@ export default function Features() {
   return (
     <section
       ref={containerRef}
-      className="flex flex-col items-center w-svw bg-white px-[80px] pb-80"
+      className="flex flex-col items-center w-svw bg-[#f0f8ff] px-[80px] pb-80"
       style={{ gap: isMobile ? '10rem' : '5rem' }}
     >
       {[

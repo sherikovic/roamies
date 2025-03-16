@@ -115,22 +115,21 @@ const TermsOfServiceModal = ({ closeModal }: { closeModal: () => void }) => {
         </HeaderSection>
       </Header>
 
-      <AnimatePresence>
-        {isTocOpen && (
-          <>
-            <TOCOverlay
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ type: 'tween', duration: 0.3 }}
-              onClick={() => setIsTocOpen(false)}
-            />
-            <TableOfContents />
-          </>
-        )}
-      </AnimatePresence>
-
       <ScrollContent data-lenis-prevent="true" id="scrollable-content">
+        <AnimatePresence>
+          {isTocOpen && (
+            <>
+              <TOCOverlay
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ type: 'tween', duration: 0.3 }}
+                onClick={() => setIsTocOpen(false)}
+              />
+              <TableOfContents />
+            </>
+          )}
+        </AnimatePresence>
         {/* Content Sections */}
         <ContentSection id={TOC_SECTIONS[0].id}>
           <PrimaryText>{TOC_SECTIONS[0].title}</PrimaryText>

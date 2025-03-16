@@ -47,9 +47,10 @@ export const TOCContainer = styled(motion.div)`
   width: 280px;
   height: 100vh;
   background: ${colors.background};
-  padding: 0px 0px 20px;
   box-shadow: 4px 0 16px rgba(0, 0, 0, 0.1);
   z-index: 999;
+  display: flex;
+  flex-direction: column;
 `
 
 export const TOCHeader = styled.h1`
@@ -65,9 +66,17 @@ export const TOCList = styled.ul`
   display: flex;
   flex-direction: column;
   gap: 8px;
-  padding: 0 20px;
+  padding: 20px;
   margin: 0;
   list-style: none;
+  height: 100%;
+  flex: 1;
+  overflow-y: scroll;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none; /* Safari and Chrome */
+  }
 `
 
 export const TOCOverlay = styled(motion.div)`
@@ -129,19 +138,10 @@ export const ScrollContent = styled.div`
   &[data-lenis-prevent] {
     overscroll-behavior: contain;
   }
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none;
   &::-webkit-scrollbar {
-    width: 5px;
-  }
-  &::-webkit-scrollbar-track {
-    background: rgb(255, 166, 0, 0.5);
-    border-radius: 4px;
-  }
-  &::-webkit-scrollbar-thumb {
-    background: ${colors.surfaceVariant};
-    border-radius: 4px;
-    &:hover {
-      background: ${colors.onSurface};
-    }
+    display: none; /* Safari and Chrome */
   }
 `
 
