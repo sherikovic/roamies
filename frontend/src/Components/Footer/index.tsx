@@ -1,14 +1,14 @@
 import downloadApp from 'assets/images/download-app.svg'
+import TermsOfServiceModal from './TermsOfServiceModal'
 import { AnimatePresence, motion } from 'motion/react'
 import PrivacyPolicyModal from './PrivacyPolicyModal'
+import ContactUsModal from './ContactUsModal'
 import styled from 'styled-components/macro'
 import { useEffect, useState } from 'react'
 import logo from 'assets/images/icon.svg'
+import { colors } from 'constants/colors'
 import { lenis } from 'util/lenis'
 import SVG from 'react-inlinesvg'
-import TermsOfServiceModal from './TermsOfServiceModal'
-import ContactUsModal from './ContactUsModal'
-import { colors } from 'constants/colors'
 
 export default function Footer() {
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false)

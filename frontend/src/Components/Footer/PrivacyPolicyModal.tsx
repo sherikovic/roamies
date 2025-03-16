@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from 'motion/react'
 import styled from 'styled-components/macro'
+import { colors } from 'constants/colors'
 import { useState } from 'react'
 import { BurgerIcon } from '.'
-import { colors } from 'constants/colors'
 
 const TOC_SECTIONS = [
   { id: 'information-we-collect', title: 'Information We Collect' },
