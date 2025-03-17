@@ -40,6 +40,7 @@ export const ModalContent = styled.div`
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  z-index: 2002;
 `
 
 export const TOCContainer = styled(motion.div)`

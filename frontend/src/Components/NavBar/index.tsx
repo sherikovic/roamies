@@ -17,7 +17,7 @@ const NavBar = () => {
   return (
     <section className="nav-bar">
       <motion.nav
-        className={`nav-container z-[2000] ${isMobile ? 'mobile' : ''}`}
+        className={`nav-container z-[1001] ${isMobile ? 'mobile' : ''}`}
         animate={{ height: isMobile ? (barOpen ? '200px' : '50px') : 'auto' }}
         transition={{ duration: 0.3, ease: 'easeInOut' }}
       >
@@ -34,38 +34,68 @@ const NavBar = () => {
                 close={() => setBarOpen(!barOpen)}
               />
             </>
-            {barOpen && (
-              <motion.div
-                className="mobile-nav-links"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <a
-                  href="#about"
-                  className="poppins-medium text-sm"
-                  onClick={() => setBarOpen(false)}
-                >
-                  About
-                </a>
-                <a
-                  href="#features"
-                  className="poppins-medium text-sm"
-                  onClick={() => setBarOpen(false)}
-                >
-                  Features
-                </a>
-                <button
-                  className="poppins-medium text-sm"
-                  onClick={() => {
-                    setBarOpen(false)
-                    setIsContactUsOpen(true)
+            <AnimatePresence>
+              {barOpen && (
+                <motion.div
+                  className="mobile-nav-links"
+                  initial="hidden"
+                  animate="visible"
+                  variants={{
+                    visible: {
+                      transition: { staggerChildren: 0.1 },
+                    },
                   }}
                 >
-                  Contact
-                </button>
-              </motion.div>
-            )}
+                  <motion.a
+                    href="#about"
+                    className="poppins-medium text-sm"
+                    onClick={() => setBarOpen(false)}
+                    variants={{
+                      hidden: { opacity: 0, y: -20 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.3, ease: 'easeInOut' },
+                      },
+                    }}
+                  >
+                    About
+                  </motion.a>
+                  <motion.a
+                    href="#features"
+                    className="poppins-medium text-sm"
+                    onClick={() => setBarOpen(false)}
+                    variants={{
+                      hidden: { opacity: 0, y: -20 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.3, ease: 'easeInOut' },
+                      },
+                    }}
+                  >
+                    Features
+                  </motion.a>
+                  <motion.button
+                    className="poppins-medium text-sm"
+                    onClick={() => {
+                      setBarOpen(false)
+                      setIsContactUsOpen(true)
+                    }}
+                    variants={{
+                      hidden: { opacity: 0, y: -20 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.3, ease: 'easeInOut' },
+                      },
+                    }}
+                  >
+                    Contact
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
           </>
         ) : (
           <>
@@ -105,15 +135,17 @@ const NavBar = () => {
           </>
         )}
       </motion.nav>
-      {barOpen && (
-        <ModalOverlay
-          as={motion.div}
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={() => setBarOpen(false)}
-        />
-      )}
+      <AnimatePresence>
+        {barOpen && (
+          <ModalOverlay
+            as={motion.div}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() => setBarOpen(false)}
+          />
+        )}
+      </AnimatePresence>
       <AnimatePresence>
         {isContactUsOpen && (
           <ModalOverlay
