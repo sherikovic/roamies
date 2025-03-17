@@ -51,9 +51,9 @@ export const About = () => {
           <motion.button
             initial={{
               background: `linear-gradient(180deg, 
-                ${colors.orangeLight} 0%, 
-                ${colors.surfaceVariant} 30%, 
-                ${colors.orangeDark} 100%)`,
+                          ${colors.orangeLight} 0%, 
+                          ${colors.surfaceVariant} 30%, 
+                          ${colors.orangeDark} 100%)`,
               backgroundSize: '200% 200%',
               backgroundPosition: '100% 100%',
               boxShadow: `0px 4px 8px rgba(0, 0, 0, 0.2), 
@@ -68,10 +68,10 @@ export const About = () => {
               backgroundPosition: '115% 85%',
               scale: 1.01,
               boxShadow: `0px 23px 6px 0px rgba(255, 255, 255, 0.00),
-          0px 15px 6px 0px rgba(255, 255, 255, 0.01),
-          0px 8px 5px 0px rgba(255, 255, 255, 0.05),
-          0px 4px 4px 0px rgba(255, 255, 255, 0.09),
-          0px 1px 2px 0px rgba(255, 255, 255, 0.10)`,
+                          0px 15px 6px 0px rgba(255, 255, 255, 0.01),
+                          0px 8px 5px 0px rgba(255, 255, 255, 0.05),
+                          0px 4px 4px 0px rgba(255, 255, 255, 0.09),
+                          0px 1px 2px 0px rgba(255, 255, 255, 0.10)`,
               transition: {
                 duration: 0.5,
                 ease: [0.33, 1, 0.68, 1],
@@ -89,13 +89,14 @@ export const About = () => {
           >
             Get the app
           </motion.button>
+
           {/* Overlay with QR Code */}
           <AnimatePresence>{showQR && <QrCodeOverlay />}</AnimatePresence>
         </div>
 
         {/* Scroll Down Arrow */}
         <a
-          href="#jump-down"
+          href="#reasons"
           className="mb-5"
           onClick={(e) => {
             e.preventDefault()

@@ -13,7 +13,6 @@ const LandingPage: React.FC = () => {
     <div>
       <NavBar />
       <About />
-      <div id="jump-down" />
       <Reasons />
       <Roamies />
       <Download />

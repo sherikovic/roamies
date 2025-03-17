@@ -14,9 +14,6 @@ export default function Reasons() {
   const video1Ref = useRef<HTMLVideoElement | null>(null)
   const video2Ref = useRef<HTMLVideoElement | null>(null)
   const video3Ref = useRef<HTMLVideoElement | null>(null)
-
-  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
-
   const isVideo1Active = useTransform(scrollYProgress, [0.25, 0.5], [0, 1])
   const isVideo2Active = useTransform(scrollYProgress, [0.5, 0.75], [0, 1])
   const isVideo3Active = useTransform(scrollYProgress, [0.75, 1], [0, 1])
@@ -72,12 +69,15 @@ export default function Reasons() {
           opacity: heroTextOpacity,
         }}
       >
-        <p style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }} className="font-drukHeavy text-white">
+        <p
+          style={{ fontSize: 'clamp(3rem, 5vw, 6rem)' }}
+          className="font-drukHeavy text-background"
+        >
           Travel Solo
         </p>
         <p
           style={{ fontSize: 'clamp(2.5rem, 4vw, 5rem)' }}
-          className="font-drukMediumItalic text-white"
+          className="font-drukMediumItalic text-background"
         >
           never alone
         </p>
@@ -100,7 +100,7 @@ export default function Reasons() {
             y: video1TextY,
             opacity: video1TextOpacity,
           }}
-          className="font-drukMedium text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
           Sometimes, it feels like you&apos;re just passing through, a stranger everywhere you go.
         </motion.p>
@@ -123,7 +123,7 @@ export default function Reasons() {
             y: video2TextY,
             opacity: video2TextOpacity,
           }}
-          className="font-drukMedium text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
           Finding a place to stay is easy.
           <br />
@@ -150,7 +150,7 @@ export default function Reasons() {
             y: video3TextY,
             opacity: video3TextOpacity,
           }}
-          className="font-drukMedium text-white text-center w-[75%] mx-auto"
+          className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
           What if meeting like-minded travelers was effortless? Without endless chats and awkward
           silences?
