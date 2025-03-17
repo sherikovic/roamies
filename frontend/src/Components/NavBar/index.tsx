@@ -15,137 +15,154 @@ const NavBar = () => {
   const [isContactUsOpen, setIsContactUsOpen] = useState(false)
 
   return (
-    <section className="nav-bar">
-      <motion.nav
-        className={`nav-container z-[1001] ${isMobile ? 'mobile' : ''}`}
-        animate={{ height: isMobile ? (barOpen ? '200px' : '50px') : 'auto' }}
-        transition={{ duration: 0.3, ease: 'easeInOut' }}
-      >
-        {isMobile ? (
-          <>
+    <>
+      <section className="nav-bar">
+        <motion.nav
+          className={`nav-container z-[1001] ${isMobile ? 'mobile' : ''}`}
+          animate={{ height: isMobile ? (barOpen ? '200px' : '50px') : 'auto' }}
+          transition={{ duration: 0.3, ease: 'easeInOut' }}
+        >
+          {isMobile ? (
+            <>
+              <>
+                <a
+                  href="/"
+                  className="flex gap-2 items-center poppins-medium text-sm cursor-pointer"
+                >
+                  <SVG src={logo} className="logo" />
+                  {!isMobile && 'Roamies'}
+                </a>
+                <BurgerIcon
+                  color={colors.outline}
+                  isOpen={barOpen}
+                  close={() => setBarOpen(!barOpen)}
+                />
+              </>
+              <AnimatePresence>
+                {barOpen && (
+                  <motion.div
+                    className="mobile-nav-links"
+                    initial="hidden"
+                    animate="visible"
+                    variants={{
+                      visible: {
+                        transition: { staggerChildren: 0.1 },
+                      },
+                    }}
+                  >
+                    <motion.a
+                      href="#reasons"
+                      className="poppins-medium text-sm"
+                      onClick={(e) => {
+                        setBarOpen(false)
+                        e.preventDefault()
+                        document
+                          .querySelector('#reasons')
+                          ?.scrollIntoView({ behavior: 'auto', block: 'start' })
+                      }}
+                      variants={{
+                        hidden: { opacity: 0, y: -20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.3, ease: 'easeInOut' },
+                        },
+                      }}
+                    >
+                      Why Roamies?
+                    </motion.a>
+                    <motion.a
+                      href="#solution"
+                      className="poppins-medium text-sm"
+                      onClick={(e) => {
+                        setBarOpen(false)
+                        e.preventDefault()
+                        document
+                          .querySelector('#solution')
+                          ?.scrollIntoView({ behavior: 'auto', block: 'start' })
+                      }}
+                      variants={{
+                        hidden: { opacity: 0, y: -20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.3, ease: 'easeInOut' },
+                        },
+                      }}
+                    >
+                      How It Works
+                    </motion.a>
+                    <motion.button
+                      className="poppins-medium text-sm"
+                      onClick={() => {
+                        setBarOpen(false)
+                        setIsContactUsOpen(true)
+                      }}
+                      variants={{
+                        hidden: { opacity: 0, y: -20 },
+                        visible: {
+                          opacity: 1,
+                          y: 0,
+                          transition: { duration: 0.3, ease: 'easeInOut' },
+                        },
+                      }}
+                    >
+                      Contact
+                    </motion.button>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </>
+          ) : (
             <>
               <a href="/" className="flex gap-2 items-center poppins-medium text-sm cursor-pointer">
                 <SVG src={logo} className="logo" />
                 {!isMobile && 'Roamies'}
               </a>
-              <BurgerIcon
-                color={colors.outline}
-                isOpen={barOpen}
-                close={() => setBarOpen(!barOpen)}
-              />
-            </>
-            <AnimatePresence>
-              {barOpen && (
-                <motion.div
-                  className="mobile-nav-links"
-                  initial="hidden"
-                  animate="visible"
-                  variants={{
-                    visible: {
-                      transition: { staggerChildren: 0.1 },
-                    },
+              <div className="nav-links">
+                <a
+                  className="poppins-medium text-sm"
+                  href="#reasons"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document
+                      .querySelector('#reasons')
+                      ?.scrollIntoView({ behavior: 'auto', block: 'start' })
                   }}
                 >
-                  <motion.a
-                    href="#about"
-                    className="poppins-medium text-sm"
-                    onClick={() => setBarOpen(false)}
-                    variants={{
-                      hidden: { opacity: 0, y: -20 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.3, ease: 'easeInOut' },
-                      },
-                    }}
-                  >
-                    About
-                  </motion.a>
-                  <motion.a
-                    href="#features"
-                    className="poppins-medium text-sm"
-                    onClick={() => setBarOpen(false)}
-                    variants={{
-                      hidden: { opacity: 0, y: -20 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.3, ease: 'easeInOut' },
-                      },
-                    }}
-                  >
-                    Features
-                  </motion.a>
-                  <motion.button
-                    className="poppins-medium text-sm"
-                    onClick={() => {
-                      setBarOpen(false)
-                      setIsContactUsOpen(true)
-                    }}
-                    variants={{
-                      hidden: { opacity: 0, y: -20 },
-                      visible: {
-                        opacity: 1,
-                        y: 0,
-                        transition: { duration: 0.3, ease: 'easeInOut' },
-                      },
-                    }}
-                  >
-                    Contact
-                  </motion.button>
-                </motion.div>
-              )}
-            </AnimatePresence>
-          </>
-        ) : (
-          <>
-            <a href="/" className="flex gap-2 items-center poppins-medium text-sm cursor-pointer">
-              <SVG src={logo} className="logo" />
-              {!isMobile && 'Roamies'}
-            </a>
-            <div className="nav-links">
-              <a
-                className="poppins-medium text-sm"
-                href="#about"
-                onClick={(e) => {
-                  e.preventDefault()
-                  document
-                    .querySelector('#about')
-                    ?.scrollIntoView({ behavior: 'auto', block: 'start' })
-                }}
-              >
-                About
-              </a>
-              <a
-                className="poppins-medium text-sm"
-                href="#features"
-                onClick={(e) => {
-                  e.preventDefault()
-                  document
-                    .querySelector('#features')
-                    ?.scrollIntoView({ behavior: 'auto', block: 'start' })
-                }}
-              >
-                Features
-              </a>
-              <button onClick={() => setIsContactUsOpen(true)} className="poppins-medium text-sm">
-                Contact
-              </button>
-            </div>
-          </>
-        )}
-      </motion.nav>
-      <AnimatePresence>
-        {barOpen && (
-          <ModalOverlay
-            as={motion.div}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setBarOpen(false)}
-          />
-        )}
-      </AnimatePresence>
+                  Why Roamies?
+                </a>
+                <a
+                  className="poppins-medium text-sm"
+                  href="#solution"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    document
+                      .querySelector('#solution')
+                      ?.scrollIntoView({ behavior: 'auto', block: 'start' })
+                  }}
+                >
+                  How It Works
+                </a>
+                <button onClick={() => setIsContactUsOpen(true)} className="poppins-medium text-sm">
+                  Contact
+                </button>
+              </div>
+            </>
+          )}
+        </motion.nav>
+        <AnimatePresence>
+          {barOpen && (
+            <ModalOverlay
+              as={motion.div}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setBarOpen(false)}
+            />
+          )}
+        </AnimatePresence>
+      </section>
       <AnimatePresence>
         {isContactUsOpen && (
           <ModalOverlay
@@ -168,7 +185,7 @@ const NavBar = () => {
           </ModalOverlay>
         )}
       </AnimatePresence>
-    </section>
+    </>
   )
 }
 

@@ -63,7 +63,7 @@ export default function Reasons() {
   const video3Opacity = useTransform(scrollYProgress, [0.75, 0.85, 0.9, 1], [0, 1, 1, 1])
 
   return (
-    <section ref={containerRef} className="h-[400vh]">
+    <section id="reasons" ref={containerRef} className="h-[400vh]">
       {/* Initial Hero Text */}
       <motion.div
         className="fixed inset-0 w-svw h-svh flex flex-col items-center justify-center pointer-events-none"

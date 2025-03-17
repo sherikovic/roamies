@@ -140,6 +140,7 @@ export default function Anticipation() {
 
   return (
     <section
+      id="solution"
       ref={containerRef}
       className="flex flex-col items-center relative w-svw overflow-x-clip overflow-y-clip"
     >
