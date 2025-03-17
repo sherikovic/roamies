@@ -1,4 +1,4 @@
-import Solitary from 'assets/videos/solitary_train_arrival.mp4'
+import Solitary from 'assets/videos/Solitary_Train_Arrival.mp4'
 import { motion, useScroll, useTransform } from 'motion/react'
 import GroupRunning from 'assets/videos/group-running.mp4'
 import LonelyHike from 'assets/videos/lonely-hike.mp4'
