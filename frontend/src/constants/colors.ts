@@ -2,7 +2,7 @@ export const colors = {
   orange: '#ffa600',
   orangeDark: '#e09302',
   orangeLight: '#d9a13b',
-  offWhite: '#ededed',
+  offWhite: '#f0f8ff',
   primary: '#004089',
   background: '#FFFFFF',
   textPrimary: '#333333',

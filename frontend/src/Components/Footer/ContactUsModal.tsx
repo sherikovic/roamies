@@ -141,7 +141,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
               } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
             />
             {errors.name && (
-              <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
+              <p className="poppins-light text-error text-xs flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -170,7 +170,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
               } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none poppins-regular text-textSecondary lg:text-base text-sm`}
             />
             {errors.email && (
-              <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
+              <p className="poppins-light text-error text-xs flex items-center gap-1">
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -199,7 +199,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
             } focus:border-primary focus:ring-2 focus:ring-primary/40 hover:border-primary transition-all outline-none resize-none poppins-regular text-textSecondary lg:text-base text-sm overflow-y-auto`}
           />
           {errors.message && (
-            <p className="poppins-light text-error lg:text-xs flex items-center gap-1">
+            <p className="poppins-light text-error text-xs flex items-center gap-1">
               <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path
                   strokeLinecap="round"

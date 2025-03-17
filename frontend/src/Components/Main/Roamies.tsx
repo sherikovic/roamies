@@ -21,7 +21,7 @@ export default function Anticipation() {
   const scaleText = useTransform(scrollYProgress, [0.05, 0.17], [0.6, 1])
   const xA = useTransform(scrollYProgress, [0.17, 0.265], [0, 765])
   const yA = useTransform(scrollYProgress, [0.17, 0.265], [0, 100])
-  const textColor = useTransform(scrollYProgress, [0.25, 0.3], ['#000000', '#ffffff'])
+  const textColor = useTransform(scrollYProgress, [0.25, 0.3], ['#000000', '#f0f8ff'])
   const opacityB = useTransform(
     scrollYProgress,
     [isMobile ? 0.17 : 0.27, isMobile ? 0.3 : 0.4],

@@ -115,7 +115,15 @@ export default function Footer() {
   )
 }
 
-export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => void }) => {
+export const BurgerIcon = ({
+  color,
+  isOpen,
+  close,
+}: {
+  color?: string
+  isOpen: boolean
+  close: () => void
+}) => {
   const topPathVariants = {
     closed: { d: 'M2 5 L22 5', rotate: 0, translateY: 0 },
     open: { d: 'M5 5 L19 19', rotate: 90, translateY: 8 },
@@ -143,7 +151,7 @@ export const BurgerIcon = ({ isOpen, close }: { isOpen: boolean; close: () => vo
         animate={isOpen ? 'open' : 'closed'}
         whileHover={{ stroke: colors.background }}
         transition={{ duration: 0.15, ease: 'easeInOut' }}
-        stroke={colors.onSurfaceVariant}
+        stroke={color ? color : colors.onSurfaceVariant}
         strokeWidth="2"
       >
         <motion.path variants={topPathVariants} transition={springTransition} />

@@ -15,7 +15,7 @@ export default {
       },
       colors: {
         white: '#fff',
-        offWhite: '#ededed',
+        offWhite: '#f0f8ff',
         orange: '#ffa600',
         orangeDark: '#e09302',
         orangeLight: '#d9a13b',

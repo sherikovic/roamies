@@ -18,7 +18,7 @@ export default function Features() {
   return (
     <section
       ref={containerRef}
-      className="flex flex-col items-center w-svw bg-[#f0f8ff] px-[80px] pb-80"
+      className="flex flex-col items-center w-svw bg-offWhite px-[80px] pb-80"
       style={{ gap: isMobile ? '10rem' : '5rem' }}
     >
       {[
@@ -68,6 +68,8 @@ const Card = ({
   progress: MotionValue<number>
   index: number
 } & Omit<MotionProps, 'style'>) => {
+  const isMobile = getIsMobile()
+
   const lightenedColor = chroma('#f7f1e3')
     .set('hsl.l', 0.8 + (index / (4 - 1)) * 0.15)
     .hex()
@@ -83,16 +85,27 @@ const Card = ({
       >
         <motion.div
           style={{ background }}
-          className="relative bg-white flex flex-col lg:flex-row gap-10 w-full lg:h-full items-center justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl"
+          className="relative bg-white flex flex-col lg:flex-row gap-5 w-full lg:h-full h-[600px] items-center lg:justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl overflow-hidden"
         >
-          <div className="w-1/2 flex justify-center">
+          <div
+            className="lg:w-1/2 lg:h-full flex justify-center"
+            style={{
+              maxWidth: isMobile
+                ? index === 0
+                  ? '230px'
+                  : index === 1
+                    ? '280px'
+                    : '180px'
+                : undefined,
+            }}
+          >
             <img loading="lazy" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />
           </div>
           <div className="flex flex-col w-full lg:w-3/5 gap-4">
-            <h1 className="poppins-semibold text-textPrimary text-2xl lg:text-4xl leading-tight">
+            <h1 className="poppins-semibold text-textPrimary text-lg lg:text-4xl leading-tight lg:max-w-[400px]">
               {headline}
             </h1>
-            <p className="poppins-regular text-gray-700 text-lg lg:text-xl leading-relaxed">
+            <p className="poppins-regular text-gray-700 text-base lg:text-xl leading-relaxed">
               {text}
             </p>
           </div>

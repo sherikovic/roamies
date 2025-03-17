@@ -22,7 +22,7 @@ export const About = () => {
 
   return (
     <section className="flex flex-col items-center w-svw h-svh background">
-      <div className="flex flex-col flex-1 justify-between items-center w-full h-full mt-80 px-20 lg:max-w-[80vw] max-w-vw">
+      <div className="flex flex-col flex-1 justify-between items-center w-full h-full mt-80 px-12 lg:max-w-[80vw] max-w-vw">
         {/* Headline */}
         <div className="flex flex-col justify-center items-center gap-10">
           <p
@@ -51,9 +51,9 @@ export const About = () => {
           <motion.button
             initial={{
               background: `linear-gradient(180deg, 
-                ${colors.orange} 0%, 
-                ${colors.surfaceVariant} 50%, 
-                ${colors.orange} 100%)`,
+                ${colors.orangeLight} 0%, 
+                ${colors.surfaceVariant} 30%, 
+                ${colors.orangeDark} 100%)`,
               backgroundSize: '200% 200%',
               backgroundPosition: '100% 100%',
               boxShadow: `0px 4px 8px rgba(0, 0, 0, 0.2), 
