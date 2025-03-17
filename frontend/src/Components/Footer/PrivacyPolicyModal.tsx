@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react'
 import { colors } from 'constants/colors'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { BurgerIcon } from '.'
 import {
   HeaderSecondary,
@@ -20,6 +20,7 @@ import {
   TOCList,
   Header,
 } from './styles'
+import { getIsMobile } from 'util/util'
 
 const TOC_SECTIONS = [
   { id: 'information-we-collect', title: 'Information We Collect' },
@@ -35,6 +36,16 @@ const TOC_SECTIONS = [
 
 const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
   const [isTocOpen, setIsTocOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(getIsMobile())
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(getIsMobile())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const TableOfContents = () => (
     <TOCContainer
@@ -67,7 +78,7 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <>
-      <Header>
+      <Header isMobile={isMobile}>
         <CloseButton onClick={closeModal}>
           <motion.svg
             width="30"
@@ -103,7 +114,7 @@ const PrivacyPolicyModal = ({ closeModal }: { closeModal: () => void }) => {
         )}
       </AnimatePresence>
 
-      <ScrollContent data-lenis-prevent="true">
+      <ScrollContent isMobile={isMobile} data-lenis-prevent="true">
         {/* Content Sections */}
         <ContentSection id={TOC_SECTIONS[0].id}>
           <PrimaryText>{TOC_SECTIONS[0].title}</PrimaryText>

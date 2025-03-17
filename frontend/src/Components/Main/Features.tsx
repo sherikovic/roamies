@@ -3,7 +3,7 @@ import Dashboard from 'assets/images/screenshots/dashboard.png'
 import Explore from 'assets/images/screenshots/explore.png'
 import Create from 'assets/images/screenshots/create.png'
 import Event from 'assets/images/screenshots/event.png'
-import { useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import chroma from 'chroma-js'
 import { getIsMobile } from 'util/util'
 
@@ -68,7 +68,16 @@ const Card = ({
   progress: MotionValue<number>
   index: number
 } & Omit<MotionProps, 'style'>) => {
-  const isMobile = getIsMobile()
+  const [isMobile, setIsMobile] = useState(getIsMobile())
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(getIsMobile())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const lightenedColor = chroma('#f7f1e3')
     .set('hsl.l', 0.8 + (index / (4 - 1)) * 0.15)

@@ -2,15 +2,25 @@ import { ModalContent, ModalOverlay } from 'Components/Footer/styles'
 import ContactUsModal from 'Components/Footer/ContactUsModal'
 import { AnimatePresence, motion } from 'motion/react'
 import { BurgerIcon } from 'Components/Footer'
+import { useEffect, useState } from 'react'
 import logo from 'assets/images/icon.svg'
 import { colors } from 'constants/colors'
 import { getIsMobile } from 'util/util'
 import SVG from 'react-inlinesvg'
-import { useState } from 'react'
 import './styles.css'
 
 const NavBar = () => {
-  const isMobile = getIsMobile()
+  const [isMobile, setIsMobile] = useState(getIsMobile())
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(getIsMobile())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
+
   const [barOpen, setBarOpen] = useState(false)
   const [isContactUsOpen, setIsContactUsOpen] = useState(false)
 

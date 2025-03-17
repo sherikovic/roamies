@@ -1,8 +1,6 @@
 import styled from 'styled-components/macro'
 import { colors } from 'constants/colors'
 import { motion } from 'motion/react'
-import { getIsMobile } from 'util/util'
-const isMobile = getIsMobile()
 
 export const BurgerButton = styled.button`
   position: absolute;
@@ -110,10 +108,10 @@ export const TOCLink = styled.a`
   }
 `
 
-export const Header = styled(motion.div)`
+export const Header = styled(motion.div)<{ isMobile: boolean }>`
   position: relative;
   background: ${colors.background};
-  padding: 12px ${isMobile ? '20px' : '0'};
+  padding: ${(props) => (props.isMobile ? '12px 20px' : '12px 0')};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -132,10 +130,10 @@ export const CloseButton = styled.button`
   z-index: 10;
 `
 
-export const ScrollContent = styled.div`
+export const ScrollContent = styled.div<{ isMobile: boolean }>`
   display: flex;
   flex-direction: column;
-  padding: 0 ${isMobile ? '20px' : '100px'} 32px;
+  padding: 0 ${(props) => (props.isMobile ? '20px' : '100px')} 32px;
   gap: 30px;
   overflow-y: auto;
   &[data-lenis-prevent] {

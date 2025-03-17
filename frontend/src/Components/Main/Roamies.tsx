@@ -1,32 +1,64 @@
-import { motion, useMotionValueEvent, useScroll, useTransform } from 'motion/react'
 import Particles, { initParticlesEngine } from '@tsparticles/react'
+import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
 import Features from './Features'
-import { getIsMobile } from 'util/util'
 
-export default function Anticipation() {
+export default function Roamies() {
   const [init, setInit] = useState(false)
-  const containerRef = useRef(null)
-  const isMobile = getIsMobile()
+  const containerRef = useRef<HTMLElement>(null)
+  const roamiesRef = useRef<HTMLParagraphElement>(null)
+  const mRef = useRef<HTMLSpanElement>(null)
+  const [transformConfig, setTransformConfig] = useState({
+    origin: '50% 50%',
+    maxX: 0,
+    maxScale: 75,
+  })
+
   const { scrollYProgress } = useScroll({
     target: containerRef,
     offset: ['start start', 'end end'],
   })
-  // mobile 1157, 534
-  // air 832, 1163 --> 832/0.17
 
-  const scaleA = useTransform(scrollYProgress, [0.17, 0.265], [1, 75])
+  useEffect(() => {
+    const calculateTransform = () => {
+      if (!roamiesRef.current || !mRef.current || !containerRef.current) return
+
+      const roamiesRect = roamiesRef.current.getBoundingClientRect()
+      const mRect = mRef.current.getBoundingClientRect()
+      const containerRect = containerRef.current.getBoundingClientRect()
+
+      // Calculate first leg position (approximately 30% into the 'm' character)
+      const firstLegPosition = mRect.width * 0.156
+      const mXRelative = mRect.left - roamiesRect.left + firstLegPosition
+
+      // Convert to percentage for transform origin
+      const originX = (mXRelative / roamiesRect.width) * 100
+
+      // Calculate required movement to keep legs at screen edges
+      const viewportWidth = containerRect.width
+      const scaleFactor = transformConfig.maxScale
+      const targetWidth = mRect.width * scaleFactor
+      const requiredMovement = (viewportWidth - targetWidth) / 2 + firstLegPosition * scaleFactor
+
+      setTransformConfig({
+        origin: `${originX}% 50%`,
+        maxX: requiredMovement,
+        maxScale: 77,
+      })
+    }
+
+    calculateTransform()
+    window.addEventListener('resize', calculateTransform)
+    return () => window.removeEventListener('resize', calculateTransform)
+  }, [])
+
+  const scaleA = useTransform(scrollYProgress, [0.17, 0.24], [1, transformConfig.maxScale])
   const scaleText = useTransform(scrollYProgress, [0.05, 0.17], [0.6, 1])
-  const xA = useTransform(scrollYProgress, [0.17, 0.265], [0, 765])
-  const yA = useTransform(scrollYProgress, [0.17, 0.265], [0, 100])
-  const textColor = useTransform(scrollYProgress, [0.25, 0.3], ['#000000', '#f0f8ff'])
-  const opacityB = useTransform(
-    scrollYProgress,
-    [isMobile ? 0.17 : 0.27, isMobile ? 0.3 : 0.4],
-    [0, 1],
-  )
+  const xA = useTransform(scrollYProgress, [0.17, 0.24], [0, -transformConfig.maxX])
+  const textColor = useTransform(scrollYProgress, [0.21, 0.3], ['#000000', '#f0f8ff'])
+  const opacityB = useTransform(scrollYProgress, [0.24, 0.3], [0, 1])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -136,7 +168,7 @@ export default function Anticipation() {
     [],
   )
 
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
+  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
 
   return (
     <section
@@ -146,6 +178,7 @@ export default function Anticipation() {
     >
       {/* Background Particles */}
       {init && <Particles id="tsparticles" options={options} className="absolute inset-0" />}
+
       {/* Content */}
       <div className="flex pt-72 w-[60%] z-10 justify-center">
         <p
@@ -181,44 +214,33 @@ export default function Anticipation() {
           </span>
         </p>
       </div>
-      {!isMobile && (
-        <motion.div
-          style={{ scale: scaleA, x: xA, y: yA }}
-          className="flex py-[30rem] w-svw h-svh justify-center items-center"
+
+      <motion.div
+        style={{ scale: scaleA, x: xA, transformOrigin: transformConfig.origin }}
+        className="flex py-[30rem] w-svw h-svh justify-center items-center"
+      >
+        <motion.p
+          ref={roamiesRef}
+          style={{
+            scale: scaleText,
+            fontSize: 'clamp(8vw, 8vw, 8vw)',
+            color: textColor,
+            lineHeight: 1,
+          }}
+          className="font-drukHeavy text-textPrimary pointer-events-none overflow-hidden"
         >
-          <motion.p
-            style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
-            className="font-drukHeavy text-textPrimary pointer-events-none"
-          >
-            Roamies
-          </motion.p>
-        </motion.div>
-      )}
-      {/* {isMobile ? (
-        <div className="flex py-[30rem] w-svw h-svh justify-center items-center z-10">
-          <p
-            style={{
-              fontSize: 'clamp(3rem, 8vw, 6rem)',
-              color: colors.textPrimary,
-            }}
-            className="font-drukHeavy text-textPrimary pointer-events-none"
-          >
-            Roamies
-          </p>
-        </div>
-      ) : (
-        <motion.div
-          style={{ scale: scaleA, x: xA, y: yA }}
-          className="flex py-[30rem] w-svw h-svh justify-center items-center"
-        >
-          <motion.p
-            style={{ scale: scaleText, fontSize: 'clamp(3rem, 8vw, 6rem)', color: textColor }}
-            className="font-drukHeavy text-textPrimary pointer-events-none"
-          >
-            Roamies
-          </motion.p>
-        </motion.div>
-      )} */}
+          {'Roamies'.split('').map((char, index) => (
+            <span
+              key={index}
+              ref={char === 'm' ? mRef : undefined}
+              style={{ display: 'inline-block' }}
+            >
+              {char}
+            </span>
+          ))}
+        </motion.p>
+      </motion.div>
+
       <motion.div style={{ opacity: opacityB }} className="sticky inset-0 w-svw">
         <Features />
       </motion.div>

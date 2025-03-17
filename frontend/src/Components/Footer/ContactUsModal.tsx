@@ -10,12 +10,23 @@ import {
   ScrollContent,
 } from './styles'
 import { motion } from 'motion/react'
+import { getIsMobile } from 'util/util'
 
 const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
   const [message, setMessage] = useState('')
   const [success, setSuccess] = useState('')
+  const [isMobile, setIsMobile] = useState(getIsMobile())
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(getIsMobile())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const [errors, setErrors] = useState({
     name: '',
@@ -99,7 +110,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
 
   return (
     <>
-      <Header>
+      <Header isMobile={isMobile}>
         <CloseButton onClick={closeModal}>
           <motion.svg
             width="30"
@@ -120,6 +131,7 @@ const ContactUsModal = ({ closeModal }: { closeModal: () => void }) => {
       </Header>
 
       <ScrollContent
+        isMobile={isMobile}
         data-lenis-prevent="true"
         className="py-16 gap-8 max-w-4xl w-full px-4 mx-auto"
       >
