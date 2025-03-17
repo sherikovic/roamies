@@ -15,4 +15,5 @@ export const colors = {
   outline: '#A5A4A4',
   error: '#B91C1C',
   errorBackground: '#FEE2E2',
+  black: '#000000',
 }
