@@ -34,7 +34,7 @@ const NavBar = () => {
         >
           {isMobile ? (
             <>
-              <>
+              <div className="flex justify-between items-center w-full">
                 <a
                   href="/"
                   className="flex gap-2 items-center poppins-medium text-sm cursor-pointer"
@@ -47,7 +47,7 @@ const NavBar = () => {
                   isOpen={barOpen}
                   close={() => setBarOpen(!barOpen)}
                 />
-              </>
+              </div>
               <AnimatePresence>
                 {barOpen && (
                   <motion.div

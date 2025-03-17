@@ -72,6 +72,9 @@
 	> a, button {
 		transition: color 0.2s ease-in-out;
 		color: #d4d4d4;
+		width: 100%;
+		text-align: start;
+		padding-bottom: 8px;
 		&:hover {
 		  color: white;
 		}

@@ -58,8 +58,8 @@ export default function Roamies() {
   const scaleA = useTransform(scrollYProgress, [0.17, 0.24], [1, transformConfig.maxScale])
   const scaleText = useTransform(scrollYProgress, [0.05, 0.17], [0.6, 1])
   const xA = useTransform(scrollYProgress, [0.17, 0.24], [0, -transformConfig.maxX])
-  const textColor = useTransform(scrollYProgress, [0.22, 0.3], [colors.black, colors.offWhite])
-  const opacityB = useTransform(scrollYProgress, [0.23, 0.32], [0, 1])
+  const textColor = useTransform(scrollYProgress, [0.22, 0.24], [colors.black, colors.offWhite])
+  const opacityB = useTransform(scrollYProgress, [0.23, 0.27], [0, 1])
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
