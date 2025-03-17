@@ -91,6 +91,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          controls={false}
           src={Solitary}
           style={{ opacity: video1Opacity }}
         />
@@ -114,6 +115,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          controls={false}
           src={LonelyHike}
           style={{ opacity: video2Opacity }}
         />
@@ -141,6 +143,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          controls={false}
           src={GroupRunning}
           style={{ opacity: video3Opacity }}
         />
