@@ -1,24 +1,24 @@
-import LandingNavigation from 'Components/Landingpage/LandingNavigation'
-import { CoolMobileApp } from 'Components/Landingpage/CoolMobileApp'
-import { Description } from 'Components/Landingpage/Description'
-import { Features } from 'Components/Landingpage/Features'
-import { Contact } from 'Components/Landingpage/Contact'
-import { About } from 'Components/Landingpage/About'
-import Footer from 'Components/Landingpage/Footer'
+import Roamies from 'Components/Main/Roamies'
+import Download from 'Components/Main/Download'
+import Reasons from 'Components/Main/Reasons'
+import { About } from 'Components/Main/About'
+import NavBar from 'Components/NavBar'
+import Footer from 'Components/Footer'
+import { lenis } from 'util/lenis'
+import { getIsMobile } from 'util/util'
 
 const LandingPage: React.FC = () => {
+  if (!getIsMobile()) lenis.start()
+
   return (
-    <>
-      <LandingNavigation />
-      <div className="flex flex-col overflow-x-hidden">
-        <About />
-        <Description />
-        <CoolMobileApp />
-        <Features />
-        <Contact />
-        <Footer />
-      </div>
-    </>
+    <div>
+      <NavBar />
+      <About />
+      <Reasons />
+      <Roamies />
+      <Download />
+      <Footer />
+    </div>
   )
 }
 

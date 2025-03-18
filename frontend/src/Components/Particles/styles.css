@@ -1,0 +1,135 @@
+@import url('../../index.css');
+
+/* Main container - Keep original */
+.principles-container {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background: #0a0a0a;
+    overflow: hidden;
+  }
+  
+  /* Canvas element - Keep original */
+  .particles-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+  }
+
+  /* Wrapper for the orbs grid - Modified for diamond layout */
+  .orbs-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+  }
+
+  /* Diamond layout container */
+  .orbs-container {
+    position: relative;
+    width: 600px;
+    height: 600px;
+    margin: 0 auto;
+  }
+  
+  /* Circular orbs arranged in diamond pattern */
+  .principle-orb {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    filter: drop-shadow(0 0 12px rgba(255, 255, 255, 0.1));
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  
+  /* Diamond positions */
+  .principle-orb:nth-child(1) { /* Top */
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .principle-orb:nth-child(2) { /* Right */
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+  }
+  
+  .principle-orb:nth-child(3) { /* Bottom */
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  
+  .principle-orb:nth-child(4) { /* Left */
+    top: 50%;
+    left: 0;
+    transform: translateY(-50%);
+  }
+  
+  /* Content inside the foreignObject - Keep original */
+  .orb-content {
+    @apply flex flex-col justify-center items-center text-center p-6;
+    h3 {
+      @apply text-white text-xl lg:text-2xl font-bold mb-2;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
+    p {
+      @apply text-[#E0E0FF] text-sm lg:text-base leading-snug;
+    }
+  }
+
+  .orb-content h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: -0.025em;
+  }
+  
+  .orb-content p {
+    font-size: 0.875rem;
+    opacity: 0.8;
+    line-height: 1.4;
+  }
+
+  /* Hover effects */
+  .principle-orb:hover {
+    filter: drop-shadow(0 0 20px rgba(255, 255, 255, 0.3));
+    /* transform: scale(1.1); */
+    z-index: 2;
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .orbs-container {
+      width: 300px;
+      height: 300px;
+    }
+  
+    .principle-orb {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .orb-content h3 {
+      font-size: 1rem;
+    }
+  
+    .orb-content p {
+      font-size: 0.7rem;
+    }
+  }
+  
+  @media (min-width: 1024px) {
+    .orbs-container {
+      width: 800px;
+      height: 800px;
+    }
+  }
