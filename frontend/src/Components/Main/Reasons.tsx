@@ -92,6 +92,7 @@ export default function Reasons() {
           muted
           loop
           controls={false}
+          controlsList="nofullscreen"
           src={Solitary}
           style={{ opacity: video1Opacity }}
         />
@@ -116,6 +117,7 @@ export default function Reasons() {
           muted
           loop
           controls={false}
+          controlsList="nofullscreen"
           src={LonelyHike}
           style={{ opacity: video2Opacity }}
         />
@@ -144,6 +146,7 @@ export default function Reasons() {
           muted
           loop
           controls={false}
+          controlsList="nofullscreen"
           src={GroupRunning}
           style={{ opacity: video3Opacity }}
         />
