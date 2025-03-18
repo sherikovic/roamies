@@ -5,6 +5,7 @@ import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
 import Features from './Features'
 import { colors } from 'constants/colors'
+import { getIsMobile } from 'util/util'
 
 export default function Roamies() {
   const [init, setInit] = useState(false)
@@ -215,32 +216,33 @@ export default function Roamies() {
           </span>
         </p>
       </div>
-
-      <motion.div
-        style={{ scale: scaleA, x: xA, transformOrigin: transformConfig.origin }}
-        className="flex py-[30rem] w-svw h-svh justify-center items-center"
-      >
-        <motion.p
-          ref={roamiesRef}
-          style={{
-            scale: scaleText,
-            fontSize: 'clamp(8vw, 8vw, 8vw)',
-            color: textColor,
-            lineHeight: 1,
-          }}
-          className="font-drukHeavy text-textPrimary pointer-events-none overflow-hidden"
+      {!getIsMobile() && (
+        <motion.div
+          style={{ scale: scaleA, x: xA, transformOrigin: transformConfig.origin }}
+          className="flex py-[30rem] w-svw h-svh justify-center items-center"
         >
-          {'Roamies'.split('').map((char, index) => (
-            <span
-              key={index}
-              ref={char === 'm' ? mRef : undefined}
-              style={{ display: 'inline-block' }}
-            >
-              {char}
-            </span>
-          ))}
-        </motion.p>
-      </motion.div>
+          <motion.p
+            ref={roamiesRef}
+            style={{
+              scale: scaleText,
+              fontSize: 'clamp(8vw, 8vw, 8vw)',
+              color: textColor,
+              lineHeight: 1,
+            }}
+            className="font-drukHeavy text-textPrimary pointer-events-none overflow-hidden"
+          >
+            {'Roamies'.split('').map((char, index) => (
+              <span
+                key={index}
+                ref={char === 'm' ? mRef : undefined}
+                style={{ display: 'inline-block' }}
+              >
+                {char}
+              </span>
+            ))}
+          </motion.p>
+        </motion.div>
+      )}
 
       <motion.div style={{ opacity: opacityB }} className="sticky inset-0 w-svw">
         <Features />

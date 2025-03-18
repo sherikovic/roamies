@@ -4,6 +4,7 @@ import QrCode from 'assets/images/qr-code.svg'
 import { useEffect, useState } from 'react'
 import { colors } from 'constants/colors'
 import SVG from 'react-inlinesvg'
+import { getIsMobile } from 'util/util'
 
 export const About = () => {
   const [showQR, setShowQR] = useState(false)
@@ -95,16 +96,18 @@ export const About = () => {
         </div>
 
         {/* Scroll Down Arrow */}
-        <a
-          href="#reasons"
-          className="mb-5"
-          onClick={(e) => {
-            e.preventDefault()
-            e.currentTarget.scrollIntoView({ behavior: 'auto', block: 'start' })
-          }}
-        >
-          <SVG src={ArrowDownShort} className="arrow-down z-50" />
-        </a>
+        {!getIsMobile() && (
+          <a
+            href="#reasons"
+            className="mb-5"
+            onClick={(e) => {
+              e.preventDefault()
+              e.currentTarget.scrollIntoView({ behavior: 'auto', block: 'start' })
+            }}
+          >
+            <SVG src={ArrowDownShort} className="arrow-down z-50" />
+          </a>
+        )}
       </div>
       <AnimatePresence>
         {showQR && (
