@@ -87,7 +87,7 @@ export default function Roamies() {
           value: '#d9a13b',
         },
       },
-      fpsLimit: 120,
+      fpsLimit: isMobile ? 60 : 120,
       interactivity: {
         detectOn: 'canvas',
         events: {
@@ -96,11 +96,11 @@ export default function Roamies() {
             mode: 'bubble',
           },
           onClick: {
-            enable: true,
+            enable: !isMobile,
             mode: 'bubble',
           },
           resize: {
-            enable: true,
+            enable: !isMobile,
           },
         },
         modes: {
@@ -113,12 +113,6 @@ export default function Roamies() {
           repulse: {
             distance: 56.84,
             duration: 0.4,
-          },
-          push: {
-            quantity: 4,
-          },
-          remove: {
-            quantity: 2,
           },
         },
       },
@@ -140,7 +134,7 @@ export default function Roamies() {
           random: true,
         },
         collisions: {
-          enable: true,
+          enable: !isMobile,
           mode: 'bounce',
         },
         size: {
@@ -148,7 +142,7 @@ export default function Roamies() {
           random: true,
           animation: {
             mode: 'random',
-            enable: true,
+            enable: !isMobile,
             speed: 10,
             sync: false,
             startValue: 'random',
@@ -156,14 +150,14 @@ export default function Roamies() {
         },
         move: {
           enable: true,
-          speed: 3,
+          speed: isMobile ? 1 : 3,
           direction: 'none',
           random: true,
           straight: false,
           out_mode: 'in',
           bounce: true,
           attract: {
-            enable: true,
+            enable: !isMobile,
             rotateX: 600,
             rotateY: 1200,
           },

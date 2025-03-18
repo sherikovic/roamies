@@ -4,8 +4,8 @@ import Explore from 'assets/images/screenshots/explore.png'
 import Create from 'assets/images/screenshots/create.png'
 import Event from 'assets/images/screenshots/event.png'
 import { useEffect, useRef, useState } from 'react'
-import chroma from 'chroma-js'
 import { getIsMobile } from 'util/util'
+import chroma from 'chroma-js'
 
 export default function Features() {
   const containerRef = useRef(null)
