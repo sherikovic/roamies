@@ -9,6 +9,7 @@ import logo from 'assets/images/icon.svg'
 import { colors } from 'constants/colors'
 import { lenis } from 'util/lenis'
 import SVG from 'react-inlinesvg'
+import { getIsMobile } from 'util/util'
 
 export default function Footer() {
   const [isPrivacyModalOpen, setIsPrivacyModalOpen] = useState(false)
@@ -41,14 +42,14 @@ export default function Footer() {
         setIsContactUsOpen(true)
         break
     }
-    lenis.stop()
+    if (!getIsMobile()) lenis.stop()
   }
 
   const closeModal = () => {
     setIsTermsOfServiceOpen(false)
     setIsPrivacyModalOpen(false)
     setIsContactUsOpen(false)
-    lenis.start()
+    if (!getIsMobile()) lenis.start()
   }
 
   return (
