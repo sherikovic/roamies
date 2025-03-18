@@ -8,6 +8,7 @@ import { getIsMobile } from 'util/util'
 
 export const About = () => {
   const [showQR, setShowQR] = useState(false)
+  const isMobile = getIsMobile()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -23,7 +24,10 @@ export const About = () => {
 
   return (
     <section className="flex flex-col items-center w-svw h-svh background">
-      <div className="flex flex-col flex-1 justify-between items-center w-full h-full mt-80 px-12 lg:max-w-[80vw] max-w-vw">
+      <div
+        className="flex flex-col flex-1 justify-between items-center w-full h-full px-12 lg:max-w-[80vw] max-w-vw"
+        style={{ marginTop: isMobile ? '16rem' : '20rem' }}
+      >
         {/* Headline */}
         <div className="flex flex-col justify-center items-center gap-10">
           <p
@@ -47,6 +51,7 @@ export const About = () => {
           className="relative flex items-center z-30"
           style={{
             perspective: 1000,
+            paddingBottom: isMobile ? '2rem' : '',
           }}
         >
           <motion.button

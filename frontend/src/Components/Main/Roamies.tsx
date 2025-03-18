@@ -177,7 +177,7 @@ export default function Roamies() {
       detectRetina: true,
       pauseOnOutsideViewport: true,
     }),
-    [],
+    [isMobile],
   )
 
   return (
