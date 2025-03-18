@@ -5,10 +5,9 @@ import { About } from 'Components/Main/About'
 import NavBar from 'Components/NavBar'
 import Footer from 'Components/Footer'
 import { lenis } from 'util/lenis'
-import { getIsMobile } from 'util/util'
 
 const LandingPage: React.FC = () => {
-  if (!getIsMobile()) lenis.start()
+  lenis.start()
 
   return (
     <div>

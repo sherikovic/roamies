@@ -18,7 +18,7 @@ export default function Features() {
   return (
     <section
       ref={containerRef}
-      className="flex flex-col items-center w-svw bg-offWhite px-[80px] pb-80"
+      className="flex flex-col items-center bg-offWhite px-[80px] pb-80"
       style={{ gap: isMobile ? '10rem' : '5rem' }}
     >
       {[
@@ -90,14 +90,14 @@ const Card = ({
     <div className="sticky top-0 lg:w-svw w-[90vw] lg:h-full">
       <motion.div
         className="relative flex flex-col"
-        style={{ top: `calc(20vh + ${index * 25}px)`, scale }}
+        style={{ top: `calc(${isMobile ? '13vh' : '20vh'} + ${index * 25}px)`, scale }}
       >
         <motion.div
           style={{ background }}
-          className="relative bg-white flex flex-col lg:flex-row gap-5 w-full lg:h-full h-[600px] items-center lg:justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl overflow-hidden"
+          className="relative bg-white flex flex-col lg:flex-row gap-5 w-full lg:h-full items-center lg:justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl overflow-hidden"
         >
           <div
-            className="lg:w-1/2 lg:h-full flex justify-center"
+            className="lg:w-1/2 lg:h-full h-[40vh] flex justify-center"
             style={{
               maxWidth: isMobile
                 ? index === 0
@@ -111,10 +111,10 @@ const Card = ({
             <img loading="lazy" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />
           </div>
           <div className="flex flex-col w-full lg:w-3/5 gap-4">
-            <h1 className="poppins-semibold text-textPrimary text-lg lg:text-4xl leading-tight lg:max-w-[400px]">
+            <h1 className="poppins-semibold text-textPrimary text-base lg:text-4xl leading-tight lg:max-w-[400px]">
               {headline}
             </h1>
-            <p className="poppins-regular text-gray-700 text-base lg:text-xl leading-relaxed">
+            <p className="poppins-regular text-gray-700 text-sm lg:text-xl leading-relaxed">
               {text}
             </p>
           </div>

@@ -3,15 +3,16 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { ISourceOptions } from '@tsparticles/engine'
 import { loadSlim } from '@tsparticles/slim'
-import Features from './Features'
 import { colors } from 'constants/colors'
 import { getIsMobile } from 'util/util'
+import Features from './Features'
 
 export default function Roamies() {
   const [init, setInit] = useState(false)
   const containerRef = useRef<HTMLElement>(null)
   const roamiesRef = useRef<HTMLParagraphElement>(null)
   const mRef = useRef<HTMLSpanElement>(null)
+  const [isMobile, setIsMobile] = useState(getIsMobile())
   const [transformConfig, setTransformConfig] = useState({
     origin: '50% 50%',
     maxX: 0,
@@ -22,6 +23,15 @@ export default function Roamies() {
     target: containerRef,
     offset: ['start start', 'end end'],
   })
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(getIsMobile())
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   useEffect(() => {
     const calculateTransform = () => {
@@ -170,8 +180,6 @@ export default function Roamies() {
     [],
   )
 
-  // useMotionValueEvent(scrollYProgress, 'change', (latest) => console.log(latest))
-
   return (
     <section
       id="solution"
@@ -179,10 +187,19 @@ export default function Roamies() {
       className="flex flex-col items-center relative w-svw overflow-x-clip overflow-y-clip"
     >
       {/* Background Particles */}
-      {init && <Particles id="tsparticles" options={options} className="absolute inset-0" />}
+      {init && (
+        <Particles
+          id="tsparticles"
+          options={options}
+          className={`absolute inset-0 ${isMobile ? 'h-[500vh]' : ''}`}
+        />
+      )}
 
       {/* Content */}
-      <div className="flex pt-72 w-[60%] z-10 justify-center">
+      <div
+        className="flex w-[60%] z-10 justify-center items-center"
+        style={{ height: isMobile ? '100vh' : '', paddingTop: isMobile ? '' : '18rem' }}
+      >
         <p
           style={{
             WebkitTextFillColor: 'transparent',
@@ -244,7 +261,10 @@ export default function Roamies() {
         </motion.div>
       )}
 
-      <motion.div style={{ opacity: opacityB }} className="sticky inset-0 w-svw">
+      <motion.div
+        style={{ opacity: isMobile ? 1 : opacityB }}
+        className={`${isMobile ? 'w-svw' : 'sticky inset-0 w-svw justify-start'}`}
+      >
         <Features />
       </motion.div>
     </section>
