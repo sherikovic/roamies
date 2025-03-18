@@ -91,6 +91,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          playsInline
           controls={false}
           controlsList="nofullscreen"
           src={Solitary}
@@ -116,6 +117,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          playsInline
           controls={false}
           controlsList="nofullscreen"
           src={LonelyHike}
@@ -145,6 +147,7 @@ export default function Reasons() {
           // autoPlay
           muted
           loop
+          playsInline
           controls={false}
           controlsList="nofullscreen"
           src={GroupRunning}
