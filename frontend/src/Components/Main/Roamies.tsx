@@ -124,7 +124,7 @@ export default function Roamies() {
       },
       particles: {
         number: {
-          value: 15,
+          value: isMobile ? 8 : 15,
           density: {
             enable: true,
           },
@@ -144,7 +144,7 @@ export default function Roamies() {
           mode: 'bounce',
         },
         size: {
-          value: { min: 45, max: 200 },
+          value: { min: isMobile ? 15 : 45, max: isMobile ? 50 : 200 },
           random: true,
           animation: {
             mode: 'random',

@@ -3,6 +3,7 @@ import { motion, useScroll, useTransform } from 'motion/react'
 import GroupRunning from 'assets/videos/group-running.mp4'
 import LonelyHike from 'assets/videos/lonely-hike.mp4'
 import { useEffect, useRef } from 'react'
+import { getIsMobile } from 'util/util'
 
 export default function Reasons() {
   const containerRef = useRef(null)
@@ -88,7 +89,7 @@ export default function Reasons() {
         <motion.video
           ref={video1Ref}
           className="w-svw h-svh brightness-50"
-          // autoPlay
+          autoPlay={getIsMobile()}
           muted
           loop
           playsInline
@@ -114,7 +115,7 @@ export default function Reasons() {
         <motion.video
           ref={video2Ref}
           className="w-svw h-svh brightness-50"
-          // autoPlay
+          autoPlay={getIsMobile()}
           muted
           loop
           playsInline
@@ -144,7 +145,7 @@ export default function Reasons() {
         <motion.video
           ref={video3Ref}
           className="w-svw h-svh brightness-50"
-          // autoPlay
+          autoPlay={getIsMobile()}
           muted
           loop
           playsInline
