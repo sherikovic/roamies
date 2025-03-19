@@ -40,9 +40,9 @@ export const About = () => {
             style={{ fontSize: 'clamp(1rem, 1.3vw, 2.5rem)' }}
             className="poppins-medium text-[#dfdbdb] z-10 text-center"
           >
-            Discover events, meet like-minded travelers, and make plans instantly.
+            Join events, meet like-minded travelers, and make plans instantly.
             <br />
-            No endless chats—just real connections.
+            Skip the small talk and start exploring together.
           </p>
         </div>
 
