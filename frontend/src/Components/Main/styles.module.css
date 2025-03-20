@@ -1,0 +1,52 @@
+.arrowDown {
+	width: 2rem;
+	height: 2rem;
+	cursor: pointer;
+	transition: transform 0.3s ease-in-out;
+	transform: scaleX(1.5);
+	> path {
+		fill: #ffffff;
+	}
+	&:hover {
+		transform: scaleX(2);
+	}
+}
+
+.background::before {
+	filter: brightness(0.4);
+	background-image: url('../../assets/images/group-friends.png');
+	background-size: cover;
+	background-position: center;
+	background-repeat: no-repeat;
+	content: '';
+	position: absolute;
+	width: 100vw;
+	height: 100vh;
+}
+
+.qrCodeContainer {
+	position: absolute;
+	left: 100%;
+	margin-left: 12px;
+	background: white;
+	padding: 24px;
+	border-radius: 12px;
+	box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 16px;
+	z-index: 30;
+	&::before {
+		content: "";
+		position: absolute;
+		left: -12px;
+		top: 50%;
+		transform: translateY(-50%);
+		width: 0;
+		height: 0;
+		border-top: 12px solid transparent;
+		border-bottom: 12px solid transparent;
+		border-right: 12px solid white;
+	}
+}

@@ -2,6 +2,20 @@ import styled from 'styled-components/macro'
 import { colors } from 'constants/colors'
 import { motion } from 'motion/react'
 
+export const LogoWrapper = styled.div`
+  max-width: 4rem;
+  max-height: 4rem;
+  transition: all 150ms ease;
+  font-size: large;
+  font-weight: bold;
+
+  svg {
+    width: 100%;
+    height: 100%;
+    fill: #ffffff;
+  }
+`
+
 export const BurgerButton = styled.button`
   position: absolute;
   top: 12px;

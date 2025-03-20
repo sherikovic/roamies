@@ -83,18 +83,17 @@ const Card = ({
     .set('hsl.l', 0.8 + (index / (4 - 1)) * 0.15)
     .hex()
   const scale = useTransform(progress, [index * 0.25, 1], [1, 1 - (4 - index) * 0.05])
-  // const background = `linear-gradient(135deg, ${lightenedColor} 0%, #ffffff 50%, #f7e9d3 100%)`
   const background = `linear-gradient(180deg, ${lightenedColor} 0%, #fcc490 35%, #ffffff 100%)`
 
   return (
     <div className="sticky top-0 lg:w-svw w-[90vw] lg:h-full">
       <motion.div
         className="relative flex flex-col"
-        style={{ top: `calc(${isMobile ? '13vh' : '20vh'} + ${index * 25}px)`, scale }}
+        style={{ top: `calc(${isMobile ? '12vh' : '20vh'} + ${index * 25}px)`, scale }}
       >
         <motion.div
           style={{ background }}
-          className="relative bg-white flex flex-col lg:flex-row gap-5 w-full lg:h-full items-center lg:justify-between max-w-6xl mx-auto p-8 lg:px-12 lg:py-10 shadow-lg rounded-2xl overflow-hidden"
+          className="relative flex flex-col lg:flex-row gap-5 w-full lg:h-full h-[70vh] items-center lg:justify-between max-w-6xl mx-auto p-5 lg:px-12 lg:py-10 shadow-lg rounded-2xl overflow-hidden"
         >
           <div
             className="lg:w-1/2 lg:h-full h-[40vh] flex justify-center"
@@ -108,14 +107,14 @@ const Card = ({
                 : undefined,
             }}
           >
-            <img loading="lazy" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />
+            <img loading="eager" src={image} alt={alt} className="lg:h-[480px] rounded-xl" />
           </div>
-          <div className="flex flex-col w-full lg:w-3/5 gap-4">
-            <h1 className="poppins-semibold text-textPrimary text-base lg:text-4xl lg:max-w-[430px]">
+          <div className="flex flex-col lg:w-3/5 lg:gap-5 gap-1">
+            <h1 className="poppins-semibold text-textPrimary text-sm lg:text-4xl lg:max-w-[430px]">
               {headline}
             </h1>
             <p
-              className="poppins-regular text-gray-700 text-sm lg:text-xl leading-relaxed"
+              className="poppins-regular text-gray-700 text-xs lg:text-xl leading-6"
               dangerouslySetInnerHTML={{ __html: text }}
             />
           </div>

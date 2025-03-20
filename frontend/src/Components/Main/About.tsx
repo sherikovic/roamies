@@ -3,8 +3,9 @@ import { AnimatePresence, motion } from 'motion/react'
 import QrCode from 'assets/images/qr-code.svg'
 import { useEffect, useState } from 'react'
 import { colors } from 'constants/colors'
-import SVG from 'react-inlinesvg'
 import { getIsMobile } from 'util/util'
+import SVG from 'react-inlinesvg'
+import styles from './styles.module.css'
 
 export const About = () => {
   const [showQR, setShowQR] = useState(false)
@@ -23,7 +24,7 @@ export const About = () => {
   }, [showQR])
 
   return (
-    <section className="flex flex-col items-center w-svw h-svh background">
+    <section className={`${styles.background} flex flex-col items-center w-svw h-svh`}>
       <div
         className="flex flex-col flex-1 justify-between items-center w-full h-full px-12 lg:max-w-[80vw] max-w-vw"
         style={{ marginTop: isMobile ? '16rem' : '20rem' }}
@@ -110,7 +111,7 @@ export const About = () => {
               e.currentTarget.scrollIntoView({ behavior: 'auto', block: 'start' })
             }}
           >
-            <SVG src={ArrowDownShort} className="arrow-down z-50" />
+            <SVG src={ArrowDownShort} className={`${styles.arrowDown} z-50`} />
           </a>
         )}
       </div>
@@ -137,7 +138,7 @@ const QrCodeOverlay = () => {
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 10 }}
       transition={{ duration: 0.3, ease: 'easeOut' }}
-      className="qr-code-container"
+      className={styles.qrCodeContainer}
     >
       <SVG src={QrCode} className="lg:w-44 lg:h-44 w-20 h-20" />
       <p className="poppins-medium text-base lg:text-lg text-center text-textPrimary">

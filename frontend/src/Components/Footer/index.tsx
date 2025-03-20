@@ -1,4 +1,4 @@
-import { ModalOverlay, ModalContent, BurgerButton } from './styles'
+import { ModalOverlay, ModalContent, BurgerButton, LogoWrapper } from './styles'
 import downloadApp from 'assets/images/download-app.svg'
 import TermsOfServiceModal from './TermsOfServiceModal'
 import { AnimatePresence, motion } from 'motion/react'
@@ -56,7 +56,9 @@ export default function Footer() {
       <div className="flex lg:flex-row flex-col lg:gap-40 gap-10">
         <div className="flex flex-col gap-5">
           <div className="flex flex-row items-center gap-5">
-            <SVG src={logo} id="logo-elem" className="logo-large" />
+            <LogoWrapper>
+              <SVG src={logo} />
+            </LogoWrapper>
             <div className="flex flex-col items-start">
               <p className="font-drukHeavy lg:text-3xl text-background">
                 Roamies <span className="lg:text-lg">&copy;</span>
