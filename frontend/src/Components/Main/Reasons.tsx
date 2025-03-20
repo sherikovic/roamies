@@ -106,7 +106,7 @@ export default function Reasons() {
           }}
           className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
-          Sometimes, it feels like you&apos;re just passing through, a stranger everywhere you go.
+          Sometimes, solo travel feels like just passing through, a stranger everywhere.
         </motion.p>
       </div>
 
@@ -132,9 +132,9 @@ export default function Reasons() {
           }}
           className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
-          Finding a place to stay is easy.
+          Finding a place to stay? That&apos;s easy.
           <br />
-          But people to share the journey with?
+          But people to explore with?
           <br />
           That&apos;s the hard part.
         </motion.p>
@@ -162,8 +162,8 @@ export default function Reasons() {
           }}
           className="font-drukMedium text-background text-center w-[75%] mx-auto"
         >
-          What if meeting like-minded travelers was effortless? Without endless chats and awkward
-          silences?
+          What if connecting with like-minded travelers was effortless? Without endless chats and
+          awkward silences?
         </motion.p>
       </div>
     </section>
